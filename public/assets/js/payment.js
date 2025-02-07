@@ -606,7 +606,6 @@ async function loadProducts() {
         allProducts = await response.json();
         filteredProducts = [...allProducts];
 
-        // Get all container references
         const containers = {
             drinks: document.querySelector("#drinks .row"),
             packages: document.querySelector("#packages .row"),
@@ -614,29 +613,46 @@ async function loadProducts() {
             merchandise: document.querySelector("#merchandise .row")
         };
 
-        // Clear containers
         Object.values(containers).forEach(container => {
             if (container) container.innerHTML = "";
         });
 
-        // Process images first
+        // Process images with improved error handling
         for (const product of allProducts) {
             if (!product.isActive) continue;
 
             if (product.imageUrl && product.imageUrl.includes('firebasestorage')) {
                 try {
-                    const imgResponse = await fetch(product.imageUrl);
+                    // Add CORS headers to the fetch request
+                    const imgResponse = await fetch(product.imageUrl, {
+                        method: 'GET',
+                        mode: 'cors',
+                        headers: {
+                            'Origin': window.location.origin
+                        }
+                    });
+                    
                     if (!imgResponse.ok) {
+                        console.warn(`Failed to load image for ${product.name}, using placeholder`);
                         product.imageUrl = '/assets/img/placeholder.jpg';
+                    } else {
+                        // Verify the image can be loaded
+                        const img = new Image();
+                        img.onerror = () => {
+                            console.warn(`Image failed to load for ${product.name}, using placeholder`);
+                            product.imageUrl = '/assets/img/placeholder.jpg';
+                        };
+                        img.src = product.imageUrl;
                     }
                 } catch (error) {
                     console.error(`Failed to load image for ${product.name}:`, error);
                     product.imageUrl = '/assets/img/placeholder.jpg';
                 }
+            } else if (!product.imageUrl) {
+                product.imageUrl = '/assets/img/placeholder.jpg';
             }
         }
 
-        // Set initial category to 'drinks' and render
         const defaultCategory = 'drinks';
         updateSubcategoryFilter(defaultCategory);
         filteredProducts = allProducts.filter(product => product.category === defaultCategory);
@@ -645,6 +661,15 @@ async function loadProducts() {
 
     } catch (error) {
         console.error("🚨 Error loading products:", error);
+        // Show error to user
+        const containers = document.querySelectorAll('.row');
+        containers.forEach(container => {
+            container.innerHTML = `
+                <div class="col-12 text-center">
+                    <p class="text-danger">Failed to load products. Please try refreshing the page.</p>
+                </div>
+            `;
+        });
     }
 }
 
