@@ -4,19 +4,39 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
-// Initialize Firebase Admin
-const admin = require('firebase-admin');
-admin.initializeApp({
-  credential: admin.credential.cert({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
-  })
+// Add logging for environment variables (redact sensitive info)
+console.log('Environment variables loaded:', {
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+  privateKeyExists: !!process.env.FIREBASE_PRIVATE_KEY
 });
 
-const db = admin.firestore();
+// Initialize Firebase Admin with error handling
+const admin = require('firebase-admin');
+try {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+    })
+  });
+  console.log('✅ Firebase initialized successfully');
+} catch (error) {
+  console.error('🔥 Firebase initialization error:', error);
+}
 
+const db = admin.firestore();
 const app = express();
+
+// Add CSP headers
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; font-src 'self' data: fonts.gstatic.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; img-src 'self' data:;"
+  );
+  next();
+});
 
 app.use(cors());
 app.use(express.json());
@@ -139,7 +159,6 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-
 // Update yacht
 app.put('/api/yachts/:id', async (req, res) => {
   try {
@@ -159,6 +178,15 @@ app.delete('/api/yachts/:id', async (req, res) => {
   } catch (error) {
     res.status(500).send(error.message);
   }
+});
+
+// Add error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Global error handler:', err);
+  res.status(500).json({
+    error: 'Internal Server Error',
+    message: err.message
+  });
 });
 
 const PORT = process.env.PORT || 3000;
