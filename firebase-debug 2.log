@@ -1,0 +1,125 @@
+[debug] [2025-01-30T14:50:38.588Z] ----------------------------------------------------------------------
+[debug] [2025-01-30T14:50:38.589Z] Command:       /Users/Julian/.nvm/versions/node/v18.20.5/bin/node /Users/Julian/.nvm/versions/node/v18.20.5/bin/firebase init functions
+[debug] [2025-01-30T14:50:38.589Z] CLI Version:   13.29.2
+[debug] [2025-01-30T14:50:38.589Z] Platform:      darwin
+[debug] [2025-01-30T14:50:38.590Z] Node Version:  v18.20.5
+[debug] [2025-01-30T14:50:38.592Z] Time:          Thu Jan 30 2025 15:50:38 GMT+0100 (Central European Standard Time)
+[debug] [2025-01-30T14:50:38.592Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-01-30T14:50:38.691Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-01-30T14:50:38.691Z] > authorizing via signed-in user (julian.pirvu@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/Julian
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-01-30T14:50:38.693Z] Using project from CLI flag: crm-boats
+[debug] [2025-01-30T14:50:38.694Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:50:38.694Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:50:38.694Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/crm-boats [none]
+[debug] [2025-01-30T14:50:39.046Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/crm-boats 200
+[debug] [2025-01-30T14:50:39.046Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/crm-boats {"projectId":"crm-boats","projectNumber":"129588517789","displayName":"CRM-Boats","name":"projects/crm-boats","resources":{"hostingSite":"crm-boats"},"state":"ACTIVE","etag":"1_4f48a7e1-b7e9-4d2f-b740-c92fd82ec08d"}
+[info] i  Using project crm-boats (CRM-Boats) 
+[info] 
+=== Functions Setup
+[debug] [2025-01-30T14:50:39.054Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-01-30T14:50:39.054Z] > authorizing via signed-in user (julian.pirvu@gmail.com)
+[debug] [2025-01-30T14:50:39.054Z] [iam] checking project crm-boats for permissions ["firebase.projects.get"]
+[debug] [2025-01-30T14:50:39.055Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:50:39.055Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:50:39.055Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/crm-boats:testIamPermissions [none]
+[debug] [2025-01-30T14:50:39.055Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/crm-boats:testIamPermissions x-goog-quota-user=projects/crm-boats
+[debug] [2025-01-30T14:50:39.055Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/crm-boats:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-01-30T14:50:39.316Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/crm-boats:testIamPermissions 200
+[debug] [2025-01-30T14:50:39.316Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/crm-boats:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-01-30T14:50:39.317Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:50:39.317Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:50:39.317Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:50:39.317Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:50:39.317Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/crm-boats/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-01-30T14:50:39.317Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/crm-boats/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/crm-boats
+[debug] [2025-01-30T14:50:39.318Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/crm-boats/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-01-30T14:50:39.318Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/crm-boats/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/crm-boats
+[debug] [2025-01-30T14:50:40.305Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/crm-boats/services/cloudfunctions.googleapis.com 200
+[debug] [2025-01-30T14:50:40.305Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/crm-boats/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-01-30T14:50:40.310Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/crm-boats/services/runtimeconfig.googleapis.com 200
+[debug] [2025-01-30T14:50:40.310Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/crm-boats/services/runtimeconfig.googleapis.com [omitted]
+[info] 
+Detected existing codebase(s): default, functions, functions_v2, functions_v4, functions_v5, functions_v6, chatbot-functions, email-functions
+
+[info] Let's create a new codebase for your functions.
+[info] A directory corresponding to the codebase will be created in your project
+[info] with sample code pre-configured.
+
+[info] See https://firebase.google.com/docs/functions/organize-functions for
+[info] more information on organizing your functions using codebases.
+
+[info] Functions can be deployed with firebase deploy.
+
+[error] Invalid codebase name. Codebase must be less than 64 characters and can contain only lowercase letters, numeric characters, underscores, and dashes.
+[error] functions.codebase must be unique but 'functions' was used more than once.
+[info] ✔  Wrote stripe-payments/package.json 
+[info] ✔  Wrote stripe-payments/index.js 
+[info] ✔  Wrote stripe-payments/.gitignore 
+[debug] [2025-01-30T14:55:39.257Z] ----------------------------------------------------------------------
+[debug] [2025-01-30T14:55:39.258Z] Command:       /Users/Julian/.nvm/versions/node/v18.20.5/bin/node /Users/Julian/.nvm/versions/node/v18.20.5/bin/firebase init functions
+[debug] [2025-01-30T14:55:39.258Z] CLI Version:   13.29.2
+[debug] [2025-01-30T14:55:39.258Z] Platform:      darwin
+[debug] [2025-01-30T14:55:39.258Z] Node Version:  v18.20.5
+[debug] [2025-01-30T14:55:39.259Z] Time:          Thu Jan 30 2025 15:55:39 GMT+0100 (Central European Standard Time)
+[debug] [2025-01-30T14:55:39.260Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-01-30T14:55:39.364Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-01-30T14:55:39.365Z] > authorizing via signed-in user (julian.pirvu@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/Julian
+
+Before we get started, keep in mind:
+
+  * You are initializing within an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-01-30T14:55:39.366Z] Using project from CLI flag: crm-boats-29a7e
+[debug] [2025-01-30T14:55:39.367Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:55:39.367Z] Checked if tokens are valid: true, expires at: 1738252114856
+[debug] [2025-01-30T14:55:39.368Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/crm-boats-29a7e [none]
+[debug] [2025-01-30T14:55:39.726Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/crm-boats-29a7e 403
+[debug] [2025-01-30T14:55:39.727Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/crm-boats-29a7e {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2025-01-30T14:55:39.727Z] Request to https://firebase.googleapis.com/v1beta1/projects/crm-boats-29a7e had HTTP Error: 403, The caller does not have permission
+[debug] [2025-01-30T14:55:39.883Z] FirebaseError: Request to https://firebase.googleapis.com/v1beta1/projects/crm-boats-29a7e had HTTP Error: 403, The caller does not have permission
+    at responseToError (/Users/Julian/.nvm/versions/node/v18.20.5/lib/node_modules/firebase-tools/lib/responseToError.js:52:12)
+    at RetryOperation._fn (/Users/Julian/.nvm/versions/node/v18.20.5/lib/node_modules/firebase-tools/lib/apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project crm-boats-29a7e. Please make sure the project exists and your account has permission to access it.

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <title>Boat Delivery Service</title>
+        <link rel="shortcut icon" href="/assets/img/favicon-16x16.png" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+        <link rel="stylesheet" href="/assets/css/plugins.css" />
+        <link rel="stylesheet" href="/assets/css/style.css" />
+        <link rel="stylesheet" href="/assets/css/services.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!-- Required Bootstrap files order -->
+       
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+        <script src="https://js.stripe.com/v3/"></script>
+           
+
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+     <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <!-- Logo -->
+          <div class="logo-wrapper">
+            <a class="logo" href="index.html">
+              <h2>Just Enjoy Ibiza <span>Boats</span></h2>
+            </a>
+          </div>
+      
+          <!-- Mobile Toggle -->
+        
+    <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+        <span class="toggler-icon">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </span>
+    </button>
+      
+          <!-- Collapsible Menu -->
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto">
+              
+              <!-- Mega Menu Dropdown -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button"
+                   data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                  Boat Charter <i class="ti-angle-down"></i>
+                </a>
+                <div class="mega-menu">
+                  <div class="mega-menu-content">
+                    <!-- Column 1 -->
+                    <div class="menu-column">
+                        <h3>Charter a Boat</h3>
+                        <ul>
+                          <li><a href="#"><i class="fa fa-angle-right"></i> Boats for Charter</a></li>
+                          <li><a href="#"><i class="fa fa-angle-right"></i> Featured Boats</a></li>
+                          <li><a href="#"><i class="fa fa-angle-right"></i> Charter Destinations</a></li>
+                          <li><a href="#"><i class="fa fa-angle-right"></i> Contact a Booking Agent</a></li>
+                        </ul>
+                      </div>
+                      
+      
+                    <!-- Column 2 -->
+                    <div class="menu-column">
+                      <h3>Why Choose Us?</h3>
+                      <ul>
+                        <li><i class="fa fa-angle-right"></i> Professional Crew</li>
+                        <li><i class="fa fa-angle-right"></i> 24/7 Support</li>
+                        <li><i class="fa fa-angle-right"></i> Easy Bookings</li>
+                        <li><i class="fa fa-angle-right"></i> Celebrations & Events</li>
+                        <li><i class="fa fa-angle-right"></i> Food & Drinks Delivered Onboard</li>
+                      </ul>
+                    </div>
+      
+                    <!-- Column 3: Featured Yachts -->
+                    <div class="featured-yachts">
+                      <div class="yacht-card" data-boat-id="${doc.id}">
+                        <img src="assets/img/Persing90.jpg" alt="Victorious">
+                        <h4>VICTORIOUS</h4>
+                        <p class="yacht-meta">85m/278' | 2021</p>
+                        <p class="yacht-price">€800,000/week</p>
+                      </div>
+                      <div class="yacht-card">
+                        <img src="assets/img/50BRONSON9.jpg" alt="Anjelif">
+                        <h4>Celebrate Li</h4>
+                        <p class="yacht-meta">50m/163' | 2024</p>
+                        <p class="yacht-price">€330,000/week</p>
+                      </div>
+                    </div>
+                  </div><!-- .mega-menu-content -->
+                </div><!-- .mega-menu -->
+              </li>
+      
+              <!-- About Us -->
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+              </li>
+              <!-- About Us -->
+              <li class="nav-item">
+                <a class="nav-link" href="#">News</a>
+              </li>
+      
+      
+              <!-- Contact -->
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact</a>
+              </li>
+      
+              <!-- Favourites -->
+              <li class="nav-item">
+                <a class="nav-link" href="/my-favourites.html">
+                  <i class="ti-heart"></i> Favourites
+                </a>
+              </li>
+            </ul>
+          </div><!-- .collapse -->
+        </div><!-- .container -->
+     </nav>
+     <div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4" data-background="/assets/img/89Leopard8.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-left caption mt-90">
+                    <h5>Enhance Your Experience</h5>
+                    <h1>Onboard Catering</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <!-- Catering Categories -->
+    <section class="categories section-padding bg-darkblack">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-12 text-center">
+                    <div class="section-subtitle special-title">Enhance Your Journey</div>
+                    <div class="section-title">Select Your Preferences</div>
+                    <p class="section-description color-2">
+                        Choose from our curated selection of premium beverages and gourmet snacks to elevate your yacht experience.
+                    </p>
+                </div>
+            </div>
+    
+            <!-- Category Navigation -->
+            
+            <ul class="nav nav-pills justify-content-center mb-5" id="cateringTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#drinks">
+                        <i class="fas fa-glass-martini-alt"></i> Drinks
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#packages">
+                        <i class="fas fa-box"></i> Packages
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#snacks">
+                        <i class="fas fa-cookie"></i> Snacks
+                    </button>
+                </li>
+                <!-- Add this new tab -->
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#merchandise">
+                        <i class="fas fa-tshirt"></i> Merchandise
+                    </button>
+                </li>
+            </ul>
+    
+ <!-- Filter Section -->
+<div class="filters-section mb-4">
+    <!-- Mobile Filter Toggle -->
+    <div class="d-md-none">
+        <button class="btn btn-filter w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterDrawer">
+            <i class="fas fa-filter"></i> Filters and Sort
+        </button>
+    </div>
+
+    <!-- Desktop Filters -->
+    <div class="d-none d-md-block">
+        <div class="row g-3">
+            <!-- Search -->
+            <div class="col-md-3">
+                <div class="filter-group">
+                    <div class="search-wrapper">
+                        <input type="text" class="form-control" id="searchFilter" placeholder="Search products...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Range -->
+            <div class="col-md-3">
+                <div class="filter-group">
+                    <select class="form-select" id="priceFilter">
+                        <option value="">Price Range</option>
+                        <option value="0-50">€0 - €50</option>
+                        <option value="51-100">€51 - €100</option>
+                        <option value="101-200">€101 - €200</option>
+                        <option value="201+">€201+</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Sort By -->
+            <div class="col-md-3">
+                <div class="filter-group">
+                    <select class="form-select" id="sortFilter">
+                        <option value="">Sort By</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                        <option value="name-desc">Name: Z to A</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Subcategories -->
+            <div class="col-md-3">
+                <div class="filter-group">
+                    <select class="form-select" id="subCategoryFilter">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Filter Drawer -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="filterDrawer">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Filters & Sort</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="mobile-filters">
+                <!-- Search -->
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                    <div class="search-wrapper">
+                        <input type="text" class="form-control" id="searchFilterMobile" placeholder="Search products...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+
+                <!-- Price Range -->
+                <div class="filter-group">
+                    <label class="filter-label">Price Range</label>
+                    <select class="form-select" id="priceFilterMobile">
+                        <option value="">All Prices</option>
+                        <option value="0-50">€0 - €50</option>
+                        <option value="51-100">€51 - €100</option>
+                        <option value="101-200">€101 - €200</option>
+                        <option value="201+">€201+</option>
+                    </select>
+                </div>
+
+                <!-- Sort By -->
+                <div class="filter-group">
+                    <label class="filter-label">Sort By</label>
+                    <select class="form-select" id="sortFilterMobile">
+                        <option value="">Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A to Z</option>
+                        <option value="name-desc">Name: Z to A</option>
+                    </select>
+                </div>
+
+                <!-- Subcategories -->
+                <div class="filter-group">
+                    <label class="filter-label">Category</label>
+                    <select class="form-select" id="subCategoryFilterMobile">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+
+                <!-- Filter Actions -->
+                <div class="filter-actions">
+                    <button class="btn btn-secondary" type="button" onclick="clearFilters()">Clear All</button>
+                    <button class="btn btn-primary" type="button" onclick="applyMobileFilters()" data-bs-dismiss="offcanvas">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>   
+        
+            
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="cateringContent">
+                <div class="tab-pane fade show active" id="drinks">
+                    <div class="row"></div>
+                    <div class="pagination-container"></div>
+                </div>
+                <div class="tab-pane fade" id="packages">
+                    <div class="row"></div>
+                    <div class="pagination-container"></div>
+                </div>
+                <div class="tab-pane fade" id="snacks">
+                    <div class="row"></div>
+                    <div class="pagination-container"></div>
+                </div>
+                <!-- Add this missing merchandise tab pane -->
+                <div class="tab-pane fade" id="merchandise">
+                    <div class="row"></div>
+                    <div class="pagination-container"></div>
+                </div>
+            </div>
+    
+            <!-- Order Summary -->
+            <div class="order-summary" id="orderSummary">
+                <div class="summary-header">
+                    <h3>Your Order</h3>
+                    <span class="item-count">0 items</span>
+                </div>
+                <div class="summary-items"></div>
+                <div class="summary-total">
+                    <div class="total-label">Total</div>
+                    <div class="total-amount">€0.00</div>
+                </div>
+                <button class="btn-checkout" id="proceedToCheckout" disabled>Proceed to Checkout</button>
+            </div>
+        </div>
+    </section>
+    
+   <!-- Checkout Modal -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkoutModalLabel">Order Summary</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div id="checkoutSummary">
+            <h6>Your Selected Items:</h6>
+            <ul class="list-group" id="checkoutItems"></ul>
+          </div>
+
+          <!-- Order Details Form Fields -->
+          <div class="mt-3">
+            <label for="fullName" class="mt-2">Full Name:</label>
+            <input type="text" id="fullName" class="form-control" placeholder="Enter your full name">
+
+            <label for="boatName" class="mt-2">Boat Name:</label>
+            <input type="text" id="boatName" class="form-control" placeholder="Enter boat name">
+
+            <label for="rentalCompany" class="mt-2">Rental Company:</label>
+            <input type="text" id="rentalCompany" class="form-control" placeholder="Enter rental company name">
+
+            <label for="phoneNumber" class="mt-2">Phone Number:</label>
+            <input type="text" id="phoneNumber" class="form-control" placeholder="Enter phone number">
+
+            <label for="email" class="mt-2">Email:</label>
+            <input type="email" id="email" class="form-control" placeholder="Enter your email">
+
+            <label for="orderDate" class="mt-2">Date:</label>
+            <input type="date" id="orderDate" class="form-control">
+
+            <label for="paymentMethod" class="mt-2">Payment Method:</label>
+            <select id="paymentMethod" class="form-control">
+              <option value="card">Credit/Debit Card</option>
+            </select>
+
+            <label for="specialNotes" class="mt-2">Special Notes:</label>
+            <textarea id="specialNotes" class="form-control" placeholder="Any additional info..."></textarea>
+          </div>
+
+          <!-- Total Price Display -->
+          <div class="mt-3">
+            <h5>Total: <span id="checkoutTotal">€0.00</span></h5>
+          </div>
+        </div><!-- /.modal-body -->
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="submitOrder()">Confirm Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="footer-column footer-about">
+                            <h3 class="footer-title">About Just Enjoy Ibiza Boat</h3>
+                            <p class="footer-about-text">Experience the ultimate in luxury yacht charters in Ibiza. We offer premium vessels, professional crews, and unforgettable Mediterranean experiences for those seeking the finest maritime adventures.</p>
+                            <div class="footer-language"> <i class="lni ti-world"></i>
+                                <select onchange="location = this.value;">
+                                    <option value="/en">English</option>
+                                    <option value="/es">Español</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 offset-md-1">
+                        <div class="footer-column footer-explore clearfix">
+                            <h3 class="footer-title">Discover</h3>
+                            <ul class="footer-explore-list list-unstyled">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="our-fleet.html">Our Fleet</a></li>
+                                <li><a href="day-charters.html">Day Charters</a></li>
+                                <li><a href="destinations.html">Destinations</a></li>
+                                <li><a href="experiences.html">VIP Experiences</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-column footer-contact">
+                            <h3 class="footer-title">Contact</h3>
+                            <p class="footer-contact-text">Marina Botafoch<br>07800 Ibiza, Balearic Islands<br>Spain</p>
+                            <div class="footer-contact-info">
+                                <p class="footer-contact-phone"><span class="flaticon-call"></span> +34 692 688 348</p>
+                                <p class="footer-contact-mail">info@justenjoyibizaboats.com</p>
+                            </div>
+                            <div class="footer-about-social-list">
+                                <a href="https://www.instagram.com/justenjoyibiza_boats_tours/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                                <a href="https://wa.me/34692688348" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    </footer>
+    
+     
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Initialize Bootstrap components
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            
+                // Initialize tabs
+                const tabEls = document.querySelectorAll('[data-bs-toggle="pill"]')
+                tabEls.forEach(tabEl => {
+                    new bootstrap.Tab(tabEl)
+                });
+            
+                // Initialize filter drawer
+                const offcanvasEl = document.getElementById('filterDrawer');
+                if (offcanvasEl) {
+                    new bootstrap.Offcanvas(offcanvasEl);
+                }
+            
+                // Initialize controls after Bootstrap is ready
+                initializeControls();
+                loadProducts();
+                loadSavedCart();
+            });
+            </script>
+            
+    <script src="/assets/js/jquery-migrate-3.0.0.min.js"></script>
+    <script src="/assets/js/modernizr-2.6.2.min.js"></script>
+    <script src="/assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/assets/js/jquery.isotope.v3.0.2.js"></script>
+    <script src="/assets/js/pace.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/scrollIt.min.js"></script>
+    <script src="/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/jquery.stellar.min.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.js"></script>
+    <script src="/assets/js/YouTubePopUp.js"></script>
+    <script src="/assets/js/select2.js"></script>
+    <script src="/assets/js/datepicker.js"></script>
+    <script src="/assets/js/smooth-scroll.min.js"></script>
+    <script src="/assets/js/custom.js"></script>
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Get elements
+    const toggler = document.querySelector('.custom-toggler');
+    const navCollapse = document.querySelector('.navbar-collapse');
+    
+    if (toggler && navCollapse) {
+        // Toggle menu
+        toggler.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.toggle('active');
+            navCollapse.classList.toggle('show');
+        });
+
+        // Close menu when clicking a link
+        const navLinks = navCollapse.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                toggler.classList.remove('active');
+                navCollapse.classList.remove('show');
+            });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!toggler.contains(e.target) && 
+                !navCollapse.contains(e.target) && 
+                navCollapse.classList.contains('show')) {
+                toggler.classList.remove('active');
+                navCollapse.classList.remove('show');
+            }
+        });
+    }
+});
+     </script>      
+    <script src="/assets/js/payment.js"></script>
+</body>
+</html>

@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Just Enjoy Ibiza Boat - Luxury Yacht Charter</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/plugins.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/navbar.css">
+    <link rel="stylesheet" href="/assets/css/yacht.rental.css">
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <!-- Required Bootstrap files order -->
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader-bg"></div>
+    <div id="preloader">
+        <div id="preloader-status">
+            <div class="preloader-position loader"> <span></span> </div>
+        </div>
+    </div>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+     <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <!-- Logo -->
+          <div class="logo-wrapper">
+            <a class="logo" href="index.html">
+              <h2>Just Enjoy Ibiza <span>Boats</span></h2>
+            </a>
+          </div>
+      
+          <!-- Mobile Toggle -->
+          <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+            <span class="toggler-icon">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </span>
+          </button>
+      
+          <!-- Collapsible Menu -->
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto">
+              <!-- Mega Menu Dropdown -->
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                    Boat Charter <i class="ti-angle-down"></i>
+                  </a>
+                <div class="mega-menu">
+                  <div class="mega-menu-content">
+                    <!-- Charter Options -->
+                    <div class="menu-column">
+                      <h3>Charter a Boat</h3>
+                      <ul class="menu-list">
+                        <li><a href="/yacht-rental.html"><i class="fa fa-angle-right"></i> Boats for Charter</a></li>
+                        <li><a href="#"><i class="fa fa-angle-right"></i> Featured Boats</a></li>
+                        <li><a href="#"><i class="fa fa-angle-right"></i> Charter Destinations</a></li>
+                        <li><a href="#"><i class="fa fa-angle-right"></i> Contact a Booking Agent</a></li>
+                      </ul>
+                    </div>
+      
+                    <!-- Services -->
+                    <div class="menu-column">
+                      <h3>Why Choose Us?</h3>
+                      <ul class="menu-list">
+                        <li><i class="fa fa-angle-right"></i> Professional Crew</li>
+                        <li><i class="fa fa-angle-right"></i> 24/7 Support</li>
+                        <li><i class="fa fa-angle-right"></i> Easy Bookings</li>
+                        <li><i class="fa fa-angle-right"></i> Celebrations & Events</li>
+                        <li><a href="/services.html"><i class="fa fa-angle-right"></i> Food & Drinks Delivered Onboard</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+      
+              <!-- About Us -->
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+              </li>
+      
+              <!-- Contact -->
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact</a>
+              </li>
+      
+              <!-- Favourites -->
+              <li class="nav-item">
+                <a class="nav-link" href="my-favourites.html">
+                  <i class="ti-heart"></i> Favourites
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+   
+
+    <section class="yacht-hero">
+        <div class="yacht-hero-content">
+            <span class="yacht-hero-subtitle">DISCOVER LUXURY AT SEA</span>
+            <h1 class="yacht-hero-title">FIND YOUR PERFECT YACHT</h1>
+            <p class="yacht-hero-description">Experience the Mediterranean's finest collection of luxury yachts</p>
+        </div>
+    
+        <div class="search-container">
+            <!-- Same tabs but with improved mobile styling -->
+            
+            <div class="minimized-title">FILTERS</div>
+            <div class="search-tabs">
+                <button class="search-tab active" data-tab="charter">CHARTER</button>
+                <button class="search-tab" data-tab="sale">SALE</button>
+                <button class="search-tab" data-tab="lastminute">LAST MINUTE</button>
+            </div>
+    
+            <!-- Last Minute Message -->
+            <div class="yacht-search" id="lastminuteSearch">
+                <div class="no-offers-message">
+                    <i class="fas fa-clock fa-3x"></i>
+                    <h3>No Last Minute Offers Available</h3>
+                    <p>Join our Members Club to get exclusive access to last minute deals and special discounts.</p>
+                    <button class="join-club-button">
+                        <i class="fas fa-star"></i> Join Members Club
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Charter Search Form -->
+            <div class="yacht-search active" id="charterSearch">
+                <!-- Primary search grid -->
+                <div class="search-grid primary-filters">
+                    <div class="search-group">
+                        <label><i class="fas fa-map-marker-alt"></i> DESTINATION</label>
+                        <select id="charter-destination">
+                            <option value="">Select Destination</option>
+                            <option value="ibiza">Ibiza</option>
+                            <option value="formentera">Formentera</option>
+                            <option value="mallorca">Mallorca</option>
+                        </select>
+                    </div>
+                    
+                    <div class="search-group">
+                        <label><i class="fas fa-ship"></i> YACHT TYPE</label>
+                        <select id="charter-yachtType">
+                            <option value="">All Types</option>
+                            <option value="motor">Motor Yacht</option>
+                            <option value="sailing">Sailing Yacht</option>
+                            <option value="catamaran">Catamaran</option>
+                        </select>
+                    </div>
+    
+                    <div class="search-group">
+                        <label><i class="fas fa-users"></i> GUESTS</label>
+                        <select id="charter-guests">
+                            <option value="">Number of Guests</option>
+                            <option value="1-6">1-6 Guests</option>
+                            <option value="7-12">7-12 Guests</option>
+                            <option value="13+">13+ Guests</option>
+                        </select>
+                    </div>
+    
+                    <div class="search-group">
+                        <label><i class="fas fa-calendar"></i> DATES</label>
+                        <input type="date" id="charter-dates" class="date-input">
+                    </div>
+                </div>
+    
+                <!-- Advanced filters section -->
+                <div class="advanced-filters" id="charterAdvancedFilters">
+                    <div class="search-grid">
+                        <div class="search-group">
+                            <label><i class="fas fa-euro-sign"></i> PRICE RANGE</label>
+                            <select id="charter-price">
+                                <option value="">Any Price</option>
+                                <option value="0-5000">Up to €5,000/day</option>
+                                <option value="5000-10000">€5,000 - €10,000/day</option>
+                                <option value="10000+">€10,000+/day</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <label><i class="fas fa-bed"></i> CABINS</label>
+                            <select id="charter-cabins">
+                                <option value="">Any</option>
+                                <option value="1-2">1-2 Cabins</option>
+                                <option value="3-4">3-4 Cabins</option>
+                                <option value="5+">5+ Cabins</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <label><i class="fas fa-ruler-combined"></i> LENGTH</label>
+                            <select id="charter-length">
+                                <option value="">Any Length</option>
+                                <option value="0-15">Up to 15m</option>
+                                <option value="15-30">15m - 30m</option>
+                                <option value="30+">30m+</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Action buttons -->
+                <div class="search-actions">
+                    <button class="advanced-filters-btn" id="charterAdvancedBtn">
+                        <span>More Filters</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <button class="search-button">
+                        <i class="fas fa-search"></i> Search Boats
+                    </button>
+                </div>
+            </div>
+    
+            <!-- Sale Search Form -->
+            <div class="yacht-search" id="saleSearch">
+                <div class="search-grid">
+                    <div class="search-group">
+                        <label><i class="fas fa-ship"></i> YACHT TYPE</label>
+                        <select id="sale-yachtType">
+                            <option value="">All Types</option>
+                            <option value="motor">Motor Yacht</option>
+                            <option value="sailing">Sailing Yacht</option>
+                            <option value="catamaran">Catamaran</option>
+                        </select>
+                    </div>
+    
+                    <div class="search-group">
+                        <label><i class="fas fa-ruler-combined"></i> LENGTH</label>
+                        <select id="sale-length">
+                            <option value="">Any Length</option>
+                            <option value="0-15">Up to 15m</option>
+                            <option value="15-30">15m - 30m</option>
+                            <option value="30+">30m+</option>
+                        </select>
+                    </div>
+    
+                    <div class="search-group">
+                        <label><i class="fas fa-euro-sign"></i> PRICE RANGE</label>
+                        <select id="sale-price">
+                            <option value="">Any Price</option>
+                            <option value="0-1M">Up to €1M</option>
+                            <option value="1M-5M">€1M - €5M</option>
+                            <option value="5M+">€5M+</option>
+                        </select>
+                    </div>
+    
+                    <div class="search-group">
+                        <label><i class="fas fa-calendar"></i> YEAR BUILT</label>
+                        <select id="sale-year">
+                            <option value="">Any Year</option>
+                            <option value="2020+">2020+</option>
+                            <option value="2015-2020">2015-2020</option>
+                            <option value="2010-2015">2010-2015</option>
+                            <option value="pre-2010">Pre-2010</option>
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="advanced-filters" id="saleAdvancedFilters">
+                    <div class="search-grid">
+                        <div class="search-group">
+                            <label><i class="fas fa-bed"></i> CABINS</label>
+                            <select id="sale-cabins">
+                                <option value="">Any</option>
+                                <option value="1-2">1-2 Cabins</option>
+                                <option value="3-4">3-4 Cabins</option>
+                                <option value="5+">5+ Cabins</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <label><i class="fas fa-flag"></i> FLAG</label>
+                            <select id="sale-flag">
+                                <option value="">Any Flag</option>
+                                <option value="spain">Spain</option>
+                                <option value="uk">UK</option>
+                                <option value="usa">USA</option>
+                            </select>
+                        </div>
+                        <div class="search-group">
+                            <label><i class="fas fa-industry"></i> BUILDER</label>
+                            <select id="sale-builder">
+                                <option value="">Any Builder</option>
+                                <option value="sunseeker">Sunseeker</option>
+                                <option value="princess">Princess</option>
+                                <option value="azimut">Azimut</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="search-actions">
+                    <button class="advanced-filters-btn" id="saleAdvancedBtn">
+                        <i class="fas fa-sliders-h"></i> More Filters
+                    </button>
+                    <button class="search-button">
+                        <i class="fas fa-search"></i> Search Yachts for Sale
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+    <div class="container">
+        <div class="stats-content">
+            <div class="stats-found">
+                FOUND <span id="yachtCount">0</span> YACHTS
+            </div>
+            <div class="stats-options">
+                <span>UNITS: M</span>
+                <span>CURRENCY: EUR</span>
+                <span>SORT BY: DEFAULT</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Keep your existing boats-list section with the dark theme -->
+
+<!-- Dynamic Boat Listing Section -->
+<section class="boats-list section-padding" id="boatsList">
+    <div class="container">
+        <div class="row" id="boatsGrid">
+            <!-- Boat cards will be dynamically injected here -->
+        </div>
+    </div>
+</section>
+
+<!-- Add this template to your HTML -->
+<template id="boat-template">
+    <div class="col-md-4 mb-4">
+      <div class="yacht-card">
+        <div class="yacht-image-wrapper">
+          <img class="boat-image" src="" alt="">
+          <button class="favorite-btn">
+            <i class="far fa-heart"></i>
+          </button>
+          <div class="image-overlay"></div>
+        </div>
+        <div class="yacht-content">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <h3 class="yacht-name mb-1"></h3>
+              <p class="yacht-builder text-muted small mb-0"></p>
+            </div>
+            <div class="price-value text-primary"></div>
+          </div>
+          
+          <div class="yacht-specs">
+            <div class="spec-item">
+              <i class="fas fa-ruler-combined"></i>
+              <span class="length"></span>
+            </div>
+            <div class="spec-item">
+              <i class="fas fa-users"></i>
+              <span class="guests"></span>
+            </div>
+            <div class="spec-item">
+              <i class="fas fa-bed"></i>
+              <span class="cabins"></span>
+            </div>
+            <div class="spec-item">
+              <i class="fas fa-user-shield"></i>
+              <span class="crew"></span>
+            </div>
+          </div>
+          
+          <div class="yacht-actions">
+            <button class="btn btn-sm btn-details">View Details</button>
+            <button class="btn btn-sm btn-book">Inquire Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loader"></div>
+</div>
+
+
+<footer class="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="footer-column footer-about">
+                <h3 class="footer-title">About Just Enjoy Ibiza Boat</h3>
+                <p class="footer-about-text">
+                    Experience the ultimate in luxury yacht charters in Ibiza.
+                    We offer premium vessels, professional crews, and unforgettable Mediterranean experiences.
+                </p>
+                
+            </div>
+
+            <div class="footer-column footer-explore">
+                <h3 class="footer-title">Discover</h3>
+                <ul class="footer-explore-list">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Our Fleet</a></li>
+                    <li><a href="#">Day Charters</a></li>
+                    <li><a href="#">Destinations</a></li>
+                    <li><a href="#">VIP Experiences</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column footer-contact">
+                <h3 class="footer-title">Contact</h3>
+                <p class="footer-contact-text">Marina Botafoch, 07800 Ibiza, Spain</p>
+                <p class="footer-contact-info"><i class="fas fa-phone"></i> +34 692 688 348</p>
+                <p class="footer-contact-info"><i class="fas fa-envelope"></i> info@justenjoyibizaboats.com</p>
+                <div class="footer-about-social-list">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+    <!-- Animation on Scroll -->
+    <script>
+        window.addEventListener('scroll', () => {
+            const yachtCards = document.querySelectorAll('.yacht-card');
+            yachtCards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const screenHeight = window.innerHeight;
+                
+                if (cardTop < screenHeight * 0.85) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+    <script>
+        function resetFilters() {
+    document.getElementById('yachtType').value = '';
+    document.getElementById('capacity').value = '';
+    document.getElementById('priceRange').value = '';
+    filterBoats(); // Reload all boats
+}
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // ============= MOBILE SEARCH CONTAINER =============
+    let searchContainer;
+    let minimizeBtn = null;
+    let handle = null;
+    let isDragging = false;
+    let startY = 0;
+    let startTransformY = 0;
+
+    function initializeMobileSearch() {
+        searchContainer = document.querySelector('.search-container');
+        if (!searchContainer || window.innerWidth > 768) return;
+
+        // Create mobile elements
+        if (!handle) {
+            handle = document.createElement('div');
+            handle.className = 'search-handle';
+            searchContainer.insertBefore(handle, searchContainer.firstChild);
+        }
+
+        if (!minimizeBtn) {
+            minimizeBtn = document.createElement('button');
+            minimizeBtn.className = 'minimize-search';
+            minimizeBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+            minimizeBtn.setAttribute('aria-label', 'Toggle search panel');
+            searchContainer.appendChild(minimizeBtn);
+        }
+
+        // Set initial state
+        searchContainer.classList.add('minimized');
+        searchContainer.style.transform = 'translateY(calc(100% - 60px))';
+
+        // Event listeners
+        handle.addEventListener('touchstart', handleTouchStart);
+        document.addEventListener('touchmove', handleTouchMove, { passive: false });
+        document.addEventListener('touchend', handleTouchEnd);
+        minimizeBtn.addEventListener('click', toggleSearchContainer);
+    }
+
+    function removeMobileSearch() {
+        if (!searchContainer || window.innerWidth <= 768) return;
+
+        // Remove mobile elements
+        if (handle) handle.remove();
+        if (minimizeBtn) minimizeBtn.remove();
+        
+        // Reset container state
+        searchContainer.classList.remove('minimized');
+        searchContainer.style.transform = '';
+    }
+
+    function handleTouchStart(e) {
+        isDragging = true;
+        startY = e.touches[0].clientY;
+        startTransformY = searchContainer.style.transform 
+            ? parseInt(searchContainer.style.transform.replace(/[^\d-]/g, ''))
+            : 0;
+    }
+
+    function handleTouchMove(e) {
+        if (!isDragging) return;
+        const currentY = e.touches[0].clientY;
+        const deltaY = currentY - startY;
+        const containerHeight = searchContainer.offsetHeight;
+        const maxTransform = containerHeight - 60;
+        const newTransformY = Math.max(0, Math.min(deltaY + startTransformY, maxTransform));
+        searchContainer.style.transform = `translateY(${newTransformY}px)`;
+        e.preventDefault();
+    }
+
+    function handleTouchEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const currentTransform = searchContainer.style.transform 
+            ? parseInt(searchContainer.style.transform.replace(/[^\d-]/g, ''))
+            : 0;
+
+        if (currentTransform > searchContainer.offsetHeight / 3) {
+            searchContainer.classList.add('minimized');
+            minimizeBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        } else {
+            searchContainer.classList.remove('minimized');
+            minimizeBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+        }
+    }
+
+    function toggleSearchContainer() {
+        const isMinimized = searchContainer.classList.toggle('minimized');
+        minimizeBtn.innerHTML = isMinimized 
+            ? '<i class="fas fa-chevron-up"></i>' 
+            : '<i class="fas fa-chevron-down"></i>';
+        
+        searchContainer.style.transform = isMinimized 
+            ? 'translateY(calc(100% - 60px))' 
+            : '';
+    }
+
+    // ============= RESPONSIVE HANDLING =============
+    function handleResize() {
+        if (window.innerWidth <= 768) {
+            initializeMobileSearch();
+        } else {
+            removeMobileSearch();
+        }
+    }
+
+    // Initial setup
+    handleResize();
+    
+    // Debounced resize handler
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(handleResize, 250);
+    });
+
+    // ============= FILTER FUNCTIONALITY =============
+    function filterYachts() {
+        const destination = document.getElementById('charter-destination').value;
+        const yachtType = document.getElementById('charter-yachtType').value;
+        const guests = document.getElementById('charter-guests').value;
+        const dates = document.getElementById('charter-dates').value;
+        const price = document.getElementById('charter-price')?.value;
+        const cabins = document.getElementById('charter-cabins')?.value;
+        const length = document.getElementById('charter-length')?.value;
+
+        const yachts = document.querySelectorAll('.yacht-card');
+        let visibleCount = 0;
+
+        yachts.forEach(yacht => {
+            let shouldShow = true;
+
+            if (destination && yacht.dataset.destination !== destination) shouldShow = false;
+            if (yachtType && yacht.dataset.type !== yachtType) shouldShow = false;
+            
+            if (guests) {
+                const [min, max] = guests.split('-').map(Number);
+                const yachtGuests = parseInt(yacht.dataset.guests);
+                if (max && yachtGuests > max) shouldShow = false;
+                if (min && yachtGuests < min) shouldShow = false;
+            }
+
+            yacht.style.display = shouldShow ? 'block' : 'none';
+            if (shouldShow) visibleCount++;
+        });
+
+        // Update count
+        document.getElementById('yachtCount').textContent = visibleCount;
+
+        // Handle no results
+        const noResultsMsg = document.getElementById('noResultsMessage');
+        if (visibleCount === 0) {
+            if (!noResultsMsg) {
+                const msg = document.createElement('div');
+                msg.id = 'noResultsMessage';
+                msg.className = 'no-results';
+                msg.innerHTML = `
+                    <div class="text-center py-8">
+                        <i class="fas fa-search mb-4 text-4xl text-gray-400"></i>
+                        <h3 class="text-xl mb-2">No yachts found</h3>
+                        <p class="text-gray-500">Try adjusting your filters</p>
+                    </div>
+                `;
+                document.getElementById('boatsGrid').appendChild(msg);
+            }
+        } else if (noResultsMsg) {
+            noResultsMsg.remove();
+        }
+    }
+
+    // Filter events
+    const filterInputs = document.querySelectorAll('.search-group select, .search-group input');
+    filterInputs.forEach(input => input.addEventListener('change', filterYachts));
+
+    // Search button
+    document.querySelector('.search-button')?.addEventListener('click', () => {
+        filterYachts();
+        if (window.innerWidth <= 768) {
+            searchContainer.classList.add('minimized');
+            minimizeBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        }
+    });
+
+    // Reset filters
+    document.querySelector('.reset-filters')?.addEventListener('click', () => {
+        filterInputs.forEach(input => input.value = '');
+        filterYachts();
+    });
+
+    // Tab switching
+    document.querySelectorAll('.search-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.yacht-search').forEach(form => {
+                form.classList.remove('active');
+                form.style.opacity = '0';
+            });
+            
+            tab.classList.add('active');
+            const formType = tab.dataset.tab;
+            const activeForm = document.getElementById(`${formType}Search`);
+            if (activeForm) {
+                activeForm.classList.add('active');
+                setTimeout(() => activeForm.style.opacity = '1', 50);
+            }
+        });
+    });
+});
+    </script>
+    <script src="/assets/js/boats.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching
+            const tabs = document.querySelectorAll('.search-tab');
+            const searchForms = document.querySelectorAll('.yacht-search');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and forms
+                    tabs.forEach(t => t.classList.remove('active'));
+                    searchForms.forEach(form => {
+                        form.classList.remove('active');
+                        form.style.opacity = '0';
+                    });
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    const formType = tab.getAttribute('data-tab');
+                    const activeForm = document.getElementById(formType + 'Search');
+                    if (activeForm) {
+                        activeForm.classList.add('active');
+                        setTimeout(() => {
+                            activeForm.style.opacity = '1';
+                        }, 50);
+                    }
+                });
+            });
+        
+            // Advanced filters toggle - Fixed version
+            const advancedBtns = {
+                'charterAdvancedBtn': 'charterAdvancedFilters',
+                'saleAdvancedBtn': 'saleAdvancedFilters'
+            };
+        
+            Object.entries(advancedBtns).forEach(([btnId, filterId]) => {
+                const btn = document.getElementById(btnId);
+                const filters = document.getElementById(filterId);
+                
+                if (btn && filters) {  // Make sure both elements exist
+                    btn.addEventListener('click', function() {
+                        // Toggle active state
+                        this.classList.toggle('active');
+                        filters.classList.toggle('active');
+                        
+                        // Update button content
+                        const isActive = filters.classList.contains('active');
+                        this.innerHTML = `
+                            <span>${isActive ? 'Less Filters' : 'More Filters'}</span>
+                            <i class="fas ${isActive ? 'fa-chevron-up' : 'fa-chevron-down'}"></i>
+                        `;
+                    });
+                }
+            });
+        });
+    </script>
+    <script src="assets/js/customyacht.js"></script>
+    <!-- Hamburger -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+  // Get elements
+  const toggler = document.querySelector('.custom-toggler');
+  const navCollapse = document.querySelector('.navbar-collapse');
+  const dropdownToggle = document.querySelector('.dropdown-toggle');
+  const megaMenu = document.querySelector('.mega-menu');
+
+  if (toggler && navCollapse) {
+    let isAnimating = false;
+
+    // Toggle menu with animation lock
+    toggler.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (isAnimating) return;
+      isAnimating = true;
+      this.classList.toggle('active');
+      navCollapse.classList.toggle('show');
+      // Toggle body scroll
+      document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
+      
+      // Reset animation lock after transition
+      setTimeout(() => {
+        isAnimating = false;
+      }, 400);
+    });
+
+    // Mobile dropdown functionality
+    if (dropdownToggle && megaMenu) {
+      dropdownToggle.addEventListener('click', function(e) {
+        if (window.innerWidth < 992) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Toggle dropdown
+          this.classList.toggle('dropdown-active');
+          megaMenu.classList.toggle('show-mobile');
+          
+          // Rotate arrow icon
+          const arrow = this.querySelector('.ti-angle-down');
+          if (arrow) {
+            arrow.style.transform = this.classList.contains('dropdown-active') 
+              ? 'rotate(180deg)' 
+              : '';
+          }
+        }
+      });
+    }
+
+    // Close menu when clicking a link
+    const navLinks = navCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (isAnimating) return;
+        toggler.classList.remove('active');
+        navCollapse.classList.remove('show');
+        document.body.style.overflow = ''; // Reset body scroll
+      });
+    });
+
+    // Close menu and dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!isAnimating &&
+          !toggler.contains(e.target) &&
+          !navCollapse.contains(e.target) &&
+          navCollapse.classList.contains('show')) {
+        toggler.classList.remove('active');
+        navCollapse.classList.remove('show');
+        document.body.style.overflow = ''; // Reset body scroll
+      }
+
+      if (window.innerWidth < 992 &&
+          dropdownToggle &&
+          megaMenu &&
+          !dropdownToggle.contains(e.target) &&
+          !megaMenu.contains(e.target)) {
+        dropdownToggle.classList.remove('dropdown-active');
+        megaMenu.classList.remove('show-mobile');
+        const arrow = dropdownToggle.querySelector('.ti-angle-down');
+        if (arrow) {
+          arrow.style.transform = '';
+        }
+      }
+    });
+
+    // Remove bootstrap event listeners and use our own overflow handling
+    navCollapse.addEventListener('click', function(e) {
+      if (e.target === navCollapse) {
+        toggler.classList.remove('active');
+        navCollapse.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+});
+   </script>
+
+    <!-- Main Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        
+    <script src="assets/js/modernizr-2.6.2.min.js"></script>
+    <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/js/jquery.isotope.v3.0.2.js"></script>
+    <script src="assets/js/pace.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/scrollIt.min.js"></script>
+    <script src="assets/js/jquery.waypoints.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/jquery.stellar.min.js"></script>
+    <script src="assets/js/jquery.magnific-popup.js"></script>
+    <script src="assets/js/select2.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script>
+        // Add this to your yacht-rental.html file
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize favorites from localStorage
+    let favorites = JSON.parse(localStorage.getItem('yachtFavorites')) || [];
+    
+    // Initialize Firebase Firestore
+    const db = firebase.firestore();
+
+    // Toggle favorite status and store yacht data
+    async function toggleFavorite(btn) {
+        const yachtCard = btn.closest('.yacht-card');
+        const yachtId = yachtCard.dataset.boatId;
+        const icon = btn.querySelector('i');
+
+        try {
+            // Get yacht data from Firebase
+            const yachtDoc = await db.collection('yachts').doc(yachtId).get();
+            const yachtData = yachtDoc.data();
+
+            if (favorites.includes(yachtId)) {
+                // Remove from favorites
+                favorites = favorites.filter(id => id !== yachtId);
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                btn.classList.remove('active');
+                showToast('Removed from favorites');
+            } else {
+                // Add to favorites
+                favorites.push(yachtId);
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                btn.classList.add('active');
+                showToast('Added to favorites');
+
+                // Store yacht data in localStorage
+                const storedYachts = JSON.parse(localStorage.getItem('yachtData')) || {};
+                storedYachts[yachtId] = {
+                    id: yachtId,
+                    ...yachtData
+                };
+                localStorage.setItem('yachtData', JSON.stringify(storedYachts));
+            }
+
+            // Update localStorage
+            localStorage.setItem('yachtFavorites', JSON.stringify(favorites));
+            updateFavoritesCount();
+
+        } catch (error) {
+            console.error('Error toggling favorite:', error);
+            showToast('Error updating favorites');
+        }
+    }
+
+    // Update heart icons on load
+    function updateHeartIcons() {
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            const yachtId = btn.closest('.yacht-card').dataset.boatId;
+            if (favorites.includes(yachtId)) {
+                btn.querySelector('i').classList.remove('far');
+                btn.querySelector('i').classList.add('fas');
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    // Update favorites count in navbar
+    function updateFavoritesCount() {
+        const favCount = document.querySelector('.favorites-count');
+        if (favCount) {
+            favCount.textContent = favorites.length;
+            favCount.style.display = favorites.length > 0 ? 'inline-block' : 'none';
+        }
+    }
+
+    // Show toast notification
+    function showToast(message) {
+        const existingToast = document.querySelector('.toast-notification');
+        if (existingToast) {
+            existingToast.remove();
+        }
+
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="fas fa-heart"></i>
+                <span>${message}</span>
+            </div>
+        `;
+
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add('visible'), 10);
+
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // Add click handlers to favorite buttons
+    function initializeFavoriteButtons() {
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleFavorite(this);
+            });
+        });
+    }
+
+    // Add necessary styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .favorite-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .favorite-btn.active {
+            background: #ff4757;
+        }
+
+        .favorite-btn.active i {
+            color: white;
+        }
+
+        .favorite-btn i {
+            color: #ff4757;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .favorites-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast-notification.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize
+    updateHeartIcons();
+    initializeFavoriteButtons();
+    updateFavoritesCount();
+});
+        </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/boat-details.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/plugins.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/boat-details.css">
+    
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <!-- jQuery and Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <title>Boat Details</title>
+</head>
+<body>
+    <!-- boat-details.html -->
+   <div class="boat-details-page">
+    <!-- Navigation -->
+    <div class="boat-header">
+        <a href="#" class="back-button" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> BACK TO SELECTION
+        </a>
+        <button class="favorite-btn">
+            <i class="far fa-heart"></i>
+        </button>
+    </div>
+
+    <!-- Main Gallery -->
+    <div class="main-gallery">
+        <div class="main-image">
+            <img src="" alt="Main boat image" id="mainGalleryImage">
+        </div>
+        
+        <!-- Info Overlay -->
+        <div class="boat-info-overlay">
+            <h1 class="boat-title" id="boatName">Vanquish 80</h1>
+            
+            <div class="quick-specs-bar">
+                <div class="spec-item">
+                    <span class="value" id="length">23.60M</span>
+                    <span class="label">LENGTH</span>
+                </div>
+                <div class="spec-item">
+                    <span class="value" id="built">N/A</span>
+                    <span class="label">BUILT/REFIT</span>
+                </div>
+                <div class="spec-item">
+                    <span class="value" id="guests">12</span>
+                    <span class="label">GUESTS</span>
+                </div>
+                <div class="spec-item">
+                    <span class="value" id="cabins">N/A</span>
+                    <span class="label">CABINS</span>
+                </div>
+                <div class="spec-item">
+                    <span class="value" id="crew">3</span>
+                    <span class="label">CREW</span>
+                </div>
+            </div>
+            
+            <div class="price-section">
+                <span class="label">FROM</span>
+                <span class="value" id="price">€10,500</span>
+                <span class="period">P/WEEK</span>
+                <button class="inquiry-btn">SEND AN INQUIRY</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="thumbnail-grid" id="thumbnailGrid">
+        <!-- Thumbnails injected by JS -->
+    </div>
+
+    <!-- Content Navigation -->
+    <div class="content-tabs">
+        <button class="tab-btn active" data-tab="description">DESCRIPTION</button>
+        <button class="tab-btn" data-tab="specification">SPECIFICATION</button>
+        <button class="tab-btn" data-tab="location">LOCATION & WEEKLY RATE</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="description">
+            <h3>A LITTLE MORE ABOUT</h3>
+            <h2 id="boatNameDesc"></h2>
+            <div class="desc-content" id="boatDescription"></div>
+        </div>
+
+        <div class="tab-pane" id="specification">
+            <h2>SPECIFICATION: <span id="boatNameSpec"></span></h2>
+            <div class="specs-grid">
+                <!-- Specifications injected by JS -->
+            </div>
+        </div>
+
+        <div class="tab-pane" id="location">
+            <h2>LOCATION & WEEKLY RATE</h2>
+            <div class="seasons-grid">
+                <div class="season">
+                    <h3>WINTER</h3>
+                    <p class="date-range">OCTOBER - MARCH</p>
+                    <div class="rate-info">
+                        <div class="rate">
+                            <span>LOW SEASON</span>
+                            <span class="price">From €<span id="winterLowRate"></span></span>
+                        </div>
+                        <div class="rate">
+                            <span>HIGH SEASON</span>
+                            <span class="price">From €<span id="winterHighRate"></span></span>
+                        </div>
+                    </div>
+                    <button class="contact-broker">CONTACT A BROKER</button>
+                </div>
+                <div class="season">
+                    <h3>SUMMER</h3>
+                    <p class="date-range">APRIL - SEPTEMBER</p>
+                    <div class="rate-info">
+                        <div class="rate">
+                            <span>LOW SEASON</span>
+                            <span class="price">From €<span id="summerLowRate"></span></span>
+                        </div>
+                        <div class="rate">
+                            <span>HIGH SEASON</span>
+                            <span class="price">From €<span id="summerHighRate"></span></span>
+                        </div>
+                    </div>
+                    <button class="contact-broker">CONTACT A BROKER</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="boat-actions">
+        <button class="action-btn" data-boat-id="${boatId}">
+            <i class="fas fa-plus"></i> ADD TO COMPARE
+        </button>
+        <button class="action-btn download-brochure" data-boat-id="${boatId}">
+            <i class="fas fa-download"></i> BROCHURE
+        </button>
+        <button class="action-btn" data-boat-id="${boatId}">
+            <i class="fas fa-share-alt"></i> SHARE
+        </button>
+    </div>
+</div>
+<script src="assets/js/brochure-download.js" ></script>
+    <script src="/assets/js/boat-details.js"></script>
+
+    
+</div>
+</body>
+</html>

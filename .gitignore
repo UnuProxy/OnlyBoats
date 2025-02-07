@@ -1,0 +1,22 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# Environment variables (VERY IMPORTANT!)
+.env
+serviceAccountKey.json
+
+# Firebase logs
+firebase-debug.log
+firestore-debug.log
+
+# VS Code settings (optional)
+.vscode/
+
+# Build and cache files
+dist/
+build/
+out/
+firebase-debug 2.log
+firebase-debug 3.log
+functions/firebase-debug*.log
