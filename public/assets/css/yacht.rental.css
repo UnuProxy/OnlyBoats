@@ -1,7 +1,7 @@
 /* Base styles */
 .yacht-hero {
     position: relative;
-    height: 100vh; /* Reduced from 100vh for mobile */
+    height: 100vh;
     background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.4)), url('/assets/img/58Vanquish10.jpg');
     background-size: cover;
     background-position: center;
@@ -16,7 +16,7 @@
     text-align: center;
     max-width: 800px;
     padding: 0 2rem;
-    margin-bottom: 15vh; /* Space for the filter at bottom */
+    margin-bottom: 15vh; 
 }
 
 .yacht-hero-subtitle {
