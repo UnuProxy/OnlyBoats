@@ -1441,32 +1441,7 @@ color: #aa8453;
 /*******************************************
   NORMAL (NON-MEGA) SUBMENUS: 190PX
 ********************************************/
-@media screen and (min-width: 992px) {
-  .navbar .dropdown-menu:not(.mega-menu) {
-    display: block;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
-    width: 190px;
-    padding: 15px;
-    border-radius: 0;
-    border: 0;
-    background-color: #1B2838;
-    transition: all 0.3s;
-  }
-  .navbar .dropdown-menu .dropdown-menu {
-    left: calc(100% + 5px);
-    top: -10px;
-    right: auto;
-    min-width: 190px;
-    transform: translateY(0);
-  }
-  .navbar .dropdown:hover > .dropdown-menu:not(.mega-menu) {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-}
+
 
 /*******************************************
   THREE-COLUMN MEGA MENU
@@ -1545,30 +1520,6 @@ color: #aa8453;
 
 
 
-.yacht-card h4 {
-    margin: 0 0 5px;
-    font-size: 16px;
-    color: #fff;
-}
-
-.yacht-meta {
-    color: #ddd;
-    font-size: 14px;
-    margin-bottom: 3px;
-}
-
-.yacht-price {
-    color: #FFF; /* Highlight price color */
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* Hover effect on yacht images */
-.yacht-card img:hover {
-    border-color: #fff;
-    transition: all 0.3s ease;
-}
-
 
 /*******************************************
   MOBILE OVERRIDES (<992px)
@@ -1598,103 +1549,7 @@ color: #aa8453;
 /*******************************************
   ADDITIONAL MEDIA QUERIES FOR NAVBAR ON MOBILE
 ********************************************/
-@media screen and (max-width: 991px) {
-    .navbar {
-        height: 90px;
-        background: transparent;
-    }
-    .nav-scroll {
-        background: #1B2838;
-    }
-    .logo-wrapper {
-        float: left;
-        padding: 26px 0 26px 15px;
-    }
-    .nav-scroll .logo-wrapper {
-        padding: 26px 0 26px 15px;
-        background-color: transparent;
-    }
-    .nav-scroll .logo-img {
-        width: 160px;
-    }
-    .navbar .logo {
-        text-align: left;
-        margin-left: 0px;
-    }
-    .logo-img {
-        margin-bottom: 0px;
-        width: 160px;
-        padding: 0;
-    }
-    .navbar button {
-        margin-right: 0px;
-        background: transparent;
-        margin-top: 10px;
-        border: none;
-    }
-    .navbar button:focus,
-    .navbar button:hover {
-        background: transparent;
-        outline: none;
-    }
-    .navbar .container {
-        max-width: 100%;
-        padding: 0;
-    }
-    .navbar .nav-link {
-        margin: 0 auto !important;
-    }
-    .nav-scroll .navbar-collapse .nav-link {
-        color: #fff !important;
-    }
-    .nav-scroll .navbar-collapse .active {
-        color: #fff !important;
-    } 
-    .navbar .dropdown-menu {
-        border: none;
-        padding: 0;
-        border-radius: 0;
-        margin: 0;
-        background: #1b1b1b;
-        box-shadow: none;
-    }
 
-    
-    .navbar .navbar-collapse {
-        max-height: 0;
-        overflow: hidden;
-        background: #1B2838;
-        text-align: left;
-        padding: 0;
-        transition: max-height 0.3s ease-in-out;
-    }
-
-    .navbar .navbar-collapse.show {
-        max-height: 500px; /* Adjust this based on menu content */
-        padding: 20px;
-        overflow: auto;
-    }
-
-   
-    .navbar .dropdown-submenu .dropdown-menu {
-        margin: 0;
-        padding: 0 0 0 20px;
-    }
-    .navbar .navbar-nav .nav-link {
-        color: #fff;
-        padding-right: 0;
-        padding-left: 0;
-    }
-    .dropdown .nav-link i {
-        color: rgba(255, 255, 255, 0.7);
-    }
-    .nav-scroll .dropdown .nav-link i {
-        color: rgba(255, 255, 255, 0.7);
-    }
-    .nav-scroll .dropdown .nav-link.active i {
-        color: #fff;
-    }
-}
 
 
 /* ======= Header style ======= */
