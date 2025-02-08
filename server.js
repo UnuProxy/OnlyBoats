@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -6,24 +5,30 @@ require('dotenv').config();
 
 // Initialize Firebase Admin
 const admin = require('firebase-admin');
+
+// Parse the service account from environment variable
+let serviceAccount;
+try {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+} catch (error) {
+  console.error('Error parsing service account:', error);
+  process.exit(1);
+}
+
 admin.initializeApp({
-  credential: admin.credential.cert({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
-  })
+  credential: admin.credential.cert(serviceAccount)
 });
 
 const db = admin.firestore();
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
 // Test route
-// server.js - Update the static file serving
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Add this route before your other routes
@@ -57,7 +62,8 @@ app.get('/api/yachts', async (req, res) => {
     
     res.json(yachts);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error('Error fetching yachts:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -68,12 +74,13 @@ app.get('/api/yachts/:id', async (req, res) => {
     const yacht = await yachtRef.get();
     
     if (!yacht.exists) {
-      res.status(404).send('Yacht not found');
-    } else {
-      res.json({ id: yacht.id, ...yacht.data() });
+      return res.status(404).json({ message: 'Yacht not found' });
     }
+    
+    res.json({ id: yacht.id, ...yacht.data() });
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error('Error fetching yacht:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -102,7 +109,8 @@ app.get('/api/yachts/filter', async (req, res) => {
     
     res.json(yachts);
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error('Error filtering yachts:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -113,7 +121,8 @@ app.post('/api/yachts', async (req, res) => {
     const docRef = await db.collection('yachts').add(newYacht);
     res.status(201).json({ id: docRef.id, ...newYacht });
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error('Error creating yacht:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -139,25 +148,39 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-
 // Update yacht
 app.put('/api/yachts/:id', async (req, res) => {
   try {
     const yachtRef = db.collection('yachts').doc(req.params.id);
+    const yacht = await yachtRef.get();
+    
+    if (!yacht.exists) {
+      return res.status(404).json({ message: 'Yacht not found' });
+    }
+    
     await yachtRef.update(req.body);
     res.json({ id: req.params.id, ...req.body });
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error('Error updating yacht:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
 // Delete yacht
 app.delete('/api/yachts/:id', async (req, res) => {
   try {
-    await db.collection('yachts').doc(req.params.id).delete();
+    const yachtRef = db.collection('yachts').doc(req.params.id);
+    const yacht = await yachtRef.get();
+    
+    if (!yacht.exists) {
+      return res.status(404).json({ message: 'Yacht not found' });
+    }
+    
+    await yachtRef.delete();
     res.json({ message: 'Yacht deleted successfully' });
   } catch (error) {
-    res.status(500).send(error.message);
+    console.error('Error deleting yacht:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 
