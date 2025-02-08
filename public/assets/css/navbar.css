@@ -6,6 +6,18 @@
       width: 100%;
   }
 
+  .gilda-text {
+    font-family: 'Gilda Display', Georgia, serif;
+}
+
+.barlow-text {
+    font-family: 'Barlow', system-ui, sans-serif;
+}
+
+.inter-text {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
   /* Main navbar collapse container */
   .navbar-collapse {
       position: fixed;
