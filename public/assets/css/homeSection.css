@@ -1,0 +1,370 @@
+/* Facilities Section  */ 
+.yacht-facilities {
+    background-color: #1B2838;
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.yacht-facilities-subtitle {
+    font-family: "Playfair Display", serif;
+    color: #2095AE;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.yacht-facilities-title {
+    font-family: "Playfair Display", serif;
+    color: #ffffff;
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 1px;
+}
+
+.facility-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.facility-card .facility-icon {
+    margin-bottom: 25px;
+}
+
+.facility-card h5 {
+    margin-bottom: 20px;
+}
+
+.facility-card p {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.facility-card:hover {
+    transform: translateY(-10px);
+    border-color: #2095AE;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.facility-icon {
+    display: inline-block;
+    font-size: 2.5rem;
+    color: #2095AE;
+    margin-bottom: 20px;
+}
+
+.facility-card h5 {
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.facility-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.facility-bg-icon {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    font-size: 8rem;
+    color: rgba(255, 255, 255, 0.02);
+    transform: rotate(-15deg);
+    transition: all 0.3s ease;
+}
+
+.facility-card:hover .facility-bg-icon {
+    color: rgba(32, 149, 174, 0.03);
+    transform: rotate(0deg);
+}
+
+@media (max-width: 768px) {
+    .yacht-facilities {
+        padding: 60px 0;
+    }
+    
+    .yacht-facilities-title {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+    
+    .facility-card {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* Yacht and Boats Presentation Section */
+.boats {
+    padding: 100px 0;
+    background: #ffffff;
+    color: #1B2838;
+}
+
+.boats-section-subtitle {
+font-family: "Playfair Display", serif;
+color: #2095AE;
+font-size: 1.1rem;
+text-transform: uppercase;
+letter-spacing: 3px;
+margin-bottom: 15px;
+text-align: center;
+font-weight: 400;
+}
+
+.boats-section-title {
+font-family: "Playfair Display", serif;
+color: #1B2838;
+font-size: 2.8rem;
+font-weight: 700;
+text-align: center;
+margin-bottom: 60px;
+letter-spacing: 1px;
+}
+
+.boat-item {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.boat-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(32, 149, 174, 0.1);
+    border-color: #2095AE;
+}
+
+.image-container {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.boat-item:hover .image-container img {
+    transform: scale(1.1);
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(27, 40, 56, 0.8), transparent);
+    padding: 30px 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+}
+
+.boat-item:hover .image-overlay {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.boat-type {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.boat-content {
+    padding: 30px;
+}
+
+.boat-name {
+    color: #2095AE;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: "Playfair Display", serif;
+}
+
+.price {
+    font-size: 1.2rem;
+    color: #1B2838;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+.facilities {
+    border-top: 1px solid #e5e5e5;
+    padding-top: 25px;
+}
+
+.facilities {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: #1B2838;
+    font-size: 0.95rem;
+}
+
+.facilities div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.facilities img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+
+
+.details-link a {
+    color: #2095AE;
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+}
+
+.details-link {
+    text-align: right;
+    margin-top: 25px;
+}
+
+.details-link a {
+    color: #2095AE;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 5px;
+    transition: all 0.3s ease;
+}
+
+.details-link a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #2095AE;
+    transition: width 0.3s ease;
+}
+
+.details-link a:hover::after {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .boats {
+        padding: 60px 0;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+    
+    .boat-item {
+        margin-bottom: 30px;
+    }
+    
+    .image-container {
+        height: 250px;
+    }
+}
+
+.view-all-boats {
+text-align: center;
+position: relative;
+}
+
+.view-all-boats h3 {
+font-family: "Playfair Display", serif;
+color: #1B2838;
+font-size: 2rem;
+margin-bottom: 15px;
+}
+
+.view-all-boats p {
+color: #666;
+font-size: 1.1rem;
+margin-bottom: 25px;
+}
+
+.view-all-link {
+display: inline-flex;
+align-items: center;
+gap: 12px;
+color: #2095AE;
+text-decoration: none;
+font-size: 1.1rem;
+font-weight: 500;
+padding: 12px 30px;
+border: 2px solid #2095AE;
+border-radius: 4px;
+transition: all 0.3s ease;
+}
+
+.view-all-link:hover {
+background: #2095AE;
+color: white;
+transform: translateY(-2px);
+}
+
+.view-all-link i {
+transition: transform 0.3s ease;
+}
+
+.view-all-link:hover i {
+transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+.view-all-boats {
+padding: 40px 0 10px;
+}
+
+.view-all-boats h3 {
+font-size: 1.8rem;
+}
+}

@@ -10,13 +10,25 @@
     <link rel="stylesheet" href="/assets/css/plugins.css" />
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="/assets/css/navbar.css">
+    <link rel="stylesheet" href="/assets/css/homeSection.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Required Bootstrap files order -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
-    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                offset: 100,
+                once: true
+            });
+        });
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
 </head>
 <body>
     <!-- Preloader -->
@@ -30,76 +42,52 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <!-- Logo -->
-          <div class="logo-wrapper">
-            <a class="logo" href="index.html">
-              <h2>Just Enjoy Ibiza <span>Boats</span></h2>
-            </a>
-          </div>
-      
-          <!-- Mobile Toggle -->
-          <button class="custom-toggler" type="button" aria-label="Toggle navigation">
-            <span class="toggler-icon">
-              <span class="line"></span>
-              <span class="line"></span>
-              <span class="line"></span>
-            </span>
-          </button>
-      
-          <!-- Collapsible Menu -->
-          <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav ms-auto">
-              <!-- Mega Menu Dropdown -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                    Boat Charter <i class="ti-angle-down"></i>
-                  </a>
-                <div class="mega-menu">
-                  <div class="mega-menu-content">
-                    <!-- Charter Options -->
-                    <div class="menu-column">
-                      <h3>Charter a Boat</h3>
-                      <ul class="menu-list">
-                        <li><a href="/yacht-rental.html"><i class="fa fa-angle-right"></i> Boats for Charter</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i> Featured Boats</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i> Charter Destinations</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i> Contact a Booking Agent</a></li>
-                      </ul>
-                    </div>
-      
-                    <!-- Services -->
-                    <div class="menu-column">
-                      <h3>Why Choose Us?</h3>
-                      <ul class="menu-list">
-                        <li><i class="fa fa-angle-right"></i> Professional Crew</li>
-                        <li><i class="fa fa-angle-right"></i> 24/7 Support</li>
-                        <li><i class="fa fa-angle-right"></i> Easy Bookings</li>
-                        <li><i class="fa fa-angle-right"></i> Celebrations & Events</li>
-                        <li><a href="/services.html"><i class="fa fa-angle-right"></i> Food & Drinks Delivered Onboard</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-      
-              <!-- About Us -->
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-              </li>
-      
-              <!-- Contact -->
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact</a>
-              </li>
-      
-              <!-- Favourites -->
-              <li class="nav-item">
-                <a class="nav-link" href="my-favourites.html">
-                  <i class="ti-heart"></i> Favourites
+            <div class="logo-wrapper">
+                <a class="logo" href="index.html">
+                    <h2>Just Enjoy Ibiza <span>Boats</span></h2>
                 </a>
-              </li>
-            </ul>
-          </div>
+            </div>
+            <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+                <span class="toggler-icon">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#">
+                            BOAT CHARTER <i class="ti-angle-down"></i>
+                        </a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-content">
+                                <div class="menu-column">
+                                    <h3>Charter a Boat</h3>
+                                    <ul class="menu-list">
+                                        <li><a href="/yacht-rental.html"><i class="fa fa-angle-right"></i> Boats for Charter</a></li>
+                                        <li><a href="/services.html"><i class="fa fa-angle-right"></i> Food & Drinks Delivered Onboard</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">ABOUT US</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">CONTACT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-favourites.html">
+                            <i class="ti-heart"></i> FAVOURITES
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="btn-book-now" href="yacht-rental.html">BOOK NOW</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
       
@@ -132,8 +120,8 @@
                 </div>
             </div>
             
-            <!-- Hero Slide 2 -->
-            <div class="text-center item bg-img" style="background-image: url('/assets/img/LuxuryYacht.png');">
+           <!-- Hero Slide 2 -->
+            <div class="text-center item bg-img slide-2">
                 <div class="v-middle caption">
                     <div class="container">
                         <div class="row">
@@ -155,6 +143,7 @@
                     </div>
                 </div>
             </div>
+
     
             <!-- Hero Slide 3 -->
             <div class="text-center item bg-img" style="background-image: url('/assets/img/1stPhoto.png');">
@@ -292,11 +281,11 @@
                     <div class="row">
                         <!-- Image 1 -->
                         <div class="col-md-6 mb-30">
-                            <img src="assets/img/50BRONSON9.jpg" alt="Luxury Boat 1" class="img-fluid rounded">
+                            <img src="/assets/img/De-Antonio-42-Bambino-13.jpg" alt="Luxury Boat 1" class="img-fluid rounded">
                         </div>
                         <!-- Image 2 -->
                         <div class="col-md-6 mb-30">
-                            <img src="assets/img/Persing90.jpg" alt="Luxury Boat 2" class="img-fluid rounded">
+                            <img src="/assets/img/De-Antonio42Bambino.jpg" alt="Luxury Boat 2" class="img-fluid rounded">
                         </div>
                         <!-- Additional Content -->
                         <div class="col-md-12">
@@ -318,92 +307,185 @@
     
 
 <!-- Boats -->
-<section class="boats section-padding bg-darkblack" data-scroll-index="1">
+<section class="boats section-padding" data-scroll-index="1">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="section-subtitle">Just Enjoy Ibiza</div>
-                <div class="section-title special-title">Our Featured Boats</div>
+                <div class="boats-section-subtitle">Experience Ibiza</div>
+                <div class="boats-section-title">Exclusive Fleet</div>
             </div>
         </div>
-        <div class="row">
+        <div class="row boat-grid">
+            <!-- Sea Ray 290 -->
             <div class="col-md-4">
-                <div class="item">
-                    <div class="position-re o-hidden image-wrapper">
-                        <img src="assets/img/Pershing(5X)2.JPG" alt="Luxury Yacht">
+                <div class="boat-item">
+                    <div class="image-container">
+                        <img src="/assets/img/SeaRAy290.JPEG" alt="Sea Ray 290 Speedboat">
+                        <div class="image-overlay">
+                            <span class="boat-type">Dynamic Comfort</span>
+                        </div>
                     </div>
-                    <span class="category"><a href="boat-details.html">Book Now</a></span>
-                    <div class="con">
-                        <h6><a href="boat-details.html">€3,500 / Day</a></h6>
-                        <h5><a href="boat-details.html">Luxury Yacht</a></h5>
-                        <div class="line"></div>
-                        <div class="row facilities">
-                            <div class="col col-md-7">
-                                <ul>
-                                    <li><i class="flaticon-anchor"></i> Spacious Deck</li>
-                                    <li><i class="flaticon-user"></i> 10 Passengers</li>
-                                    <li><i class="flaticon-speedometer"></i> High Speed</li>
-                                    <li><i class="flaticon-cocktail"></i> Complimentary Drinks</li>
-                                </ul>
-                            </div>
-                            <div class="col col-md-5 text-end">
-                                <div class="permalink"><a href="boat-details.html">Details <i class="ti-arrow-right"></i></a></div>
+                    <div class="boat-content">
+                        <div class="boat-name">Sea Ray 290</div>
+                        <div class="price">Starting from €900</div>
+                        <div class="facilities">
+                            <ul>
+                                <li><i class="fas fa-ship"></i> Compact & Fast</li>
+                                <li><i class="fas fa-users"></i> 9 Passengers</li>
+                                <li><i class="fas fa-sun"></i> Sunroof</li>
+                                <li><i class="fas fa-glass-martini"></i> Premium Drinks</li>
+                            </ul>
+                            <div class="details-link">
+                                <a href="boat-details.html">View Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- DeAntonio 34 -->
             <div class="col-md-4">
-                <div class="item">
-                    <div class="position-re o-hidden image-wrapper">
-                        <img src="assets/img/50BRONSON9.jpg" alt="Catamaran">
+                <div class="boat-item">
+                    <div class="image-container">
+                        <img src="/assets/img/DeAntonio36.jpg" alt="DeAntonio 34 Yacht">
+                        <div class="image-overlay">
+                            <span class="boat-type">Smart Versatility</span>
+                        </div>
                     </div>
-                    <span class="category"><a href="boat-details.html">Book Now</a></span>
-                    <div class="con">
-                        <h6><a href="boat-details.html">€2,800 / Day</a></h6>
-                        <h5><a href="boat-details.html">Catamaran</a></h5>
-                        <div class="line"></div>
-                        <div class="row facilities">
-                            <div class="col col-md-7">
-                                <ul>
-                                    <li><i class="flaticon-anchor"></i> Dual Hull Design</li>
-                                    <li><i class="flaticon-user"></i> 15 Passengers</li>
-                                    <li><i class="flaticon-sun"></i> Sun Deck</li>
-                                    <li><i class="flaticon-music"></i> Premium Sound System</li>
-                                </ul>
-                            </div>
-                            <div class="col col-md-5 text-end">
-                                <div class="permalink"><a href="boat-details.html">Details <i class="ti-arrow-right"></i></a></div>
+                    <div class="boat-content">
+                        <div class="boat-name">DeAntonio 34</div>
+                        <div class="price">€1,400 / Day</div>
+                        <div class="facilities">
+                            <ul>
+                                <li><i class="fas fa-ship"></i> Spacious Deck</li>
+                                <li><i class="fas fa-users"></i> 9 Passengers</li>
+                                <li><i class="fas fa-sun"></i> Sun Deck</li>
+                                <li><i class="fas fa-music"></i> Premium Sound</li>
+                            </ul>
+                            <div class="details-link">
+                                <a href="boat-details.html">View Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Sessa Marine 52 -->
             <div class="col-md-4">
-                <div class="item">
-                    <div class="position-re o-hidden image-wrapper">
-                        <img src="assets/img/50BRONSON9.jpg" alt="Speedboat">
+                <div class="boat-item">
+                    <div class="image-container">
+                        <img src="/assets/img/SessaMarine.jpg" alt="Sessa Marine 52 Luxury Yacht">
+                        <div class="image-overlay">
+                            <span class="boat-type">Elegant Explorer</span>
+                        </div>
                     </div>
-                    <span class="category"><a href="boat-details.html">Book Now</a></span>
-                    <div class="con">
-                        <h6><a href="boat-details.html">Starting from €3.000</a></h6>
-                        <h5><a href="boat-details.html">Speedboat</a></h5>
-                        <div class="line"></div>
-                        <div class="row facilities">
-                            <div class="col col-md-7">
-                                <ul>
-                                    <li><i class="flaticon-anchor"></i> Compact & Fast</li>
-                                    <li><i class="flaticon-user"></i> 6 Passengers</li>
-                                    <li><i class="flaticon-sun"></i> Sunroof</li>
-                                    <li><i class="flaticon-cocktail"></i> Drinks Included</li>
-                                </ul>
-                            </div>
-                            <div class="col col-md-5 text-end">
-                                <div class="permalink"><a href="boat-details.html">Details <i class="ti-arrow-right"></i></a></div>
+                    <div class="boat-content">
+                        <div class="boat-name">Sessa Marine 52</div>
+                        <div class="price">€1,800 / Day</div>
+                        <div class="facilities">
+                            <ul>
+                                <li><i class="fas fa-ship"></i> Spacious Deck</li>
+                                <li><i class="fas fa-users"></i> 10 Passengers</li>
+                                <li><i class="fas fa-tachometer-alt"></i> High Speed</li>
+                                <li><i class="fas fa-glass-martini"></i> Premium Bar</li>
+                            </ul>
+                            <div class="details-link">
+                                <a href="boat-details.html">View Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Cranchi A46 -->
+            <div class="col-md-4">
+                <div class="boat-item">
+                    <div class="image-container">
+                        <img src="/assets/img/CranchiA46.jpeg" alt="Cranchi A46 Luxury Yacht">
+                        <div class="image-overlay">
+                            <span class="boat-type">Modern Luxury</span>
+                        </div>
+                    </div>
+                    <div class="boat-content">
+                        <div class="boat-name">Cranchi A46</div>
+                        <div class="price">Starting from €1,800 / Day</div>
+                        <div class="facilities">
+                            <ul>
+                                <li><i class="fas fa-ship"></i> Spacious Deck</li>
+                                <li><i class="fas fa-users"></i> 12 Passengers</li>
+                                <li><i class="fas fa-tachometer-alt"></i> High Speed</li>
+                                <li><i class="fas fa-glass-martini"></i> Premium Bar</li>
+                            </ul>
+                            <div class="details-link">
+                                <a href="boat-details.html">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mangusta 108 -->
+        <div class="col-md-4">
+            <div class="boat-item">
+                <div class="image-container">
+                    <img src="/assets/img/Nomad-142.jpg" alt="Mangusta 108 Luxury Yacht">
+                    <div class="image-overlay">
+                        <span class="boat-type">Power Performance</span>
+                    </div>
+                </div>
+                <div class="boat-content">
+                    <div class="boat-name">Mangusta 108</div>
+                    <div class="price">Starting from €12.250 / Day</div>
+                    <div class="facilities">
+                        <ul>
+                            <li><i class="fas fa-ruler"></i> Length 33m</li>
+                            <li><i class="fas fa-bed"></i> 4 Cabins</li>
+                            <li><i class="fas fa-clock"></i> Overnight Stay</li>
+                            <li><i class="fas fa-swimming-pool"></i> Jacuzzi</li>
+                        </ul>
+                        <div class="details-link">
+                            <a href="boat-details.html">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- Riva Argo 90 -->
+        <div class="col-md-4">
+            <div class="boat-item">
+                <div class="image-container">
+                    <img src="/assets/img/RivaArgo90.jpeg" alt="Riva Argo 90 Luxury Yacht">
+                    <div class="image-overlay">
+                        <span class="boat-type">Italin Elegance</span>
+                    </div>
+                </div>
+                <div class="boat-content">
+                    <div class="boat-name">Riva Argo 90</div>
+                    <div class="price">Starting from €12,950 / Day</div>
+                    <div class="facilities">
+                        <ul>
+                            <li><i class="fas fa-ruler"></i> Length 28.49m</li>
+                            <li><i class="fas fa-users"></i> 8 Guests</li>
+                            <li><i class="fas fa-couch"></i> Solarium</li>
+                            <li><i class="fas fa-umbrella-beach"></i> Beach Club</li>
+                        </ul>
+                        <div class="details-link">
+                            <a href="boat-details.html">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="view-all-boats">
+                <h3>Discover Our Complete Fleet</h3>
+                <p>Explore our extensive collection of premium boats and yachts</p>
+                <a href="yacht-rental.html" class="view-all-link">
+                    <span>View All Boats</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -430,141 +512,179 @@
             </div>
 
             <!-- Carousel Content -->
-            <div class="col-md-8">
-                <div class="owl-carousel owl-theme">
-                    <!-- Offering 1 -->
-                    <div class="pricing-card">
-                        <img src="assets/img/Persing90.jpg" alt="Complementary Drinks">
-                        <div class="desc">
-                            <div class="name">Complementary Drinks</div>
-                            <ul class="list-unstyled list">
-                                <li><i class="ti-check"></i> Refreshing beverages</li>
-                                <li><i class="ti-check"></i> Included with every charter</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Offering 2 -->
-                    <div class="pricing-card">
-                        <img src="assets/img/89Leopard8.jpg" alt="Food Delivery">
-                        <div class="desc">
-                            <div class="name">Food Delivery</div>
-                            <ul class="list-unstyled list">
-                                <li><i class="ti-check"></i> Delicious meals</li>
-                                <li><i class="ti-check"></i> Delivered directly to your yacht</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Offering 3 -->
-                    <div class="pricing-card">
-                        <img src="assets/img/moet-ice-party.jpg.webp" alt="Drink Delivery">
-                        <div class="desc">
-                            <div class="name">Drink Delivery</div>
-                            <ul class="list-unstyled list">
-                                <li><i class="ti-check"></i> Premium drinks</li>
-                                <li><i class="ti-check"></i> Delivered on demand</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           <div class="col-md-8">
+  <div class="owl-carousel owl-theme">
+    <!-- Offering 1 -->
+    <div class="pricing-card">
+      <img src="/assets/img/ComplementaryDrinks.webp" alt="Complementary Drinks" style="width: 100%; height: 250px; object-fit: cover;">
+      <div class="desc">
+        <div class="name">Complementary Drinks</div>
+        <ul class="list-unstyled list">
+          <li><i class="ti-check"></i> Refreshing beverages</li>
+          <li><i class="ti-check"></i> Included with every charter</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Offering 2 -->
+    <div class="pricing-card">
+      <img src="/assets/img/FoodDelivery.webp" alt="Food Delivery" style="width: 100%; height: 250px; object-fit: cover;">
+      <div class="desc">
+        <div class="name">Food Delivery</div>
+        <ul class="list-unstyled list">
+          <li><i class="ti-check"></i> Delicious meals</li>
+          <li><i class="ti-check"></i> Delivered directly to your boat</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Offering 3 -->
+    <div class="pricing-card">
+      <img src="/assets/img/YachtDrinks&Food.JPG" alt="Drink Delivery" style="width: 100%; height: 250px; object-fit: cover;">
+      <div class="desc">
+        <div class="name">Drink Delivery</div>
+        <ul class="list-unstyled list">
+          <li><i class="ti-check"></i> Premium drinks</li>
+          <li><i class="ti-check"></i> Delivered on demand</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
         </div>
     </div>
 </section>
 
 
 <!-- About Just Enjoy Ibiza Boats -->
-<section class="video-wrapper video section-padding custom-video-section bg-img bg-fixed" data-overlay-dark="3" data-background="assets/img/58Vanquish10.jpg">
+<section class="video-wrapper video section-padding custom-video-section bg-img bg-fixed" data-overlay-dark="3" data-background="/assets/img/Fjord.jpg">
     <div class="container">
-        <div class="row justify-content-center align-items-center text-center custom-video-content">
+        <div class="row justify-content-center">
             <div class="col-md-8">
-                <span>
-                    <i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i>
-                    <i class="star-rating"></i><i class="star-rating"></i>
-                </span>
-                <div class="section-subtitle custom-subtitle">
-                    <span>Discover Luxury on the Waves</span>
-                </div>
-                <div class="section-title custom-title">
-                    <span>About Just Enjoy Ibiza Boats</span>
-                </div>
-                <a class="vid custom-play-button" href="https://youtube.com/shorts/5ycIkq3AFQ8?si=LHS3QfzYomrQc2Ys">
-                    <div class="vid-butn">
-                        <span class="icon">
-                            <i class="ti-control-play"></i>
-                        </span>
+                <div class="custom-video-content text-center">
+                    <!-- Stars -->
+                    <div class="stars-wrapper">
+                        <i class="star-rating">★</i>
+                        <i class="star-rating">★</i>
+                        <i class="star-rating">★</i>
+                        <i class="star-rating">★</i>
+                        <i class="star-rating">★</i>
                     </div>
-                </a>
+                    
+                    <!-- Subtitle -->
+                    <div class="custom-subtitle">
+                        <span>Discover Luxury on the Waves</span>
+                    </div>
+                    
+                    <!-- Title -->
+                    <div class="custom-title">
+                        <span>About</span>
+                        <span>Just Enjoy</span>
+                        <span>Ibiza Boats</span>
+                    </div>
+                    
+                    <!-- Play Button -->
+                    <a class="vid custom-play-button" href="https://youtube.com/shorts/5ycIkq3AFQ8?si=LHS3QfzYomrQc2Ys">
+                        <div class="vid-butn">
+                            <span class="icon">
+                                <i class="ti-control-play"></i>
+                            </span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Facilties -->
-<section class="facilities section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-subtitle">Our Services</div>
-                    <div class="section-title">Yacht & Boat Facilities</div>
+<section class="yacht-facilities section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="yacht-facilities-subtitle">Our Services</div>
+                <div class="yacht-facilities-title">Yacht & Boat Facilities</div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Service 1: Pick Up & Drop -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up">
+                    <span class="facility-icon">
+                        <i class="fas fa-car"></i>
+                    </span>
+                    <h5>Pick Up & Drop</h5>
+                    <p>We offer seamless transportation to and from your yacht, ensuring a stress-free start and end to your journey.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <!-- Service 1: Pick Up & Drop -->
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        <span class="flaticon-transport"></span> <!-- New Icon -->
-                        <h5>Pick Up & Drop</h5>
-                        <p>We offer seamless transportation to and from your yacht, ensuring a stress-free start and end to your journey.</p>
-                        <div class="facility-shape"><span class="flaticon-transport"></span></div>
+            <!-- Service 2: Extra Water Toys -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="100">
+                    <span class="facility-icon">
+                        <i class="fas fa-water"></i>
+                    </span>
+                    <h5>Extra Water Toys</h5>
+                    <p>Enhance your experience with seascooters, paddleboards, and other fun options.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-water"></i>
                     </div>
                 </div>
-                <!-- Service 2: Extra Water Toys -->
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        <span class="flaticon-kayak"></span> <!-- New Icon -->
-                        <h5>Extra Water Toys</h5>
-                        <p>Enhance your experience with seascooters, paddleboards, and other fun options.</p>
-                        <div class="facility-shape"><span class="flaticon-kayak"></span></div>
+            </div>
+            <!-- Service 3: Seabobs -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="200">
+                    <span class="facility-icon">
+                        <i class="fas fa-swimmer"></i>
+                    </span>
+                    <h5>Seabobs</h5>
+                    <p>Experience the thrill of underwater exploration with our high-performance Seabobs.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-swimmer"></i>
                     </div>
                 </div>
-                <!-- Service 3: Seabobs -->
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        <span class="flaticon-diving"></span> <!-- New Icon -->
-                        <h5>Seabobs</h5>
-                        <p>Experience the thrill of underwater exploration with our high-performance Seabobs.</p>
-                        <div class="facility-shape"><span class="flaticon-diving"></span></div>
+            </div>
+            <!-- Service 4: Onboard Catering -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="300">
+                    <span class="facility-icon">
+                        <i class="fas fa-utensils"></i>
+                    </span>
+                    <h5>Onboard Catering</h5>
+                    <p>Enjoy gourmet meals, snacks, and beverages prepared to your preferences while onboard.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-utensils"></i>
                     </div>
                 </div>
-                <!-- Service 4: Onboard Catering -->
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        <span class="flaticon-restaurant"></span> <!-- New Icon -->
-                        <h5>Onboard Catering</h5>
-                        <p>Enjoy gourmet meals, snacks, and beverages prepared to your preferences while onboard.</p>
-                        <div class="facility-shape"><span class="flaticon-restaurant"></span></div>
+            </div>
+            <!-- Service 5: Water Sports Equipment -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="400">
+                    <span class="facility-icon">
+                        <i class="fas fa-wind"></i>
+                    </span>
+                    <h5>Water Sports Equipment</h5>
+                    <p>Access jet skis, wakeboards, and other water sports equipment for an adventurous day on the water.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-wind"></i>
                     </div>
                 </div>
-                <!-- Service 5: Water Sports Equipment -->
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        <span class="flaticon-jet-ski"></span> <!-- New Icon -->
-                        <h5>Water Sports Equipment</h5>
-                        <p>Access jet skis, wakeboards, and other water sports equipment for an adventurous day on the water.</p>
-                        <div class="facility-shape"><span class="flaticon-jet-ski"></span></div>
-                    </div>
-                </div>
-                <!-- Service 6: Personalised Itineraries -->
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        <span class="flaticon-map"></span> <!-- New Icon -->
-                        <h5>Personalised Itineraries</h5>
-                        <p>Plan your perfect day at sea with a custom itinerary tailored to your preferences.</p>
-                        <div class="facility-shape"><span class="flaticon-map"></span></div>
+            </div>
+            <!-- Service 6: Personalised Itineraries -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="500">
+                    <span class="facility-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </span>
+                    <h5>Personalised Itineraries</h5>
+                    <p>Plan your perfect day at sea with a custom itinerary tailored to your preferences.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-map-marked-alt"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
     
   <!-- Testimonials Section -->
@@ -967,7 +1087,34 @@
       
 </footer>
     <!-- jQuery -->
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const boatItems = document.querySelectorAll('.boat-item');
+            
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: '0px'
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            boatItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                item.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(item);
+            });
+        });
+        </script>
     <script src="/assets/js/jquery-3.6.3.min.js"></script>
     <!-- Hamburger -->
     <script>

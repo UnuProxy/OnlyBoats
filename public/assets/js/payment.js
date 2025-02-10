@@ -30,8 +30,6 @@ function debounce(func, wait) {
 }
 
 
-
-
 // Update the mobile filter toggle functionality
 function initializeMobileFilters() {
     const filterToggle = document.querySelector('.mobile-filter-toggle button');
@@ -317,17 +315,42 @@ async function submitOrder() {
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
     try {
+        // Validate cart has items with proper IDs
+        if (!cart || cart.length === 0) {
+            throw new Error('Cart is empty');
+        }
+    
+        // Validate each item has required fields
+        cart.forEach(item => {
+            if (!item.id) {
+                console.error('Invalid item:', item);
+                throw new Error(`Missing product ID for item: ${item.name}`);
+            }
+        });
+    
         // Calculate total
         const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-        const orderData = {
-            cart: cart.map(item => ({
+    
+        // Format cart data, ensuring all necessary fields
+        const formattedCart = cart.map(item => {
+            console.log('Processing cart item:', {
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity
+            });
+            
+            return {
                 id: item.id,
                 name: item.name,
                 price: Number(item.price),
                 quantity: Number(item.quantity),
                 size: item.size // Include size for merchandise items
-            })),
+            };
+        });
+    
+        const orderData = {
+            cart: formattedCart,
             customerEmail: email,
             boatName,
             orderDate,
@@ -338,10 +361,12 @@ async function submitOrder() {
             specialNotes,
             total: total
         };
-
-        console.log('Sending order data:', orderData);
-
+    
+        console.log('Sending order data:', JSON.stringify(orderData, null, 2));
+    
         const functionUrl = 'https://us-central1-crm-boats.cloudfunctions.net/createCheckoutSession';
+        console.log('Sending request to:', functionUrl);
+    
         const response = await fetch(functionUrl, {
             method: 'POST',
             headers: {
@@ -351,24 +376,35 @@ async function submitOrder() {
             mode: 'cors',
             body: JSON.stringify(orderData)
         });
-
+    
+        // Log the raw response
+        console.log('Response status:', response.status);
+        
         if (!response.ok) {
             const errorData = await response.json();
+            console.error('Server error response:', errorData);
             throw new Error(errorData.details || errorData.error || 'Payment session creation failed');
         }
-
+    
         const data = await response.json();
+        console.log('Received session data:', data);
+    
         if (!data.sessionId) {
             throw new Error('Invalid response from server: missing sessionId');
         }
-
+    
+        // Proceed with checkout
+        console.log('Redirecting to Stripe checkout with session:', data.sessionId);
         const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+        
         if (result.error) {
+            console.error('Stripe redirect error:', result.error);
             throw new Error(result.error.message);
         }
-
+    
     } catch (error) {
         console.error('Payment error:', error);
+        console.error('Error stack:', error.stack);
         alert(`Payment failed: ${error.message}. Please try again.`);
     } finally {
         submitButton.disabled = false;
@@ -424,7 +460,9 @@ function initializeControls() {
     
         // Quantity decrease
         if (target.closest(".minus")) {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             const input = target.closest(".quantity-control").querySelector(".qty-input");
             let currentValue = parseInt(input.value) || 0;
             input.value = Math.max(0, currentValue - 1);
@@ -434,7 +472,9 @@ function initializeControls() {
     
         // Quantity increase
         if (target.closest(".plus")) {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             const input = target.closest(".quantity-control").querySelector(".qty-input");
             const maxStock = parseInt(input.dataset.maxStock);
             let currentValue = parseInt(input.value) || 0;
@@ -447,7 +487,9 @@ function initializeControls() {
     
         // Add to cart
         if (target.closest(".add-to-cart")) {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             const itemElement = target.closest(".catering-item") || target.closest(".merchandise-item");
             if (itemElement) {
                 addToCart(itemElement);
@@ -457,7 +499,9 @@ function initializeControls() {
     
         // Remove from cart
         if (target.closest(".remove-item")) {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             const summaryItem = target.closest(".summary-item");
             if (summaryItem) {
                 const productId = summaryItem.dataset.productId;
@@ -468,7 +512,9 @@ function initializeControls() {
     
         // Size selection
         if (target.closest(".size-option")) {
-            e.preventDefault();
+            if (e.cancelable) {
+                e.preventDefault();
+            }
             const sizeOptions = target.closest(".size-selector").querySelectorAll(".size-option");
             sizeOptions.forEach(opt => opt.classList.remove("selected"));
             target.closest(".size-option").classList.add("selected");
@@ -476,14 +522,16 @@ function initializeControls() {
         }
     }
     
-    // Add the event listeners with the debounce check in place
-    document.addEventListener('touchstart', handleEvent);
+    // Add the event listeners with passive option explicitly set
+    document.addEventListener('touchstart', handleEvent, { passive: false });
     document.addEventListener('click', handleEvent);
     
     document.body.dataset.controlsInitialised = 'true';
 }
 
 initializeControls();
+
+
 
 
 
@@ -603,7 +651,13 @@ async function loadProducts() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
+        // Get products and ensure we have stock information
         allProducts = await response.json();
+        allProducts = allProducts.map(product => ({
+            ...product,
+            stock: product.stock || 0  // Ensure stock property exists
+        }));
+        
         filteredProducts = [...allProducts];
 
         const containers = {
@@ -620,6 +674,12 @@ async function loadProducts() {
         // Process images with improved error handling
         for (const product of allProducts) {
             if (!product.isActive) continue;
+
+            // Ensure product ID is available for stock updates
+            if (!product.id) {
+                console.warn(`Product ${product.name} missing ID`);
+                continue;
+            }
 
             if (product.imageUrl && product.imageUrl.includes('firebasestorage')) {
                 try {
@@ -651,11 +711,25 @@ async function loadProducts() {
             } else if (!product.imageUrl) {
                 product.imageUrl = '/assets/img/placeholder.jpg';
             }
+
+            // Add stock validation
+            if (typeof product.stock !== 'number') {
+                console.warn(`Invalid stock value for product ${product.name}`);
+                product.stock = 0;
+            }
         }
+
+        // Filter out products with invalid data
+        allProducts = allProducts.filter(product => 
+            product.id && 
+            product.isActive !== false && 
+            typeof product.stock === 'number'
+        );
 
         const defaultCategory = 'drinks';
         updateSubcategoryFilter(defaultCategory);
         filteredProducts = allProducts.filter(product => product.category === defaultCategory);
+        
         renderProducts(defaultCategory);
         updateCartDisplay();
 
@@ -761,6 +835,11 @@ function createMerchandiseHtml(product) {
 }// Add to Cart
 function addToCart(itemElement) {
     const productId = itemElement.dataset.productId;
+    if (!productId) {
+        console.error('No product ID found');
+        return;
+    }
+
     const stock = parseInt(itemElement.dataset.stock);
     const quantity = parseInt(itemElement.querySelector(".qty-input").value);
     const priceText = itemElement.querySelector(".item-price").textContent.replace("€", "");
@@ -790,7 +869,7 @@ function addToCart(itemElement) {
             }
         } else {
             cart.push({
-                id: productId,
+                id: productId,  // This is the important field for stock updates
                 name: itemElement.querySelector("h4").textContent,
                 price: price,
                 quantity: quantity,

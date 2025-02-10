@@ -45,11 +45,22 @@
         <link rel="stylesheet" href="/assets/css/style.css">
         <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    
+        <link rel="stylesheet" href="/assets/css/homeSection.css">
         <!-- Required Bootstrap & jQuery Scripts -->
         <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                offset: 100,
+                once: true
+            });
+        });
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
     
 <body>
@@ -69,76 +80,52 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <!-- Logo -->
-          <div class="logo-wrapper">
-            <a class="logo" href="index.html">
-              <h2>Just Enjoy Ibiza <span>Boats</span></h2>
-            </a>
-          </div>
-      
-          <!-- Mobile Toggle -->
-          <button class="custom-toggler" type="button" aria-label="Toggle navigation">
-            <span class="toggler-icon">
-              <span class="line"></span>
-              <span class="line"></span>
-              <span class="line"></span>
-            </span>
-          </button>
-      
-          <!-- Collapsible Menu -->
-          <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav ms-auto">
-              <!-- Mega Menu Dropdown -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                    Boat Charter <i class="ti-angle-down"></i>
-                  </a>
-                <div class="mega-menu">
-                  <div class="mega-menu-content">
-                    <!-- Charter Options -->
-                    <div class="menu-column">
-                      <h3>Charter a Boat</h3>
-                      <ul class="menu-list">
-                        <li><a href="/yacht-rental.html"><i class="fa fa-angle-right"></i> Boats for Charter</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i> Featured Boats</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i> Charter Destinations</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i> Contact a Booking Agent</a></li>
-                      </ul>
-                    </div>
-      
-                    <!-- Services -->
-                    <div class="menu-column">
-                      <h3>Why Choose Us?</h3>
-                      <ul class="menu-list">
-                        <li><i class="fa fa-angle-right"></i> Professional Crew</li>
-                        <li><i class="fa fa-angle-right"></i> 24/7 Support</li>
-                        <li><i class="fa fa-angle-right"></i> Easy Bookings</li>
-                        <li><i class="fa fa-angle-right"></i> Celebrations & Events</li>
-                        <li><a href="/services.html"><i class="fa fa-angle-right"></i> Food & Drinks Delivered Onboard</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-      
-              <!-- About Us -->
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
-              </li>
-      
-              <!-- Contact -->
-              <li class="nav-item">
-                <a class="nav-link" href="contact.html">Contact</a>
-              </li>
-      
-              <!-- Favourites -->
-              <li class="nav-item">
-                <a class="nav-link" href="my-favourites.html">
-                  <i class="ti-heart"></i> Favourites
+            <div class="logo-wrapper">
+                <a class="logo" href="index.html">
+                    <h2>Just Enjoy Ibiza <span>Boats</span></h2>
                 </a>
-              </li>
-            </ul>
-          </div>
+            </div>
+            <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+                <span class="toggler-icon">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#">
+                            BOAT CHARTER <i class="ti-angle-down"></i>
+                        </a>
+                        <div class="mega-menu">
+                            <div class="mega-menu-content">
+                                <div class="menu-column">
+                                    <h3>Charter a Boat</h3>
+                                    <ul class="menu-list">
+                                        <li><a href="/yacht-rental.html"><i class="fa fa-angle-right"></i> Boats for Charter</a></li>
+                                        <li><a href="/services.html"><i class="fa fa-angle-right"></i> Food & Drinks Delivered Onboard</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">ABOUT US</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">CONTACT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my-favourites.html">
+                            <i class="ti-heart"></i> FAVOURITES
+                        </a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="btn-book-now" href="yacht-rental.html">BOOK NOW</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <!-- Header Banner -->
@@ -181,7 +168,7 @@
                     </div>
                 </div>
                 <div class="col col-md-3 animate-box" data-animate-effect="fadeInUp">
-                    <img src="assets/img/Persing90.jpg" alt="Luxury yacht in Ibiza waters" class="mt-90 mb-30">
+                    <img src="/assets/img/WomenHammock.jpg" alt="Luxury yacht in Ibiza waters" class="mt-90 mb-30">
                 </div>
                 <div class="col col-md-3 animate-box" data-animate-effect="fadeInUp">
                     <img src="assets/img/50BRONSON9.jpg" alt="Exclusive boat charter experience">
@@ -262,78 +249,97 @@
             </div>
         </div>
     </section>
-    <section class="facilities section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-subtitle">Luxury Experience</div>
-                    <div class="section-title">Charter Services</div>
+    <!-- Facilties -->
+<section class="yacht-facilities section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="yacht-facilities-subtitle">Our Services</div>
+                <div class="yacht-facilities-title">Yacht & Boat Facilities</div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Service 1: Pick Up & Drop -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up">
+                    <span class="facility-icon">
+                        <i class="fas fa-car"></i>
+                    </span>
+                    <h5>Pick Up & Drop</h5>
+                    <p>We offer seamless transportation to and from your yacht, ensuring a stress-free start and end to your journey.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        
-                        <h5>Custom Itineraries</h5>
-                        <p>Personalized routes to discover Ibiza's hidden gems, secluded beaches, and exclusive spots tailored to your preferences.</p>
-                        <div class="facility-shape">
-                            <span class="fas fa-map-marked-alt"></span>
-                        </div>
+            <!-- Service 2: Extra Water Toys -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="100">
+                    <span class="facility-icon">
+                        <i class="fas fa-water"></i>
+                    </span>
+                    <h5>Extra Water Toys</h5>
+                    <p>Enhance your experience with seascooters, paddleboards, and other fun options.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-water"></i>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        
-                        <h5>VIP Experiences</h5>
-                        <p>Access to exclusive beach clubs, premium restaurant reservations, and special events around the island.</p>
-                        <div class="facility-shape">
-                            <span class="fas fa-glass-cheers"></span>
-                        </div>
+            </div>
+            <!-- Service 3: Seabobs -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="200">
+                    <span class="facility-icon">
+                        <i class="fas fa-swimmer"></i>
+                    </span>
+                    <h5>Seabobs</h5>
+                    <p>Experience the thrill of underwater exploration with our high-performance Seabobs.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-swimmer"></i>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        
-                        <h5>Gourmet Catering</h5>
-                        <p>Exquisite onboard dining experiences with professional chefs and carefully curated food and beverage selections.</p>
-                        <div class="facility-shape">
-                            <span class="fas fa-utensils"></span>
-                        </div>
+            </div>
+            <!-- Service 4: Onboard Catering -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="300">
+                    <span class="facility-icon">
+                        <i class="fas fa-utensils"></i>
+                    </span>
+                    <h5>Onboard Catering</h5>
+                    <p>Enjoy gourmet meals, snacks, and beverages prepared to your preferences while onboard.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-utensils"></i>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        
-                        <h5>Water Activities</h5>
-                        <p>Complete set of water toys including jet skis, seabobs, paddleboards, and snorkeling equipment for adventure.</p>
-                        <div class="facility-shape">
-                            <span class="fas fa-water"></span>
-                        </div>
+            </div>
+            <!-- Service 5: Water Sports Equipment -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="400">
+                    <span class="facility-icon">
+                        <i class="fas fa-wind"></i>
+                    </span>
+                    <h5>Water Sports Equipment</h5>
+                    <p>Access jet skis, wakeboards, and other water sports equipment for an adventurous day on the water.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-wind"></i>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        
-                        <h5>Concierge Service</h5>
-                        <p>24/7 dedicated concierge to handle all your requests, from transport arrangements to special celebrations.</p>
-                        <div class="facility-shape">
-                            <span class="fas fa-concierge-bell"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="single-facility animate-box" data-animate-effect="fadeInUp">
-                        
-                        <h5>Transfer Service</h5>
-                        <p>Luxury transportation from your accommodation to the marina, ensuring a seamless door-to-dock experience.</p>
-                        <div class="facility-shape">
-                            <span class="fas fa-shuttle-van"></span>
-                        </div>
+            </div>
+            <!-- Service 6: Personalised Itineraries -->
+            <div class="col-md-4">
+                <div class="facility-card" data-aos="fade-up" data-aos-delay="500">
+                    <span class="facility-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </span>
+                    <h5>Personalised Itineraries</h5>
+                    <p>Plan your perfect day at sea with a custom itinerary tailored to your preferences.</p>
+                    <div class="facility-bg-icon">
+                        <i class="fas fa-map-marked-alt"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
     <!-- Team -->
     <section class="team section-padding bg-darkblack">
         <div class="container">

@@ -4,47 +4,93 @@ const fetch = require("node-fetch");
 const stripe = require("stripe")(functions.config().stripe.secret_key);
 const sgMail = require("@sendgrid/mail");
 
-// 1) Import and initialize admin
+// Initialize admin with credential check
 const admin = require("firebase-admin");
-admin.initializeApp();
+if (!admin.apps.length) {
+    admin.initializeApp({
+        credential: admin.credential.applicationDefault()
+    });
+}
 
-sgMail.setApiKey(functions.config().sendgrid.api_key); // Set SendGrid API Key
+sgMail.setApiKey(functions.config().sendgrid.api_key);
 
-// Initialise CORS middleware
 const corsHandler = cors({
-  origin: true, // Allow all origins
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+    origin: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 });
 
 /**
- * A helper function to decrement product stock after purchase.
- * Expects each purchased item to have: { id, quantity }
+ * Helper function to decrement product stock after purchase.
+ * Uses admin privileges to bypass security rules.
  */
 async function updateStock(items) {
-  const db = admin.firestore();
-  await db.runTransaction(async (transaction) => {
-    for (const item of items) {
-      const productRef = db.collection("products").doc(item.id);
-      const productSnap = await transaction.get(productRef);
-
-      if (!productSnap.exists) {
-        console.warn(`Product doc not found: ${item.id}`);
-        continue;
-      }
-
-      const currentStock = productSnap.data().stock || 0;
-      let newStock = currentStock - item.quantity;
-      if (newStock < 0) {
-        // You can decide how to handle negative stock
-        // e.g. set to 0 or throw an error
-        newStock = 0;
-      }
-
-      transaction.update(productRef, { stock: newStock });
+    if (!items || !Array.isArray(items)) {
+        console.error('Invalid items array provided to updateStock');
+        return;
     }
-  });
-  console.log("Stock update transaction successful.");
+
+    const db = admin.firestore();
+    console.log("Starting stock update process with items:", items);
+
+    try {
+        await db.runTransaction(async (transaction) => {
+            console.log("Beginning Firestore transaction");
+
+            const productRefs = items.map(item => ({
+                ref: db.collection("products").doc(item.id),
+                quantity: parseInt(item.quantity)
+            }));
+
+            console.log("Product references created:", productRefs.map(ref => ref.ref.path));
+
+            const productSnapshots = await Promise.all(
+                productRefs.map(async ({ ref }) => {
+                    const snap = await transaction.get(ref);
+                    if (snap.exists) {
+                        console.log(`Product ${ref.id} current data:`, snap.data());
+                    } else {
+                        console.error(`Product ${ref.id} not found in database`);
+                    }
+                    return snap;
+                })
+            );
+
+            const invalidProducts = productSnapshots.map((snap, index) => {
+                if (!snap.exists) {
+                    return `Product ${items[index].id} not found`;
+                }
+                const currentStock = snap.data().stock || 0;
+                if (currentStock < items[index].quantity) {
+                    return `Insufficient stock for product ${items[index].id}`;
+                }
+                return null;
+            }).filter(error => error !== null);
+
+            if (invalidProducts.length > 0) {
+                throw new Error(`Stock update failed: ${invalidProducts.join(', ')}`);
+            }
+
+            productSnapshots.forEach((snap, index) => {
+                const currentStock = snap.data().stock;
+                const newStock = Math.max(0, currentStock - productRefs[index].quantity);
+                
+                console.log(`Updating stock for ${snap.id} from ${currentStock} to ${newStock}`);
+                
+                transaction.update(productRefs[index].ref, {
+                    stock: newStock,
+                    lastUpdated: admin.firestore.FieldValue.serverTimestamp()
+                });
+            });
+        });
+
+        console.log("Stock update transaction completed successfully");
+        return true;
+    } catch (error) {
+        console.error("Error in stock update transaction:", error);
+        console.error("Stack trace:", error.stack);
+        throw error;
+    }
 }
 
 // ✅ Create Stripe Checkout Session
@@ -72,6 +118,8 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
         return res.status(400).json({ error: "Invalid cart data or missing email" });
       }
 
+      console.log("Creating checkout session with cart:", cart);
+
       // Build line items for Stripe
       const lineItems = cart.map(item => ({
         price_data: {
@@ -90,7 +138,6 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
         mode: "payment",
         success_url: `${req.headers.origin}/success.html`,
         cancel_url: `${req.headers.origin}/services.html`,
-        // Pass the entire cart in metadata, as a JSON string
         metadata: {
           orderId: Date.now().toString(),
           boatName,
@@ -101,9 +148,12 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
           phoneNumber,
           specialNotes,
           paymentMethod,
-          cart: JSON.stringify(cart)  // <--- Key line to store cart
+          cart: JSON.stringify(cart)
         }
       });
+
+      console.log("Checkout session created:", session.id);
+      console.log("Session metadata sent to Stripe:", session.metadata); // Log metadata sent
 
       return res.json({ sessionId: session.id });
     } catch (error) {
@@ -116,7 +166,6 @@ exports.createCheckoutSession = functions.https.onRequest((req, res) => {
   });
 });
 
-
 // ✅ Handle Stripe Webhook Events (DB Write + Stock + Confirmation Email)
 exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
   const endpointSecret = functions.config().stripe.webhook_secret;
@@ -124,7 +173,6 @@ exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
 
   let event;
   try {
-    // Validate the event from Stripe
     event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
   } catch (err) {
     console.error("Webhook signature verification failed.", err.message);
@@ -136,7 +184,8 @@ exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
   // Only handle checkout.session.completed for now
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    console.log("Payment successful for:", session.id);
+    console.log("Payment successful for session:", session.id);
+    console.log("Session metadata (raw):", session.metadata); // Log raw metadata
 
     // Extract metadata
     const {
@@ -149,35 +198,51 @@ exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
       specialNotes,
       paymentMethod,
       orderId,
-      cart  // <-- JSON string containing purchased items
+      cart
     } = session.metadata || {};
 
-    // 1) Parse the cart so we know which items to decrement
+    console.log("Extracted metadata - cart (string):", cart); // Log cart string as extracted
+
+    // Parse the cart and update stock
     let purchasedItems = [];
     if (cart) {
       try {
         purchasedItems = JSON.parse(cart);
-        console.log("Purchased items:", purchasedItems);
-      } catch (parseErr) {
-        console.error("Error parsing cart JSON:", parseErr);
+        console.log("Parsed purchased items (array):", purchasedItems); // Log parsed cart array
+
+        if (!Array.isArray(purchasedItems)) {
+          throw new Error('Parsed cart is not an array');
+        }
+
+        // Ensure we have the required fields for stock update
+        const stockUpdateItems = purchasedItems.map(item => {
+          console.log("Processing item for stock update:", item);
+          return {
+            id: item.id,
+            quantity: parseInt(item.quantity)
+          };
+        });
+
+        console.log("Prepared stock update items:", stockUpdateItems);
+
+        // Update stock with error handling
+        await updateStock(stockUpdateItems);
+        console.log("Stock updated successfully");
+      } catch (error) {
+        console.error("Error processing cart or updating stock:", error);
+        console.error("Error details (cart parsing):", error.stack); // More specific error log
       }
+    } else {
+      console.warn("No cart data found in session metadata");
     }
 
-    // 2) Update stock in Firestore
-    try {
-      await updateStock(purchasedItems);
-      console.log("Stock updated successfully.");
-    } catch (updateErr) {
-      console.error("Error updating stock:", updateErr);
-    }
-
-    // 3) Build and save the order to Firestore
+    // Build and save the order to Firestore
     const orderData = {
       sessionId: session.id,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      amount_total: session.amount_total / 100 || null, // if you want the total
+      amount_total: session.amount_total / 100 || null,
       currency: session.currency || "eur",
-      paymentStatus: session.payment_status, // 'paid' if successful
+      paymentStatus: session.payment_status,
       boatName,
       orderDate,
       customerEmail,
@@ -187,32 +252,41 @@ exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
       specialNotes,
       paymentMethod,
       orderId,
-      items: purchasedItems  // optional: store the full purchased cart
+      items: purchasedItems
     };
 
     try {
       const db = admin.firestore();
-      await db.collection("orders").add(orderData);
-      console.log("Order saved to Firestore:", orderId);
+      const orderRef = await db.collection("orders").add(orderData);
+      console.log("Order saved to Firestore:", orderRef.id);
     } catch (firestoreError) {
       console.error("Error saving order to Firestore:", firestoreError);
+      console.error("Error details:", firestoreError.stack);
     }
 
-    // 4) Send confirmation email
+    // Send confirmation email
     try {
-      await sendOrderConfirmationEmail(customerEmail, boatName, orderDate, fullName);
+      await sendOrderConfirmationEmail(
+        customerEmail,
+        boatName,
+        orderDate,
+        fullName,
+        phoneNumber,
+        specialNotes,
+        purchasedItems,
+        session.amount_total / 100
+      );
+      console.log("Confirmation email sent successfully");
     } catch (emailError) {
       console.error("Error sending confirmation email:", emailError);
+      console.error("Error details:", emailError.stack);
     }
   }
 
-  // Handle other events if needed
   if (event.type === "checkout.session.expired" || event.type === "payment_intent.payment_failed") {
     console.log("Payment failed for:", event.data.object.id);
-    res.redirect(303, `${req.headers.origin}/cancel.html`);
   }
 
-  // Respond 200 so Stripe knows we handled the webhook
   res.status(200).send("Webhook received");
 });
 
@@ -220,8 +294,8 @@ exports.handleStripeWebhook = functions.https.onRequest(async (req, res) => {
 async function sendOrderConfirmationEmail(email, boatName, orderDate, fullName, phoneNumber, specialNotes, items, totalPrice) {
   const msg = {
     to: email,
-    from: "info@justenjoyibiza.com", // Must be verified in SendGrid
-    templateId: "d-519fbb63105146899cbd444ef8ff60a9", // Your Dynamic Template ID
+    from: "info@justenjoyibiza.com",
+    templateId: "d-519fbb63105146899cbd444ef8ff60a9",
     dynamic_template_data: {
       customer_name: fullName,
       boat_name: boatName,
@@ -229,8 +303,8 @@ async function sendOrderConfirmationEmail(email, boatName, orderDate, fullName, 
       phone_number: phoneNumber,
       special_notes: specialNotes,
       total_price: totalPrice,
-      items: items,     // an array that matches #each logic
-      track_link: "https://your-site.com/track-order/1234" // or some dynamic link
+      items: items,
+      track_link: "https://your-site.com/track-order/1234"
     },
   };
 
@@ -239,6 +313,7 @@ async function sendOrderConfirmationEmail(email, boatName, orderDate, fullName, 
     console.log("Confirmation email sent to", email);
   } catch (error) {
     console.error("Email sending error:", error);
+    console.error("Error details:", error.stack);
   }
 }
 
