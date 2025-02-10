@@ -49,13 +49,28 @@ async function loadBoatDetails() {
         document.getElementById('built').textContent = specs["Built/Refit"] || 'N/A';
         document.getElementById('cabins').textContent = specs.Cabins || 'N/A';
 
-        // Update seasonal prices
+        // Update seasonal prices with proper error handling
         const prices = boat.seasonalPrices || {};
-        document.getElementById('price').textContent = prices["July / August"] || 'N/A';
-        document.getElementById('winterLowRate').textContent = prices["May / October"] || 'N/A';
-        document.getElementById('winterHighRate').textContent = prices["June / September"] || 'N/A';
-        document.getElementById('summerLowRate').textContent = prices["June / September"] || 'N/A';
-        document.getElementById('summerHighRate').textContent = prices["July / August"] || 'N/A';
+        const defaultPrice = 'Price on request';
+
+        // Peak Season (July/August)
+        const peakPrice = prices["July / August"]?.trim() || defaultPrice;
+        document.getElementById('price').textContent = peakPrice;
+        document.getElementById('summerHighRate').textContent = peakPrice;
+
+        // Mid Season (June/September)
+        const midPrice = prices["June / September"]?.trim() || defaultPrice;
+        document.getElementById('summerLowRate').textContent = midPrice;
+
+        // Low Season (May/October)
+        const lowPrice = prices["May / October"]?.trim() || defaultPrice;
+        document.getElementById('winterLowRate').textContent = lowPrice;
+
+        // Hide winter high rate as it's not applicable
+        const winterHighRateElement = document.getElementById('winterHighRate');
+        if (winterHighRateElement) {
+            winterHighRateElement.closest('.rate-row')?.remove();
+        }
 
         // Load gallery images
         if (boat.images && boat.images.length > 0) {
@@ -122,6 +137,7 @@ async function loadBoatDetails() {
         console.error('Error loading boat details:', error);
     }
 }
+
 // Function to assign boatId to all "Download Brochure" buttons
 function assignBoatIdToDownloadButtons() {
     const mainImage = document.getElementById('mainGalleryImage');
@@ -137,7 +153,6 @@ function assignBoatIdToDownloadButtons() {
         button.setAttribute('data-boat-id', boatId);
     });
 }
-
 
 // Utility functions
 function formatAmenityName(name) {
@@ -162,6 +177,7 @@ function changeMainImage(src, thumbnail) {
     );
     thumbnail.classList.add('active');
 }
+
 function initializeTouchGallery() {
     const mainImage = document.getElementById('mainGalleryImage');
     let touchstartX = 0;
@@ -191,7 +207,6 @@ function initializeTouchGallery() {
         }
     }
 }
-
 
 // Tab switching functionality
 document.querySelectorAll('.tab-btn').forEach(button => {

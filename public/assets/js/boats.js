@@ -2,6 +2,18 @@
 let db;
 const favoriteBoats = JSON.parse(localStorage.getItem('favBoats') || '[]');
 
+function formatPriceFromFirestore(boat) {
+    if (boat.seasonalPrices && boat.seasonalPrices["July / August"]) {
+        return boat.seasonalPrices["July / August"];
+    }
+    
+    if (boat.detailedSpecs && boat.detailedSpecs.Price) {
+        return boat.detailedSpecs.Price;
+    }
+
+    return "Price on request";
+}
+
 async function initializeApp() {
     try {
         const response = await fetch('/api/firebase-config');
@@ -102,10 +114,11 @@ function createBoatCard(doc, template, container) {
     clone.querySelector('.guests').textContent = specs.Guests || 'N/A';
     clone.querySelector('.crew').textContent = specs.Crew || 'N/A';
 
-    // Price handling
-    const priceStr = boat.seasonalPrices?.["July / August"] || "0";
-    const price = parseInt(priceStr.replace(/\./g, ''), 10) || 0;
-    clone.querySelector('.price-value').textContent = `€${price.toLocaleString()}`;
+    // Updated price handling
+    const priceElement = clone.querySelector('.price-value');
+    const price = formatPriceFromFirestore(boat);
+    priceElement.textContent = price;
+    priceElement.classList.toggle('price-on-request', price === 'Price on request');
 
     // Add view details click handler for new page navigation
     const viewDetailsBtn = clone.querySelector('.btn-details');
@@ -339,4 +352,4 @@ window.filterBoats = function() {
 };
 
 // Initialize application
-document.addEventListener('DOMContentLoaded', initializeApp)
+document.addEventListener('DOMContentLoaded', initializeApp);

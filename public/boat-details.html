@@ -9,7 +9,143 @@
     <link rel="stylesheet" href="/assets/css/plugins.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/boat-details.css">
-    
+    <style>
+        .rates-container {
+    background: linear-gradient(145deg, rgba(45, 65, 90, 0.95), rgba(35, 50, 70, 0.95));
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rates-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.rates-header h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-family: 'Gilda Display', serif;
+}
+
+.season-title {
+    display: block;
+    color: #00c2cb;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.date-range {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.rates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.rate-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.rate-card.highlight {
+    background: linear-gradient(145deg, rgba(0, 194, 203, 0.1), rgba(0, 194, 203, 0.05));
+    border-color: rgba(0, 194, 203, 0.3);
+}
+
+.rate-period {
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.rate-amount {
+    text-align: center;
+}
+
+.rate-amount .label {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+}
+
+.rate-amount .price {
+    display: block;
+    color: #00c2cb;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.rate-amount .period {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+}
+
+.rates-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+}
+
+.rate-notes p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .rates-container {
+        padding: 1.5rem;
+    }
+
+    .rates-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .rate-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem;
+    }
+
+    .rate-period {
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .rate-amount {
+        text-align: right;
+    }
+
+    .rate-amount .price {
+        font-size: 1.5rem;
+    }
+}
+    </style>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -46,35 +182,53 @@
             
             <div class="quick-specs-bar">
                 <div class="spec-item">
-                    <span class="value" id="length">23.60M</span>
+                    <span class="value" id="length"></span>
                     <span class="label">LENGTH</span>
                 </div>
                 <div class="spec-item">
-                    <span class="value" id="built">N/A</span>
+                    <span class="value" id="built"></span>
                     <span class="label">BUILT/REFIT</span>
                 </div>
                 <div class="spec-item">
-                    <span class="value" id="guests">12</span>
+                    <span class="value" id="guests"></span>
                     <span class="label">GUESTS</span>
                 </div>
                 <div class="spec-item">
-                    <span class="value" id="cabins">N/A</span>
+                    <span class="value" id="cabins">-</span>
                     <span class="label">CABINS</span>
                 </div>
                 <div class="spec-item">
-                    <span class="value" id="crew">3</span>
+                    <span class="value" id="crew"></span>
                     <span class="label">CREW</span>
                 </div>
             </div>
             
             <div class="price-section">
-                <span class="label">FROM</span>
-                <span class="value" id="price">€10,500</span>
-                <span class="period">P/WEEK</span>
-                <button class="inquiry-btn">SEND AN INQUIRY</button>
-            </div>
+                <div class="price-info">
+                  <span class="value" id="price">€10,500</span>
+                  <span class="period">per day</span>
+                </div>
+                <button class="btn btn-sm btn-book" onclick="openInquiryModal(this)">
+                    <i class="fas fa-envelope"></i> Inquire Now
+                  </button>
+              </div>
         </div>
     </div>
+
+    <div id="inquiryModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Yacht Inquiry</h2>
+          <form id="inquiryForm">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="tel" name="phone" placeholder="Phone">
+            <input type="date" name="date" required>
+            <textarea name="message" placeholder="Message"></textarea>
+            <button type="submit">Send Inquiry</button>
+          </form>
+        </div>
+      </div>
 
     <!-- Thumbnails -->
     <div class="thumbnail-grid" id="thumbnailGrid">
@@ -85,7 +239,7 @@
     <div class="content-tabs">
         <button class="tab-btn active" data-tab="description">DESCRIPTION</button>
         <button class="tab-btn" data-tab="specification">SPECIFICATION</button>
-        <button class="tab-btn" data-tab="location">LOCATION & WEEKLY RATE</button>
+        <button class="tab-btn" data-tab="location">Boat Price</button>
     </div>
 
     <!-- Tab Content -->
@@ -103,38 +257,50 @@
             </div>
         </div>
 
+     
         <div class="tab-pane" id="location">
-            <h2>LOCATION & WEEKLY RATE</h2>
-            <div class="seasons-grid">
-                <div class="season">
-                    <h3>WINTER</h3>
-                    <p class="date-range">OCTOBER - MARCH</p>
-                    <div class="rate-info">
-                        <div class="rate">
-                            <span>LOW SEASON</span>
-                            <span class="price">From €<span id="winterLowRate"></span></span>
-                        </div>
-                        <div class="rate">
-                            <span>HIGH SEASON</span>
-                            <span class="price">From €<span id="winterHighRate"></span></span>
-                        </div>
-                    </div>
-                    <button class="contact-broker">CONTACT A BROKER</button>
+            <div class="rates-container">
+                <div class="rates-header">
+                    <h2>SEASONAL RATES</h2>
+                    <span class="season-title">SUMMER SEASON</span>
+                    <span class="date-range">MAY - OCTOBER</span>
                 </div>
-                <div class="season">
-                    <h3>SUMMER</h3>
-                    <p class="date-range">APRIL - SEPTEMBER</p>
-                    <div class="rate-info">
-                        <div class="rate">
-                            <span>LOW SEASON</span>
-                            <span class="price">From €<span id="summerLowRate"></span></span>
-                        </div>
-                        <div class="rate">
-                            <span>HIGH SEASON</span>
-                            <span class="price">From €<span id="summerHighRate"></span></span>
+
+                <div class="rates-grid">
+                    <div class="rate-card">
+                        <div class="rate-period">MAY & OCTOBER</div>
+                        <div class="rate-amount">
+                            <span class="label">From</span>
+                            <span class="price"><span id="winterLowRate"></span></span>
+                            <span class="period">per day</span>
                         </div>
                     </div>
-                    <button class="contact-broker">CONTACT A BROKER</button>
+
+                    <div class="rate-card">
+                        <div class="rate-period">JUNE & SEPTEMBER</div>
+                        <div class="rate-amount">
+                            <span class="label">From</span>
+                            <span class="price"><span id="summerLowRate"></span></span>
+                            <span class="period">per day</span>
+                        </div>
+                    </div>
+
+                    <div class="rate-card highlight">
+                        <div class="rate-period">JULY & AUGUST</div>
+                        <div class="rate-amount">
+                            <span class="label">From</span>
+                            <span class="price"><span id="summerHighRate"></span></span>
+                            <span class="period">per day</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rates-footer">
+                    <div class="rate-notes">
+                        <p>* All prices are per day</p>
+                        <p>* Fuel consumption not included</p>
+                        <p>* VAT not included</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -154,8 +320,39 @@
     </div>
 </div>
 <script src="assets/js/brochure-download.js" ></script>
-    <script src="/assets/js/boat-details.js"></script>
-
+<script src="/assets/js/boat-details.js"></script>
+<script>
+    function openInquiryModal(btn) {
+ const modal = document.getElementById('inquiryModal');
+ const yachtCard = btn.closest('.yacht-card');
+ const yachtName = yachtCard.querySelector('.yacht-name').textContent;
+ 
+ modal.style.display = "block";
+ 
+ const form = modal.querySelector('#inquiryForm');
+ form.onsubmit = async (e) => {
+   e.preventDefault();
+   
+   try {
+     await db.collection('inquiries').add({
+       yachtName: yachtName,
+       name: form.querySelector('[name="name"]').value,
+       email: form.querySelector('[name="email"]').value,
+       phone: form.querySelector('[name="phone"]').value,
+       date: form.querySelector('[name="date"]').value,
+       message: form.querySelector('[name="message"]').value,
+       timestamp: firebase.firestore.FieldValue.serverTimestamp()
+     });
+     
+     modal.style.display = "none";
+     alert('Inquiry sent successfully!');
+   } catch (error) {
+     console.error('Error:', error);
+     alert('Error sending inquiry');
+   }
+ };
+}
+   </script>
     
 </div>
 </body>

@@ -349,6 +349,56 @@ blockquote cite:before {
     width: 100%;
 }
 
+/* Default background for large screens */
+.slide-2 {
+    background-image: url('/assets/img/Rand30.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Mobile version */
+@media (max-width: 768px) {
+    .slide-2 {
+        background-image: url('/assets/img/AlfastreetMarine.jpg');
+    }
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden; /* Ensures no stretching */
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures uniform cropping */
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.con {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.facilities ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.facilities li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 /* Darken the image using an overlay */
 .bg-img::before {
     content: '';
@@ -1247,6 +1297,143 @@ color: #aa8453;
     transform: rotate(-45deg);
 }
 
+
+/* Testimonials Section Styling */
+.testimonials .background {
+    padding: 120px 0;
+    position: relative;
+}
+
+.testimonials-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 60px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Header Styling */
+.head-box {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.head-box h6 {
+    color: #FF385C;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.head-box h4 {
+    font-family: 'Gilda Display', serif;
+    font-size: 46px;
+    font-weight: 400;
+    color: #1B2838;
+    margin-bottom: 20px;
+}
+
+.head-box .line {
+    width: 60px;
+    height: 3px;
+    background: #FF385C;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+/* Testimonial Items */
+.testimonials .item {
+    padding: 0 15px;
+    text-align: center;
+}
+
+.testimonials .quote {
+    display: inline-block;
+    margin-bottom: 30px;
+}
+
+.testimonials .quote img {
+    width: 50px;
+    opacity: 0.3;
+}
+
+.testimonials .item p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 30px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Client Info */
+.testimonials .info {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.testimonials .info .cont {
+    display: inline-block;
+}
+
+.testimonials .info h6 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1B2838;
+    margin-bottom: 5px;
+}
+
+
+
+
+/* Carousel Navigation */
+.owl-theme .owl-nav [class*=owl-] {
+    background: transparent;
+    color: #1B2838;
+    font-size: 30px;
+    transition: all 0.3s ease;
+}
+
+.owl-theme .owl-nav [class*=owl-]:hover {
+    background: transparent;
+    color: #FF385C;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .testimonials-box {
+        padding: 30px;
+    }
+
+    .head-box h4 {
+        font-size: 36px;
+    }
+
+    .testimonials .item p {
+        font-size: 16px;
+    }
+
+    .testimonials .info h6 {
+        font-size: 18px;
+    }
+}
+
+/* Animation for items */
+.testimonials .item {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Mobile menu styles with smoother animation */
 @media (max-width: 991px) {
     .custom-toggler {
@@ -1438,9 +1625,7 @@ color: #aa8453;
     right: 100%;
 }
 
-/*******************************************
-  NORMAL (NON-MEGA) SUBMENUS: 190PX
-********************************************/
+
 
 
 /*******************************************
@@ -1450,12 +1635,13 @@ color: #aa8453;
     position: absolute;
     top: 100%;
     left: 0;
-    min-width: 700px; 
+    min-width: 250px; 
     background: #1B2838;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     display: none;  
     z-index: 9999;
+    border-radius: 10px;
 }
 
 /* Show mega menu on .dropdown.show OR on desktop hover */
@@ -1512,45 +1698,13 @@ color: #aa8453;
     color: #2095AE; 
   }
 
-  .featured-yachts {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+
+
+  .pricing-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
 }
-
-
-
-
-/*******************************************
-  MOBILE OVERRIDES (<992px)
-********************************************/
-@media (max-width: 991px) {
-  .mega-menu {
-      position: static;
-      width: 100%;
-      box-shadow: none;
-      margin-top: 10px;
-  }
-  .mega-menu-content {
-      display: block; 
-  }
-  .menu-column {
-      margin-bottom: 20px;
-  }
-  .featured-yachts {
-      flex-direction: column; /* stack yacht-cards */
-      margin-top: 20px;
-  }
-  .yacht-card {
-      width: 100%;
-  }
-}
-
-/*******************************************
-  ADDITIONAL MEDIA QUERIES FOR NAVBAR ON MOBILE
-********************************************/
-
-
 
 /* ======= Header style ======= */
 .header {
