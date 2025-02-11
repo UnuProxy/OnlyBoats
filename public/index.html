@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="/assets/css/navbar.css">
     <link rel="stylesheet" href="/assets/css/homeSection.css">
+    <link rel="stylesheet" href="/assets/css/widget.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Required Bootstrap files order -->
@@ -28,7 +29,11 @@
         });
     </script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    
 </head>
 <body>
     <!-- Preloader -->
@@ -249,62 +254,61 @@
             </div>
     </div>
 
-    <!-- About Just Enjoy Ibiza -->
-    <section class="about section-padding">
-        <div class="container">
-            <div class="row">
-                <!-- Text Content -->
-                <div class="col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
-                    <span>
-                        <i class="star-rating"></i>
-                        <i class="star-rating"></i>
-                        <i class="star-rating"></i>
-                        <i class="star-rating"></i>
-                        <i class="star-rating"></i>
-                    </span>
-                    <div class="section-subtitle">Just Enjoy Ibiza Boats</div>
-                    <div class="section-title">Your Gateway to the Mediterranean</div>
-                    <p>Welcome to the ultimate yacht charter experience in Ibiza. Explore the azure waters, hidden coves, and pristine beaches with our exclusive fleet of luxury boats. Whether it's a family getaway, a romantic escape, or a corporate retreat, we cater to your every need.</p>
-                    <p>At Just Enjoy Ibiza Boats, we pride ourselves on delivering premium services: professional crews, exquisite onboard catering, and unforgettable moments tailored to you. Experience unparalleled comfort and style as you embark on your Mediterranean adventure.</p>
-                    <!-- Reservation Call -->
-                    <div class="reservations">
-                        <div class="icon"><span class="flaticon-call"></span></div>
-                        <div class="text">
-                            <p>For Bookings</p> 
-                            <a href="tel:+34692688348">+34 692 688 348</a>
-                        </div>
+  <!-- About Just Enjoy Ibiza -->
+<section class="about section-padding">
+    <div class="container">
+        <div class="row">
+            <!-- Text Content -->
+            <div class="col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
+                <span>
+                    <i class="star-rating"></i>
+                    <i class="star-rating"></i>
+                    <i class="star-rating"></i>
+                    <i class="star-rating"></i>
+                    <i class="star-rating"></i>
+                </span>
+                <div class="section-subtitle">Just Enjoy Ibiza Boats</div>
+                <div class="section-title">Your Gateway to the Mediterranean</div>
+                <p>Welcome to the ultimate yacht charter experience in Ibiza. Explore the azure waters, hidden coves, and pristine beaches with our exclusive fleet of luxury boats. Whether it's a family getaway, a romantic escape, or a corporate retreat, we cater to your every need.</p>
+                <p>At Just Enjoy Ibiza Boats, we pride ourselves on delivering premium services: professional crews, exquisite onboard catering, and unforgettable moments tailored to you. Experience unparalleled comfort and style as you embark on your Mediterranean adventure.</p>
+                <!-- Reservation Call -->
+                <div class="reservations">
+                    <div class="icon"><span class="flaticon-call"></span></div>
+                    <div class="text">
+                        <p>For Bookings</p> 
+                        <a href="tel:+34692688348">+34 692 688 348</a>
                     </div>
                 </div>
-                
-                <!-- Right-Side Content -->
-                <div class="col-md-6 animate-box" data-animate-effect="fadeInUp">
-                    <div class="row">
-                        <!-- Image 1 -->
-                        <div class="col-md-6 mb-30">
-                            <img src="/assets/img/De-Antonio-42-Bambino-13.jpg" alt="Luxury Boat 1" class="img-fluid rounded">
-                        </div>
-                        <!-- Image 2 -->
-                        <div class="col-md-6 mb-30">
-                            <img src="/assets/img/De-Antonio42Bambino.jpg" alt="Luxury Boat 2" class="img-fluid rounded">
-                        </div>
-                        <!-- Additional Content -->
-                        <div class="col-md-12">
-                            <div class="additional-info mt-30">
-                                <h4>Why Choose Us?</h4>
-                                <ul>
-                                    <li><i class="fa fa-check"></i> Tailored Experiences</li>
-                                    <li><i class="fa fa-check"></i> Premium Fleet & Crew</li>
-                                    <li><i class="fa fa-check"></i> Onboard Catering & Drinks</li>
-                                    <li><i class="fa fa-check"></i> 24/7 Personalised Support</li>
-                                </ul>
-                            </div>
+            </div>
+            
+            <!-- Right-Side Content -->
+            <div class="col-md-6 animate-box" data-animate-effect="fadeInUp">
+                <div class="row">
+                    <!-- Image 1 -->
+                    <div class="col-md-6 mb-30">
+                        <img src="/assets/img/De-Antonio-42-Bambino-13.jpg" alt="Luxury Boat 1" class="img-fluid rounded">
+                    </div>
+                    <!-- Image 2 -->
+                    <div class="col-md-6 mb-30">
+                        <img src="/assets/img/De-Antonio42Bambino.jpg" alt="Luxury Boat 2" class="img-fluid rounded">
+                    </div>
+                    <!-- Additional Content -->
+                    <div class="col-md-12">
+                        <div class="additional-info mt-30">
+                            <h4>Why Choose Us?</h4>
+                            <ul>
+                                <li><i class="fa fa-check"></i> Tailored Experiences</li>
+                                <li><i class="fa fa-check"></i> Premium Fleet & Crew</li>
+                                <li><i class="fa fa-check"></i> Onboard Catering & Drinks</li>
+                                <li><i class="fa fa-check"></i> 24/7 Personalised Support</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    
+    </div>
+</section>
 
 <!-- Boats -->
 <section class="boats section-padding" data-scroll-index="1">
@@ -423,58 +427,60 @@
                     </div>
                 </div>
             </div>
+
             <!-- Mangusta 108 -->
-        <div class="col-md-4">
-            <div class="boat-item">
-                <div class="image-container">
-                    <img src="/assets/img/Nomad-142.jpg" alt="Mangusta 108 Luxury Yacht">
-                    <div class="image-overlay">
-                        <span class="boat-type">Power Performance</span>
+            <div class="col-md-4">
+                <div class="boat-item">
+                    <div class="image-container">
+                        <img src="/assets/img/Nomad-142.jpg" alt="Mangusta 108 Luxury Yacht">
+                        <div class="image-overlay">
+                            <span class="boat-type">Power Performance</span>
+                        </div>
                     </div>
-                </div>
-                <div class="boat-content">
-                    <div class="boat-name">Mangusta 108</div>
-                    <div class="price">Starting from €12.250 / Day</div>
-                    <div class="facilities">
-                        <ul>
-                            <li><i class="fas fa-ruler"></i> Length 33m</li>
-                            <li><i class="fas fa-bed"></i> 4 Cabins</li>
-                            <li><i class="fas fa-clock"></i> Overnight Stay</li>
-                            <li><i class="fas fa-swimming-pool"></i> Jacuzzi</li>
-                        </ul>
-                        <div class="details-link">
-                            <a href="boat-details.html">View Details</a>
+                    <div class="boat-content">
+                        <div class="boat-name">Mangusta 108</div>
+                        <div class="price">Starting from €12.250 / Day</div>
+                        <div class="facilities">
+                            <ul>
+                                <li><i class="fas fa-ruler"></i> Length 33m</li>
+                                <li><i class="fas fa-bed"></i> 4 Cabins</li>
+                                <li><i class="fas fa-clock"></i> Overnight Stay</li>
+                                <li><i class="fas fa-swimming-pool"></i> Jacuzzi</li>
+                            </ul>
+                            <div class="details-link">
+                                <a href="boat-details.html">View Details</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-         <!-- Riva Argo 90 -->
-        <div class="col-md-4">
-            <div class="boat-item">
-                <div class="image-container">
-                    <img src="/assets/img/RivaArgo90.jpeg" alt="Riva Argo 90 Luxury Yacht">
-                    <div class="image-overlay">
-                        <span class="boat-type">Italin Elegance</span>
+
+            <!-- Riva Argo 90 -->
+            <div class="col-md-4">
+                <div class="boat-item">
+                    <div class="image-container">
+                        <img src="/assets/img/RivaArgo90.jpeg" alt="Riva Argo 90 Luxury Yacht">
+                        <div class="image-overlay">
+                            <span class="boat-type">Italian Elegance</span>
+                        </div>
                     </div>
-                </div>
-                <div class="boat-content">
-                    <div class="boat-name">Riva Argo 90</div>
-                    <div class="price">Starting from €12,950 / Day</div>
-                    <div class="facilities">
-                        <ul>
-                            <li><i class="fas fa-ruler"></i> Length 28.49m</li>
-                            <li><i class="fas fa-users"></i> 8 Guests</li>
-                            <li><i class="fas fa-couch"></i> Solarium</li>
-                            <li><i class="fas fa-umbrella-beach"></i> Beach Club</li>
-                        </ul>
-                        <div class="details-link">
-                            <a href="boat-details.html">View Details</a>
+                    <div class="boat-content">
+                        <div class="boat-name">Riva Argo 90</div>
+                        <div class="price">Starting from €12,950 / Day</div>
+                        <div class="facilities">
+                            <ul>
+                                <li><i class="fas fa-ruler"></i> Length 28.49m</li>
+                                <li><i class="fas fa-users"></i> 8 Guests</li>
+                                <li><i class="fas fa-couch"></i> Solarium</li>
+                                <li><i class="fas fa-umbrella-beach"></i> Beach Club</li>
+                            </ul>
+                            <div class="details-link">
+                                <a href="boat-details.html">View Details</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
     <div class="row mt-5">
@@ -949,16 +955,10 @@
                         <div class="yacht-form-subtitle">Contact Us</div>
                         <h2 class="yacht-form-title">Yacht Charter Inquiry</h2>
                     </div>
-                    <form method="post" action="/submit-inquiry">
+                    <form  >
                         <div class="yacht-form-grid">
-                            <div class="yacht-input-group">
-                                <input type="text" class="yacht-input" placeholder="First Name*" required>
-                                <i class="far fa-user"></i>
-                            </div>
-                            <div class="yacht-input-group">
-                                <input type="text" class="yacht-input" placeholder="Last Name*" required>
-                                <i class="far fa-user"></i>
-                            </div>
+                            <input type="text" class="yacht-input" name="firstName" placeholder="First Name*" required>
+                            <input type="text" class="yacht-input" name="lastName" placeholder="Last Name*" required>
                             <div class="yacht-input-group">
                                 <input type="email" class="yacht-input" placeholder="Email Address*" required>
                                 <i class="far fa-envelope"></i>
@@ -1004,7 +1004,9 @@
             </div>
         </div>
 </section>
-    <!-- Clients -->
+
+
+<!-- Clients -->
 <!-- <section class="clients">
         <div class="container">
             <div class="row">
@@ -1033,6 +1035,36 @@
             </div>
         </div>
 </section> -->
+
+<!-- Chatbot Widget -->
+<div id="chatbot-widget" style="display: none;">
+    <div id="chat-header">
+        <div id="agent-info">
+            <img id="agent-photo" alt="Agent" />
+            <div id="agent-details">
+                <span id="agent-name"></span>
+                <span id="availability-dot"></span>
+            </div>
+        </div>
+        <button id="close-btn" onclick="window.closeChat(event)">×</button>
+    </div>
+    <div id="messages"></div>
+    <div id="user-input-container">
+        <input id="user-input" type="text" placeholder="Type your message..." />
+        <button id="send-btn" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+        </button>
+    </div>
+</div>
+<button class="chat-button" onclick="window.toggleChat()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+    </svg>
+    Chat with us
+</button>
 
 <!-- Footer -->
 <footer class="footer">
@@ -1086,6 +1118,17 @@
         </div>
       
 </footer>
+<script>
+    window.toggleChat = function() {
+        const widget = document.getElementById("chatbot-widget");
+        widget.style.display = (widget.style.display === "none" || widget.style.display === "") ? "block" : "none";
+    };
+
+    window.closeChat = function(event) {
+        event.preventDefault();
+        document.getElementById("chatbot-widget").style.display = "none";
+    };
+</script>
     <!-- jQuery -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1114,7 +1157,8 @@
                 observer.observe(item);
             });
         });
-        </script>
+    </script>
+    <script src="/assets/js/chatbot.js"></script>
     <script src="/assets/js/jquery-3.6.3.min.js"></script>
     <!-- Hamburger -->
     <script>

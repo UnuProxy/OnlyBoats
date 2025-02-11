@@ -29,6 +29,9 @@ async function initializeApp() {
             });
         }
 
+        // Initialize search functionality
+        initializeSearchFunctionality();
+
         // Initial load
         await displayBoats();
         
@@ -36,6 +39,84 @@ async function initializeApp() {
         console.error('Initialization error:', error);
         showErrorNotification();
     }
+}
+
+function initializeSearchFunctionality() {
+    // Add event listeners for search buttons
+    const searchButtons = document.querySelectorAll('.search-button');
+    searchButtons.forEach(button => {
+        button.addEventListener('click', handleSearch);
+    });
+
+    // Initialize tab switching
+    document.querySelectorAll('.search-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs and forms
+            document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.yacht-search').forEach(form => {
+                form.classList.remove('active');
+                form.style.opacity = '0';
+            });
+            
+            // Add active class to clicked tab
+            tab.classList.add('active');
+            const formType = tab.dataset.tab;
+            const activeForm = document.getElementById(`${formType}Search`);
+            if (activeForm) {
+                activeForm.classList.add('active');
+                setTimeout(() => activeForm.style.opacity = '1', 50);
+            }
+        });
+    });
+
+    // Initialize advanced filters
+    document.querySelectorAll('.advanced-filters-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const type = this.id.replace('AdvancedBtn', '');
+            const filtersSection = document.getElementById(`${type}AdvancedFilters`);
+            const isVisible = filtersSection.style.display === 'block';
+            
+            filtersSection.style.display = isVisible ? 'none' : 'block';
+            
+            // Update button icon and text
+            const icon = this.querySelector('i');
+            const span = this.querySelector('span');
+            if (icon && span) {
+                icon.className = isVisible ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+                span.textContent = isVisible ? 'More Filters' : 'Less Filters';
+            }
+        });
+    });
+}
+
+async function handleSearch(e) {
+    e.preventDefault();
+    const activeTab = document.querySelector('.search-tab.active').dataset.tab;
+    const filters = {};
+
+    if (activeTab === 'charter') {
+        filters.type = document.getElementById('charter-yachtType')?.value;
+        filters.guests = document.getElementById('charter-guests')?.value;
+        filters.dates = document.getElementById('charter-dates')?.value;
+        filters.price = document.getElementById('charter-price')?.value;
+        filters.cabins = document.getElementById('charter-cabins')?.value;
+        filters.length = document.getElementById('charter-length')?.value;
+    } else if (activeTab === 'sale') {
+        filters.type = document.getElementById('sale-yachtType')?.value;
+        filters.length = document.getElementById('sale-length')?.value;
+        filters.price = document.getElementById('sale-price')?.value;
+        filters.year = document.getElementById('sale-year')?.value;
+        filters.cabins = document.getElementById('sale-cabins')?.value;
+        filters.flag = document.getElementById('sale-flag')?.value;
+        filters.builder = document.getElementById('sale-builder')?.value;
+    }
+
+    // Remove empty filters
+    Object.keys(filters).forEach(key => 
+        !filters[key] && delete filters[key]
+    );
+
+    await displayBoats(filters);
 }
 
 async function displayBoats(filters = {}) {
@@ -53,18 +134,30 @@ async function displayBoats(filters = {}) {
 
         let query = db.collection('boats');
 
-        // Apply filters with corrected field paths
+        // Apply base filters
         if (filters.type) {
             query = query.where('detailedSpecs.Class', '==', filters.type);
         }
-        if (filters.capacity) {
-            const capacity = parseInt(filters.capacity);
-            query = query.where('detailedSpecs.Guests', '==', capacity.toString());
+
+        if (filters.guests) {
+            const [min, max] = filters.guests.split('-').map(Number);
+            if (min) query = query.where('detailedSpecs.Guests', '>=', min.toString());
+            if (max) query = query.where('detailedSpecs.Guests', '<=', max.toString());
         }
-        if (filters.priceRange) {
-            const [min, max] = filters.priceRange.split('-').map(Number);
-            query = query.where('seasonalPrices.July / August', '>=', min)
-                        .where('seasonalPrices.July / August', '<=', max);
+
+        if (filters.price) {
+            let [min, max] = filters.price.split('-').map(val => {
+                // Remove non-numeric characters and convert to number
+                return parseInt(val.replace(/[^\d]/g, ''));
+            });
+            
+            // Handle special case for "10000+" price range
+            if (filters.price.endsWith('+')) {
+                query = query.where('seasonalPrices.July / August', '>=', min);
+            } else {
+                query = query.where('seasonalPrices.July / August', '>=', min)
+                           .where('seasonalPrices.July / August', '<=', max);
+            }
         }
 
         const snapshot = await query.get();
@@ -74,8 +167,51 @@ async function displayBoats(filters = {}) {
             return;
         }
 
-        snapshot.forEach(doc => createBoatCard(doc, template, boatsGrid));
-        updateYachtCount(snapshot.size);
+        // Post-query filtering for complex filters
+        let filteredBoats = [];
+        snapshot.forEach(doc => {
+            const boat = doc.data();
+            let includeBoat = true;
+
+            // Apply additional filters
+            if (filters.length) {
+                const [min, max] = filters.length.split('-').map(val => 
+                    parseInt(val.replace(/[^\d]/g, '')));
+                const boatLength = parseInt(boat.detailedSpecs?.Length);
+                if ((min && boatLength < min) || (max && boatLength > max)) {
+                    includeBoat = false;
+                }
+            }
+
+            if (filters.cabins) {
+                const [min, max] = filters.cabins.split('-').map(Number);
+                const cabins = parseInt(boat.detailedSpecs?.Cabins);
+                if ((min && cabins < min) || (max && cabins > max)) {
+                    includeBoat = false;
+                }
+            }
+
+            if (filters.flag && boat.detailedSpecs?.Flag !== filters.flag) {
+                includeBoat = false;
+            }
+
+            if (filters.builder && boat.detailedSpecs?.Builder !== filters.builder) {
+                includeBoat = false;
+            }
+
+            if (includeBoat) {
+                filteredBoats.push({ id: doc.id, data: () => boat });
+            }
+        });
+
+        // Update count and display results
+        updateYachtCount(filteredBoats.length);
+        
+        if (filteredBoats.length === 0) {
+            showNoResults(boatsGrid);
+        } else {
+            filteredBoats.forEach(doc => createBoatCard(doc, template, boatsGrid));
+        }
 
     } catch (error) {
         console.error('Error displaying boats:', error);
@@ -266,7 +402,9 @@ function showBoatDetails(boatId) {
 
 function updateMainImage(src) {
     const mainImage = document.getElementById('mainImage');
-    mainImage.src = src;
+    if (mainImage) {
+        mainImage.src = src;
+    }
 }
 
 function updateThumbnailsActive(activeIndex) {
@@ -341,15 +479,123 @@ function updateYachtCount(count) {
     }
 }
 
-// Filter handling
-window.filterBoats = function() {
-    const filters = {
-        type: document.getElementById('boatType')?.value,
-        capacity: document.getElementById('capacity')?.value,
-        priceRange: document.getElementById('priceRange')?.value
-    };
-    displayBoats(filters);
-};
+// Mobile search container handling
+let searchContainer;
+let minimizeBtn = null;
+let handle = null;
+let isDragging = false;
+let startY = 0;
+let startTransformY = 0;
 
-// Initialize application
-document.addEventListener('DOMContentLoaded', initializeApp);
+function initializeMobileSearch() {
+    searchContainer = document.querySelector('.search-container');
+    if (!searchContainer || window.innerWidth > 768) return;
+
+    // Create mobile elements
+    if (!handle) {
+        handle = document.createElement('div');
+        handle.className = 'search-handle';
+        searchContainer.insertBefore(handle, searchContainer.firstChild);
+    }
+
+    if (!minimizeBtn) {
+        minimizeBtn = document.createElement('button');
+        minimizeBtn.className = 'minimize-search';
+        minimizeBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+        minimizeBtn.setAttribute('aria-label', 'Toggle search panel');
+        searchContainer.appendChild(minimizeBtn);
+    }
+
+    // Set initial state
+    searchContainer.classList.add('minimized');
+    searchContainer.style.transform = 'translateY(calc(100% - 60px))';
+
+    // Event listeners
+    handle.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleTouchEnd);
+    minimizeBtn.addEventListener('click', toggleSearchContainer);
+}
+
+function removeMobileSearch() {
+    if (!searchContainer || window.innerWidth <= 768) return;
+
+    // Remove mobile elements
+    if (handle) handle.remove();
+    if (minimizeBtn) minimizeBtn.remove();
+    
+    // Reset container state
+    searchContainer.classList.remove('minimized');
+    searchContainer.style.transform = '';
+}
+
+function handleTouchStart(e) {
+    isDragging = true;
+    startY = e.touches[0].clientY;
+    startTransformY = searchContainer.style.transform 
+        ? parseInt(searchContainer.style.transform.replace(/[^\d-]/g, ''))
+        : 0;
+}
+
+function handleTouchMove(e) {
+    if (!isDragging) return;
+    const currentY = e.touches[0].clientY;
+    const deltaY = currentY - startY;
+    const containerHeight = searchContainer.offsetHeight;
+    const maxTransform = containerHeight - 60;
+    const newTransformY = Math.max(0, Math.min(deltaY + startTransformY, maxTransform));
+    searchContainer.style.transform = `translateY(${newTransformY}px)`;
+    e.preventDefault();
+}
+
+function handleTouchEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const currentTransform = searchContainer.style.transform 
+        ? parseInt(searchContainer.style.transform.replace(/[^\d-]/g, ''))
+        : 0;
+
+    if (currentTransform > searchContainer.offsetHeight / 3) {
+        searchContainer.classList.add('minimized');
+        minimizeBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+    } else {
+        searchContainer.classList.remove('minimized');
+        minimizeBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+    }
+}
+
+function toggleSearchContainer() {
+    const isMinimized = searchContainer.classList.toggle('minimized');
+    minimizeBtn.innerHTML = isMinimized 
+        ? '<i class="fas fa-chevron-up"></i>' 
+        : '<i class="fas fa-chevron-down"></i>';
+    
+    searchContainer.style.transform = isMinimized 
+        ? 'translateY(calc(100% - 60px))' 
+        : '';
+}
+
+// Handle window resize
+function handleResize() {
+    if (window.innerWidth <= 768) {
+        initializeMobileSearch();
+    } else {
+        removeMobileSearch();
+    }
+}
+
+// Initialize application and set up event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    initializeApp();
+    
+    // Initial mobile setup
+    handleResize();
+    
+    // Debounced resize handler
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(handleResize, 250);
+    });
+});

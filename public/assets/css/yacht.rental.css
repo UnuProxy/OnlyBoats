@@ -1001,6 +1001,8 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+    background-color: #1B2838;
+    color: #999;
    }
    
    .modal textarea {
