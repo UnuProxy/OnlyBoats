@@ -752,3 +752,141 @@ button {
         font-size: 13px;
     }
 }
+
+
+        .rates-container {
+    background: linear-gradient(145deg, rgba(45, 65, 90, 0.95), rgba(35, 50, 70, 0.95));
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rates-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.rates-header h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-family: 'Gilda Display', serif;
+}
+
+.season-title {
+    display: block;
+    color: #00c2cb;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.date-range {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.rates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.rate-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.rate-card.highlight {
+    background: linear-gradient(145deg, rgba(0, 194, 203, 0.1), rgba(0, 194, 203, 0.05));
+    border-color: rgba(0, 194, 203, 0.3);
+}
+
+.rate-period {
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.rate-amount {
+    text-align: center;
+}
+
+.rate-amount .label {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+}
+
+.rate-amount .price {
+    display: block;
+    color: #00c2cb;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.rate-amount .period {
+    display: block;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+}
+
+.rates-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+}
+
+.rate-notes p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .rates-container {
+        padding: 1.5rem;
+    }
+
+    .rates-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .rate-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem;
+    }
+
+    .rate-period {
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .rate-amount {
+        text-align: right;
+    }
+
+    .rate-amount .price {
+        font-size: 1.5rem;
+    }
+}
+   

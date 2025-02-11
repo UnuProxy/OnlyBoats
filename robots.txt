@@ -1,0 +1,15 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /staging/
+Disallow: /temp/
+Disallow: /cancel/
+Disallow: /my-favourites/
+Disallow: /success/
+
+Allow: /
+Allow: /boat/
+Allow: /services/
+Allow: /contact/
+Allow: /index/
+Allow: /yacht-rental/
