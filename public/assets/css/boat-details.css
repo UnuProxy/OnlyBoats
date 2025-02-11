@@ -665,16 +665,19 @@ button {
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+    background-color: #1B2838;
+    color: #999;
    }
    
    .modal textarea {
     height: 120px;
     resize: vertical;
+   
    }
    
    .modal button[type="submit"] {
     background: #ff4757;
-    color: #333;
+    color: #999;
     padding: 12px;
     border: none;
     border-radius: 4px;
@@ -686,6 +689,7 @@ button {
    
    .modal button[type="submit"]:hover {
     background: #ff2e44;
+    color: #FFFFFF;
    }
    
    @keyframes modalFade {
@@ -710,3 +714,41 @@ button {
     color: #666;
     font-size: 14px;
    }
+   .btn-book {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-book:hover {
+    background-color: #0052a3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.btn-book:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-book i {
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .btn-book {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+}

@@ -298,7 +298,7 @@
     </div>
 </div>
 
-<!-- Keep your existing boats-list section with the dark theme -->
+
 
 <!-- Dynamic Boat Listing Section -->
 <section class="boats-list section-padding" id="boatsList">
@@ -359,21 +359,21 @@
       </div>
     </div>
   </template>
-
+ <!--  Modal Form --> 
   <div id="inquiryModal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Yacht Inquiry</h2>
-      <form id="inquiryForm">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="tel" name="phone" placeholder="Phone">
-        <input type="date" name="date" required>
-        <textarea name="message" placeholder="Message"></textarea>
-        <button type="submit">Send Inquiry</button>
-      </form>
+        <span class="close">&times;</span>
+        <h2>Yacht Inquiry</h2>
+        <form id="inquiryForm">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="tel" name="phone" placeholder="Phone">
+            <input type="date" name="date" required>
+            <textarea name="message" placeholder="Message"></textarea>
+            <button type="submit">Send Inquiry</button>
+        </form>
     </div>
-  </div>
+</div>
 
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
@@ -437,37 +437,61 @@
     </div>
 </footer>
 
+    <!-- Modal -->
     <script>
-     function openInquiryModal(btn) {
-  const modal = document.getElementById('inquiryModal');
-  const yachtCard = btn.closest('.yacht-card');
-  const yachtName = yachtCard.querySelector('.yacht-name').textContent;
-  
-  modal.style.display = "block";
-  
-  const form = modal.querySelector('#inquiryForm');
-  form.onsubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      await db.collection('inquiries').add({
-        yachtName: yachtName,
-        name: form.querySelector('[name="name"]').value,
-        email: form.querySelector('[name="email"]').value,
-        phone: form.querySelector('[name="phone"]').value,
-        date: form.querySelector('[name="date"]').value,
-        message: form.querySelector('[name="message"]').value,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      
-      modal.style.display = "none";
-      alert('Inquiry sent successfully!');
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error sending inquiry');
+    function openInquiryModal(btn) {
+        const modal = document.getElementById('inquiryModal');
+        const yachtCard = btn.closest('.yacht-card');
+        const yachtName = yachtCard.querySelector('.yacht-name').textContent;
+        modal.style.display = "block";
+        
+        const form = modal.querySelector('#inquiryForm');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            try {
+                await db.collection('inquiries').add({
+                    yachtName: yachtName,
+                    name: form.querySelector('[name="name"]').value,
+                    email: form.querySelector('[name="email"]').value,
+                    phone: form.querySelector('[name="phone"]').value,
+                    date: form.querySelector('[name="date"]').value,
+                    message: form.querySelector('[name="message"]').value,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                modal.style.display = "none";
+                form.reset(); // Reset form after successful submission
+                alert('Inquiry sent successfully!');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error sending inquiry');
+            }
+        };
     }
-  };
-}
+    
+    // Add these event listeners when the document loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('inquiryModal');
+        const closeBtn = modal.querySelector('.close');
+        
+        // Close button click handler
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+        
+        // Click outside modal to close
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        // Escape key to close
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape" && modal.style.display === "block") {
+                modal.style.display = "none";
+            }
+        });
+    });
     </script>
 
     <!-- Animation on Scroll -->
@@ -493,218 +517,7 @@
     filterBoats(); // Reload all boats
 }
     </script>
-    <!-- Filters -->
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    // ============= MOBILE SEARCH CONTAINER =============
-    let searchContainer;
-    let minimizeBtn = null;
-    let handle = null;
-    let isDragging = false;
-    let startY = 0;
-    let startTransformY = 0;
-
-    function initializeMobileSearch() {
-        searchContainer = document.querySelector('.search-container');
-        if (!searchContainer || window.innerWidth > 768) return;
-
-        // Create mobile elements
-        if (!handle) {
-            handle = document.createElement('div');
-            handle.className = 'search-handle';
-            searchContainer.insertBefore(handle, searchContainer.firstChild);
-        }
-
-        if (!minimizeBtn) {
-            minimizeBtn = document.createElement('button');
-            minimizeBtn.className = 'minimize-search';
-            minimizeBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-            minimizeBtn.setAttribute('aria-label', 'Toggle search panel');
-            searchContainer.appendChild(minimizeBtn);
-        }
-
-        // Set initial state
-        searchContainer.classList.add('minimized');
-        searchContainer.style.transform = 'translateY(calc(100% - 60px))';
-
-        // Event listeners
-        handle.addEventListener('touchstart', handleTouchStart);
-        document.addEventListener('touchmove', handleTouchMove, { passive: false });
-        document.addEventListener('touchend', handleTouchEnd);
-        minimizeBtn.addEventListener('click', toggleSearchContainer);
-    }
-
-    function removeMobileSearch() {
-        if (!searchContainer || window.innerWidth <= 768) return;
-
-        // Remove mobile elements
-        if (handle) handle.remove();
-        if (minimizeBtn) minimizeBtn.remove();
-        
-        // Reset container state
-        searchContainer.classList.remove('minimized');
-        searchContainer.style.transform = '';
-    }
-
-    function handleTouchStart(e) {
-        isDragging = true;
-        startY = e.touches[0].clientY;
-        startTransformY = searchContainer.style.transform 
-            ? parseInt(searchContainer.style.transform.replace(/[^\d-]/g, ''))
-            : 0;
-    }
-
-    function handleTouchMove(e) {
-        if (!isDragging) return;
-        const currentY = e.touches[0].clientY;
-        const deltaY = currentY - startY;
-        const containerHeight = searchContainer.offsetHeight;
-        const maxTransform = containerHeight - 60;
-        const newTransformY = Math.max(0, Math.min(deltaY + startTransformY, maxTransform));
-        searchContainer.style.transform = `translateY(${newTransformY}px)`;
-        e.preventDefault();
-    }
-
-    function handleTouchEnd() {
-        if (!isDragging) return;
-        isDragging = false;
-
-        const currentTransform = searchContainer.style.transform 
-            ? parseInt(searchContainer.style.transform.replace(/[^\d-]/g, ''))
-            : 0;
-
-        if (currentTransform > searchContainer.offsetHeight / 3) {
-            searchContainer.classList.add('minimized');
-            minimizeBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-        } else {
-            searchContainer.classList.remove('minimized');
-            minimizeBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
-        }
-    }
-
-    function toggleSearchContainer() {
-        const isMinimized = searchContainer.classList.toggle('minimized');
-        minimizeBtn.innerHTML = isMinimized 
-            ? '<i class="fas fa-chevron-up"></i>' 
-            : '<i class="fas fa-chevron-down"></i>';
-        
-        searchContainer.style.transform = isMinimized 
-            ? 'translateY(calc(100% - 60px))' 
-            : '';
-    }
-
-    // ============= RESPONSIVE HANDLING =============
-    function handleResize() {
-        if (window.innerWidth <= 768) {
-            initializeMobileSearch();
-        } else {
-            removeMobileSearch();
-        }
-    }
-
-    // Initial setup
-    handleResize();
     
-    // Debounced resize handler
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(handleResize, 250);
-    });
-
-    // ============= FILTER FUNCTIONALITY =============
-    function filterYachts() {
-        const destination = document.getElementById('charter-destination').value;
-        const yachtType = document.getElementById('charter-yachtType').value;
-        const guests = document.getElementById('charter-guests').value;
-        const dates = document.getElementById('charter-dates').value;
-        const price = document.getElementById('charter-price')?.value;
-        const cabins = document.getElementById('charter-cabins')?.value;
-        const length = document.getElementById('charter-length')?.value;
-
-        const yachts = document.querySelectorAll('.yacht-card');
-        let visibleCount = 0;
-
-        yachts.forEach(yacht => {
-            let shouldShow = true;
-
-            if (destination && yacht.dataset.destination !== destination) shouldShow = false;
-            if (yachtType && yacht.dataset.type !== yachtType) shouldShow = false;
-            
-            if (guests) {
-                const [min, max] = guests.split('-').map(Number);
-                const yachtGuests = parseInt(yacht.dataset.guests);
-                if (max && yachtGuests > max) shouldShow = false;
-                if (min && yachtGuests < min) shouldShow = false;
-            }
-
-            yacht.style.display = shouldShow ? 'block' : 'none';
-            if (shouldShow) visibleCount++;
-        });
-
-        // Update count
-        document.getElementById('yachtCount').textContent = visibleCount;
-
-        // Handle no results
-        const noResultsMsg = document.getElementById('noResultsMessage');
-        if (visibleCount === 0) {
-            if (!noResultsMsg) {
-                const msg = document.createElement('div');
-                msg.id = 'noResultsMessage';
-                msg.className = 'no-results';
-                msg.innerHTML = `
-                    <div class="text-center py-8">
-                        <i class="fas fa-search mb-4 text-4xl text-gray-400"></i>
-                        <h3 class="text-xl mb-2">No yachts found</h3>
-                        <p class="text-gray-500">Try adjusting your filters</p>
-                    </div>
-                `;
-                document.getElementById('boatsGrid').appendChild(msg);
-            }
-        } else if (noResultsMsg) {
-            noResultsMsg.remove();
-        }
-    }
-
-    // Filter events
-    const filterInputs = document.querySelectorAll('.search-group select, .search-group input');
-    filterInputs.forEach(input => input.addEventListener('change', filterYachts));
-
-    // Search button
-    document.querySelector('.search-button')?.addEventListener('click', () => {
-        filterYachts();
-        if (window.innerWidth <= 768) {
-            searchContainer.classList.add('minimized');
-            minimizeBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-        }
-    });
-
-    // Reset filters
-    document.querySelector('.reset-filters')?.addEventListener('click', () => {
-        filterInputs.forEach(input => input.value = '');
-        filterYachts();
-    });
-
-    // Tab switching
-    document.querySelectorAll('.search-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.yacht-search').forEach(form => {
-                form.classList.remove('active');
-                form.style.opacity = '0';
-            });
-            
-            tab.classList.add('active');
-            const formType = tab.dataset.tab;
-            const activeForm = document.getElementById(`${formType}Search`);
-            if (activeForm) {
-                activeForm.classList.add('active');
-                setTimeout(() => activeForm.style.opacity = '1', 50);
-            }
-        });
-    });
-});
-    </script>
     <script src="/assets/js/boats.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

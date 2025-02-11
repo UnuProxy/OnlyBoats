@@ -1902,6 +1902,16 @@ hr {
 }
 
 
+ /* Base fixes */
+ .section-padding {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
+
+
+
 /* reservation field for slider */
 .header div.reservation {
     -webkit-writing-mode: vertical-lr;
