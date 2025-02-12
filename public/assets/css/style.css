@@ -701,7 +701,48 @@ color: #aa8453;
     background: rgba(0, 0, 0, 0.4); /* Dark overlay */
     z-index: 1;
 }
+.header {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
 
+.bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+/* You can use this if you want a video background instead */
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Ensure slider items don't show background */
+.slider-fade .item {
+    background: none !important;
+}
+
+/* Text transitions */
+.slider-fade .owl-item .caption {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+}
+
+.slider-fade .owl-item.active .caption {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 /* ======= Owl-Theme custom style ======= */
 .owl-theme .owl-nav.disabled + .owl-dots {
@@ -1163,7 +1204,7 @@ color: #aa8453;
 .categories {
     background-color: #1A3D5D;
 }
-/* ======= Navbar style ======= */
+
 
 /*******************************************
   NAVBAR BASE STYLES
@@ -1296,6 +1337,8 @@ color: #aa8453;
     top: 7px;
     transform: rotate(-45deg);
 }
+
+
 
 
 /* Testimonials Section Styling */
@@ -1591,6 +1634,7 @@ color: #aa8453;
     color: #2095AE;
 }
 
+
 /*******************************************
   DEFAULT (SMALL) DROPDOWN STYLES
 ********************************************/
@@ -1867,38 +1911,103 @@ hr {
     border: 1px solid #aa8453;
     color: #fff;
 }
+
+/* Additional styles for left-aligned slider text */
+.slider-fade .item .caption {
+    z-index: 9;
+    text-align: left;
+    padding-left: 10%;
+}
+
+.slider-fade .item .caption .container {
+    max-width: 800px;
+    margin: 0;
+    padding: 0;
+}
+
+.slider-fade .item .caption .row {
+    margin: 0;
+}
+
+.slider-fade .item .caption .col-md-10 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Adjust star rating alignment */
+.slider-fade .item .caption span {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+/* Heading styles */
+.slider-fade .item .caption h4 {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.slider-fade .item .caption h1 {
+    font-size: 60px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+/* Mobile slider text improvements */
 @media screen and (max-width: 768px) {
-    .slider-fade .owl-nav {
-        display: none;
+    .slider-fade .item .caption {
+        padding: 0 20px;
+        width: 100%;
+    }
+
+    .slider-fade .item .caption h1 {
+        font-size: 32px;
+        line-height: 1.2;
+        letter-spacing: 2px;
+        /* Ensure text wraps properly */
+        word-wrap: break-word;
+        hyphens: auto;
+        white-space: normal;
+    }
+
+    .slider-fade .item .caption h4 {
+        font-size: 14px;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    /* Adjust star rating size on mobile */
+    .slider-fade .item .caption span {
+        margin-bottom: 10px;
+    }
+
+    .slider-fade .item .caption .star-rating {
+        font-size: 14px;
+    }
+
+    /* Ensure container doesn't add extra padding */
+    .slider-fade .item .caption .container,
+    .slider-fade .item .caption .row,
+    .slider-fade .item .caption [class*="col-"] {
+        padding: 0;
+        margin: 0;
+        width: 100%;
     }
 }
-/* owl-dots for slider */
-.slider-fade .owl-dots {
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    right: 5%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    width: 40px;
-    text-align: right !important
-}
-.slider-fade .owl-dots .owl-dot span {
-    background: transparent;
-    display: none
-}
-.slider-fade .owl-dots .owl-dot {
-    height: 12px;
-    width: 12px;
-    border: 1px solid rgba(255,255,255, 0.7);
-    display: block;
-    margin-bottom: 10px;
-    border-radius: 50%
-}
-.slider-fade .owl-dots .owl-dot.active {
-    border-color: #fff;
-    background: #1B2838;
+
+/* Extra small devices */
+@media screen and (max-width: 576px) {
+    .slider-fade .item .caption h1 {
+        font-size: 28px;
+        letter-spacing: 1px;
+    }
 }
 
 
@@ -2051,11 +2160,7 @@ hr {
     background: transparent;
     border: 1px solid rgba(255,255,255,0.5);
 }
-.slider .owl-theme .owl-dots .owl-dot.active span,
-.slider .owl-theme .owl-dots .owl-dot:hover span {
-    background: #aa8453;
-    border: 1px solid #aa8453;
-}
+
 /* bounce */
 .header .arrow {
     position: absolute;
@@ -4142,15 +4247,190 @@ button.mfp-arrow {
     }
 }
 
+.header {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
 
+.bg-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Overlay */
+.bg-img::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Adjust opacity as needed */
+    z-index: 1;
+}
+
+/* Ensure text stays above overlay */
+.slider-fade .owl-carousel {
+    position: relative;
+    z-index: 2;
+}
+
+/* If using video background */
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Adjust opacity as needed */
+    z-index: 1;
+}
+
+/* Enhanced hero section styles */
+.slider-fade .item {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Gradient overlay for better text contrast */
+.slider-fade .item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    z-index: 1;
+}
+
+/* Star animation */
+.star-rating {
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Animated text entrance */
+.caption h4 {
+    animation: slideInLeft 1s ease-out;
+}
+
+.caption h1 {
+    animation: slideInRight 1s ease-out 0.3s backwards;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Booking bar enhancements */
+.booking-wrapper {
+    transition: transform 0.3s ease;
+}
+
+.booking-wrapper:hover {
+    transform: translateY(-5px);
+}
+
+/* Check availability button glow */
+.check-availability {
+    position: relative;
+    overflow: hidden;
+}
+
+.check-availability::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0) 70%
+    );
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 12px;
+    letter-spacing: 2px;
+    opacity: 0.8;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Mouse movement effect */
+.bg-img {
+    transition: transform 0.3s ease-out;
+}
 /* ======= Booking style ======= */
 .booking-wrapper {
     position: absolute;
-    left: 0;
+    right: 11%;
+    bottom: 15%;
     width: 100%;
-    bottom: 5%;
     z-index: 5;
 }
+
 .booking2-wrapper {
     position: relative;
     margin-bottom: 40px;
@@ -4270,6 +4550,7 @@ button.mfp-arrow {
     transition: all 0.3s ease-out;
     letter-spacing: 3px;
     text-transform: uppercase;
+    flex: auto;
 }
 .btn-form1-submit:hover {
     background:  #2095AE;
@@ -4415,6 +4696,13 @@ button.mfp-arrow {
 @media (max-width: 1259.98px) {
     .booking2-wrapper {
         margin-bottom: 30px;
+    }
+    .booking-wrapper {
+        position: absolute;
+        left: 0;
+        bottom: 25%;
+        width: 100%;
+        z-index: 5;
     }
 }
 @media (max-width: 991.98px) {
