@@ -1,22 +1,22 @@
 [
-  {
-    "origin": [
-      "https://only-boats.vercel.app",
-      "https://justenjoyibizaboats.com",
-      "https://www.justenjoyibizaboats.com",
-      "http://localhost:3000",
-      "http://localhost:5000",
-      "http://127.0.0.1:5000",
-      "http://127.0.0.1:3000"
-    ],
-    "method": ["GET", "HEAD", "OPTIONS"],
-    "responseHeader": [
-      "Content-Type",
-      "Access-Control-Allow-Origin",
-      "Content-Length",
-      "Content-Range",
-      "X-Content-Range"
-    ],
-    "maxAgeSeconds": 3600
-  }
-]
+    {
+      "origin": [
+        "https://only-boats.vercel.app",
+        "https://justenjoyibizaboats.com",
+        "https://wwww.justenjoyibizaboats.com",
+        "http://localhost:3000",
+        "http://localhost:5000",
+        "http://127.0.0.1:5000",
+        "http://127.0.0.1:3000"
+      ],
+      "method": ["GET", "HEAD", "OPTIONS"],
+      "responseHeader": [
+        "Content-Type",
+        "Access-Control-Allow-Origin",
+        "Content-Length",
+        "Content-Range",
+        "X-Content-Range"
+      ],
+      "maxAgeSeconds": 3600
+    }
+  ]
