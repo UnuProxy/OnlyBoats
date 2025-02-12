@@ -643,40 +643,6 @@ function toggleAddButton(input) {
 }
 
 // Load Products
-// Function to handle image loading with fallback
-async function loadProductImage(imageUrl, productName) {
-    if (!imageUrl || !imageUrl.trim()) {
-        return '/assets/img/placeholder.jpg';
-    }
-
-    try {
-        // Add cache-busting parameter and handle CORS
-        const timestamp = new Date().getTime();
-        const urlWithCache = `${imageUrl}${imageUrl.includes('?') ? '&' : '?'}_cb=${timestamp}`;
-        
-        const response = await fetch(urlWithCache, {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Accept': 'image/*'
-            }
-        });
-
-        if (!response.ok) {
-            console.warn(`Failed to load image for ${productName}, using placeholder`);
-            return '/assets/img/placeholder.jpg';
-        }
-
-        // Create a blob URL for the image
-        const blob = await response.blob();
-        return URL.createObjectURL(blob);
-    } catch (error) {
-        console.error(`Error loading image for ${productName}:`, error);
-        return '/assets/img/placeholder.jpg';
-    }
-}
-
-// Load Products
 async function loadProducts() {
     try {
         console.log("🔥 Fetching products from API...");
@@ -685,34 +651,76 @@ async function loadProducts() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        // Get products and process them
+        // Get products and ensure we have stock information
         allProducts = await response.json();
-        
-        // Process images for all products
-        const processedProducts = await Promise.all(allProducts.map(async (product) => {
-            if (!product.isActive) return null;
-
-            try {
-                // Load and process image
-                const processedImageUrl = await loadProductImage(product.imageUrl, product.name);
-                return {
-                    ...product,
-                    imageUrl: processedImageUrl,
-                    stock: product.stock || 0
-                };
-            } catch (error) {
-                console.error(`Error processing product ${product.name}:`, error);
-                return {
-                    ...product,
-                    imageUrl: '/assets/img/placeholder.jpg',
-                    stock: product.stock || 0
-                };
-            }
+        allProducts = allProducts.map(product => ({
+            ...product,
+            stock: product.stock || 0  // Ensure stock property exists
         }));
+        
+        filteredProducts = [...allProducts];
 
-        // Filter out null products and update allProducts
-        allProducts = processedProducts.filter(product => 
-            product && 
+        const containers = {
+            drinks: document.querySelector("#drinks .row"),
+            packages: document.querySelector("#packages .row"),
+            snacks: document.querySelector("#snacks .row"),
+            merchandise: document.querySelector("#merchandise .row")
+        };
+
+        Object.values(containers).forEach(container => {
+            if (container) container.innerHTML = "";
+        });
+
+        // Process images with improved error handling
+        for (const product of allProducts) {
+            if (!product.isActive) continue;
+
+            // Ensure product ID is available for stock updates
+            if (!product.id) {
+                console.warn(`Product ${product.name} missing ID`);
+                continue;
+            }
+
+            if (product.imageUrl && product.imageUrl.includes('firebasestorage')) {
+                try {
+                    // Add CORS headers to the fetch request
+                    const imgResponse = await fetch(product.imageUrl, {
+                        method: 'GET',
+                        mode: 'cors',
+                        headers: {
+                            'Origin': window.location.origin
+                        }
+                    });
+                    
+                    if (!imgResponse.ok) {
+                        console.warn(`Failed to load image for ${product.name}, using placeholder`);
+                        product.imageUrl = '/assets/img/placeholder.jpg';
+                    } else {
+                        // Verify the image can be loaded
+                        const img = new Image();
+                        img.onerror = () => {
+                            console.warn(`Image failed to load for ${product.name}, using placeholder`);
+                            product.imageUrl = '/assets/img/placeholder.jpg';
+                        };
+                        img.src = product.imageUrl;
+                    }
+                } catch (error) {
+                    console.error(`Failed to load image for ${product.name}:`, error);
+                    product.imageUrl = '/assets/img/placeholder.jpg';
+                }
+            } else if (!product.imageUrl) {
+                product.imageUrl = '/assets/img/placeholder.jpg';
+            }
+
+            // Add stock validation
+            if (typeof product.stock !== 'number') {
+                console.warn(`Invalid stock value for product ${product.name}`);
+                product.stock = 0;
+            }
+        }
+
+        // Filter out products with invalid data
+        allProducts = allProducts.filter(product => 
             product.id && 
             product.isActive !== false && 
             typeof product.stock === 'number'
@@ -727,6 +735,7 @@ async function loadProducts() {
 
     } catch (error) {
         console.error("🚨 Error loading products:", error);
+        // Show error to user
         const containers = document.querySelectorAll('.row');
         containers.forEach(container => {
             container.innerHTML = `
