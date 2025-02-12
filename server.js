@@ -23,7 +23,41 @@ const db = admin.firestore();
 const app = express();
 
 // Middleware
-app.use(cors());
+// CORS Configuration
+const corsOptions = {
+  origin: [
+      'https://only-boats.vercel.app',
+      'https://justenjoyibizaboats.com',
+      'https://www.justenjoyibizaboats.com',
+      'http://localhost:3000',
+      'http://localhost:5000',
+      'http://127.0.0.1:5000',
+      'http://127.0.0.1:3000'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  maxAge: 3600
+};
+
+// Middleware
+app.use(cors(corsOptions));
+app.use(express.json());
+
+// Add security headers
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', 
+      "default-src 'self' https://firebasestorage.googleapis.com; " +
+      "img-src 'self' https://firebasestorage.googleapis.com data: blob:; " +
+      "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
+      "script-src 'self' 'unsafe-inline' https://js.stripe.com https://cdnjs.cloudflare.com; " +
+      "frame-src https://js.stripe.com"
+  );
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
 app.use(express.json());
 
 // === API Routes First ===
