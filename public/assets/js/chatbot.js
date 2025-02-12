@@ -1,15 +1,16 @@
+// Firebase initialisation function for the client
 window.initFirebase = async function() {
     if (window.db) {
-        return window.db; // Return existing instance if already initialized
+        return window.db; // Return existing instance if already initialised
     }
 
     try {
-        // Check if Firebase SDK is loaded
+        // Ensure Firebase SDK is loaded
         if (typeof firebase === 'undefined') {
             throw new Error('Firebase SDK not loaded');
         }
 
-        // Fetch Firebase config
+        // Fetch Firebase configuration from the server
         const response = await fetch('/api/firebase-config');
         if (!response.ok) {
             throw new Error(`Failed to fetch Firebase config: ${response.status}`);
@@ -17,36 +18,38 @@ window.initFirebase = async function() {
         
         const firebaseConfig = await response.json();
 
-        // Initialize Firebase if not already initialized
+        // Initialise Firebase if not already done
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
 
-        // Initialize Firestore and auth
+        // Initialise Firestore and sign in anonymously
         window.db = firebase.firestore();
         await firebase.auth().signInAnonymously();
 
-        console.log('Firebase initialized successfully');
         return window.db;
     } catch (error) {
-        console.error('Firebase initialization error:', error);
+        console.error('Firebase initialisation error:', error);
         throw error;
     }
 };
 
-// Add initialization check function
+function generateUniqueId() {
+    return 'msg_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+}
+  
+// Utility function to ensure Firebase is initialised before use
 async function ensureFirebaseInitialized() {
     if (!window.db) {
         try {
             await window.initFirebase();
         } catch (error) {
-            console.error('Failed to initialize Firebase:', error);
-            throw new Error('Database not initialized');
+            console.error('Failed to initialise Firebase:', error);
+            throw new Error('Database not initialised');
         }
     }
     return window.db;
 }
-
 
 document.addEventListener('DOMContentLoaded', async () => {
     // === DOM Elements ===
@@ -57,6 +60,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userInputField = document.getElementById('user-input');
     const sendButton = document.getElementById('send-btn');
     const BASE_API_URL = window.location.origin;
+
+    // === Typing Indicator Utility Functions ===
+    function showTypingIndicator() {
+        if (document.getElementById('typing-indicator')) return;
+        const typingMessage = document.createElement('div');
+        typingMessage.className = 'message bot typing';
+        typingMessage.id = 'typing-indicator';
+        typingMessage.innerHTML = `<span class="dot"></span>
+                                     <span class="dot"></span>
+                                     <span class="dot"></span>`;
+        messagesContainer.appendChild(typingMessage);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const typingMessage = document.getElementById('typing-indicator');
+        if (typingMessage) {
+            typingMessage.remove();
+        }
+    }
 
     // === State Management ===
     const state = {
@@ -72,17 +95,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         isWaitingForName: false
     };
 
-    // Generate new conversationId if none exists
+    // Generate a new conversationId if none exists
     if (!state.conversationId) {
         state.conversationId = `conv_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
         localStorage.setItem('conversationId', state.conversationId);
     }
 
     // === Core Functions ===
+
+    // Set up Firestore real-time listeners for conversation status and messages
     function setupMessageListeners() {
+        // Clear any existing listeners
         clearExistingListeners();
         
-        // Conversation status listener
+        // Listen for conversation status changes
         const conversationUnsubscribe = window.db.collection('chatConversations')
             .doc(state.conversationId)
             .onSnapshot(doc => {
@@ -93,36 +119,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         state.unsubscribeHandlers.add(conversationUnsubscribe);
-
-        // Load existing messages once
-        window.db.collection('chatConversations')
-            .doc(state.conversationId)
-            .collection('messages')
-            .orderBy('timestamp', 'asc')
-            .get()
-            .then(snapshot => {
-                messagesContainer.innerHTML = '';
-                state.processedMessages.clear();
-                
-                snapshot.docs.forEach(doc => {
-                    const message = doc.data();
-                    const messageId = message.messageId || doc.id;
-                    if (!state.processedMessages.has(messageId)) {
-                        displayMessage(message.role, message.content, messageId);
-                        state.processedMessages.add(messageId);
-                    }
-                });
-            });
-
-        // Real-time listener for new messages
+        
+        // Listen for messages in real time.
+        // Set includeMetadataChanges so we can filter out local writes.
         const messagesUnsubscribe = window.db.collection('chatConversations')
             .doc(state.conversationId)
             .collection('messages')
-            .orderBy('timestamp', 'desc')
-            .limit(1)
-            .onSnapshot(snapshot => {
+            .orderBy('timestamp', 'asc')
+            .onSnapshot({ includeMetadataChanges: true }, snapshot => {
                 snapshot.docChanges().forEach(change => {
                     if (change.type === 'added') {
+                        // Skip documents that still have pending writes.
+                        if (change.doc.metadata.hasPendingWrites) {
+                            return;
+                        }
                         const message = change.doc.data();
                         const messageId = message.messageId || change.doc.id;
                         if (!state.processedMessages.has(messageId)) {
@@ -131,15 +141,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                         }
                     }
                 });
+            }, error => {
+                console.error('Error in messages listener:', error);
             });
         state.unsubscribeHandlers.add(messagesUnsubscribe);
     }
-
+    
+    // Remove any existing listeners
     function clearExistingListeners() {
         state.unsubscribeHandlers.forEach(unsubscribe => unsubscribe());
         state.unsubscribeHandlers.clear();
     }
 
+    // Dynamically set the agent name and image based on time of day
     function setDynamicAgentName() {
         const currentHour = new Date().getHours();
         let agentName = "Just Enjoy Ibiza Assistant";
@@ -147,22 +161,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         if (currentHour >= 7 && currentHour < 19) {
             agentName = "Julian (Available)";
-            photoSrc = "img/team/Julian-small.png";
+            photoSrc = "/assets/img/Julian-small.png";
         } else {
             agentName = "Alin (Available)";
-            photoSrc = "img/team/alin.png";
+            photoSrc = "/assets/img/Alin.png";
         }
         
         if (agentNameElement) agentNameElement.textContent = agentName;
         if (agentPhoto) agentPhoto.src = photoSrc;
     }
 
+    // Show a welcome message to request the user's name
     async function showWelcomeMessage() {
         const welcomeMessage = "Hi there! 👋 I'm here to help you discover the best of Ibiza. What's your name so I can assist you better?";
         await saveMessageToFirestore('bot', welcomeMessage);
         state.isWaitingForName = true;
     }
 
+    // Display a message in the chat window
     function displayMessage(role, content, messageId) {
         if (document.querySelector(`[data-message-id="${messageId}"]`)) return;
         
@@ -179,40 +195,43 @@ document.addEventListener('DOMContentLoaded', async () => {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
+    // Save a message to Firestore and update the conversation document
     async function saveMessageToFirestore(role, content) {
         try {
-            // Ensure Firebase is initialized
-            await ensureFirebaseInitialized();
+          await ensureFirebaseInitialized();
+          const conversationRef = window.db.collection('chatConversations').doc(state.conversationId);
+          
+          // Generate a unique ID for this message
+          const messageId = generateUniqueId();
+          
+          return await window.db.runTransaction(async (transaction) => {
+            // Use the generated messageId instead of letting Firestore auto-generate one
+            const messageRef = conversationRef.collection('messages').doc(messageId);
             
-            const conversationRef = window.db.collection('chatConversations').doc(state.conversationId);
-            
-            return await window.db.runTransaction(async (transaction) => {
-                const messageRef = conversationRef.collection('messages').doc();
-                const messageId = messageRef.id;
-                
-                transaction.set(messageRef, {
-                    role,
-                    content,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    messageId
-                });
-    
-                transaction.set(conversationRef, {
-                    lastMessage: content,
-                    lastMessageAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    lastMessageRole: role,
-                    status: role === 'agent' ? 'agent-handling' : (state.isAgentHandling ? 'agent-handling' : 'active'),
-                    lastMessageId: messageId
-                }, { merge: true });
-    
-                return messageId;
+            transaction.set(messageRef, {
+              role,
+              content,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              messageId: messageId
             });
+        
+            transaction.set(conversationRef, {
+              lastMessage: content,
+              lastMessageAt: firebase.firestore.FieldValue.serverTimestamp(),
+              lastMessageRole: role,
+              status: role === 'agent' ? 'agent-handling' : (state.isAgentHandling ? 'agent-handling' : 'active'),
+              lastMessageId: messageId
+            }, { merge: true });
+        
+            return messageId;
+          });
         } catch (error) {
-            console.error('Error saving message:', error);
-            throw error; // Re-throw the error to be handled by the caller
+          console.error('Error saving message:', error);
+          throw error;
         }
     }
-
+      
+    // Handle agent takeover scenario
     function handleAgentTakeover(agentId) {
         state.isAgentHandling = true;
         state.userDetailsSubmitted = true;
@@ -227,6 +246,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Handle input when waiting for the user’s name
     async function handleNameInput(userInput) {
         const name = userInput.trim();
         if (name.length > 0) {
@@ -250,113 +270,79 @@ document.addEventListener('DOMContentLoaded', async () => {
         return false;
     }
 
-    
-   // === Message Handling ===
-   window.sendMessage = async () => {
-    if (state.isProcessingMessage) return;
-    state.isProcessingMessage = true;
-    
-    // Get DOM elements inside the function
-    const sendButton = document.getElementById('send-btn');
-    const userInputField = document.getElementById('user-input');
-    
-    if (sendButton) sendButton.disabled = true;
-
-    // Get user input value and check BASE_API_URL
-    const userInput = userInputField ? userInputField.value.trim() : '';
-    console.log('window.location:', window.location);
-    console.log('window.location.origin:', window.location.origin);
-    console.log('BASE_API_URL:', BASE_API_URL);
-    console.log('Full API URL:', `${BASE_API_URL}/api/chat`);
-    
-    // Debug logs to verify data
-    console.log('Starting message send process with:', {
-        userInput,
-        conversationId: state.conversationId,
-        userName: state.userName,
-        isAgentHandling: state.isAgentHandling,
-        isWaitingForName: state.isWaitingForName
-    });
-
-    if (!userInput) {
-        console.log('Empty input, cancelling send');
-        state.isProcessingMessage = false;
-        if (sendButton) sendButton.disabled = false;
-        return;
-    }
-
-    try {
-        // First save user message to Firestore
-        console.log('Saving message to Firestore...');
-        const messageId = await saveMessageToFirestore('user', userInput);
-        if (!messageId) throw new Error('Failed to save message');
-        console.log('Message saved with ID:', messageId);
+    // === Message Handling ===
+    window.sendMessage = async () => {
+        if (state.isProcessingMessage) return;
+        state.isProcessingMessage = true;
         
-        // Clear input field
-        if (userInputField) userInputField.value = '';
+        if (sendButton) sendButton.disabled = true;
 
-        if (!state.isAgentHandling) {
-            if (state.isWaitingForName) {
-                console.log('Handling name input...');
-                await handleNameInput(userInput);
-            } else {
-                try {
-                    const apiUrl = `${BASE_API_URL}/api/chat`;
-                    console.log('Making API call to:', apiUrl);
-                    console.log('Request body:', {
-                        userMessage: userInput,
-                        conversationId: state.conversationId,
-                        userName: state.userName
-                    });
+        const userInput = userInputField ? userInputField.value.trim() : '';
 
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({ 
-                            userMessage: userInput, 
-                            conversationId: state.conversationId,
-                            userName: state.userName
-                        })
-                    });
+        if (!userInput) {
+            state.isProcessingMessage = false;
+            if (sendButton) sendButton.disabled = false;
+            return;
+        }
 
-                    console.log('API response status:', response.status);
-                    console.log('API response headers:', [...response.headers.entries()]);
-                    
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        console.error('Error response body:', errorText);
-                        throw new Error(`HTTP error: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    console.log('API response data:', data);
-                    
-                    const currentStatus = (await window.db.collection('chatConversations')
-                        .doc(state.conversationId)
-                        .get()).data()?.status;
-                    console.log('Current conversation status:', currentStatus);
+        try {
+            const messageId = await saveMessageToFirestore('user', userInput);
+            if (!messageId) throw new Error('Failed to save message');
+            
+            if (userInputField) userInputField.value = '';
+
+            if (!state.isAgentHandling) {
+                if (state.isWaitingForName) {
+                    await handleNameInput(userInput);
+                } else {
+                    showTypingIndicator();
+                    try {
+                        const apiUrl = `${BASE_API_URL}/api/chat`;
                         
-                    if (currentStatus !== 'agent-handling') {
-                        await saveMessageToFirestore('bot', data.response || "I'm here to help!");
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({ 
+                                userMessage: userInput, 
+                                conversationId: state.conversationId,
+                                userName: state.userName
+                            })
+                        });
+
+                        removeTypingIndicator();
+
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            throw new Error(`HTTP error: ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+
+                        if (data && data.response) {
+                            displayMessage('bot', data.response, data.messageId);
+                            state.processedMessages.add(data.messageId);
+                        } else {
+                            throw new Error('Invalid response format from server');
+                        }
+                    } catch (error) {
+                        removeTypingIndicator();
+                        const errorMessage = "I'm sorry, I couldn't process your request. Please try again.";
+                        const systemMessageId = await saveMessageToFirestore('system', errorMessage);
+                        displayMessage('system', errorMessage, systemMessageId);
                     }
-                } catch (error) {
-                    console.error("API error details:", error);
-                    await saveMessageToFirestore('system', "Service temporarily unavailable.");
                 }
             }
+        } catch (error) {
+            console.error('Error in sendMessage:', error);
+            await saveMessageToFirestore('system', 'Failed to send message. Please try again.');
+        } finally {
+            state.isProcessingMessage = false;
+            if (sendButton) sendButton.disabled = false;
         }
-    } catch (error) {
-        console.error('Error in sendMessage:', error);
-        await saveMessageToFirestore('system', 'Failed to send message. Please try again.');
-    } finally {
-        state.isProcessingMessage = false;
-        if (sendButton) sendButton.disabled = false;
-        console.log('Message handling completed');
-    }
-};
+    };
 
     // === Widget Control ===
     window.toggleChat = () => {
@@ -398,11 +384,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // === Initialization ===
+    // === Initialisation ===
     if (!state.initialized) {
         try {
             await initFirebase();
-            if (!window.db) throw new Error('Firestore not initialized');
+            if (!window.db) throw new Error('Firestore not initialised');
             
             await firebase.auth().signInAnonymously();
             setupMessageListeners();
@@ -410,11 +396,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!state.userName) showWelcomeMessage();
             state.initialized = true;
             
-            // Set initial agent name
             setDynamicAgentName();
         } catch (error) {
-            console.error("Initialization error:", error);
+            console.error("Initialisation error:", error);
             return;
         }
     }
 });
+
