@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/assets/css/navbar.css">
         <link rel="stylesheet" href="/assets/css/homeSection.css">
         <link rel="stylesheet" href="/assets/css/widget.css">
+        <link rel="stylesheet" href="/assets/css/widget.boats.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
         <meta property="og:title" content="Just Enjoy Ibiza Boats: Boat Charters & Rentals in Ibiza">
@@ -1335,6 +1336,46 @@
           // Save back to localStorage
           localStorage.setItem('favBoats', JSON.stringify(store));
         }
+    </script>
+
+    <script>
+        // Add this to your existing DOMContentLoaded event listener
+
+function createWelcomePopup() {
+    const popup = document.createElement('div');
+    popup.className = 'welcome-popup';
+    popup.innerHTML = `
+        <div class="welcome-popup-content">
+            <div class="welcome-popup-text">
+                👋 Hi there! Need help planning your perfect Ibiza experience? We're here to assist!
+            </div>
+            <button class="welcome-popup-close" onclick="closeWelcomePopup()">&times;</button>
+        </div>
+    `;
+    document.body.appendChild(popup);
+
+    // Store in localStorage that we've shown the popup
+    localStorage.setItem('welcomePopupShown', 'true');
+
+    // Automatically hide popup after 5 seconds
+    setTimeout(() => {
+        closeWelcomePopup();
+    }, 5000);
+}
+
+function closeWelcomePopup() {
+    const popup = document.querySelector('.welcome-popup');
+    if (popup) {
+        popup.style.opacity = '0';
+        setTimeout(() => popup.remove(), 500);
+    }
+}
+
+// Show welcome popup if it hasn't been shown before
+if (!localStorage.getItem('welcomePopupShown')) {
+    // Delay popup appearance by 2 seconds
+    setTimeout(createWelcomePopup, 2000);
+}
     </script>
     <script src="/assets/js/jquery-migrate-3.0.0.min.js"></script>
     <script src="/assets/js/modernizr-2.6.2.min.js"></script>
