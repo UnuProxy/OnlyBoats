@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // === State Management ===
     const state = {
         processedMessages: new Set(),
+        messageQueue: new Set(),
         initialized: false,
         unsubscribeHandlers: new Set(),
         conversationId: localStorage.getItem('conversationId'),
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         userDetailsSubmitted: false,
         isAgentHandling: false,
         isProcessingMessage: false,
-        isFirstMessage: true,
+        isFirstMessage: localStorage.getItem('welcomeMessageShown') !=='true',
         isWaitingForName: false
     };
 
@@ -99,53 +100,68 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!state.conversationId) {
         state.conversationId = `conv_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
         localStorage.setItem('conversationId', state.conversationId);
+        localStorage.removeItem('welcomeMessageShown'); 
     }
+    
 
     // === Core Functions ===
 
     // Set up Firestore real-time listeners for conversation status and messages
     function setupMessageListeners() {
-        // Clear any existing listeners
         clearExistingListeners();
         
-        // Listen for conversation status changes
         const conversationUnsubscribe = window.db.collection('chatConversations')
-            .doc(state.conversationId)
-            .onSnapshot(doc => {
-                const data = doc.data();
-                if (data?.status === 'agent-handling' && !state.isAgentHandling) {
-                    state.isAgentHandling = true;
-                    handleAgentTakeover(data.agentId);
-                }
-            });
-        state.unsubscribeHandlers.add(conversationUnsubscribe);
+          .doc(state.conversationId)
+          .onSnapshot(doc => {
+            const data = doc.data();
+            if (data?.status === 'agent-handling' && !state.isAgentHandling) {
+              state.isAgentHandling = true;
+              handleAgentTakeover(data.agentId);
+            }
+          });
         
-        // Listen for messages in real time.
-        // Set includeMetadataChanges so we can filter out local writes.
+        state.unsubscribeHandlers.add(conversationUnsubscribe);
+      
         const messagesUnsubscribe = window.db.collection('chatConversations')
-            .doc(state.conversationId)
-            .collection('messages')
-            .orderBy('timestamp', 'asc')
-            .onSnapshot({ includeMetadataChanges: true }, snapshot => {
-                snapshot.docChanges().forEach(change => {
-                    if (change.type === 'added') {
-                        // Skip documents that still have pending writes.
-                        if (change.doc.metadata.hasPendingWrites) {
-                            return;
-                        }
-                        const message = change.doc.data();
-                        const messageId = message.messageId || change.doc.id;
-                        if (!state.processedMessages.has(messageId)) {
-                            displayMessage(message.role, message.content, messageId);
-                            state.processedMessages.add(messageId);
-                        }
-                    }
-                });
-            }, error => {
-                console.error('Error in messages listener:', error);
+          .doc(state.conversationId)
+          .collection('messages')
+          .orderBy('timestamp', 'asc')
+          .onSnapshot({ includeMetadataChanges: true }, snapshot => {
+            snapshot.docChanges().forEach(change => {
+              if (change.type === 'added') {
+                // Skip if the message is already being processed
+                const messageId = change.doc.data().messageId || change.doc.id;
+                if (state.messageQueue.has(messageId)) {
+                  return;
+                }
+                
+                // Skip if message is already displayed
+                if (state.processedMessages.has(messageId)) {
+                  return;
+                }
+      
+                // Skip documents that have pending writes
+                if (change.doc.metadata.hasPendingWrites) {
+                  return;
+                }
+      
+                const message = change.doc.data();
+                
+                // Add to processing queue
+                state.messageQueue.add(messageId);
+                
+                // Process the message
+                displayMessage(message.role, message.content, messageId);
+                state.processedMessages.add(messageId);
+                
+                // Remove from processing queue
+                state.messageQueue.delete(messageId);
+              }
             });
+          });
+        
         state.unsubscribeHandlers.add(messagesUnsubscribe);
-    }
+      }
     
     // Remove any existing listeners
     function clearExistingListeners() {
@@ -173,27 +189,39 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Show a welcome message to request the user's name
     async function showWelcomeMessage() {
-        const welcomeMessage = "Hi there! 👋 I'm here to help you discover the best of Ibiza. What's your name so I can assist you better?";
-        await saveMessageToFirestore('bot', welcomeMessage);
-        state.isWaitingForName = true;
-    }
+        if (state.isFirstMessage && !localStorage.getItem('welcomeMessageShown')) {
+          const welcomeMessage = "Hi there! 👋 I'm here to help you discover the best of Ibiza. What's your name so I can assist you better?";
+          const messageId = await saveMessageToFirestore('bot', welcomeMessage);
+          state.isWaitingForName = true;
+          state.isFirstMessage = false;
+          localStorage.setItem('welcomeMessageShown', 'true');
+        }
+      }
 
     // Display a message in the chat window
     function displayMessage(role, content, messageId) {
-        if (document.querySelector(`[data-message-id="${messageId}"]`)) return;
-        
+        // Check if message already exists in DOM
+        if (document.querySelector(`[data-message-id="${messageId}"]`)) {
+          return;
+        }
+      
+        // Check if message is already processed
+        if (state.processedMessages.has(messageId)) {
+          return;
+        }
+      
         const messageClass = role === 'user' ? 'user'
-            : role === 'agent' ? 'agent'
-            : role === 'system' ? 'system'
-            : 'bot';
-
+          : role === 'agent' ? 'agent'
+          : role === 'system' ? 'system'
+          : 'bot';
+      
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${messageClass}`;
         messageDiv.setAttribute('data-message-id', messageId);
         messageDiv.textContent = content;
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
+      }
 
     // Save a message to Firestore and update the conversation document
     async function saveMessageToFirestore(role, content) {
@@ -351,14 +379,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const isCurrentlyHidden = chatbotWidget.style.display === 'none' || chatbotWidget.style.display === '';
         chatbotWidget.style.display = isCurrentlyHidden ? 'flex' : 'none';
         
-        if (isCurrentlyHidden) {
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-            if (!state.userName && state.isFirstMessage) {
-                state.isFirstMessage = false;
-                showWelcomeMessage();
-            }
+        if (isCurrentlyHidden && !state.userName && !state.processedMessages.size) {
+          showWelcomeMessage();
         }
-    };
+      };
 
     window.closeChat = (event) => {
         if (event) {
