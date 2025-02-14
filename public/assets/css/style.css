@@ -4439,6 +4439,15 @@ button.mfp-arrow {
     position: relative;
     border-radius: 0;
 }
+@media screen and (min-width: 1024px) and (max-width: 1366px){
+    .booking-wrapper {
+        right: 28% !important;
+        bottom: 5% !important;
+        
+        z-index: 5;
+    }
+}
+
 .form1 {
     display: block;
     padding: 0;
@@ -4625,6 +4634,7 @@ button.mfp-arrow {
     color:  #2095AE;
     font-weight: normal;
     line-height: 15px;
+    
 }
 .select2 {
     width: 100%;
@@ -4691,6 +4701,47 @@ button.mfp-arrow {
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
     background: #1A3D5D;
     color: #fff;
+}
+
+.form1 .col1,
+.form1 .col2,
+.form1 .col3 {
+    float: left;
+    width: 18%; /* Make all columns similar width */
+}
+
+/* Override for the button column if needed */
+.form1 .c6 {
+    width: 16%;
+}
+
+/* Style adjustments for select2 to match width */
+.select2-container {
+    width: 100% !important; /* Force consistent width */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    padding: 16px 40px 16px 20px; /* Slightly reduced right padding */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ensure inputs maintain consistent width */
+.input1_inner input,
+.select1_inner .select2-container {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* Optional: Add if you want to ensure the calendar icon doesn't affect width */
+.input1_inner:after {
+    right: 15px; /* Slightly adjust icon position if needed */
+}
+
+
+.select1_inner:after {
+    right: 15px;
 }
 /* responsive */
 @media (max-width: 1259.98px) {
@@ -5026,7 +5077,9 @@ button.mfp-arrow {
     }
 }
 
-
+.special-background{
+    background-color: #1b1b1b;
+}
 
 /* ======= Accordion Box (for Faqs) style ======= */
 .accordion-box {
@@ -5059,7 +5112,7 @@ button.mfp-arrow {
     font-family: 'Gilda Display', serif;;
 }
 .accordion-box .block .acc-btn .count {
-  color: #aa8453;
+  color: #2095AE;
   padding-right: 3px;
 }
 .accordion-box .block .acc-btn:before {
@@ -5069,7 +5122,7 @@ button.mfp-arrow {
     height: 30px;
     font-size: 14px;
     font-weight: normal;
-    color: #aa8453;
+    color: #2095AE;
     line-height: 30px;
     content: "\e61a";
     font-family: "Themify";
@@ -5077,7 +5130,7 @@ button.mfp-arrow {
 }
 .accordion-box .block .acc-btn.active {
   background-color: #2b2b2b;
-    color: #aa8453;
+    color: #2095AE;
 }
 .accordion-box .block .acc-btn.active:before {
   color: "Themify";
@@ -6137,9 +6190,6 @@ select:disabled {
 h5 {
     margin-bottom: 5px; 
 }
-
-
-
 
 
 /* ======= toTop Button style ======= */
