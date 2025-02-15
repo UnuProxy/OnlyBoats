@@ -743,6 +743,28 @@ color: #aa8453;
     opacity: 1;
     transform: translateY(0);
 }
+.owl-theme .owl-dots {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    z-index: 2;
+}
+
+.owl-theme .owl-dots .owl-dot span {
+    width: 8px;
+    height: 8px;
+    margin: 5px 7px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    transition: all 0.4s ease;
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.5);
+}
 
 /* ======= Owl-Theme custom style ======= */
 .owl-theme .owl-nav.disabled + .owl-dots {

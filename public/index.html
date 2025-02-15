@@ -95,7 +95,107 @@
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     </head>
+    <style>
+        .header {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Updated overlay fix */
+.bg-overlay {
+    position: fixed; /* Change to fixed */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw; /* Use viewport width */
+    height: 100vh; /* Use viewport height */
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.v-middle.caption {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.v-middle.caption h1 {
+    margin-bottom: 2rem;
+}
+
+.elegant-cta {
+    display: inline-block;
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-decoration: none;
+    padding: 20px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    transition: all 0.4s ease;
+}
+
+.elegant-cta:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.owl-theme .owl-dots {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .header {
+        height: calc(100vh - 70px);
+    }
     
+    .v-middle.caption {
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+    
+    .elegant-cta {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+        width: auto;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 576px) {
+    .v-middle.caption {
+        gap: 1.5rem;
+    }
+    
+    .elegant-cta {
+        font-size: 1rem;
+        padding: 12px 25px;
+        letter-spacing: 1px;
+    }
+}
+        </style>
 <body>
 
 <!-- Progress scroll totop -->
@@ -177,6 +277,12 @@
                             </span>
                             <h4>Boat Rentals in Ibiza</h4>
                             <h1>Experience Ibiza from the Sea</h1>
+                            <!-- CTA integrated into slide -->
+                            <div class="cta-wrapper">
+                                <a href="/discover" class="elegant-cta">
+                                    Discover Available Dates
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -198,6 +304,12 @@
                             </span>
                             <h4>Explore Hidden Coves & Beaches</h4>
                             <h1>Your Perfect Day at Sea</h1>
+                            <!-- CTA integrated into slide -->
+                            <div class="cta-wrapper">
+                                <a href="/discover" class="elegant-cta">
+                                    Discover Available Dates
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -219,6 +331,12 @@
                             </span>
                             <h4>Best Yachting Experience</h4>
                             <h1>Enjoy The Best Moments of Life</h1>
+                            <!-- CTA integrated into slide -->
+                            <div class="cta-wrapper">
+                                <a href="/discover" class="elegant-cta">
+                                    Discover Available Dates
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -226,74 +344,6 @@
         </div>
     </div>
 </header>
-    
-    
-<!-- Boats Availability -->
-<div class="booking-wrapper">
-            <div class="container">
-                <div class="booking-inner clearfix">
-                    <form action="#" class="form1 clearfix">
-                        <div class="col1 c1">
-                            <div class="input1_wrapper">
-                                <label>Check in</label>
-                                <div class="input1_inner">
-                                    <input type="text" class="form-control input datepicker" placeholder="Check in">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col1 c2">
-                            <div class="input1_wrapper">
-                                <label>Check out</label>
-                                <div class="input1_inner">
-                                    <input type="text" class="form-control input datepicker" placeholder="Check out">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col2 c3">
-                            <div class="select1_wrapper">
-                                <label>Passengers</label>
-                                <div class="select1_inner">
-                                    <select class="select2 select" style="width: 100%">
-                                        <option value="" selected disabled>No. of Passengers</option>
-                                        <option value="1">1 Passenger</option>
-                                        <option value="2">2 Passengers</option>
-                                        <option value="3">3 Passengers</option>
-                                        <option value="4">4 Passengers</option>
-                                        <option value="5">5 Passengers</option>
-                                        <option value="6">6 Passengers</option>
-                                        <option value="7">7 Passengers</option>
-                                        <option value="8">8 Passengers</option>
-                                        <option value="9">9 Passengers</option>
-                                        <option value="10">10 Passengers</option>
-                                        <option value="11">11 Passengers</option>
-                                        <option value="12">12 Passengers</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col2 c5">
-                            <div class="select1_wrapper">
-                              <label>Boat Type</label>
-                              <div class="select1_inner">
-                                <select class="select2 select" style="width: 100%;">
-                                    <option value="" selected disabled>Preferred Boat</option>
-                                  <option value="Motor">Motor</option>
-                                  <option value="Sailing">Sailing</option>
-                                  <option value="Catamaran">Catamaran</option>
-                                  <option value="Speedboat">Speedboat</option>
-                                  <option value="Yacht">Yacht</option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          
-                        <div class="col3 c6">
-                            <a href="yacht-rental.html" class="btn-form1-submit">Check availability</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-</div>
 
   <!-- About Just Enjoy Ibiza -->
 <section class="about section-padding">
