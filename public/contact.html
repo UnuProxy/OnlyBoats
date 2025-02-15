@@ -33,51 +33,43 @@
         </svg>
     </div>
     <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <div class="logo-wrapper">
-            <a class="logo" href="index.html">
-                <h2>Just Enjoy Ibiza <span>Boats</span></h2>
+      <div class="logo-wrapper">
+        <a class="logo" href="index.html">
+          <h2>Just Enjoy Ibiza <span>Boats</span></h2>
+        </a>
+      </div>
+      <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+        <span class="toggler-icon">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">ABOUT US</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/yacht-rental.html">BOATS FOR CHARTER</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/services.html">YACHT DELIVERY</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">CONTACT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://wa.me/+34692688348" target="_blank">
+              <i class="fab fa-whatsapp"></i>
             </a>
-        </div>
-        <button class="custom-toggler" type="button" aria-label="Toggle navigation">
-            <span class="toggler-icon">
-                <span class="line"></span>
-                <span class="line"></span>
-                <span class="line"></span>
-            </span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">HOME</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">ABOUT US</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="#">
-                        BOAT CHARTER <i class="ti-angle-down"></i>
-                    </a>
-                    <div class="mega-menu">
-                        <div class="mega-menu-content">
-                            <div class="menu-column">
-                                <h3>Charter a Boat</h3>
-                                <ul class="menu-list">
-                                    <li><a href="/yacht-rental.html"><i class="fa fa-angle-right"></i> Boats for Charter</a></li>
-                                    <li><a href="/services.html"><i class="fa fa-angle-right"></i> Food & Drinks Delivered Onboard</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">CONTACT</a>
-                </li>
-            </ul>
-        </div>
+          </li>
+        </ul>
+      </div>
     </div>
-</nav>
+    </nav>
     <!-- Header Banner -->
     <div class="banner-header section-padding valign bg-img bg-fixed bg-position-bottom" data-overlay-dark="4" data-background="/assets/img/EcoFriendly.jpeg">
         <div class="container">
@@ -208,147 +200,80 @@
     </footer>
     <!-- jQuery -->
     <script src="/assets/js/jquery-3.6.3.min.js"></script>
-    <!-- Hamburger -->
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-   // Get elements
-   const toggler = document.querySelector('.custom-toggler');
-   const navCollapse = document.querySelector('.navbar-collapse');
-   const dropdownToggle = document.querySelector('.dropdown-toggle');
-   const megaMenu = document.querySelector('.mega-menu');
+   <!-- Hamburger -->
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+ // Get elements
+ const toggler = document.querySelector('.custom-toggler');
+ const navCollapse = document.querySelector('.navbar-collapse');
 
-   if (toggler && navCollapse) {
-       let isAnimating = false;
+ if (toggler && navCollapse) {
+     let isAnimating = false;
 
-       // Toggle menu with animation lock
-       toggler.addEventListener('click', function(e) {
-           e.preventDefault();
-           if (isAnimating) return;
-           
-           isAnimating = true;
-           this.classList.toggle('active');
-           navCollapse.classList.toggle('show');
-           
-           // Reset mega menu when closing main menu
-           if (!navCollapse.classList.contains('show')) {
-               dropdownToggle.classList.remove('dropdown-active');
-               megaMenu.classList.remove('show-mobile');
-               const arrow = dropdownToggle.querySelector('.ti-angle-down');
-               if (arrow) arrow.style.transform = '';
-           }
-           
-           // Toggle body classes for overflow control
-           document.body.classList.toggle('menu-open');
-           document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
-           
-           // Reset animation lock after transition
-           setTimeout(() => {
-               isAnimating = false;
-           }, 400);
-       });
+     // Toggle menu with animation lock
+     toggler.addEventListener('click', function(e) {
+         e.preventDefault();
+         if (isAnimating) return;
+         
+         isAnimating = true;
+         this.classList.toggle('active');
+         navCollapse.classList.toggle('show');
+         
+         // Toggle body classes for overflow control
+         document.body.classList.toggle('menu-open');
+         document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
+         
+         // Reset animation lock after transition
+         setTimeout(() => {
+             isAnimating = false;
+         }, 400);
+     });
 
-       // Mobile dropdown functionality
-       if (dropdownToggle && megaMenu) {
-           dropdownToggle.addEventListener('click', function(e) {
-               if (window.innerWidth < 992) {
-                   e.preventDefault();
-                   e.stopPropagation();
-                   
-                   // Toggle dropdown
-                   this.classList.toggle('dropdown-active');
-                   megaMenu.classList.toggle('show-mobile');
-                   
-                   // Rotate arrow icon
-                   const arrow = this.querySelector('.ti-angle-down');
-                   if (arrow) {
-                       arrow.style.transform = this.classList.contains('dropdown-active') 
-                           ? 'rotate(180deg)' 
-                           : '';
-                   }
-               }
-           });
-       }
+     // Close menu when clicking a link
+     const navLinks = navCollapse.querySelectorAll('.nav-link');
+     navLinks.forEach(link => {
+         link.addEventListener('click', () => {
+             if (isAnimating) return;
+             toggler.classList.remove('active');
+             navCollapse.classList.remove('show');
+             document.body.classList.remove('menu-open');
+             document.body.style.overflow = '';
+         });
+     });
 
-       // Close menu when clicking a link
-       const navLinks = navCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle)');
-       navLinks.forEach(link => {
-           link.addEventListener('click', () => {
-               if (isAnimating) return;
-               toggler.classList.remove('active');
-               navCollapse.classList.remove('show');
-               document.body.classList.remove('menu-open'); // Remove body class
-               document.body.style.overflow = ''; // Reset body scroll
-           });
-       });
+     // Close menu when clicking outside
+     document.addEventListener('click', function(e) {
+         if (!isAnimating &&
+             !toggler.contains(e.target) &&
+             !navCollapse.contains(e.target) &&
+             navCollapse.classList.contains('show')) {
+             toggler.classList.remove('active');
+             navCollapse.classList.remove('show');
+             document.body.classList.remove('menu-open');
+             document.body.style.overflow = '';
+         }
+     });
 
-       // Close menu and dropdown when clicking outside
-       document.addEventListener('click', function(e) {
-           // Close main menu if clicking outside
-           if (!isAnimating &&
-               !toggler.contains(e.target) &&
-               !navCollapse.contains(e.target) &&
-               navCollapse.classList.contains('show')) {
-               toggler.classList.remove('active');
-               navCollapse.classList.remove('show');
-               document.body.classList.remove('menu-open'); // Remove body class
-               document.body.style.overflow = ''; // Reset body scroll
-           }
+     // Handle clicking on navbar collapse background
+     navCollapse.addEventListener('click', function(e) {
+         if (e.target === navCollapse) {
+             toggler.classList.remove('active');
+             navCollapse.classList.remove('show');
+             document.body.classList.remove('menu-open');
+             document.body.style.overflow = '';
+         }
+     });
 
-           // Close dropdown if clicking outside
-           if (window.innerWidth < 992 &&
-               dropdownToggle &&
-               megaMenu &&
-               !dropdownToggle.contains(e.target) &&
-               !megaMenu.contains(e.target)) {
-               dropdownToggle.classList.remove('dropdown-active');
-               megaMenu.classList.remove('show-mobile');
-               const arrow = dropdownToggle.querySelector('.ti-angle-down');
-               if (arrow) {
-                   arrow.style.transform = '';
-               }
-           }
-       });
-
-       // Handle clicking on navbar collapse background
-       navCollapse.addEventListener('click', function(e) {
-           if (e.target === navCollapse) {
-               toggler.classList.remove('active');
-               navCollapse.classList.remove('show');
-               document.body.classList.remove('menu-open'); // Remove body class
-               document.body.style.overflow = '';
-           }
-       });
-
-       // Window resize handler
-       window.addEventListener('resize', function() {
-           if (window.innerWidth >= 992) {
-               // Reset mobile-specific states when returning to desktop
-               document.body.classList.remove('menu-open'); // Remove body class
-               document.body.style.overflow = '';
-               if (dropdownToggle) {
-                   dropdownToggle.classList.remove('dropdown-active');
-               }
-               if (megaMenu) {
-                   megaMenu.classList.remove('show-mobile');
-               }
-               const arrow = dropdownToggle?.querySelector('.ti-angle-down');
-               if (arrow) {
-                   arrow.style.transform = '';
-               }
-           }
-       });
-
-       // Prevent scroll propagation within mega menu
-       if (megaMenu) {
-           megaMenu.addEventListener('wheel', function(e) {
-               if (window.innerWidth < 992) {
-                   e.stopPropagation();
-               }
-           });
-       }
-   }
+     // Window resize handler
+     window.addEventListener('resize', function() {
+         if (window.innerWidth >= 992) {
+             document.body.classList.remove('menu-open');
+             document.body.style.overflow = '';
+         }
+     });
+ }
 });
-  </script>
+</script>
     <script>
         function toggleFavourite(boatId) {
           let store = JSON.parse(localStorage.getItem('favBoats')) || {};
