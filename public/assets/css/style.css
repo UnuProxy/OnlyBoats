@@ -553,6 +553,38 @@ color: #aa8453;
   transform: rotate(35deg);
 }
 
+/* HEADER OUR FLEET  */
+.elegant-cta {
+    border: 1px solid #fff;
+    padding: 10px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .elegant-cta:hover {
+    background-color: #fff;
+    color: #00c2cb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .elegant-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.4s ease;
+  }
+  
+  .elegant-cta:hover::before {
+    left: 100%;
+  }
+
 
 /* ======= Selection style ======= */
 ::-webkit-selection {
@@ -744,26 +776,7 @@ color: #aa8453;
     transform: translateY(0);
 }
 .owl-theme .owl-dots {
-    position: absolute;
-    bottom: 30px;
-    width: 100%;
-    z-index: 2;
-}
-
-.owl-theme .owl-dots .owl-dot span {
-    width: 8px;
-    height: 8px;
-    margin: 5px 7px;
-    background: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
-    transition: all 0.4s ease;
-}
-
-.owl-theme .owl-dots .owl-dot.active span,
-.owl-theme .owl-dots .owl-dot:hover span {
-    background: rgba(255, 255, 255, 0.5);
-    border-color: rgba(255, 255, 255, 0.5);
+    opacity: 0;
 }
 
 /* ======= Owl-Theme custom style ======= */
