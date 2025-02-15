@@ -382,59 +382,57 @@
 <footer class="footer">
     <div class="footer-top">
         <div class="container">
-            <!-- About Column -->
-            <div class="footer-column">
-                <h3 class="footer-title">About Just Enjoy Ibiza Boat</h3>
-                <p class="footer-about-text">
-                    At Just Enjoy Ibiza, we create unforgettable yacht experiences. With premium vessels and expert crews, your time on the Mediterranean will be nothing short of exceptional.
-                </p>
-                <button class="footer-language-btn">English</button>
-            </div>
-
-            <!-- Discover Column -->
-            <div class="footer-column">
-                <h3 class="footer-title">Discover</h3>
-                <ul class="footer-explore-list">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/yacht-rental.html">Our Fleet</a></li>
-                    <li><a href="/yacht-rental.html">Day Charters</a></li>
-                    <li><a href="/services.html">Food & Drinks Boat Delivery</a></li>
-                    <li><a href="/contact.html">Contact</a></li>
-                    <li><a href="/about.html">About Us</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Column -->
-            <div class="footer-column">
-                <h3 class="footer-title">Contact</h3>
-                <div class="footer-contact-info">
-                    <p class="footer-contact-address">
-                        Marina Botafoch<br>
-                        07800 Ibiza, Balearic Islands<br>
-                        Spain
-                    </p>
-                    <div class="footer-contact-phone">
-                        <a href="tel:+34692688348">
-                            <i class="fas fa-phone"></i>
-                            +34 692 688 348
-                        </a>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-column footer-about">
+                        <h3 class="footer-title">About Just Enjoy Ibiza Boat</h3>
+                        <p class="footer-about-text">At Just Enjoy Ibiza, we create unforgettable yacht experiences. With premium vessels and expert crews, your time on the Mediterranean will be nothing short of exceptional.</p>
+                        <div class="footer-language"> <i class="lni ti-world"></i>
+                            <select onchange="location = this.value;">
+                                <option value="/en">English</option>
+                                
+                            </select>
+                        </div>
                     </div>
-                    <div class="footer-contact-email">
-                        <a href="mailto:info@justenjoyibizaboats.com">info@justenjoyibizaboats.com</a>
+                </div>
+                <div class="col-md-3 offset-md-1">
+                    <div class="footer-column footer-explore clearfix">
+                        <h3 class="footer-title">Discover</h3>
+                        <ul class="footer-explore-list list-unstyled">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="yacht-rental.html">Our Fleet</a></li>
+                            <li><a href="yacht-rental.html">Day Charters</a></li>
+                            <li><a href="services.html">Food & Drinks Boat Delivery</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                            <li><a href="news.html">News</a></li>
+                        </ul>
                     </div>
-                    <div class="footer-social">
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-column footer-contact">
+                        <h3 class="footer-title">Contact</h3>
+                        <p class="footer-contact-text">Marina Botafoch<br>07800 Ibiza, Balearic Islands<br>Spain</p>
+                        <div class="footer-contact-info">
+                            <p class="footer-contact-phone"><span class="flaticon-call"></span> +34 692 688 348</p>
+                            <p class="footer-contact-mail">info@justenjoyibizaboats.com</p>
+                        </div>
+                        <div class="footer-about-social-list">
+                            <a href="https://www.instagram.com/justenjoyibiza_boats_tours/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                            <a href="https://wa.me/34692688348" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</footer>
-<script>
+  
+</footer>>
+    <script>
     function checkGuests(value) {
         if (value === "more") {
             alert("For groups with more than 12 people, we can accommodate you in boats! Please contact us for arrangements.");
@@ -582,7 +580,7 @@
     </script>
     <script src="assets/js/customyacht.js"></script>
    <!-- Hamburger Menu -->
-   <script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
  // Get elements
  const toggler = document.querySelector('.custom-toggler');
@@ -654,7 +652,7 @@
      });
  }
 });
- </script> 
+    </script> 
     
     <!-- Main Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
@@ -673,6 +671,5 @@
     <script src="assets/js/jquery.magnific-popup.js"></script>
     <script src="assets/js/select2.js"></script>
     <script src="assets/js/custom.js"></script>
-    
 </body>
 </html>
