@@ -94,6 +94,7 @@
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+       
     </head>
 <body>
 
@@ -124,10 +125,10 @@
             <a class="nav-link" href="about.html">ABOUT US</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/yacht-rental.html">BOATS FOR CHARTER</a>
+            <a class="nav-link" href="/yacht-rental.html">BOAT RENTAL</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/services.html">YACHT DELIVERY</a>
+            <a class="nav-link" href="/services.html">ONBOARD DELIVERY</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact.html">CONTACT</a>
@@ -142,91 +143,30 @@
     </div>
 </nav>
       
-<!-- Header with Text Slider -->
 <header class="header slider-fade">
-    <!-- Fixed Background -->
-    <div class="bg-overlay"></div>
-    <video class="bg-video" autoplay loop muted playsinline>
-        <source src="/assets/video/space_boat_experience_corto.mp4" type="video/mp4">
-    </video>
-    
-    <!-- Text Slider -->
-    <div class="owl-carousel owl-theme">
-        <!-- Slide 1 -->
-        <div class="text-center item">
-            <div class="v-middle caption">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <span>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                            </span>
-                            <h4>Boat Rentals in Ibiza</h4>
-                            <h1>Experience Ibiza from the Sea</h1>
-                            <!-- CTA integrated into slide -->
-                            <div class="cta-wrapper">
-                                <a href="yacht-rental.html" class="elegant-cta">
-                                    OUR FLEET
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 2 -->
-        <div class="text-center item">
-            <div class="v-middle caption">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <span>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                            </span>
-                            <h4>Explore Hidden Coves & Beaches</h4>
-                            <h1>Your Perfect Day at Sea</h1>
-                            <!-- CTA integrated into slide -->
-                            <div class="cta-wrapper">
-                                <a href="yacht-rental.html" class="elegant-cta">
-                                    OUR FLEET
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="text-center item">
-            <div class="v-middle caption">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <span>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                                <i class="star-rating"></i>
-                            </span>
-                            <h4>Best Yachting Experience</h4>
-                            <h1>Enjoy The Best Moments of Life</h1>
-                            <!-- CTA integrated into slide -->
-                            <div class="cta-wrapper">
-                                <a href="yacht-rental.html" class="elegant-cta">
-                                    OUR FLEET
-                                </a>
-                            </div>
+    <div class="video-wrapper">
+        <div class="bg-overlay"></div>
+        
+        <!-- Videos -->
+        <video class="bg-video mobile-video" autoplay loop muted playsinline>
+            <source src="/assets/video/Torre~.mp4" type="video/mp4">
+        </video>
+        <video class="bg-video desktop-video" autoplay loop muted playsinline>
+            <source src="/assets/video/VQ82SeaStory.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Content integrated within video-wrapper -->
+        <div class="header-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1 text-center">
+                        <h1>Boat Rental in Ibiza</h1>
+                        <h4>
+                            Just enjoy the trip of your life</h4>
+                        <div class="cta-wrapper">
+                            <a href="yacht-rental.html" class="elegant-cta">
+                                OUR FLEET
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -241,13 +181,7 @@
         <div class="row">
             <!-- Text Content -->
             <div class="col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
-                <span>
-                    <i class="star-rating"></i>
-                    <i class="star-rating"></i>
-                    <i class="star-rating"></i>
-                    <i class="star-rating"></i>
-                    <i class="star-rating"></i>
-                </span>
+                
                 <div class="section-subtitle">Just Enjoy Ibiza Boats</div>
                 <div class="section-title">Your Gateway to the Mediterranean</div>
                 <p>Welcome to the ultimate yacht charter experience in Ibiza. Explore the azure waters, hidden coves, and pristine beaches with our exclusive fleet of luxury boats. Whether it's a family getaway, a romantic escape, or a corporate retreat, we cater to your every need.</p>
@@ -547,18 +481,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="custom-video-content text-center">
-                    <!-- Stars -->
-                    <div class="stars-wrapper">
-                        <i class="star-rating">★</i>
-                        <i class="star-rating">★</i>
-                        <i class="star-rating">★</i>
-                        <i class="star-rating">★</i>
-                        <i class="star-rating">★</i>
-                    </div>
                     
                     <!-- Subtitle -->
                     <div class="custom-subtitle">
-                        <span>Discover Luxury on the Waves</span>
+                        <span>Discover Ibiza on the Waves</span>
                     </div>
                     
                     <!-- Title -->
@@ -612,22 +538,9 @@
                         <i class="fas fa-water"></i>
                     </span>
                     <h5>Extra Water Toys</h5>
-                    <p>Enhance your experience with seascooters, paddleboards, and other fun options.</p>
+                    <p>Enhance your experience with seascooters, paddleboards, Seabobs and other fun options.</p>
                     <div class="facility-bg-icon">
                         <i class="fas fa-water"></i>
-                    </div>
-                </div>
-            </div>
-            <!-- Service 3: Seabobs -->
-            <div class="col-md-4">
-                <div class="facility-card" data-aos="fade-up" data-aos-delay="200">
-                    <span class="facility-icon">
-                        <i class="fas fa-swimmer"></i>
-                    </span>
-                    <h5>Seabobs</h5>
-                    <p>Experience the thrill of underwater exploration with our high-performance Seabobs.</p>
-                    <div class="facility-bg-icon">
-                        <i class="fas fa-swimmer"></i>
                     </div>
                 </div>
             </div>
@@ -644,21 +557,9 @@
                     </div>
                 </div>
             </div>
-            <!-- Service 5: Water Sports Equipment -->
-            <div class="col-md-4">
-                <div class="facility-card" data-aos="fade-up" data-aos-delay="400">
-                    <span class="facility-icon">
-                        <i class="fas fa-wind"></i>
-                    </span>
-                    <h5>Water Sports Equipment</h5>
-                    <p>Access jet skis, wakeboards, and other water sports equipment for an adventurous day on the water.</p>
-                    <div class="facility-bg-icon">
-                        <i class="fas fa-wind"></i>
-                    </div>
-                </div>
-            </div>
+            
             <!-- Service 6: Personalised Itineraries -->
-            <div class="col-md-4">
+           <!--  <div class="col-md-4">
                 <div class="facility-card" data-aos="fade-up" data-aos-delay="500">
                     <span class="facility-icon">
                         <i class="fas fa-map-marked-alt"></i>
@@ -669,7 +570,7 @@
                         <i class="fas fa-map-marked-alt"></i>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </section>
@@ -906,10 +807,8 @@
             <div class="yacht-flex">
                 <!-- Info Section -->
                 <div class="yacht-info">
-                    <div class="yacht-rating">
-                        ★★★★★
-                    </div>
-                    <h1 class="yacht-title">Experience Luxury on Ibiza's Crystal Waters</h1>
+                    
+                    <h1 class="yacht-title">Experience Ibiza's Crystal Waters</h1>
                     <p class="yacht-description">
                         Embark on an unforgettable journey aboard our premium yachts. 
                         With professional crew, world-class amenities, and breathtaking 
