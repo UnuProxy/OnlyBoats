@@ -256,3 +256,38 @@
   #messages::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+  /* Font styling for chat widget */
+#chatbot-widget,
+.chat-button,
+.welcome-popup {
+    font-family: "Crimson Text", serif;
+}
+
+/* Refine specific element font styles */
+#agent-name {
+    font-family: "Crimson Text", serif;
+    font-size: 1.1rem;
+    font-weight: 500; /* Slightly reduced from 600 to match the elegant style */
+}
+
+#user-input {
+    font-family: "Crimson Text", serif;
+    font-size: 1rem;
+}
+
+.message {
+    font-family: "Crimson Text", serif;
+    line-height: 1.5;
+    font-size: 1rem; /* Adjusted from 0.95rem for better readability */
+}
+
+.welcome-popup-text {
+    font-family: "Crimson Text", serif;
+    font-size: 1rem; /* Adjusted from 0.95rem */
+}
+
+.chat-button {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+}

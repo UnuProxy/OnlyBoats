@@ -93,8 +93,7 @@
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-       
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>          
     </head>
 <body>
 
@@ -124,24 +123,33 @@
           <li class="nav-item">
             <a class="nav-link" href="about.html">ABOUT US</a>
           </li>
+          <!-- Changed BOAT RENTAL to OUR FLEET -->
           <li class="nav-item">
-            <a class="nav-link" href="/yacht-rental.html">BOAT RENTAL</a>
+            <a class="nav-link" href="yacht-rental.html">OUR BOATS</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/services.html">ONBOARD DELIVERY</a>
+          <!-- Replace ONBOARD DELIVERY with SERVICES dropdown -->
+          <li class="nav-item dropdown" id="servicesDropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownToggle" role="button">
+              SERVICES
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="yacht-rental.html">BOAT RENTAL</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="services.html">CATERING DELIVERY</a>
+              </li>
+            </ul>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="contact.html">CONTACT</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://wa.me/+34692688348" target="_blank">
-              <i class="fab fa-whatsapp"></i>
-            </a>
-          </li>
+          <!-- WhatsApp button removed -->
         </ul>
       </div>
     </div>
-</nav>
+  </nav>
       
 <header class="header slider-fade">
     <div class="video-wrapper">
@@ -149,7 +157,7 @@
         
         <!-- Videos -->
         <video class="bg-video mobile-video" autoplay loop muted playsinline>
-            <source src="/assets/video/Torre~.mp4" type="video/mp4">
+            <source src="/assets/video/e108f1a5-726f-4431-bcaf-b1140b9b19e9.mp4" type="video/mp4">
         </video>
         <video class="bg-video desktop-video" autoplay loop muted playsinline>
             <source src="/assets/video/VQ82SeaStory.mp4" type="video/mp4">
@@ -158,80 +166,71 @@
         <!-- Content integrated within video-wrapper -->
         <div class="header-content">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-10 offset-md-1 text-center">
-                        <h1>Boat Rental in Ibiza</h1>
-                        <h4>
-                            Just enjoy the trip of your life</h4>
-                        <div class="cta-wrapper">
-                            <a href="yacht-rental.html" class="elegant-cta">
-                                OUR FLEET
-                            </a>
-                        </div>
-                    </div>
+              <div class="row">
+                <div class="col-md-10 offset-md-1 text-center">
+                  <h1>Arrive as Clients, Leave as Friends.</h1>
+                  <!-- Updated tagline -->
+                  <h4></h4>
+                  <div class="cta-wrapper">
+                    <a href="yacht-rental.html" class="elegant-cta">
+                      BOOK NOW
+                    </a>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
+          
     </div>
 </header>
 
-  <!-- About Just Enjoy Ibiza -->
-<section class="about section-padding">
+<!-- About Just Enjoy Ibiza -->
+<section class="benefits-section">
     <div class="container">
-        <div class="row">
-            <!-- Text Content -->
-            <div class="col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
-                
-                <div class="section-subtitle">Just Enjoy Ibiza Boats</div>
-                <div class="section-title">Your Gateway to the Mediterranean</div>
-                <p>Welcome to the ultimate yacht charter experience in Ibiza. Explore the azure waters, hidden coves, and pristine beaches with our exclusive fleet of luxury boats. Whether it's a family getaway, a romantic escape, or a corporate retreat, we cater to your every need.</p>
-                <p>At Just Enjoy Ibiza Boats, we pride ourselves on delivering premium services: professional crews, exquisite onboard catering, and unforgettable moments tailored to you. Experience unparalleled comfort and style as you embark on your Mediterranean adventure.</p>
-                <!-- Reservation Call -->
-                <div class="reservations">
-                    <div class="icon"><span class="flaticon-call"></span></div>
-                    <div class="text">
-                        <p>For Bookings</p> 
-                        <a href="tel:+34692688348">+34 692 688 348</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Right-Side Content -->
-            <div class="col-md-6 animate-box" data-animate-effect="fadeInUp">
-                <div class="row">
-                    <!-- Image 1 -->
-                    <div class="col-md-6 mb-30">
-                        <img src="/assets/img/De-Antonio-42-Bambino-13.jpg" alt="Luxury Boat 1" class="img-fluid rounded">
-                    </div>
-                    <!-- Image 2 -->
-                    <div class="col-md-6 mb-30">
-                        <img src="/assets/img/De-Antonio42Bambino.jpg" alt="Luxury Boat 2" class="img-fluid rounded">
-                    </div>
-                    <!-- Additional Content -->
-                    <div class="col-md-12">
-                        <div class="additional-info mt-30">
-                            <h4>Why Choose Us?</h4>
-                            <ul>
-                                <li><i class="fa fa-check"></i> Tailored Experiences</li>
-                                <li><i class="fa fa-check"></i> Premium Fleet & Crew</li>
-                                <li><i class="fa fa-check"></i> Onboard Catering & Drinks</li>
-                                <li><i class="fa fa-check"></i> 24/7 Personalised Support</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="benefits-content">
+        <div class="intro-text">
+          <div class="brand-name">Just Enjoy Ibiza Boats</div>
+          <h1 class="main-title">Experience Ibiza Differently</h1>
+          <p class="description">
+            We're a young, local team driven by a passion for friendly, professional yacht experiences that you'll remember and talk about long after your holiday ends.
+          </p>
+          <p class="description">
+            From hidden coves to Ibiza's iconic nightlife, we guide you every step of the way—ensuring an authentic taste of the island. Our difference? We treat you like a friend, offering personal touches, top-tier service, and a warm welcome that sets us apart.
+          </p>
         </div>
+
+        <div class="benefits-list-section">
+          <h2>Why Choose Us?</h2>
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <div class="benefit-dot"></div>
+              <div class="benefit-text">Warm & Genuine Hospitality</div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-dot"></div>
+              <div class="benefit-text">Handpicked Fleet & Crews</div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-dot"></div>
+              <div class="benefit-text">Personalised Itineraries</div>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-dot"></div>
+              <div class="benefit-text">Seamless Experience</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 </section>
-
+  
 <!-- Boats -->
 <section class="boats section-padding" data-scroll-index="1">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="boats-section-subtitle">Experience Ibiza</div>
-                <div class="boats-section-title">Exclusive Fleet</div>
+                <div class="boats-section-title">Find Your Perfect Boat</div>
             </div>
         </div>
         <div class="row boat-grid">
@@ -241,22 +240,18 @@
                     <div class="image-container">
                         <img src="/assets/img/SeaRAy290.JPEG" alt="Sea Ray 290 Speedboat">
                         <div class="image-overlay">
-                            <span class="boat-type">Dynamic Comfort</span>
+                            <span class="boat-type">Perfect for Couples & Small Groups</span>
                         </div>
                     </div>
                     <div class="boat-content">
                         <div class="boat-name">Sea Ray 290</div>
-                        <div class="price">Starting from €900</div>
-                        <div class="facilities">
-                            <ul>
-                                <li><i class="fas fa-ship"></i> Compact & Fast</li>
-                                <li><i class="fas fa-users"></i> 11 Passengers</li>
-                                <li><i class="fas fa-sun"></i> Sunroof</li>
-                                <li><i class="fas fa-glass-martini"></i> Premium Drinks</li>
-                            </ul>
-                            <div class="details-link">
-                                <a href="boat-details.html">View Details</a>
-                            </div>
+                        <div class="key-features">
+                            <span class="price-tag">From €900/day</span>
+                            <span class="capacity">Up to 11 guests</span>
+                        </div>
+                        <div class="boat-actions">
+                            <button class="enquiry-btn" onclick="openInquiryForm()">Enquire Now</button>
+                            <a href="boat-details.html" class="view-details">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -266,24 +261,20 @@
             <div class="col-md-4">
                 <div class="boat-item">
                     <div class="image-container">
-                        <img src="/assets/img/DeAntonio36.jpg" alt="DeAntonio 34 Yacht">
+                        <img src="/assets/img/DeAntonio36Paradise.jpg" alt="DeAntonio 36 Yacht">
                         <div class="image-overlay">
-                            <span class="boat-type">Smart Versatility</span>
+                            <span class="boat-type">Great for Family & Friends</span>
                         </div>
                     </div>
                     <div class="boat-content">
                         <div class="boat-name">DeAntonio 34</div>
-                        <div class="price">€1,400 / Day</div>
-                        <div class="facilities">
-                            <ul>
-                                <li><i class="fas fa-ship"></i> Spacious Deck</li>
-                                <li><i class="fas fa-users"></i> 9 Passengers</li>
-                                <li><i class="fas fa-sun"></i> Sun Deck</li>
-                                <li><i class="fas fa-music"></i> Premium Sound</li>
-                            </ul>
-                            <div class="details-link">
-                                <a href="boat-details.html">View Details</a>
-                            </div>
+                        <div class="key-features">
+                            <span class="price-tag">€1,400/day</span>
+                            <span class="capacity">Up to 9 guests</span>
+                        </div>
+                        <div class="boat-actions">
+                            <button class="enquiry-btn" onclick="openInquiryForm()">Enquire Now</button>
+                            <a href="boat-details.html" class="view-details">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -295,22 +286,18 @@
                     <div class="image-container">
                         <img src="/assets/img/SessaMarine.jpg" alt="Sessa Marine 52 Luxury Yacht">
                         <div class="image-overlay">
-                            <span class="boat-type">Elegant Explorer</span>
+                            <span class="boat-type">Luxury Day Cruiser</span>
                         </div>
                     </div>
                     <div class="boat-content">
                         <div class="boat-name">Sessa Marine 52</div>
-                        <div class="price">€1,800 / Day</div>
-                        <div class="facilities">
-                            <ul>
-                                <li><i class="fas fa-ship"></i> Spacious Deck</li>
-                                <li><i class="fas fa-users"></i> 10 Passengers</li>
-                                <li><i class="fas fa-tachometer-alt"></i> High Speed</li>
-                                <li><i class="fas fa-glass-martini"></i> Premium Bar</li>
-                            </ul>
-                            <div class="details-link">
-                                <a href="boat-details.html">View Details</a>
-                            </div>
+                        <div class="key-features">
+                            <span class="price-tag">€1,800/day</span>
+                            <span class="capacity">Up to 10 guests</span>
+                        </div>
+                        <div class="boat-actions">
+                            <button class="enquiry-btn" onclick="openInquiryForm()">Enquire Now</button>
+                            <a href="boat-details.html" class="view-details">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -322,22 +309,18 @@
                     <div class="image-container">
                         <img src="/assets/img/CranchiA46.jpeg" alt="Cranchi A46 Luxury Yacht">
                         <div class="image-overlay">
-                            <span class="boat-type">Modern Luxury</span>
+                            <span class="boat-type">Perfect for Large Groups</span>
                         </div>
                     </div>
                     <div class="boat-content">
                         <div class="boat-name">Cranchi A46</div>
-                        <div class="price">Starting from €1,800 / Day</div>
-                        <div class="facilities">
-                            <ul>
-                                <li><i class="fas fa-ship"></i> Spacious Deck</li>
-                                <li><i class="fas fa-users"></i> 12 Passengers</li>
-                                <li><i class="fas fa-tachometer-alt"></i> High Speed</li>
-                                <li><i class="fas fa-glass-martini"></i> Premium Bar</li>
-                            </ul>
-                            <div class="details-link">
-                                <a href="boat-details.html">View Details</a>
-                            </div>
+                        <div class="key-features">
+                            <span class="price-tag">From €1,800/day</span>
+                            <span class="capacity">Up to 12 guests</span>
+                        </div>
+                        <div class="boat-actions">
+                            <button class="enquiry-btn" onclick="openInquiryForm()">Enquire Now</button>
+                            <a href="boat-details.html" class="view-details">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -349,22 +332,18 @@
                     <div class="image-container">
                         <img src="/assets/img/Nomad-142.jpg" alt="Mangusta 108 Luxury Yacht">
                         <div class="image-overlay">
-                            <span class="boat-type">Power Performance</span>
+                            <span class="boat-type">Luxury Experience</span>
                         </div>
                     </div>
                     <div class="boat-content">
                         <div class="boat-name">Mangusta 108</div>
-                        <div class="price">Starting from €12.250 / Day</div>
-                        <div class="facilities">
-                            <ul>
-                                <li><i class="fas fa-ruler"></i> Length 33m</li>
-                                <li><i class="fas fa-bed"></i> 4 Cabins</li>
-                                <li><i class="fas fa-clock"></i> Overnight Stay</li>
-                                <li><i class="fas fa-swimming-pool"></i> Jacuzzi</li>
-                            </ul>
-                            <div class="details-link">
-                                <a href="boat-details.html">View Details</a>
-                            </div>
+                        <div class="key-features">
+                            <span class="price-tag">From €12,250/day</span>
+                            <span class="capacity">Overnight Stay</span>
+                        </div>
+                        <div class="boat-actions">
+                            <button class="enquiry-btn" onclick="openInquiryForm()">Enquire Now</button>
+                            <a href="boat-details.html" class="view-details">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -376,22 +355,18 @@
                     <div class="image-container">
                         <img src="/assets/img/RivaArgo90.jpeg" alt="Riva Argo 90 Luxury Yacht">
                         <div class="image-overlay">
-                            <span class="boat-type">Italian Elegance</span>
+                            <span class="boat-type">Ultimate Luxury</span>
                         </div>
                     </div>
                     <div class="boat-content">
                         <div class="boat-name">Riva Argo 90</div>
-                        <div class="price">Starting from €12,950 / Day</div>
-                        <div class="facilities">
-                            <ul>
-                                <li><i class="fas fa-ruler"></i> Length 28.49m</li>
-                                <li><i class="fas fa-users"></i> 8 Guests</li>
-                                <li><i class="fas fa-couch"></i> Solarium</li>
-                                <li><i class="fas fa-umbrella-beach"></i> Beach Club</li>
-                            </ul>
-                            <div class="details-link">
-                                <a href="boat-details.html">View Details</a>
-                            </div>
+                        <div class="key-features">
+                            <span class="price-tag">From €12,950/day</span>
+                            <span class="capacity">8 Guests</span>
+                        </div>
+                        <div class="boat-actions">
+                            <button class="enquiry-btn" onclick="openInquiryForm()">Enquire Now</button>
+                            <a href="boat-details.html" class="view-details">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -401,10 +376,24 @@
     <div class="row mt-5">
         <div class="col-md-12">
             <div class="view-all-boats">
-                <h3>Discover Our Complete Fleet</h3>
-                <p>Explore our extensive collection of premium boats and yachts</p>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="60">0</div>
+                        <div class="stat-label">Boats Available</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="2500">0</div>
+                        <div class="stat-label">Happy Clients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="150">0</div>
+                        <div class="stat-label">5-Star Reviews</div>
+                    </div>
+                </div>
+                <h3>Find Your Dream Boat</h3>
+                <p>Join thousands of satisfied customers who found their perfect boat with us</p>
                 <a href="yacht-rental.html" class="view-all-link">
-                    <span>View All Boats</span>
+                    <span>Explore Full Fleet</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -412,167 +401,124 @@
     </div>
 </section>
 
-
 <!-- Offerings Section -->
-<section class="pricing section-padding">
+<section class="news section-padding special-background">
     <div class="container">
+        <!-- Section Header -->
         <div class="row">
-            <!-- Left Content -->
-            <div class="col-md-4">
-                <div class="section-subtitle"><span>What We Offer</span></div>
-                <div class="section-title">Exclusive Services</div>
-                <p class="color-2">Enjoy premium services tailored to elevate your yacht experience. Complementary drinks, boat food delivery, and drink delivery services are just the beginning.</p>
-                <p class="color-2">Relax and indulge while we handle the details, ensuring your time on the water is as luxurious and effortless as possible.</p>
-                <div class="reservations mb-30">
-                    <div class="icon"><span class="flaticon-call"></span></div>
-                    <div class="text">
-                        <p class="color-2">For more information</p> 
-                        <a href="tel:692-688-348">+34 692 688 348</a>
-                    </div>
+            <div class="col-md-12">
+                <div class="section-subtitle">
+                    <span>What We Offer</span>
                 </div>
+                <div class="section-title ">Exclusive Services</div>
             </div>
-
-            <!-- Carousel Content -->
-           <div class="col-md-8">
-  <div class="owl-carousel owl-theme">
-    <!-- Offering 1 -->
-    <div class="pricing-card">
-      <img src="/assets/img/ComplementaryDrinks.webp" alt="Complementary Drinks" style="width: 100%; height: 250px; object-fit: cover;">
-      <div class="desc">
-        <div class="name">Complementary Drinks</div>
-        <ul class="list-unstyled list">
-          <li><i class="ti-check"></i> Refreshing beverages</li>
-          <li><i class="ti-check"></i> Included with every charter</li>
-        </ul>
-      </div>
-    </div>
-    <!-- Offering 2 -->
-    <div class="pricing-card">
-      <img src="/assets/img/FoodDelivery.webp" alt="Food Delivery" style="width: 100%; height: 250px; object-fit: cover;">
-      <div class="desc">
-        <div class="name">Food Delivery</div>
-        <ul class="list-unstyled list">
-          <li><i class="ti-check"></i> Delicious meals</li>
-          <li><i class="ti-check"></i> Delivered directly to your boat</li>
-        </ul>
-      </div>
-    </div>
-    <!-- Offering 3 -->
-    <div class="pricing-card">
-      <img src="/assets/img/YachtDrinks&Food.JPG" alt="Drink Delivery" style="width: 100%; height: 250px; object-fit: cover;">
-      <div class="desc">
-        <div class="name">Drink Delivery</div>
-        <ul class="list-unstyled list">
-          <li><i class="ti-check"></i> Premium drinks</li>
-          <li><i class="ti-check"></i> Delivered on demand</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
         </div>
-    </div>
-</section>
 
-
-<!-- About Just Enjoy Ibiza Boats -->
-<section class="video-wrapper video section-padding custom-video-section bg-img bg-fixed" data-overlay-dark="3" data-background="/assets/img/Fjord.jpg">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="custom-video-content text-center">
+        <!-- Carousel (structured exactly like your blog) -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="owl-carousel owl-theme">
                     
-                    <!-- Subtitle -->
-                    <div class="custom-subtitle">
-                        <span>Discover Ibiza on the Waves</span>
-                    </div>
-                    
-                    <!-- Title -->
-                    <div class="custom-title">
-                        <span>About</span>
-                        <span>Just Enjoy</span>
-                        <span>Ibiza Boats</span>
-                    </div>
-                    
-                    <!-- Play Button -->
-                    <a class="vid custom-play-button" href="https://youtube.com/shorts/5ycIkq3AFQ8?si=LHS3QfzYomrQc2Ys">
-                        <div class="vid-butn">
-                            <span class="icon">
-                                <i class="ti-control-play"></i>
-                            </span>
+                    <!-- Offering 1 -->
+                    <div class="item">
+                        <div class="position-re o-hidden">
+                            <img src="assets/img/ComplementaryDrinks.webp" alt="Complementary Drinks">
                         </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                        <div class="con">
+                            <span class="category">
+                                <a href="#">Luxury</a>
+                            </span>
+                            <h5>
+                                <a href="#">Complementary Drinks</a>
+                            </h5>
+                            <p>
+                                Refreshing beverages<br>
+                                Included with every charter
+                            </p>
+                        </div>
+                    </div>
 
-<!-- Facilties -->
-<section class="yacht-facilities section-padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <div class="yacht-facilities-subtitle">Our Services</div>
-                <div class="yacht-facilities-title">Yacht & Boat Facilities</div>
-            </div>
-        </div>
-        <div class="row">
-            <!-- Service 1: Pick Up & Drop -->
-            <div class="col-md-4">
-                <div class="facility-card" data-aos="fade-up">
-                    <span class="facility-icon">
-                        <i class="fas fa-car"></i>
-                    </span>
-                    <h5>Pick Up & Drop</h5>
-                    <p>We offer seamless transportation to and from your yacht, ensuring a stress-free start and end to your journey.</p>
-                    <div class="facility-bg-icon">
-                        <i class="fas fa-car"></i>
+                    <!-- Offering 2 -->
+                    <div class="item">
+                        <div class="position-re o-hidden">
+                            <img src="assets/img/FoodDelivery.webp" alt="Food Delivery">
+                        </div>
+                        <div class="con">
+                            <span class="category">
+                                <a href="#">Convenience</a>
+                            </span>
+                            <h5>
+                                <a href="#">Food Delivery</a>
+                            </h5>
+                            <p>
+                                Delicious meals<br>
+                                Delivered directly to your boat
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- Service 2: Extra Water Toys -->
-            <div class="col-md-4">
-                <div class="facility-card" data-aos="fade-up" data-aos-delay="100">
-                    <span class="facility-icon">
-                        <i class="fas fa-water"></i>
-                    </span>
-                    <h5>Extra Water Toys</h5>
-                    <p>Enhance your experience with seascooters, paddleboards, Seabobs and other fun options.</p>
-                    <div class="facility-bg-icon">
-                        <i class="fas fa-water"></i>
+
+                    <!-- Offering 3 -->
+                    <div class="item">
+                        <div class="position-re o-hidden">
+                            <img src="assets/img/YachtDrinks&Food.JPG" alt="Drink Delivery">
+                        </div>
+                        <div class="con">
+                            <span class="category">
+                                <a href="#">Premium</a>
+                            </span>
+                            <h5>
+                                <a href="#">Drink Delivery</a>
+                            </h5>
+                            <p>
+                                Premium drinks<br>
+                                Delivered on demand
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- Service 4: Onboard Catering -->
-            <div class="col-md-4">
-                <div class="facility-card" data-aos="fade-up" data-aos-delay="300">
-                    <span class="facility-icon">
-                        <i class="fas fa-utensils"></i>
-                    </span>
-                    <h5>Onboard Catering</h5>
-                    <p>Enjoy gourmet meals, snacks, and beverages prepared to your preferences while onboard.</p>
-                    <div class="facility-bg-icon">
-                        <i class="fas fa-utensils"></i>
+                    
+                    <!-- Offering 4 (NEW) -->
+                    <div class="item">
+                        <div class="position-re o-hidden">
+                            <!-- Replace with your own image -->
+                            <img src="/assets/img/offerings/v-class.png.avif" alt="Pick Up & Drop">
+                        </div>
+                        <div class="con">
+                            <span class="category">
+                                <a href="#">Convenience</a>
+                            </span>
+                            <h5>
+                                <a href="#">Pick Up & Drop</a>
+                            </h5>
+                            <p>
+                                We offer seamless transportation to and from your yacht.
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Service 6: Personalised Itineraries -->
-           <!--  <div class="col-md-4">
-                <div class="facility-card" data-aos="fade-up" data-aos-delay="500">
-                    <span class="facility-icon">
-                        <i class="fas fa-map-marked-alt"></i>
-                    </span>
-                    <h5>Personalised Itineraries</h5>
-                    <p>Plan your perfect day at sea with a custom itinerary tailored to your preferences.</p>
-                    <div class="facility-bg-icon">
-                        <i class="fas fa-map-marked-alt"></i>
+
+                    <!-- Offering 5 (NEW) -->
+                    <div class="item">
+                        <div class="position-re o-hidden">
+                            <!-- Replace with your own image -->
+                            <img src="/assets/img/offerings/seabob-f5-sr-ixon-red-chrome-1.png" alt="Extra Water Toys">
+                        </div>
+                        <div class="con">
+                            <span class="category">
+                                <a href="#">Adventure</a>
+                            </span>
+                            <h5>
+                                <a href="#">Extra Water Toys</a>
+                            </h5>
+                            <p>
+                                Enhance your experience with seascooters, paddleboards, 
+                                Seabobs and other fun options.
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </div> -->
-        </div>
-    </div>
+
+                </div> <!-- end .owl-carousel -->
+            </div> <!-- end .col-md-12 -->
+        </div> <!-- end .row -->
+    </div> <!-- end .container -->
 </section>
     
   <!-- Testimonials Section -->
@@ -590,7 +536,7 @@
                         <div class="owl-carousel owl-theme">
                             <!-- Testimonial 1 -->
                             <div class="item">
-                                <span class="quote"><img src="assets/img/quot.png" alt="Quote"></span>
+                                
                                 <p>"Our day out on the yacht was incredible. The staff were attentive, the drinks were flowing, and the personalised itinerary was perfect for our group."</p>
                                 <div class="info">
                                    
@@ -606,7 +552,7 @@
                             </div>
                             <!-- Testimonial 2 -->
                             <div class="item">
-                                <span class="quote"><img src="assets/img/quote.png" alt="Quote"></span>
+                               
                                 <p>"We rented a boat with Just Enjoy Ibiza for a corporate event. Everything from the catering to the Seabobs was on point. Highly recommend their services for any occasion!"</p>
                                 <div class="info">
                                     
@@ -622,7 +568,7 @@
                             </div>
                             <!-- Testimonial 3 -->
                             <div class="item">
-                                <span class="quote"><img src="assets/img/quote.png" alt="Quote"></span>
+                                
                                 <p>"From start to finish, the team at Just Enjoy Ibiza took care of every detail. The onboard catering was phenomenal, and the water sports equipment made the day even more fun!"</p>
                                 <div class="info">
                                     
@@ -727,7 +673,7 @@
     </section> -->
 
 <!-- Blog Section -->
-<section class="news section-padding bg-darkblack">
+<!-- <section class="news section-padding bg-darkblack">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -799,91 +745,79 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
-<!-- Yacht Inquiry & Contact Form -->
-<section class="yacht-form-section">
-        <div class="yacht-container">
-            <div class="yacht-flex">
-                <!-- Info Section -->
-                <div class="yacht-info">
-                    
-                    <h1 class="yacht-title">Experience Ibiza's Crystal Waters</h1>
-                    <p class="yacht-description">
-                        Embark on an unforgettable journey aboard our premium yachts. 
-                        With professional crew, world-class amenities, and breathtaking 
-                        Mediterranean views, your perfect day at sea awaits.
-                    </p>
-                    <div class="yacht-contact">
-                        <div class="yacht-contact-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div>
-                            <div class="yacht-contact-text">For Immediate Assistance</div>
-                            <a href="tel:+34900123456" class="yacht-contact-number">+34 692 688 348</a>
-                        </div>
-                    </div>
-                    <p class="yacht-contact-text">
-                        <i class="fas fa-check-circle" style="color: #00c2cb; margin-right: 8px;"></i>
-                        Available 24/7 for your yacht charter needs
-                    </p>
-                </div>
 
-                <!-- Form Section -->
-                <div class="yacht-form-container">
-                    <div class="yacht-form-header">
-                        <div class="yacht-form-subtitle">Contact Us</div>
-                        <h2 class="yacht-form-title">Yacht Charter Inquiry</h2>
-                    </div>
-                    <form  >
-                        <div class="yacht-form-grid">
-                            <input type="text" class="yacht-input" name="firstName" placeholder="First Name*" required>
-                            <input type="text" class="yacht-input" name="lastName" placeholder="Last Name*" required>
-                            <div class="yacht-input-group">
-                                <input type="email" class="yacht-input" placeholder="Email Address*" required>
-                                <i class="far fa-envelope"></i>
-                            </div>
-                            <div class="yacht-input-group">
-                                <input type="tel" class="yacht-input" placeholder="Phone Number*" required>
-                                <i class="far fa-phone"></i>
-                            </div>
-                            <div class="yacht-input-group yacht-form-full">
-                                <input type="text" class="yacht-input datepicker" placeholder="Select Preferred Date">
-                                <i class="far fa-calendar"></i>
-                            </div>
-                            <div class="yacht-input-group">
-                                <select class="yacht-select">
-                                    <option value="" disabled selected>Number of Guests</option>
-                                    <option value="1-4">1-4 Guests</option>
-                                    <option value="5-8">5-8 Guests</option>
-                                    <option value="9-12">9-12 Guests</option>
-                                </select>
-                                <i class="far fa-users"></i>
-                            </div>
-                            <div class="yacht-input-group">
-                                <select class="yacht-select">
-                                    <option value="" disabled selected>Charter Duration</option>
-                                    <option value="half">Full Day (8h)</option>
-                                    <option value="full">Week Charter </option>
-                                    <option value="sunset">Custom My Charter</option>
-                                </select>
-                                <i class="far fa-clock"></i>
-                            </div>
-                            <div class="yacht-input-group yacht-form-full">
-                                <textarea class="yacht-textarea" placeholder="Tell us about your preferences or special requests"></textarea>
-                                <i class="far fa-message"></i>
-                            </div>
-                            <div class="yacht-form-full">
-                                <button type="submit" class="yacht-submit">
-                                    Send Inquiry
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<!-- Contact / Inquiry Form Section -->
+<section class="inquiry-wrap">
+    <div class="inner-bounds">
+      <div class="split-layout">
+        <!-- Info Side -->
+        <div class="info-side">
+          <div class="info-background"></div>
+          <div class="info-content">
+            <h2 class="main-title">Get in touch to find the perfect charter</h2>
+            <p class="subtitle">
+              You'll hear from us in <span class="time-highlight">15 minutes</span>. Or request a callback. 
+              We assure you the best offer during the high season.
+            </p>
+          </div>
         </div>
+
+        <!-- Form Side -->
+        <div class="form-side">
+          <div class="form-container">
+            <h3 class="form-header">Yacht Charter Inquiry</h3>
+            <form>
+              <div class="field-row">
+                <div class="field-wrap">
+                  <input type="text" class="input-field" placeholder="First Name*" required>
+                </div>
+                <div class="field-wrap">
+                  <input type="text" class="input-field" placeholder="Last Name*" required>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field-wrap">
+                  <input type="email" class="input-field" placeholder="Email Address*" required>
+                </div>
+                <div class="field-wrap">
+                  <input type="tel" class="input-field" placeholder="Phone Number*" required>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field-wrap">
+                  <input type="date" class="input-field" required>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field-wrap">
+                  <select class="select-field" required>
+                    <option value="" disabled selected>Number of Guests</option>
+                    <option value="1-4">1-4 Guests</option>
+                    <option value="5-8">5-8 Guests</option>
+                    <option value="9-12">9-12 Guests</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field-wrap">
+                  <textarea class="message-field" placeholder="Tell us about your preferences or special requests"></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="submit-button">Send Inquiry</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 </section>
+  
 
 
 <!-- Clients -->
@@ -1000,6 +934,133 @@
         </div>
       
 </footer>
+<div class="modal-inquiry">
+    <div class="modal-container">
+      <button class="modal-close">✕</button>
+      <div class="modal-content">
+        <div class="modal-info">
+          <h2 class="modal-title">Get in touch to find the perfect charter</h2>
+          <p class="modal-subtitle">
+            You'll hear from us in <span class="time-highlight">15 minutes</span>. Or request a callback.
+            We assure you the best offer during the high season.
+          </p>
+        </div>
+        <div class="modal-form">
+          <form>
+            <div class="field-row">
+              <div class="field-wrap">
+                <input type="text" class="input-field" placeholder="First Name*" required>
+              </div>
+              <div class="field-wrap">
+                <input type="text" class="input-field" placeholder="Last Name*" required>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-wrap">
+                <input type="email" class="input-field" placeholder="Email Address*" required>
+              </div>
+              <div class="field-wrap">
+                <input type="tel" class="input-field" placeholder="Phone Number*" required>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-wrap">
+                <input type="date" class="input-field" required>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-wrap">
+                <select class="select-field" required>
+                  <option value="" disabled selected>Number of Guests</option>
+                  <option value="1-4">1-4 Guests</option>
+                  <option value="5-8">5-8 Guests</option>
+                  <option value="9-12">9-12 Guests</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field-wrap">
+                <textarea class="message-field" placeholder="Tell us about your preferences or special requests"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="submit-button">Send Inquiry</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+    function openInquiryForm() {
+    const modal = document.querySelector('.modal-inquiry');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeInquiryForm() {
+    const modal = document.querySelector('.modal-inquiry');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.querySelector('.modal-inquiry');
+    const closeBtn = document.querySelector('.modal-close');
+    
+    closeBtn.addEventListener('click', closeInquiryForm);
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeInquiryForm();
+        }
+    });
+
+    // Add escape key handler
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeInquiryForm();
+        }
+    });
+});
+</script>
+<!-- Numbers -->
+<script>
+    // Number counter animation
+    function animateNumbers() {
+        const numbers = document.querySelectorAll('.stat-number');
+        
+        numbers.forEach(number => {
+            const target = parseInt(number.getAttribute('data-count'));
+            const duration = 2000; // 2 seconds
+            const steps = 50;
+            const increment = target / steps;
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                number.textContent = Math.floor(current);
+                
+                if (current >= target) {
+                    number.textContent = target;
+                    clearInterval(timer);
+                }
+            }, duration / steps);
+        });
+    }
+    
+    // Start animation when element comes into view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateNumbers();
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+    
+    observer.observe(document.querySelector('.stats-container'));
+</script>
+  
 <script>
     window.toggleChat = function() {
         const widget = document.getElementById("chatbot-widget");
@@ -1044,78 +1105,98 @@
     <script src="/assets/js/jquery-3.6.3.min.js"></script>
     <!-- Hamburger -->
     <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    // Get elements
-    const toggler = document.querySelector('.custom-toggler');
-    const navCollapse = document.querySelector('.navbar-collapse');
-
-    if (toggler && navCollapse) {
-        let isAnimating = false;
-
-        // Toggle menu with animation lock
-        toggler.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (isAnimating) return;
-            
-            isAnimating = true;
-            this.classList.toggle('active');
-            navCollapse.classList.toggle('show');
-            
-            // Toggle body classes for overflow control
-            document.body.classList.toggle('menu-open');
-            document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
-            
-            // Reset animation lock after transition
-            setTimeout(() => {
-                isAnimating = false;
-            }, 400);
-        });
-
-        // Close menu when clicking a link
-        const navLinks = navCollapse.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (isAnimating) return;
-                toggler.classList.remove('active');
-                navCollapse.classList.remove('show');
-                document.body.classList.remove('menu-open');
-                document.body.style.overflow = '';
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!isAnimating &&
-                !toggler.contains(e.target) &&
-                !navCollapse.contains(e.target) &&
-                navCollapse.classList.contains('show')) {
-                toggler.classList.remove('active');
-                navCollapse.classList.remove('show');
-                document.body.classList.remove('menu-open');
-                document.body.style.overflow = '';
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements for the hamburger menu
+            const toggler = document.querySelector('.custom-toggler');
+            const navCollapse = document.querySelector('.navbar-collapse');
+        
+            if (toggler && navCollapse) {
+                let isAnimating = false;
+        
+                // Toggle menu with animation lock
+                toggler.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (isAnimating) return;
+                    
+                    isAnimating = true;
+                    this.classList.toggle('active');
+                    navCollapse.classList.toggle('show');
+                    
+                    // Toggle body classes for overflow control
+                    document.body.classList.toggle('menu-open');
+                    document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
+                    
+                    // Reset animation lock after transition
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 400);
+                });
+        
+                // Close menu when clicking a link (exclude SERVICES dropdown toggle)
+                const navLinks = navCollapse.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    // If this link is the SERVICES dropdown toggle, skip closing the menu
+                    if(link.id === 'servicesDropdownToggle') return;
+                    link.addEventListener('click', () => {
+                        if (isAnimating) return;
+                        toggler.classList.remove('active');
+                        navCollapse.classList.remove('show');
+                        document.body.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                    });
+                });
+        
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!isAnimating &&
+                        !toggler.contains(e.target) &&
+                        !navCollapse.contains(e.target) &&
+                        navCollapse.classList.contains('show')) {
+                        toggler.classList.remove('active');
+                        navCollapse.classList.remove('show');
+                        document.body.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                    }
+                });
+        
+                // Handle clicking on navbar collapse background
+                navCollapse.addEventListener('click', function(e) {
+                    if (e.target === navCollapse) {
+                        toggler.classList.remove('active');
+                        navCollapse.classList.remove('show');
+                        document.body.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                    }
+                });
+        
+                // Window resize handler
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth >= 992) {
+                        document.body.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+        
+            // SERVICES dropdown toggle for mobile: on click toggle dropdown (do nothing on desktop)
+            const servicesDropdownToggle = document.getElementById('servicesDropdownToggle');
+            if (servicesDropdownToggle) {
+                servicesDropdownToggle.addEventListener('click', function(e) {
+                    // Only override click behavior on mobile (<992px)
+                    if (window.innerWidth < 992) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Toggle open class on the parent dropdown element
+                        const parentDropdown = this.closest('.dropdown');
+                        if (parentDropdown) {
+                            parentDropdown.classList.toggle('open');
+                        }
+                    }
+                });
             }
         });
-
-        // Handle clicking on navbar collapse background
-        navCollapse.addEventListener('click', function(e) {
-            if (e.target === navCollapse) {
-                toggler.classList.remove('active');
-                navCollapse.classList.remove('show');
-                document.body.classList.remove('menu-open');
-                document.body.style.overflow = '';
-            }
-        });
-
-        // Window resize handler
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 992) {
-                document.body.classList.remove('menu-open');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-});
-   </script>
+    </script>
+        
     <script>
         function toggleFavourite(boatId) {
           let store = JSON.parse(localStorage.getItem('favBoats')) || {};

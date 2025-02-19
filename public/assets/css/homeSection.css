@@ -1,4 +1,4 @@
-/* Facilities Section  */ 
+/* Facilities Section */
 .yacht-facilities {
     background-color: #1B2838;
     padding: 100px 0;
@@ -27,6 +27,7 @@
     letter-spacing: 1px;
 }
 
+/* Facility Card Styles */
 .facility-card {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -49,10 +50,21 @@
 }
 
 .facility-card h5 {
-    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
 }
 
 .facility-card p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 1;
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -72,24 +84,6 @@
     margin-bottom: 20px;
 }
 
-.facility-card h5 {
-    color: #ffffff;
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    font-weight: 600;
-    position: relative;
-    z-index: 1;
-}
-
-.facility-card p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 0;
-    position: relative;
-    z-index: 1;
-}
-
 .facility-bg-icon {
     position: absolute;
     right: -20px;
@@ -105,23 +99,7 @@
     transform: rotate(0deg);
 }
 
-@media (max-width: 768px) {
-    .yacht-facilities {
-        padding: 60px 0;
-    }
-    
-    .yacht-facilities-title {
-        font-size: 2.2rem;
-        margin-bottom: 40px;
-    }
-    
-    .facility-card {
-        margin-bottom: 20px;
-    }
-}
-
-
-/* Yacht and Boats Presentation Section */
+/* Boats Section */
 .boats {
     padding: 100px 0;
     background: #ffffff;
@@ -129,26 +107,27 @@
 }
 
 .boats-section-subtitle {
-font-family: "Playfair Display", serif;
-color: #2095AE;
-font-size: 1.1rem;
-text-transform: uppercase;
-letter-spacing: 3px;
-margin-bottom: 15px;
-text-align: center;
-font-weight: 400;
+    font-family: "Playfair Display", serif;
+    color: #2095AE;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 400;
 }
 
 .boats-section-title {
-font-family: "Playfair Display", serif;
-color: #1B2838;
-font-size: 2.8rem;
-font-weight: 700;
-text-align: center;
-margin-bottom: 60px;
-letter-spacing: 1px;
+    font-family: "Playfair Display", serif;
+    color: #1B2838;
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 1px;
 }
 
+/* Boat Card Styles */
 .boat-item {
     background: #ffffff;
     border: 1px solid #e5e5e5;
@@ -157,6 +136,11 @@ letter-spacing: 1px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     margin-bottom: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    max-width: 350px;
+    margin: 0 auto 30px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .boat-item:hover {
@@ -167,7 +151,7 @@ letter-spacing: 1px;
 
 .image-container {
     position: relative;
-    height: 300px;
+    height: 220px;
     overflow: hidden;
     border-radius: 12px 12px 0 0;
 }
@@ -188,183 +172,705 @@ letter-spacing: 1px;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(27, 40, 56, 0.8), transparent);
-    padding: 30px 20px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s ease;
-}
-
-.boat-item:hover .image-overlay {
+    background: linear-gradient(to top, rgba(27, 40, 56, 0.9), rgba(27, 40, 56, 0.4));
+    padding: 20px;
     opacity: 1;
-    transform: translateY(0);
 }
 
 .boat-type {
     color: #fff;
-    font-size: 1.1rem;
-    font-weight: 300;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 1px;
 }
 
 .boat-content {
-    padding: 30px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .boat-name {
     color: #2095AE;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     font-family: "Playfair Display", serif;
 }
 
-.price {
-    font-size: 1.2rem;
-    color: #1B2838;
-    margin-bottom: 25px;
-    font-weight: 500;
-}
-
-.facilities {
-    border-top: 1px solid #e5e5e5;
-    padding-top: 25px;
-}
-
-.facilities {
+.key-features {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    color: #1B2838;
-    font-size: 0.95rem;
-}
-
-.facilities div {
-    display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(229, 229, 229, 0.5);
+    margin: 0;
+}
+
+.price-tag {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2095AE;
+    line-height: 1;
+}
+
+.capacity {
+    background: rgba(32, 149, 174, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: #2095AE;
+    font-weight: 500;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+/* Button Styles */
+/* Button Styles */
+.boat-actions {
+    display: flex;
     gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(229, 229, 229, 0.5);
+    margin: 0;
 }
 
-.facilities img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-}
-
-
-
-.details-link a {
-    color: #2095AE;
-    text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 1.5px;
-    font-weight: 500;
-}
-
-.details-link {
-    text-align: right;
-    margin-top: 25px;
-}
-
-.details-link a {
-    color: #2095AE;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    letter-spacing: 1px;
+.enquiry-btn, 
+.view-details {
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    font-size: 0.9rem;
+    border-radius: 5px;
     text-transform: uppercase;
-    position: relative;
-    padding-bottom: 5px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    transition: none; /* Reset all transitions */
+    white-space: nowrap;
+    transform: none;
+    text-align: center;
+}
+
+.enquiry-btn {
+    flex: 2;
+    background: #2095AE;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.view-details {
+    flex: 1;
+    border: 1px solid #2095AE;
+    color: #2095AE;
+    background: transparent;
+    text-decoration: none;
+}
+
+.enquiry-btn:hover {
+    background: #1b7f94;
+}
+
+.view-details:hover {
+    background: rgba(32, 149, 174, 0.05);
+}
+
+/* View All Section */
+.view-all-boats {
+    text-align: center;
+    margin-top: 50px;
+    padding: 40px 0;
+    border-top: 1px solid #e5e5e5;
+}
+
+.view-all-boats h3 {
+    font-family: "Playfair Display", serif;
+    color: #1B2838;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.view-all-boats p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+.view-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #2095AE;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 12px 30px;
+    border: 2px solid #2095AE;
+    border-radius: 4px;
     transition: all 0.3s ease;
 }
 
-.details-link a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
+.view-all-link:hover {
     background: #2095AE;
-    transition: width 0.3s ease;
+    color: white;
+    transform: translateY(-2px);
 }
 
-.details-link a:hover::after {
-    width: 100%;
+.view-all-link i {
+    transition: transform 0.3s ease;
 }
 
-@media (max-width: 768px) {
+.view-all-link:hover i {
+    transform: translateX(5px);
+}
+
+/* Stats Container Styles */
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 40px;
+    padding: 20px;
+}
+
+.stat-item {
+    text-align: center;
+    min-width: 140px;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2095AE;
+    margin-bottom: 5px;
+    font-family: "Playfair Display", serif;
+}
+
+.stat-number::after {
+    content: "+";
+    font-size: 1.5rem;
+    vertical-align: super;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
     .boats {
         padding: 60px 0;
     }
     
-    .section-title {
+    .boats-section-title {
+        font-size: 2.2rem;
+        margin-bottom: 40px;
+    }
+
+    .boat-item {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    .yacht-facilities {
+        padding: 60px 0;
+    }
+    
+    .yacht-facilities-title {
         font-size: 2.2rem;
         margin-bottom: 40px;
     }
     
+    .facility-card {
+        margin-bottom: 20px;
+    }
+    
     .boat-item {
-        margin-bottom: 30px;
+        max-width: 100%;
+        margin: 0 15px 30px;
     }
     
     .image-container {
-        height: 250px;
+        height: 220px;
+    }
+    
+    .boat-content {
+        padding: 20px;
+    }
+    
+    .boat-name {
+        text-align: center;
+        font-size: 1.4rem;
+    }
+    
+    .key-features {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 15px 0;
+    }
+    
+    .price-tag {
+        font-size: 1.3rem;
+    }
+    
+    .capacity {
+        display: inline-block;
+        margin: 0 auto;
+        padding: 8px 16px;
+        font-size: 0.95rem;
+    }
+    
+    .boat-actions {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 20px;
+    }
+    
+    .enquiry-btn,
+    .view-details {
+        width: 100%;
+        height: 48px;
+        font-size: 0.95rem;
+    }
+    
+    .stats-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .view-all-boats {
+        padding: 40px 15px 10px;
+        margin-top: 30px;
+    }
+    
+    .view-all-boats h3 {
+        font-size: 1.8rem;
+    }
+    
+    .view-all-link {
+        width: 100%;
+        justify-content: center;
     }
 }
 
-.view-all-boats {
-text-align: center;
-position: relative;
+@media (max-width: 576px) {
+    .boat-item {
+        margin: 0 10px 25px;
+    }
+    
+    .boat-content {
+        padding: 15px;
+    }
+    
+    .image-container {
+        height: 200px;
+    }
+    
+    .boat-name {
+        font-size: 1.3rem;
+    }
+    
+    .key-features {
+        gap: 10px;
+    }
+    
+    .boat-actions {
+        gap: 10px;
+    }
+    
+    .enquiry-btn,
+    .view-details {
+        height: 44px;
+    }
 }
 
-.view-all-boats h3 {
-font-family: "Playfair Display", serif;
-color: #1B2838;
-font-size: 2rem;
-margin-bottom: 15px;
+/* Modal popup */
+.modal-inquiry {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(27, 40, 56, 0.95);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  overflow-y: auto;
+  padding: 40px 20px;
 }
 
-.view-all-boats p {
-color: #666;
-font-size: 1.1rem;
-margin-bottom: 25px;
+.modal-inquiry.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.view-all-link {
-display: inline-flex;
-align-items: center;
-gap: 12px;
-color: #2095AE;
-text-decoration: none;
-font-size: 1.1rem;
-font-weight: 500;
-padding: 12px 30px;
-border: 2px solid #2095AE;
-border-radius: 4px;
-transition: all 0.3s ease;
+.modal-container {
+  background: #1B2838;
+  border-radius: 16px;
+  max-width: 900px;
+  width: 100%;
+  margin: auto;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-.view-all-link:hover {
-background: #2095AE;
-color: white;
-transform: translateY(-2px);
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  z-index: 2;
 }
 
-.view-all-link i {
-transition: transform 0.3s ease;
+.modal-close:hover {
+  color: white;
 }
 
-.view-all-link:hover i {
-transform: translateX(5px);
+.modal-content {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 0;
+}
+
+.modal-info {
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px 0 0 16px;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: 300;
+  color: white;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.modal-subtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.time-highlight {
+  color: #00c2cb;
+  font-weight: 400;
+}
+
+.modal-form {
+  padding: 40px;
+}
+
+.field-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.field-wrap {
+  flex: 1;
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.input-field:focus {
+  outline: none;
+  border-bottom-color: #00c2cb;
+}
+
+.select-field {
+  width: 100%;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+  appearance: none;
+}
+
+.message-field {
+  width: 100%;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 15px;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 14px;
+  background: #00c2cb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.submit-button:hover {
+  background: #00adb5;
 }
 
 @media (max-width: 768px) {
-.view-all-boats {
-padding: 40px 0 10px;
+  .modal-content {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-info {
+    border-radius: 16px 16px 0 0;
+    padding: 30px;
+  }
+
+  .modal-form {
+    padding: 30px;
+  }
+
+  .field-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .modal-title {
+    font-size: 24px;
+  }
 }
 
-.view-all-boats h3 {
-font-size: 1.8rem;
-}
-}
+/* Benefits Section */
+
+    .benefits-section {
+      padding: 60px 0;
+      background-color: #1B2838;
+      color: white;
+      
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .benefits-content {
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    .intro-text {
+      max-width: 720px;
+    }
+
+    .brand-name {
+      color: #00c2cb;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .main-title {
+      font-size: 42px;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 32px;
+      color: white;
+    }
+
+    .description {
+      font-size: 16px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .benefits-list-section h2 {
+      font-size: 32px;
+      font-weight: 300;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .benefit-item {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .benefit-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .benefit-dot {
+      width: 4px;
+      height: 4px;
+      background-color: #00c2cb;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .benefit-text {
+      font-size: 17px;
+      font-weight: 300;
+      color: white;
+      line-height: 1.4;
+    }
+
+    @media (min-width: 768px) {
+      .benefits-section {
+        padding: 100px 0;
+      }
+
+      .benefits-content {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 80px;
+      }
+
+      .intro-text, .benefits-list-section {
+        flex: 1;
+      }
+
+      .benefits-list-section h2 {
+        font-size: 28px;
+      }
+
+      .benefit-item {
+        padding: 28px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .container {
+        padding: 0 20px;
+      }
+
+      .main-title {
+        font-size: 32px;
+        margin-bottom: 24px;
+      }
+
+      .benefits-list-section h2 {
+        font-size: 28px;
+        margin-bottom: 32px;
+      }
+
+      .benefits-list {
+        gap: 12px;
+      }
+
+      .benefit-item {
+        padding: 20px;
+      }
+
+      .benefit-text {
+        font-size: 16px;
+      }
+    }
+ 
+    
+    /* Stats Container */
+    .stats-container {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        margin-bottom: 40px;
+        padding: 20px;
+    }
+    
+    .stat-item {
+        text-align: center;
+        min-width: 140px;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2095AE;
+        margin-bottom: 5px;
+        font-family: "Playfair Display", serif;
+    }
+    
+    .stat-number::after {
+        content: "+";
+        font-size: 1.5rem;
+        vertical-align: super;
+    }
+    
+    .stat-label {
+        color: #666;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    
+    @media (max-width: 768px) {
+        .stats-container {
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .stat-item {
+            padding: 10px;
+        }
+    }
+
+    .image.about-signature {
+        margin-right: 20px;
+        width: 80px;
+    }
+
+    .special-background2 {
+        background-color: #fff;
+    }
+
+    .special-background2 p{
+        color: #333;
+    }
+    .special-text {
+        color: #333 !important;
+    }
+   
