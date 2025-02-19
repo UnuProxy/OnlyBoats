@@ -33,9 +33,7 @@
         <meta name="twitter:title" content="Just Enjoy Ibiza Boats | About Us">
         <meta name="twitter:description" content="Luxury yacht charters in Ibiza – explore the Mediterranean with Just Enjoy Ibiza Boats.">
         <meta name="twitter:image" content="https://justenjoyibizaboats.com/assets/img/1stPhoto.png">
-    
-        <!-- Google Verification (Optional: For Search Console) -->
-        <!-- <meta name="google-site-verification" content="your-google-verification-code"> -->
+
     
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
@@ -61,6 +59,124 @@
         });
     </script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .commitment-section {
+          padding: 100px 0;
+          background-color: #1B2838;
+          color: white;
+        }
+    
+        .section-category {
+          font-size: 14px;
+          letter-spacing: 2px;
+          color: #00c2cb;
+          text-transform: uppercase;
+          margin-bottom: 16px;
+        }
+    
+        .section-heading {
+          font-size: 42px;
+          font-weight: 300;
+          margin-bottom: 48px;
+          letter-spacing: -0.5px;
+        }
+    
+        .features-list {
+          margin-bottom: 60px;
+        }
+    
+        .feature-item {
+          margin-bottom: 40px;
+        }
+    
+        .feature-item h3 {
+          color: #00c2cb;
+          font-size: 24px;
+          font-weight: 300;
+          margin-bottom: 12px;
+        }
+    
+        .feature-item p {
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 16px;
+          line-height: 1.6;
+          font-weight: 300;
+        }
+    
+        .image-section {
+          position: relative;
+          
+          overflow: hidden;
+          height: 100%;
+        }
+    
+        .feature-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        
+        }
+    
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 30px;
+          margin-top: 60px;
+        }
+    
+        .stat-item {
+          text-align: center;
+          padding: 24px;
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 12px;
+          transition: transform 0.3s ease;
+        }
+    
+        .stat-item:hover {
+          transform: translateY(-5px);
+        }
+    
+        .stat-number {
+          font-size: 36px;
+          font-weight: 300;
+          color: #00c2cb;
+          margin-bottom: 8px;
+          line-height: 1;
+        }
+    
+        .stat-label {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.7);
+          font-weight: 300;
+          letter-spacing: 0.5px;
+        }
+    
+        @media (max-width: 768px) {
+          .commitment-section {
+            padding: 60px 0;
+          }
+    
+          .section-heading {
+            font-size: 32px;
+            margin-bottom: 32px;
+          }
+    
+          .feature-item h3 {
+            font-size: 20px;
+          }
+    
+          .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 40px;
+          }
+    
+          .image-section {
+            margin-top: 40px;
+            height: 300px;
+          }
+        }
+      </style>
     </head>
     
 <body>
@@ -78,7 +194,7 @@
         </svg>
     </div>
    <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
     <div class="container">
       <div class="logo-wrapper">
         <a class="logo" href="index.html">
@@ -114,7 +230,7 @@
         </ul>
       </div>
     </div>
-</nav>
+    </nav>
     <!-- Header Banner -->
     <div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4" data-background="/assets/img/Music-sailing-yacht.jpg">
         <div class="container">
@@ -126,199 +242,81 @@
             </div>
         </div>
     </div>
-    <!-- About -->
-    <section class="about section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 mb-30 animate-box" data-animate-effect="fadeInUp">
-                    <span class="rating-stars">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </span>
-                    <div class="section-subtitle">Premium Charter Experience</div>
-                    <div class="section-title">Discover Ibiza's Waters in Style</div>
-                    <p>Welcome to Just Enjoy Ibiza Boats, your premier luxury yacht charter service in the Balearic Islands. We specialize in creating unforgettable maritime experiences, combining pristine vessels with exceptional service to explore the crystal-clear waters of Ibiza and Formentera.</p>
-                    <p>Our fleet features carefully selected luxury yachts, each maintained to the highest standards and crewed by experienced professionals. Whether you're planning a romantic sunset cruise, a family day trip to Formentera, or an exclusive corporate event, we ensure every journey exceeds expectations.</p>
-                    
-                    <!-- Contact Information -->
-                    <div class="reservations">
-                        <div class="icon">
-                            <span class="fas fa-phone-alt"></span>
-                        </div>
-                        <div class="text">
-                            <p>Charter Inquiry</p>
-                            <a href="tel:+34692688348">+34 692 688 348</a>
-                        </div>
+   <!-- About -->
+   <section class="about section-padding special-background2" data-scroll-index="1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-30 animate-box" data-animate-effect="fadeInUp">
+                <div class="section-subtitle">Since 2016</div>
+                <div class="section-title special-text">Unmatched Experience in Ibiza</div>
+                <p>Welcome to Just Enjoy Ibiza, where luxury meets personalised service. With years of experience since 2016, we strive to offer unforgettable moments on the beautiful waters of Ibiza. We take great pride in providing a bespoke yachting experience that exceeds expectations, backed by our passion for the sea and our deep knowledge of the industry.</p>
+                <p>Myself, <strong>Julian</strong>, along with my trusted associate, <strong>Alin</strong>, have built a reputation for delivering excellence with every charter. Our goal is to make your time aboard our yachts seamless, luxurious, and truly memorable—whether you are looking to explore hidden coves, enjoy water sports, or simply relax and take in the breathtaking views.</p>
+                <div class="about-bottom"> <img src="/assets/img/signature-dark.svg" alt="" class="image about-signature">
+                    <div class="about-name-wrapper">
+                        <div class="about-name special-text">Julian Pirvu</div>
+                        <div class="about-rol special-text">Co-Founder Just Enjoy Ibiza</div>
                     </div>
                 </div>
-                <div class="col col-md-3 animate-box" data-animate-effect="fadeInUp">
-                    <img src="/assets/img/WomenHammock.jpg" alt="Luxury yacht in Ibiza waters" class="mt-90 mb-30">
-                </div>
-                <div class="col col-md-3 animate-box" data-animate-effect="fadeInUp">
-                    <img src="assets/img/50BRONSON9.jpg" alt="Exclusive boat charter experience">
+            </div>
+            <div class="col-lg-6 col-md-12 animate-box" data-animate-effect="fadeInUp">
+                <div class="img-exp">
+                    <div class="about-img">
+                        <div class="img"> <img src="/assets/img/50BRONSON9.jpg" class="img-fluid" alt=""> </div>
+                    </div>
+                   
                 </div>
             </div>
         </div>
+    </div>
     </section>
 
-    <section class="commitment section-padding bg-darkblack">
+    <section class="commitment-section">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="section-subtitle"><span>Why Choose Us</span></div>
-                    <div class="section-title special-title">Our Commitment</div>
-                    
-                    <div class="commitment-features">
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                             
-                            </div>
-                            <div class="feature-content">
-                                <h4>Expert Crew</h4>
-                                <p>Licensed captains and multilingual staff ensuring your safety and comfort throughout the journey.</p>
-                            </div>
-                        </div>
-    
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                    
-                            </div>
-                            <div class="feature-content">
-                                <h4>Premium Service</h4>
-                                <p>Personalised itineraries and concierge service for an unmatched luxury experience.</p>
-                            </div>
-                        </div>
-    
-                        <div class="feature-item">
-                            <div class="feature-icon">
-                                
-                            </div>
-                            <div class="feature-content">
-                                <h4>Premium Fleet</h4>
-                                <p>Meticulously maintained luxury vessels equipped with the latest amenities.</p>
-                            </div>
-                        </div>
-    
-                        
-                    </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="section-category">Why Choose Us</div>
+              <h2 class="section-heading">Our Commitment</h2>
+              
+              <div class="features-list">
+                <div class="feature-item">
+                  <h3>Expert Crew</h3>
+                  <p>Licensed captains and multilingual staff ensuring your safety and comfort throughout the journey.</p>
                 </div>
-    
-                <div class="col-md-6">
-                    <div class="commitment-image-wrapper">
-                        <img src="/assets/img/YachtCouple.png" alt="Luxury yacht experience in Ibiza">
-                        <div class="stats-overlay">
-                            <div class="stat-item">
-                                <span class="stat-number">10+</span>
-                                <span class="stat-text">Years Experience</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">500+</span>
-                                <span class="stat-text">Happy Clients</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">100%</span>
-                                <span class="stat-text">Satisfaction</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="feature-item">
+                  <h3>Premium Service</h3>
+                  <p>Personalised itineraries and concierge service for an unmatched luxury experience.</p>
                 </div>
+                <div class="feature-item">
+                  <h3>Premium Fleet</h3>
+                  <p>Meticulously maintained luxury vessels equipped with the latest amenities.</p>
+                </div>
+              </div>
+    
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-number" data-count="10" data-suffix="">0</div>
+                  <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number" data-count="2500" data-suffix="">0</div>
+                  <div class="stat-label">Happy Clients</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number" data-count="100" data-suffix="%">0</div>
+                  <div class="stat-label">Satisfaction</div>
+                </div>
+              </div>
             </div>
+    
+            <div class="col-md-6">
+              <div class="image-section">
+                <img src="/assets/img/YachtCouple.png" alt="Luxury yacht experience" class="feature-image">
+              </div>
+            </div>
+          </div>
         </div>
     </section>
-    <!-- Facilties -->
-    <section class="yacht-facilities section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="yacht-facilities-subtitle">Our Services</div>
-                    <div class="yacht-facilities-title">Yacht & Boat Facilities</div>
-                </div>
-            </div>
-            <div class="row">
-                <!-- Service 1: Pick Up & Drop -->
-                <div class="col-md-4">
-                    <div class="facility-card" data-aos="fade-up">
-                        <span class="facility-icon">
-                            <i class="fas fa-car"></i>
-                        </span>
-                        <h5>Pick Up & Drop</h5>
-                        <p>We offer seamless transportation to and from your yacht, ensuring a stress-free start and end to your journey.</p>
-                        <div class="facility-bg-icon">
-                            <i class="fas fa-car"></i>
-                        </div>
-                    </div>
-                </div>
-                <!-- Service 2: Extra Water Toys -->
-                <div class="col-md-4">
-                    <div class="facility-card" data-aos="fade-up" data-aos-delay="100">
-                        <span class="facility-icon">
-                            <i class="fas fa-water"></i>
-                        </span>
-                        <h5>Extra Water Toys</h5>
-                        <p>Enhance your experience with seascooters, paddleboards, and other fun options.</p>
-                        <div class="facility-bg-icon">
-                            <i class="fas fa-water"></i>
-                        </div>
-                    </div>
-                </div>
-                <!-- Service 3: Seabobs -->
-                <div class="col-md-4">
-                    <div class="facility-card" data-aos="fade-up" data-aos-delay="200">
-                        <span class="facility-icon">
-                            <i class="fas fa-swimmer"></i>
-                        </span>
-                        <h5>Seabobs</h5>
-                        <p>Experience the thrill of underwater exploration with our high-performance Seabobs.</p>
-                        <div class="facility-bg-icon">
-                            <i class="fas fa-swimmer"></i>
-                        </div>
-                    </div>
-                </div>
-                <!-- Service 4: Onboard Catering -->
-                <div class="col-md-4">
-                    <div class="facility-card" data-aos="fade-up" data-aos-delay="300">
-                        <span class="facility-icon">
-                            <i class="fas fa-utensils"></i>
-                        </span>
-                        <h5>Onboard Catering</h5>
-                        <p>Enjoy gourmet meals, snacks, and beverages prepared to your preferences while onboard.</p>
-                        <div class="facility-bg-icon">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                    </div>
-                </div>
-                <!-- Service 5: Water Sports Equipment -->
-                <div class="col-md-4">
-                    <div class="facility-card" data-aos="fade-up" data-aos-delay="400">
-                        <span class="facility-icon">
-                            <i class="fas fa-wind"></i>
-                        </span>
-                        <h5>Water Sports Equipment</h5>
-                        <p>Access jet skis, wakeboards, and other water sports equipment for an adventurous day on the water.</p>
-                        <div class="facility-bg-icon">
-                            <i class="fas fa-wind"></i>
-                        </div>
-                    </div>
-                </div>
-                <!-- Service 6: Personalised Itineraries -->
-                <div class="col-md-4">
-                    <div class="facility-card" data-aos="fade-up" data-aos-delay="500">
-                        <span class="facility-icon">
-                            <i class="fas fa-map-marked-alt"></i>
-                        </span>
-                        <h5>Personalised Itineraries</h5>
-                        <p>Plan your perfect day at sea with a custom itinerary tailored to your preferences.</p>
-                        <div class="facility-bg-icon">
-                            <i class="fas fa-map-marked-alt"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+   
     <!-- Team -->
     <section class="team section-padding bg-darkblack">
         <div class="container">
@@ -606,7 +604,41 @@
      }
  });
     </script>
+   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const stats = document.querySelectorAll('.stat-number');
+      
+      const animateValue = (element, start, end, duration) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          const value = Math.floor(progress * (end - start) + start);
+          
+          const suffix = element.getAttribute('data-suffix') || '';
+          element.textContent = value + suffix;
+          
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        window.requestAnimationFrame(step);
+      };
 
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = entry.target;
+            const count = parseInt(target.getAttribute('data-count'));
+            animateValue(target, 0, count, 2000);
+            observer.unobserve(target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      stats.forEach(stat => observer.observe(stat));
+    });
+  </script>
     <script src="/assets/js/jquery-migrate-3.0.0.min.js"></script>
     <script src="/assets/js/modernizr-2.6.2.min.js"></script>
     <script src="/assets/js/imagesloaded.pkgd.min.js"></script>
