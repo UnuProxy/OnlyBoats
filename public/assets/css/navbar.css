@@ -170,13 +170,16 @@
     padding: 16px 40px;
     color: #FFFFFF;
     font-weight: 500;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* for Safari support */
     border: 2px solid #FFFFFF;
     text-transform: uppercase;
     letter-spacing: 2px;
     text-decoration: none;
     transition: all 0.3s ease;
 }
+
 
 .elegant-cta:hover {
     background: #FFFFFF;
