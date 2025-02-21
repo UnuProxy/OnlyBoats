@@ -930,9 +930,7 @@
     .special-background2 p{
         color: #333;
     }
-    .special-text {
-        color: #333 !important;
-    }
+ 
    
 .white-background {
     background-color: #fff;
@@ -946,12 +944,12 @@
   /* Container for two-column layout */
   .memories-container {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr; /* ~60% images, 40% text */
+    grid-template-columns: 1.2fr 0.8fr; 
     align-items: center;
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px; /* horizontal padding */
+    padding: 0 20px; 
   }
   
   /* ===== LEFT COLUMN: Image Grid ===== */

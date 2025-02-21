@@ -1,4 +1,5 @@
 /* Base styles */
+
 .yacht-hero {
     position: relative;
     height: 100vh;
@@ -341,10 +342,10 @@
 
 /* Boats Grid */
 
-.boats-list {
+/* .boats-list {
     padding: 60px 0;
     background: #1B2838;
-}
+} */
 
 #boatsGrid {
     display: grid;
@@ -370,23 +371,76 @@
 .yacht-card {
     position: relative;
     width: 100%;
-    background: linear-gradient(145deg, rgba(45, 65, 90, 0.95), rgba(35, 50, 70, 0.95));
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #eef1f5;
+}
+
+
+
+/* Update pricing grid background */
+.pricing-grid {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.813rem;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.yacht-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(0, 194, 203, 0.2);
-    background: linear-gradient(145deg, rgba(50, 70, 95, 0.95), rgba(40, 55, 75, 0.95));
+/* Update specs row colors */
+.specs-row {
+    display: flex;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
 }
+
+/* Update yacht name color */
+.yacht-name {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+/* Price row styling */
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.375rem 0;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Update buttons */
+.btn-view {
+    background: rgba(32, 149, 174, 0.1);
+    border: 1px solid #2095AE;
+    color: #2095AE;
+    transition: all 0.3s ease;
+}
+
+.btn-view:hover {
+    background: rgba(32, 149, 174, 0.2);
+}
+
+.btn-inquire {
+    background: #2095AE;
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-inquire:hover {
+    background: #1b7f94;
+}
+
+
 
 #boatsGrid {
     display: grid;
@@ -527,10 +581,7 @@
     color: white;
   } 
 
-  .col-md-4 {
-    width: 100%;
-    padding: 0; /* Remove any default padding */
-}
+  
   
   /* Responsive Adjustments */
   @media (max-width: 992px) {
@@ -619,15 +670,20 @@
     padding: 60px 0;
 }
 
-.footer-top .container {
+/* .footer-top .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4rem;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
-}
-
+} */
+.footer-top .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  
 /* Title Styles */
 .footer-title {
     color: #fff;
@@ -1048,3 +1104,487 @@
     color: #666;
     font-size: 14px;
    }
+
+   /* Mobile-first styles */
+   .card-wrapper {
+    width: 100%;
+    padding: 0.5rem;
+  }
+  
+  
+  
+  .yacht-image-wrapper {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+  }
+  
+  .yacht-image-wrapper img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .favorite-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(26, 32, 44, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .yacht-content {
+    padding: 1rem;
+  }
+  
+  .card-header {
+    margin-bottom: 0.75rem;
+  }
+  
+  .yacht-name {
+    color: #fff;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .specs-row {
+    display: flex;
+    gap: 1rem;
+    color: rgb(160, 174, 192);
+    font-size: 0.875rem;
+  }
+  
+  .spec-item {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  
+  .spec-item i {
+    color:  #2095AE;
+  }
+  
+  .pricing-grid {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.813rem;
+  }
+  
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 0;
+    color: rgb(160, 174, 192);
+  }
+  
+  .price-value {
+    color:  #2095AE;
+    font-weight: 500;
+  }
+  
+  .action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  
+  .btn-view, .btn-inquire {
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .btn-view {
+    background: transparent;
+    border: 1px solid  #2095AE;
+    color:  #2095AE;
+  }
+  
+  .btn-inquire {
+    background:  #2095AE;
+    border: none;
+    color: rgb(26, 32, 44);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .yacht-content {
+      padding: 0.75rem;
+    }
+    
+    .specs-row {
+      flex-wrap: wrap;
+    }
+    
+    .action-buttons {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Update body and main content area */
+body {
+    background: #ffffff;
+}
+
+.boats-list {
+    background: #ffffff;
+    padding: 60px 0;
+}
+
+/* Update stats bar */
+.stats-bar {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.stats-content {
+    color: #1a2b3b;
+}
+
+.stats-options {
+    color: #64748b;
+}
+
+/* Update card colors */
+.yacht-card {
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+}
+
+.yacht-content {
+    background: #ffffff;
+}
+
+/* Update text colors */
+.yacht-name {
+    color: #1a2b3b;
+}
+
+.specs-row {
+    color: #64748b;
+}
+
+.price-row {
+    color: #64748b;
+}
+
+.price-row span {
+    color: #64748b;
+}
+
+.price-value {
+    color: #2095AE !important;
+}
+
+/* Update pricing grid */
+.pricing-grid {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+}
+
+/* Stats found count */
+.stats-found {
+    color: #1a2b3b;
+}
+
+/* Update buttons */
+.btn-view {
+    color: #2095AE;
+    border: 1px solid #2095AE;
+    background: transparent;
+}
+
+.btn-inquire {
+    background: #2095AE;
+    color: white;
+}
+
+/* Card hover effect */
+.yacht-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Filter button */
+.yacht-hero-content .toggle-search-btn {
+    display: none; 
+  }
+  
+  
+  @media (min-width: 769px) {
+    .toggle-search-btn.desktop-only {
+      display: inline-block;
+      background-color: #00c2cb;
+      color: #fff;
+      border: none;
+      padding: 0.15rem 0.25rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: auto;  /* pushes it to the far right if inside a flex container */
+    }
+    .toggle-search-btn.desktop-only:hover {
+      background-color: #00a7af;
+    }
+  
+    /* Keep the search container hidden by default */
+    .search-container {
+      display: none;
+    }
+    .search-container.active {
+      display: block;
+    }
+  }
+  
+  /* On mobile, rely on your existing minimised approach;
+     hide this new button so it doesn't conflict. */
+  @media (max-width: 768px) {
+    .toggle-search-btn.desktop-only {
+      display: none;
+    }
+  }
+  
+  /* Inquiry Modal Popup */
+.inquiry-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(32, 149, 174, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    overflow-y: auto;
+    padding: 40px 20px;
+  }
+  
+  .inquiry-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .inquiry-modal-container {
+    background: white;
+    border-radius: 16px;
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .inquiry-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: none;
+    color: #2095AE;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 10; 
+  }
+  
+  
+  .inquiry-modal-close:hover {
+    color: #1b7f94;
+  }
+  
+  .inquiry-modal-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 0;
+  }
+  
+  .inquiry-modal-info {
+    position: relative;
+    border-radius: 16px 0 0 16px;
+    overflow: hidden;
+    background-image: url('/assets/img/50BRONSON9.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .inquiry-modal-info-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(32, 149, 174, 0.3);
+    z-index: 1;
+  }
+  
+  .inquiry-modal-info-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+  }
+  
+  .inquiry-modal-logo {
+    text-decoration: none;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .inquiry-modal-logo h2 {
+    font-size: 28px;
+    color: white;
+    font-weight: 400;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  
+  .inquiry-modal-logo span {
+    color: white;
+    font-weight: 300;
+    font-size: 22px;
+    display: block;
+    letter-spacing: 0.5px;
+  }
+  
+  .inquiry-modal-title {
+    font-size: 40px;
+    font-weight: 400;
+    color: white;
+    margin-bottom: 24px;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+  }
+  
+  .inquiry-modal-subtitle {
+    font-size: 17px;
+    color: white;
+    line-height: 1.6;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+  
+  .inquiry-time-highlight {
+    color: white;
+    font-weight: 500;
+  }
+  
+  .inquiry-modal-form {
+    padding: 40px;
+    background: white;
+  }
+  
+  .inquiry-field-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .inquiry-field-wrap {
+    flex: 1;
+  }
+  
+  .inquiry-input-field {
+    width: 100%;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    color: #343a40;
+    font-size: 15px;
+  }
+  
+  .inquiry-input-field::placeholder {
+    color: #6c757d;
+  }
+  
+  .inquiry-input-field:focus {
+    outline: none;
+    border-color: #2095AE;
+    box-shadow: 0 0 0 2px rgba(32, 149, 174, 0.1);
+  }
+  
+  .inquiry-select-field {
+    width: 100%;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    color: #6c757d;
+    font-size: 15px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%227%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1%201l5%205%205-5%22%20stroke%3D%22%236c757d%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+  
+  .inquiry-message-field {
+    width: 100%;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    color: #343a40;
+    font-size: 15px;
+    min-height: 80px;
+    resize: vertical;
+  }
+  
+  .inquiry-submit-button {
+    width: 100%;
+    padding: 14px;
+    background: #2095AE;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .inquiry-submit-button:hover {
+    background: #1b7f94;
+  }
+  
+  @media (max-width: 768px) {
+    .inquiry-modal-content {
+      grid-template-columns: 1fr;
+    }
+    
+    .inquiry-modal-info {
+      border-radius: 16px 16px 0 0;
+      padding: 30px;
+    }
+    
+    .inquiry-modal-form {
+      padding: 30px;
+    }
+    
+    .inquiry-field-row {
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .inquiry-modal-title {
+      font-size: 24px;
+    }
+  }
+  
