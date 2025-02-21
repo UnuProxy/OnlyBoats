@@ -66,31 +66,39 @@
           <li class="nav-item">
             <a class="nav-link" href="about.html">ABOUT US</a>
           </li>
+          <!-- Changed BOAT RENTAL to OUR FLEET -->
           <li class="nav-item">
-            <a class="nav-link" href="/yacht-rental.html">BOAT RENTAL</a>
+            <a class="nav-link" href="yacht-rental.html">OUR BOATS</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/services.html">ONBOARD DELIVERY</a>
+          <!-- Replace ONBOARD DELIVERY with SERVICES dropdown -->
+          <li class="nav-item dropdown" id="servicesDropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownToggle" role="button">
+              SERVICES
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="yacht-rental.html">BOAT RENTAL</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="services.html">CATERING DELIVERY</a>
+              </li>
+            </ul>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="contact.html">CONTACT</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://wa.me/+34692688348" target="_blank">
-              <i class="fab fa-whatsapp"></i>
-            </a>
-          </li>
+          <!-- WhatsApp button removed -->
         </ul>
       </div>
     </div>
 </nav>
    
 
-    <section class="yacht-hero">
+<section class="yacht-hero">
         <div class="yacht-hero-content">
-            <span class="yacht-hero-subtitle">DISCOVER LUXURY AT SEA</span>
-            <h1 class="yacht-hero-title">FIND YOUR PERFECT YACHT</h1>
-            <p class="yacht-hero-description">Experience the Mediterranean's finest collection of luxury yachts</p>
+            <span class="yacht-hero-subtitle">Just Enjoy</span>
+            <h1 class="yacht-hero-title">BOATS FOR RENT Ibiza</h1>
         </div>
     
         <div class="search-container">
@@ -279,7 +287,8 @@
                 </div>
             </div>
         </div>
-    </section>
+</section>
+
 
 <!-- Stats Bar -->
 <div class="stats-bar">
@@ -289,6 +298,10 @@
                 FOUND <span id="yachtCount">0</span> YACHTS
             </div>
             <div class="stats-options">
+                <button id="toggleSearch" class="toggle-search-btn desktop-only">
+                    <i class="fas fa-filter"></i> Filters
+                  </button>
+                  
                 <span>UNITS: M</span>
                 <span>CURRENCY: EUR</span>
                 <span>SORT BY: DEFAULT</span>
@@ -296,8 +309,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- Dynamic Boat Listing Section -->
 <section class="boats-list section-padding" id="boatsList">
@@ -308,71 +319,140 @@
     </div>
 </section>
 
-<!-- Add this template to your HTML -->
+<!-- Modified boat card template -->
 <template id="boat-template">
-    <div class="col-md-4 mb-4">
+    <div class="card-wrapper">
       <div class="yacht-card">
+        <!-- Image section -->
         <div class="yacht-image-wrapper">
           <img class="boat-image" src="" alt="">
-          <button class="favorite-btn">
+          <button class="favorite-btn" aria-label="Add to favorites">
             <i class="far fa-heart"></i>
           </button>
-          <div class="image-overlay"></div>
         </div>
+        
         <div class="yacht-content">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <div>
-              <h3 class="yacht-name mb-1"></h3>
-              <p class="yacht-builder text-muted small mb-0"></p>
-            </div>
-            <div class="price-value text-primary"></div>
-          </div>
-          
-          <div class="yacht-specs">
-            <div class="spec-item">
-              <i class="fas fa-ruler-combined"></i>
-              <span class="length"></span>
-            </div>
-            <div class="spec-item">
-              <i class="fas fa-users"></i>
-              <span class="guests"></span>
-            </div>
-            <div class="spec-item">
-              <i class="fas fa-bed"></i>
-              <span class="cabins"></span>
-            </div>
-            <div class="spec-item">
-              <i class="fas fa-user-shield"></i>
-              <span class="crew"></span>
+          <!-- Header with name and compact specs -->
+          <div class="card-header">
+            <h3 class="yacht-name"></h3>
+            <div class="specs-row">
+              <span class="spec-item"><i class="fas fa-ruler-combined"></i> <span class="length"></span></span>
+              <span class="spec-item"><i class="fas fa-users"></i> <span class="guests"></span></span>
+              <span class="spec-item"><i class="fas fa-bed"></i> <span class="cabins"></span></span>
+              <span class="spec-item"><i class="fas fa-user-shield"></i> <span class="crew"></span></span>
             </div>
           </div>
-          
-         
-          <div class="yacht-actions">
-            <button class="btn btn-sm btn-details">View Details</button>
-            <button class="btn btn-sm btn-book" onclick="openInquiryModal(this)">
-              <i class="fas fa-envelope"></i> Inquire Now
-            </button>
+  
+          <!-- Compact pricing grid -->
+          <div class="pricing-grid">
+            <div class="price-row">
+              <span>MAY & OCTOBER</span>
+              <span class="price-value low-season"></span>
+            </div>
+            <div class="price-row">
+              <span>JUNE & SEPTEMBER</span>
+              <span class="price-value mid-season"></span>
+            </div>
+            <div class="price-row">
+              <span>JULY & AUGUST</span>
+              <span class="price-value high-season"></span>
+            </div>
+          </div>
+  
+          <!-- Action buttons -->
+          <div class="action-buttons">
+            <button class="btn-view">View Details</button>
+            <button class="btn-inquire">Book Now</button>
           </div>
         </div>
       </div>
     </div>
   </template>
- <!--  Modal Form --> 
-  <div id="inquiryModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Yacht Inquiry</h2>
-        <form id="inquiryForm">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="tel" name="phone" placeholder="Phone">
-            <input type="date" name="date" required>
-            <textarea name="message" placeholder="Message"></textarea>
-            <button type="submit">Send Inquiry</button>
-        </form>
+  
+
+<!-- Inquiry Modal Popup -->
+<div class="inquiry-modal">
+    <div class="inquiry-modal-container">
+      <button class="inquiry-modal-close">✕</button>
+      <div class="inquiry-modal-content">
+        <div class="inquiry-modal-info">
+          <div class="inquiry-modal-info-overlay"></div>
+          <div class="inquiry-modal-info-content">
+            <a class="inquiry-modal-logo" href="index.html">
+              <h2>Just Enjoy Ibiza</h2>
+              <span>Boats</span>
+            </a>
+            <h2 class="inquiry-modal-title">Get in touch to find the perfect boat</h2>
+            <p class="inquiry-modal-subtitle">
+              You'll hear from us in <span class="inquiry-time-highlight">15 minutes</span>. Or request a callback.
+              We assure you the best offer during the high season.
+            </p>
+          </div>
+        </div>
+        <div class="inquiry-modal-form">
+          <form>
+            <!-- Your existing fields -->
+            <div class="inquiry-field-row">
+              <div class="inquiry-field-wrap">
+                <input type="text" class="inquiry-input-field" placeholder="First Name*" required>
+              </div>
+              <div class="inquiry-field-wrap">
+                <input type="text" class="inquiry-input-field" placeholder="Last Name*" required>
+              </div>
+            </div>
+            <div class="inquiry-field-row">
+              <div class="inquiry-field-wrap">
+                <input type="email" class="inquiry-input-field" placeholder="Email Address*" required>
+              </div>
+              <div class="inquiry-field-wrap">
+                <input type="tel" class="inquiry-input-field" placeholder="Phone Number*" required>
+              </div>
+            </div>
+            <div class="inquiry-field-row">
+              <div class="inquiry-field-wrap">
+                <input type="date" class="inquiry-input-field" required>
+              </div>
+            </div>
+            <div class="inquiry-field-row">
+                <div class="inquiry-field-wrap">
+                  <select class="inquiry-select-field" required>
+                    <option value="" disabled selected>Number of Guests</option>
+                    <option value="1">1 Passenger</option>
+                    <option value="2">2 Passengers</option>
+                    <option value="3">3 Passengers</option>
+                    <option value="4">4 Passengers</option>
+                    <option value="5">5 Passengers</option>
+                    <option value="6">6 Passengers</option>
+                    <option value="7">7 Passengers</option>
+                    <option value="8">8 Passengers</option>
+                    <option value="9">9 Passengers</option>
+                    <option value="10">10 Passengers</option>
+                    <option value="11">11 Passengers</option>
+                    <option value="12">12 Passengers</option>
+                  </select>
+                </div>
+              </div>
+              
+            <div class="inquiry-field-row">
+              <div class="inquiry-field-wrap">
+                <input type="number" class="inquiry-input-field" placeholder="Preferred Budget (€/day)*" min="0" required>
+              </div>
+            </div>
+            <div class="inquiry-field-row">
+              <div class="inquiry-field-wrap">
+                <textarea class="inquiry-message-field" placeholder="Tell us about your preferences or special requests"></textarea>
+              </div>
+            </div>
+            <!-- Hidden field for Boat Name -->
+            <input type="hidden" id="boatNameInput" value="">
+            <button type="submit" class="inquiry-submit-button">Send Inquiry</button>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  
+  
 
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
@@ -417,7 +497,13 @@
                         <p class="footer-contact-text">Marina Botafoch<br>07800 Ibiza, Balearic Islands<br>Spain</p>
                         <div class="footer-contact-info">
                             <p class="footer-contact-phone"><span class="flaticon-call"></span> +34 692 688 348</p>
-                            <p class="footer-contact-mail">info@justenjoyibizaboats.com</p>
+                            <p class="footer-contact-mail">
+                                <a href="mailto:info@justenjoyibizaboats.com" class="footer-email-link">
+                                  info@justenjoyibizaboats.com
+                                </a>
+                              </p>
+                              
+                              
                         </div>
                         <div class="footer-about-social-list">
                             <a href="https://www.instagram.com/justenjoyibiza_boats_tours/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -433,7 +519,19 @@
     </div>
   
 </footer>
-    <script>
+<!-- Filter Toggle -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const toggleButton = document.getElementById('toggleSearch');
+  const searchContainer = document.querySelector('.search-container');
+  
+  toggleButton.addEventListener('click', function() {
+    searchContainer.classList.toggle('active');
+  });
+});
+
+</script>
+<script>
     function checkGuests(value) {
         if (value === "more") {
             alert("For groups with more than 12 people, we can accommodate you in boats! Please contact us for arrangements.");
@@ -441,64 +539,32 @@
             document.getElementById("charter-guests").value = "";
         }
     }
-    </script>
-    <!-- Modal -->
-    <script>
-    function openInquiryModal(btn) {
-        const modal = document.getElementById('inquiryModal');
-        const yachtCard = btn.closest('.yacht-card');
-        const yachtName = yachtCard.querySelector('.yacht-name').textContent;
-        modal.style.display = "block";
-        
-        const form = modal.querySelector('#inquiryForm');
-        form.onsubmit = async (e) => {
-            e.preventDefault();
-            try {
-                await db.collection('inquiries').add({
-                    yachtName: yachtName,
-                    name: form.querySelector('[name="name"]').value,
-                    email: form.querySelector('[name="email"]').value,
-                    phone: form.querySelector('[name="phone"]').value,
-                    date: form.querySelector('[name="date"]').value,
-                    message: form.querySelector('[name="message"]').value,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                modal.style.display = "none";
-                form.reset(); // Reset form after successful submission
-                alert('Inquiry sent successfully!');
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error sending inquiry');
-            }
-        };
-    }
-    
-    // Add these event listeners when the document loads
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('inquiryModal');
-        const closeBtn = modal.querySelector('.close');
-        
-        // Close button click handler
-        closeBtn.onclick = function() {
-            modal.style.display = "none";
-        }
-        
-        // Click outside modal to close
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-        
-        // Escape key to close
-        document.addEventListener('keydown', function(event) {
-            if (event.key === "Escape" && modal.style.display === "block") {
-                modal.style.display = "none";
-            }
-        });
-    });
-    </script>
+</script>
+<script>
+    document.addEventListener("click", function(e) {
+  // Check if the clicked element is a Book Now button
+  const btn = e.target.closest('.btn-inquire');
+  if (btn) {
+    const yachtCard = btn.closest('.yacht-card');
+    const boatNameElement = yachtCard.querySelector('.yacht-name');
+    const boatName = boatNameElement ? boatNameElement.textContent.trim() : '';
+    const boatNameField = document.getElementById('boatNameInput');
+    boatNameField.value = boatName;
+    const modal = document.querySelector('.inquiry-modal');
+    modal.classList.add('active');
+  }
+});
 
+document.addEventListener("click", function(e) {
+  if (e.target.closest('.inquiry-modal-close')) {
+    const modal = document.querySelector('.inquiry-modal');
+    modal.classList.remove('active');
+  }
+});
+
+
+    </script>
+    
     <!-- Animation on Scroll -->
     <script>
         window.addEventListener('scroll', () => {
@@ -654,7 +720,45 @@
  }
 });
     </script> 
+    <script>
+       function createBoatCard(doc, template, container) {
+    const boat = doc.data();
+    const clone = template.content.cloneNode(true);
+
+    // Image
+    const img = clone.querySelector('.boat-image');
+    img.src = boat.images?.[0] || 'placeholder.jpg';
+    img.alt = boat.name;
+    img.loading = 'lazy';
+
+    // Name and specs
+    clone.querySelector('.yacht-name').textContent = boat.name;
     
+    const specs = boat.detailedSpecs || {};
+    clone.querySelector('.length').textContent = specs.Length || ''; // Added fallback to empty string
+    clone.querySelector('.guests').textContent = specs.Guests || '';
+    clone.querySelector('.cabins').textContent = specs.Cabins || ''; // Changed to empty string fallback
+    clone.querySelector('.crew').textContent = specs.Crew || '';
+
+    // Prices
+    function formatPrice(price) {
+        return price ? `${price.toLocaleString()}` : 'On request';
+    }
+
+    clone.querySelector('.low-season').textContent = formatPrice(boat.seasonalPrices?.["May / October"]);
+    clone.querySelector('.mid-season').textContent = formatPrice(boat.seasonalPrices?.["June / September"]);
+    clone.querySelector('.high-season').textContent = formatPrice(boat.seasonalPrices?.["July / August"]);
+
+    // Event listeners
+    clone.querySelector('.favorite-btn').addEventListener('click', () => 
+        toggleFavorite(doc.id));
+        
+    clone.querySelector('.btn-view').addEventListener('click', () => 
+        window.location.href = `/boat-details.html?id=${doc.id}`);
+
+    container.appendChild(clone);
+}
+        </script>
     <!-- Main Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

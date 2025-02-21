@@ -322,43 +322,52 @@
         </svg>
     </div>
    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <div class="logo-wrapper">
-        <a class="logo" href="index.html">
-          <h2>Just Enjoy Ibiza <span>Boats</span></h2>
-        </a>
-      </div>
-      <button class="custom-toggler" type="button" aria-label="Toggle navigation">
-        <span class="toggler-icon">
-          <span class="line"></span>
-          <span class="line"></span>
-          <span class="line"></span>
-        </span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">ABOUT US</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/yacht-rental.html">BOAT RENTAL</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/services.html">ONBOARD DELIVERY</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">CONTACT</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://wa.me/+34692688348" target="_blank">
-              <i class="fab fa-whatsapp"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <div class="logo-wrapper">
+      <a class="logo" href="index.html">
+        <h2>Just Enjoy Ibiza <span>Boats</span></h2>
+      </a>
     </div>
-    </nav>
+    <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+      <span class="toggler-icon">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">ABOUT US</a>
+        </li>
+        <!-- Changed BOAT RENTAL to OUR FLEET -->
+        <li class="nav-item">
+          <a class="nav-link" href="yacht-rental.html">OUR BOATS</a>
+        </li>
+        <!-- Replace ONBOARD DELIVERY with SERVICES dropdown -->
+        <li class="nav-item dropdown" id="servicesDropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownToggle" role="button">
+            SERVICES
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="yacht-rental.html">BOAT RENTAL</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="services.html">CATERING DELIVERY</a>
+            </li>
+          </ul>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">CONTACT</a>
+        </li>
+        <!-- WhatsApp button removed -->
+      </ul>
+    </div>
+  </div>
+</nav>
     <!-- Header Banner -->
     <div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4" data-background="/assets/img/Music-sailing-yacht.jpg">
         <div class="container">
@@ -371,13 +380,13 @@
         </div>
     </div>
    <!-- About -->
-   <section class="about section-padding special-background2" data-scroll-index="1">
+   <section class="about section-padding white-background " data-scroll-index="1">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-12 mb-30 animate-box" data-animate-effect="fadeInUp">
                 <div class="section-subtitle">Since 2016</div>
-                <div class="section-title special-text">Unmatched Experience in Ibiza</div>
-                <p>Welcome to Just Enjoy Ibiza, where luxury meets personalised service. With years of experience since 2016, we strive to offer unforgettable moments on the beautiful waters of Ibiza. We take great pride in providing a bespoke yachting experience that exceeds expectations, backed by our passion for the sea and our deep knowledge of the industry.</p>
+                <div class="section-title only-header">Unmatched Experience in Ibiza</div>
+                <p class="special-text"> Welcome to Just Enjoy Ibiza, where luxury meets personalised service. With years of experience since 2016, we strive to offer unforgettable moments on the beautiful waters of Ibiza. We take great pride in providing a bespoke yachting experience that exceeds expectations, backed by our passion for the sea and our deep knowledge of the industry.</p>
                 <p>Myself, <strong>Julian</strong>, along with my trusted associate, <strong>Alin</strong>, have built a reputation for delivering excellence with every charter. Our goal is to make your time aboard our yachts seamless, luxurious, and truly memorable—whether you are looking to explore hidden coves, enjoy water sports, or simply relax and take in the breathtaking views.</p>
                 <div class="about-bottom"> <img src="/assets/img/signature-dark.svg" alt="" class="image about-signature">
                     <div class="about-name-wrapper">

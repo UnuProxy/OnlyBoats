@@ -1318,6 +1318,18 @@ color: #aa8453;
 .special-title{
     color: #1b1b1b;
 }
+.about p {
+    color: #222;
+  }
+  
+  .about {
+    color: #333;
+  }
+  
+  .only-header {
+    color: #222 !important;
+  }
+  
 
 .special-title a{
     color: #1b1b1b !important; 

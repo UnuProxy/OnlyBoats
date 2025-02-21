@@ -1,4 +1,3 @@
-// server.js
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -53,7 +52,7 @@ app.get('/api/firebase-config', (req, res) => {
 app.post('/api/chat', async (req, res) => {
   console.log('Chat endpoint hit:', req.body);
   try {
-    const { userMessage, conversationId, userName } = req.body;
+    const { userMessage, conversationId, userName, agentName } = req.body;
     if (!userMessage || !conversationId) {
       console.log('Missing required fields:', { userMessage, conversationId });
       return res.status(400).json({ error: 'Missing required fields' });
@@ -62,11 +61,6 @@ app.post('/api/chat', async (req, res) => {
     const conversationRef = db.collection('chatConversations').doc(conversationId);
     const conversationDoc = await conversationRef.get();
     const conversationData = conversationDoc.data() || {};
-
-    // For testing, the early exit check for agent-handling is commented out.
-    // if (conversationData?.status === 'agent-handling') {
-    //   return res.status(200).json({ response: null, status: 'agent-handling' });
-    // }
 
     console.log('Fetching conversation history...');
     const messagesSnapshot = await conversationRef
@@ -83,14 +77,17 @@ app.post('/api/chat', async (req, res) => {
       };
     });
 
+    // Updated system prompt with dynamic agent introduction
     const systemMessage = {
       role: 'system',
       content: `You are a friendly and knowledgeable yacht rental assistant for Just Enjoy Ibiza Boats.
-You help customers with yacht rentals, boat information, and booking inquiries in Ibiza.
-Keep responses concise and focused on yachts and boats.
-The current user's name is ${userName || 'Guest'}.
-Always maintain a friendly, professional tone.
-Include specific information about yacht options, prices, and availability when relevant.`
+      When greeting a user for the first time, always introduce yourself with your current name, for example:
+      "Hi, I'm ${agentName}. How can I help you today?"
+      You help customers with yacht rentals, boat information, and booking inquiries in Ibiza.
+      Keep responses concise and focused on yachts and boats.
+      The current user's name is ${userName || 'Guest'}.
+      Always maintain a friendly, professional tone.
+      Include specific information about yacht options, prices, and availability when relevant.`
     };
 
     const messages = [
