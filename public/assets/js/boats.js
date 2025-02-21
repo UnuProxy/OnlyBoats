@@ -1,6 +1,17 @@
 // Global references
 let db;
+const BOATS_PER_LOAD = 6;
+let lastVisibleBoat = null;
+let isLoading = false;
+let allBoatsLoaded = false;
 const favoriteBoats = JSON.parse(localStorage.getItem('favBoats') || '[]');
+
+// Helper function to extract numeric length from string (e.g., "9m" -> 9)
+function extractLength(lengthStr) {
+    if (!lengthStr) return 0;
+    const match = lengthStr.match(/\d+/);
+    return match ? parseInt(match[0]) : 0;
+}
 
 function formatPriceFromFirestore(boat) {
     if (boat.seasonalPrices && boat.seasonalPrices["July / August"]) {
@@ -12,33 +23,6 @@ function formatPriceFromFirestore(boat) {
     }
 
     return "Price on request";
-}
-
-async function initializeApp() {
-    try {
-        const response = await fetch('/api/firebase-config');
-        const firebaseConfig = await response.json();
-        firebase.initializeApp(firebaseConfig);
-        db = firebase.firestore();
-
-        // Initialize Select2
-        if (window.$ && window.$.fn.select2) {
-            $('.select2').select2({
-                minimumResultsForSearch: -1,
-                width: '100%'
-            });
-        }
-
-        // Initialize search functionality
-        initializeSearchFunctionality();
-
-        // Initial load
-        await displayBoats();
-        
-    } catch (error) {
-        console.error('Initialization error:', error);
-        showErrorNotification();
-    }
 }
 
 function initializeSearchFunctionality() {
@@ -72,11 +56,10 @@ function initializeSearchFunctionality() {
     // Initialize advanced filters
     document.querySelectorAll('.advanced-filters-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            const type = this.id.replace('AdvancedBtn', '');
-            const filtersSection = document.getElementById(`${type}AdvancedFilters`);
-            const isVisible = filtersSection.style.display === 'block';
+            const filtersSection = document.getElementById(`${this.id.replace('AdvancedBtn', '')}AdvancedFilters`);
+            const isVisible = filtersSection.classList.contains('active');
             
-            filtersSection.style.display = isVisible ? 'none' : 'block';
+            filtersSection.classList.toggle('active');
             
             // Update button icon and text
             const icon = this.querySelector('i');
@@ -89,9 +72,26 @@ function initializeSearchFunctionality() {
     });
 }
 
+function initializeInfiniteScroll() {
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        
+        scrollTimeout = setTimeout(() => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
+                if (!isLoading && !allBoatsLoaded) {
+                    displayBoats({}, true);
+                }
+            }
+        }, 100);
+    });
+}
+
 async function handleSearch(e) {
     e.preventDefault();
-    const activeTab = document.querySelector('.search-tab.active').dataset.tab;
+    const activeTab = document.querySelector('.search-tab.active')?.dataset.tab;
+    if (!activeTab) return;
+
     const filters = {};
 
     if (activeTab === 'charter') {
@@ -116,74 +116,143 @@ async function handleSearch(e) {
         !filters[key] && delete filters[key]
     );
 
+    // Reset pagination state for new search
+    lastVisibleBoat = null;
+    allBoatsLoaded = false;
+    
     await displayBoats(filters);
 }
 
-async function displayBoats(filters = {}) {
+async function initializeApp() {
+    try {
+        const response = await fetch('/api/firebase-config');
+        const firebaseConfig = await response.json();
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+
+        // Initialize Select2
+        if (window.$ && window.$.fn.select2) {
+            $('.select2').select2({
+                minimumResultsForSearch: -1,
+                width: '100%'
+            });
+        }
+
+        // Initialize search functionality
+        initializeSearchFunctionality();
+
+        // Create and append load more button
+        createLoadMoreButton();
+
+        // Initial load
+        await displayBoats();
+        
+        // Initialize infinite scroll
+        initializeInfiniteScroll();
+
+    } catch (error) {
+        console.error('Initialization error:', error);
+        showErrorNotification();
+    }
+}
+
+function createLoadMoreButton() {
+    const boatsGrid = document.getElementById('boatsGrid');
+    if (!boatsGrid) return;
+
+    const loadMoreButton = document.createElement('button');
+    loadMoreButton.className = 'load-more-button';
+    loadMoreButton.innerHTML = 'Load More Boats';
+    loadMoreButton.onclick = () => displayBoats({}, true);
+    boatsGrid.parentElement.appendChild(loadMoreButton);
+}
+
+async function displayBoats(filters = {}, isLoadMore = false) {
+    if (isLoading) return;
+    
     const loadingOverlay = document.getElementById('loadingOverlay');
     const boatsGrid = document.getElementById('boatsGrid');
     const template = document.getElementById('boat-template');
+    const loadMoreButton = document.querySelector('.load-more-button');
 
     try {
         if (!boatsGrid || !template || !loadingOverlay) {
             throw new Error('Required elements missing');
         }
 
+        isLoading = true;
         loadingOverlay.style.display = 'flex';
-        boatsGrid.innerHTML = '';
 
+        // Clear grid if this is a new search
+        if (!isLoadMore) {
+            boatsGrid.innerHTML = '';
+            lastVisibleBoat = null;
+            allBoatsLoaded = false;
+            if (loadMoreButton) {
+                loadMoreButton.disabled = false;
+                loadMoreButton.innerHTML = 'Load More Boats';
+            }
+        }
+
+        // Create query without length ordering initially
         let query = db.collection('boats');
 
-        // Apply base filters
-        if (filters.type) {
+        // Apply filters
+        if (filters.type && filters.type !== '') {
             query = query.where('detailedSpecs.Class', '==', filters.type);
         }
 
-        if (filters.guests) {
+        if (filters.guests && filters.guests !== '') {
             const [min, max] = filters.guests.split('-').map(Number);
             if (min) query = query.where('detailedSpecs.Guests', '>=', min.toString());
             if (max) query = query.where('detailedSpecs.Guests', '<=', max.toString());
         }
 
-        if (filters.price) {
+        if (filters.price && filters.price !== '') {
             let [min, max] = filters.price.split('-').map(val => {
-                // Remove non-numeric characters and convert to number
                 return parseInt(val.replace(/[^\d]/g, ''));
             });
             
-            // Handle special case for "10000+" price range
             if (filters.price.endsWith('+')) {
                 query = query.where('seasonalPrices.July / August', '>=', min);
-            } else {
+            } else if (min && max) {
                 query = query.where('seasonalPrices.July / August', '>=', min)
                            .where('seasonalPrices.July / August', '<=', max);
             }
         }
 
+        // Get all boats for proper sorting
         const snapshot = await query.get();
         
         if (snapshot.empty) {
-            showNoResults(boatsGrid);
+            allBoatsLoaded = true;
+            if (loadMoreButton) {
+                loadMoreButton.disabled = true;
+                loadMoreButton.innerHTML = 'No More Boats';
+            }
+            if (!isLoadMore) {
+                showNoResults(boatsGrid);
+            }
             return;
         }
 
-        // Post-query filtering for complex filters
-        let filteredBoats = [];
+        // Convert to array and sort by length
+        let boats = [];
         snapshot.forEach(doc => {
             const boat = doc.data();
             let includeBoat = true;
 
             // Apply additional filters
-            if (filters.length) {
+            if (filters.length && filters.length !== '') {
                 const [min, max] = filters.length.split('-').map(val => 
                     parseInt(val.replace(/[^\d]/g, '')));
-                const boatLength = parseInt(boat.detailedSpecs?.Length);
+                const boatLength = extractLength(boat.detailedSpecs?.Length);
                 if ((min && boatLength < min) || (max && boatLength > max)) {
                     includeBoat = false;
                 }
             }
 
-            if (filters.cabins) {
+            if (filters.cabins && filters.cabins !== '') {
                 const [min, max] = filters.cabins.split('-').map(Number);
                 const cabins = parseInt(boat.detailedSpecs?.Cabins);
                 if ((min && cabins < min) || (max && cabins > max)) {
@@ -191,32 +260,69 @@ async function displayBoats(filters = {}) {
                 }
             }
 
-            if (filters.flag && boat.detailedSpecs?.Flag !== filters.flag) {
+            if (filters.flag && filters.flag !== '' && boat.detailedSpecs?.Flag !== filters.flag) {
                 includeBoat = false;
             }
 
-            if (filters.builder && boat.detailedSpecs?.Builder !== filters.builder) {
+            if (filters.builder && filters.builder !== '' && boat.detailedSpecs?.Builder !== filters.builder) {
                 includeBoat = false;
             }
 
             if (includeBoat) {
-                filteredBoats.push({ id: doc.id, data: () => boat });
+                boats.push({ id: doc.id, data: boat });
             }
         });
 
-        // Update count and display results
-        updateYachtCount(filteredBoats.length);
-        
-        if (filteredBoats.length === 0) {
-            showNoResults(boatsGrid);
-        } else {
-            filteredBoats.forEach(doc => createBoatCard(doc, template, boatsGrid));
+        // Sort boats by length
+        boats.sort((a, b) => {
+            const lengthA = extractLength(a.data.detailedSpecs?.Length);
+            const lengthB = extractLength(b.data.detailedSpecs?.Length);
+            return lengthA - lengthB;
+        });
+
+        // Handle pagination
+        const startIndex = isLoadMore ? boats.findIndex(b => b.id === lastVisibleBoat?.id) + 1 : 0;
+        if (startIndex === -1) {
+            // If we can't find the last visible boat, start from beginning
+            lastVisibleBoat = null;
+            return await displayBoats(filters, false);
         }
+
+        const boatsToShow = boats.slice(startIndex, startIndex + BOATS_PER_LOAD);
+        
+        // Update last visible boat
+        lastVisibleBoat = boatsToShow[boatsToShow.length - 1];
+
+        // Check if all boats are loaded
+        if (startIndex + BOATS_PER_LOAD >= boats.length) {
+            allBoatsLoaded = true;
+            if (loadMoreButton) {
+                loadMoreButton.disabled = true;
+                loadMoreButton.innerHTML = 'No More Boats';
+            }
+        }
+
+        // Update count
+        if (!isLoadMore) {
+            updateYachtCount(boats.length);
+        } else {
+            const currentCount = parseInt(document.getElementById('yachtCount').textContent) || 0;
+            updateYachtCount(currentCount + boatsToShow.length);
+        }
+        
+        // Display boats
+        boatsToShow.forEach(boat => {
+            createBoatCard({
+                id: boat.id,
+                data: () => boat.data
+            }, template, boatsGrid);
+        });
 
     } catch (error) {
         console.error('Error displaying boats:', error);
         showErrorUI(boatsGrid);
     } finally {
+        isLoading = false;
         loadingOverlay.style.display = 'none';
     }
 }
@@ -224,14 +330,21 @@ async function displayBoats(filters = {}) {
 function createBoatCard(doc, template, container) {
     const boat = doc.data();
     const clone = template.content.cloneNode(true);
+    const card = clone.querySelector('.yacht-card');
 
     // Add boat ID to card
-    clone.querySelector('.yacht-card').setAttribute('data-boat-id', doc.id);
+    card.setAttribute('data-boat-id', doc.id);
 
     // Image handling
     const img = clone.querySelector('.boat-image');
     img.src = boat.images?.[0] || 'placeholder.jpg';
     img.alt = boat.name;
+    img.loading = 'lazy';
+
+    // Add animation class after a small delay
+    setTimeout(() => {
+        card.classList.add('loaded');
+    }, 100);
 
     // Favorite button
     const favBtn = clone.querySelector('.favorite-btn');
@@ -248,16 +361,17 @@ function createBoatCard(doc, template, container) {
     const specs = boat.detailedSpecs || {};
     clone.querySelector('.length').textContent = specs.Length || 'N/A';
     clone.querySelector('.guests').textContent = specs.Guests || 'N/A';
+    clone.querySelector('.cabins').textContent = specs.Cabins || 'N/A';
     clone.querySelector('.crew').textContent = specs.Crew || 'N/A';
 
-    // Updated price handling
-    const priceElement = clone.querySelector('.price-value');
-    const price = formatPriceFromFirestore(boat);
-    priceElement.textContent = price;
-    priceElement.classList.toggle('price-on-request', price === 'Price on request');
+    // Seasonal prices
+    const seasonalPrices = boat.seasonalPrices || {};
+    clone.querySelector('.low-season').textContent = formatPrice(seasonalPrices["May / October"]);
+    clone.querySelector('.mid-season').textContent = formatPrice(seasonalPrices["June / September"]);
+    clone.querySelector('.high-season').textContent = formatPrice(seasonalPrices["July / August"]);
 
-    // Add view details click handler for new page navigation
-    const viewDetailsBtn = clone.querySelector('.btn-details');
+    // Add view details click handler
+    const viewDetailsBtn = clone.querySelector('.btn-view');
     viewDetailsBtn.addEventListener('click', () => {
         window.location.href = `/boat-details.html?id=${doc.id}`;
     });
@@ -265,158 +379,9 @@ function createBoatCard(doc, template, container) {
     container.appendChild(clone);
 }
 
-function showBoatDetails(boatId) {
-    const modal = document.createElement('div');
-    modal.className = 'boat-details-modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <button class="close-modal">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="boat-gallery">
-                <div class="main-image">
-                    <img id="mainImage" src="" alt="Yacht">
-                    <button class="gallery-nav prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <button class="gallery-nav next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-                <div class="thumbnail-grid" id="thumbnailGrid"></div>
-            </div>
-            <div class="boat-info">
-                <h2 id="boatName"></h2>
-                <div class="specs-section">
-                    <div class="spec-row">
-                        <div class="spec-item">
-                            <i class="fas fa-ruler"></i>
-                            <span id="lengthSpec"></span>
-                        </div>
-                        <div class="spec-item">
-                            <i class="fas fa-users"></i>
-                            <span id="guestsSpec"></span>
-                        </div>
-                        <div class="spec-item">
-                            <i class="fas fa-user-shield"></i>
-                            <span id="crewSpec"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="description-section">
-                    <p id="boatDescription"></p>
-                </div>
-                <div class="amenities-section" id="amenitiesSection">
-                    <h3>Features & Amenities</h3>
-                    <div class="amenities-grid"></div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    // Load boat data
-    db.collection('boats').doc(boatId).get().then((doc) => {
-        if (doc.exists) {
-            const boat = doc.data();
-            
-            // Populate basic info
-            document.getElementById('boatName').textContent = boat.name;
-            document.getElementById('lengthSpec').textContent = boat.detailedSpecs?.Length || 'N/A';
-            document.getElementById('guestsSpec').textContent = boat.detailedSpecs?.Guests || 'N/A';
-            document.getElementById('crewSpec').textContent = boat.detailedSpecs?.Crew || 'N/A';
-            document.getElementById('boatDescription').textContent = boat.description;
-
-            // Handle images
-            if (boat.images && boat.images.length > 0) {
-                const mainImage = document.getElementById('mainImage');
-                const thumbnailGrid = document.getElementById('thumbnailGrid');
-                let currentImageIndex = 0;
-                
-                // Set main image
-                mainImage.src = boat.images[0];
-                
-                // Create thumbnails
-                thumbnailGrid.innerHTML = boat.images.map((img, index) => `
-                    <div class="thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}">
-                        <img src="${img}" alt="Yacht view ${index + 1}">
-                    </div>
-                `).join('');
-
-                // Add thumbnail click handlers
-                thumbnailGrid.querySelectorAll('.thumbnail').forEach(thumb => {
-                    thumb.addEventListener('click', () => {
-                        currentImageIndex = parseInt(thumb.dataset.index);
-                        updateMainImage(boat.images[currentImageIndex]);
-                        updateThumbnailsActive(currentImageIndex);
-                    });
-                });
-
-                // Add navigation handlers
-                modal.querySelector('.gallery-nav.prev').addEventListener('click', () => {
-                    currentImageIndex = (currentImageIndex - 1 + boat.images.length) % boat.images.length;
-                    updateMainImage(boat.images[currentImageIndex]);
-                    updateThumbnailsActive(currentImageIndex);
-                });
-
-                modal.querySelector('.gallery-nav.next').addEventListener('click', () => {
-                    currentImageIndex = (currentImageIndex + 1) % boat.images.length;
-                    updateMainImage(boat.images[currentImageIndex]);
-                    updateThumbnailsActive(currentImageIndex);
-                });
-            }
-
-            // Display amenities if available
-            if (boat.amenities) {
-                const amenitiesGrid = modal.querySelector('.amenities-grid');
-                Object.entries(boat.amenities).forEach(([category, items]) => {
-                    if (typeof items === 'object') {
-                        Object.entries(items).forEach(([name, value]) => {
-                            if (value === true) {
-                                amenitiesGrid.innerHTML += `
-                                    <div class="amenity-item">
-                                        <i class="fas fa-check"></i>
-                                        <span>${formatAmenityName(name)}</span>
-                                    </div>
-                                `;
-                            }
-                        });
-                    }
-                });
-            }
-        }
-    });
-
-    // Close handlers
-    modal.querySelector('.close-modal').addEventListener('click', () => {
-        modal.remove();
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    });
-}
-
-function updateMainImage(src) {
-    const mainImage = document.getElementById('mainImage');
-    if (mainImage) {
-        mainImage.src = src;
-    }
-}
-
-function updateThumbnailsActive(activeIndex) {
-    document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
-        thumb.classList.toggle('active', index === activeIndex);
-    });
-}
-
-function formatAmenityName(name) {
-    return name
-        .replace(/([A-Z])/g, ' $1')
-        .replace(/^./, str => str.toUpperCase());
+function formatPrice(price) {
+    if (!price) return 'On request';
+    return `€${price.toLocaleString()}`;
 }
 
 function toggleFavorite(boatId, button) {
