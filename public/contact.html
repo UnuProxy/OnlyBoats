@@ -32,7 +32,7 @@
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
     </div>
-    <!-- Navbar -->
+   <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
       <div class="logo-wrapper">
@@ -52,20 +52,29 @@
           <li class="nav-item">
             <a class="nav-link" href="about.html">ABOUT US</a>
           </li>
+          <!-- Changed BOAT RENTAL to OUR FLEET -->
           <li class="nav-item">
-            <a class="nav-link" href="/yacht-rental.html">BOAT RENTAL</a>
+            <a class="nav-link" href="yacht-rental.html">OUR BOATS</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/services.html">ONBOARD DELIVERY</a>
+          <!-- Replace ONBOARD DELIVERY with SERVICES dropdown -->
+          <li class="nav-item dropdown" id="servicesDropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownToggle" role="button">
+              SERVICES
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="yacht-rental.html">BOAT RENTAL</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="services.html">CATERING DELIVERY</a>
+              </li>
+            </ul>
           </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="contact.html">CONTACT</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="https://wa.me/+34692688348" target="_blank">
-              <i class="fab fa-whatsapp"></i>
-            </a>
-          </li>
+          <!-- WhatsApp button removed -->
         </ul>
       </div>
     </div>

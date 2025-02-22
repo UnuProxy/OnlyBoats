@@ -147,8 +147,8 @@ async function initializeApp() {
         // Initial load
         await displayBoats();
         
-        // Initialize infinite scroll
-        initializeInfiniteScroll();
+        // Remove infinite scroll initialization
+        // initializeInfiniteScroll();
 
     } catch (error) {
         console.error('Initialization error:', error);
@@ -156,6 +156,7 @@ async function initializeApp() {
     }
 }
 
+// Modify the createLoadMoreButton function to make the button more visible
 function createLoadMoreButton() {
     const boatsGrid = document.getElementById('boatsGrid');
     if (!boatsGrid) return;
@@ -163,6 +164,8 @@ function createLoadMoreButton() {
     const loadMoreButton = document.createElement('button');
     loadMoreButton.className = 'load-more-button';
     loadMoreButton.innerHTML = 'Load More Boats';
+    loadMoreButton.style.display = 'block'; // Make sure it's visible
+    loadMoreButton.style.margin = '20px auto'; // Center it
     loadMoreButton.onclick = () => displayBoats({}, true);
     boatsGrid.parentElement.appendChild(loadMoreButton);
 }
