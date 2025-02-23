@@ -4355,13 +4355,7 @@ button.mfp-arrow {
     text-align: left;
     margin: 30px 0 15px 0;
 }
-.testimonials .item .info .author-img {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    float: left;
-    overflow: hidden;
-}
+/*  */
 .testimonials .item .info .cont {
     margin-left: 85px;
 }

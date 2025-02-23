@@ -46,325 +46,203 @@
         </svg>
     </div>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <div class="logo-wrapper">
-        <a class="logo" href="index.html">
-          <h2>Just Enjoy Ibiza <span>Boats</span></h2>
-        </a>
-      </div>
-      <button class="custom-toggler" type="button" aria-label="Toggle navigation">
-        <span class="toggler-icon">
-          <span class="line"></span>
-          <span class="line"></span>
-          <span class="line"></span>
-        </span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">ABOUT US</a>
-          </li>
-          <!-- Changed BOAT RENTAL to OUR FLEET -->
-          <li class="nav-item">
-            <a class="nav-link" href="yacht-rental.html">OUR BOATS</a>
-          </li>
-          <!-- Replace ONBOARD DELIVERY with SERVICES dropdown -->
-          <li class="nav-item dropdown" id="servicesDropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownToggle" role="button">
-              SERVICES
-            </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" href="yacht-rental.html">BOAT RENTAL</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="services.html">CATERING DELIVERY</a>
-              </li>
-            </ul>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">CONTACT</a>
-          </li>
-          <!-- WhatsApp button removed -->
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-special">
+  <div class="container">
+    <div class="logo-wrapper">
+      <a class="logo" href="index.html">
+        <h2>Just Enjoy Ibiza <span>Boats</span></h2>
+      </a>
     </div>
+    <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+      <span class="toggler-icon">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">ABOUT US</a>
+        </li>
+        <!-- Changed BOAT RENTAL to OUR FLEET -->
+        <li class="nav-item">
+          <a class="nav-link" href="yacht-rental.html">OUR BOATS</a>
+        </li>
+        <!-- Replace ONBOARD DELIVERY with SERVICES dropdown -->
+        <li class="nav-item dropdown" id="servicesDropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownToggle" role="button">
+            SERVICES
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="yacht-rental.html">BOAT RENTAL</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="services.html">CATERING DELIVERY</a>
+            </li>
+          </ul>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">CONTACT</a>
+        </li>
+        <!-- WhatsApp button removed -->
+      </ul>
+    </div>
+  </div>
 </nav>
    
-<section class="yacht-hero">
-        <div class="yacht-hero-content">
-            <span class="yacht-hero-subtitle">Just Enjoy</span>
-            <h1 class="yacht-hero-title">BOATS FOR RENT Ibiza</h1>
-        </div>
-    
-        <div class="search-container">
-            <!-- Same tabs but with improved mobile styling -->
-            
-            <div class="minimized-title">FILTERS</div>
-            <div class="search-tabs">
-                <button class="search-tab active" data-tab="charter">CHARTER</button>
-                <button class="search-tab" data-tab="sale">SALE</button>
-                <button class="search-tab" data-tab="lastminute">LAST MINUTE</button>
-            </div>
-    
-            <!-- Last Minute Message -->
-            <div class="yacht-search" id="lastminuteSearch">
-                <div class="no-offers-message">
-                    <i class="fas fa-clock fa-3x"></i>
-                    <h3>No Last Minute Offers Available</h3>
-                    <p>Join our Members Club to get exclusive access to last minute deals and special discounts.</p>
-                    <button class="join-club-button">
-                        <i class="fas fa-star"></i> Join Members Club
-                    </button>
-                </div>
-            </div>
-    
-            <!-- Charter Search Form -->
-            <div class="yacht-search active" id="charterSearch">
-                <!-- Primary search grid -->
-                <div class="search-grid primary-filters">
-                   
-                    
-                    <div class="search-group">
-                        <label><i class="fas fa-ship"></i> BOAT TYPE</label>
-                        <select id="charter-yachtType">
-                            <option value="">All Types</option>
-                            <option value="motor">Motor Yacht</option>
-                            <option value="sailing">Sailing Yacht</option>
-                            <option value="catamaran">Catamaran</option>
-                        </select>
-                    </div>
-    
-                    <div class="search-group">
-                        <label><i class="fas fa-users"></i> GUESTS</label>
-                        <select id="charter-guests" onchange="checkGuests(this.value)">
-                            <option value="">Number of Guests</option>
-                            <option value="1-6">1-6 Guests</option>
-                            <option value="7-12">7-12 Guests</option>
-                            <option value="more">More than 12 Guests</option>
-                          </select>
-                    </div>
-    
-                    <div class="search-group">
-                        <label><i class="fas fa-calendar"></i> DATES</label>
-                        <input type="date" id="charter-dates" class="date-input">
-                    </div>
-                </div>
-    
-                <!-- Advanced filters section -->
-                <div class="advanced-filters" id="charterAdvancedFilters">
-                    <div class="search-grid">
-                        <div class="search-group">
-                            <label><i class="fas fa-euro-sign"></i> PRICE RANGE</label>
-                            <select id="charter-price">
-                                <option value="">Any Price</option>
-                                <option value="0-5000">Up to €5,000/day</option>
-                                <option value="5000-10000">€5,000 - €10,000/day</option>
-                                <option value="10000+">€10,000+/day</option>
-                            </select>
-                        </div>
-                        <div class="search-group">
-                            <label><i class="fas fa-bed"></i> CABINS</label>
-                            <select id="charter-cabins">
-                                <option value="">Any</option>
-                                <option value="1-2">1-2 Cabins</option>
-                                <option value="3-4">3-4 Cabins</option>
-                                <option value="5+">5+ Cabins</option>
-                            </select>
-                        </div>
-                        <div class="search-group">
-                            <label><i class="fas fa-ruler-combined"></i> LENGTH</label>
-                            <select id="charter-length">
-                                <option value="">Any Length</option>
-                                <option value="0-15">Up to 15m</option>
-                                <option value="15-30">15m - 30m</option>
-                                <option value="30+">30m+</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-    
-                <!-- Action buttons -->
-                <div class="search-actions">
-                    <button class="advanced-filters-btn" id="charterAdvancedBtn">
-                        <span>More Filters</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <button class="search-button">
-                        <i class="fas fa-search"></i> Search Boats
-                    </button>
-                </div>
-            </div>
-    
-            <!-- Sale Search Form -->
-            <div class="yacht-search" id="saleSearch">
-                <div class="search-grid">
-                    <div class="search-group">
-                        <label><i class="fas fa-ship"></i> YACHT TYPE</label>
-                        <select id="sale-yachtType">
-                            <option value="">All Types</option>
-                            <option value="motor">Motor Yacht</option>
-                            <option value="sailing">Sailing Yacht</option>
-                            <option value="catamaran">Catamaran</option>
-                        </select>
-                    </div>
-    
-                    <div class="search-group">
-                        <label><i class="fas fa-ruler-combined"></i> LENGTH</label>
-                        <select id="sale-length">
-                            <option value="">Any Length</option>
-                            <option value="0-15">Up to 15m</option>
-                            <option value="15-30">15m - 30m</option>
-                            <option value="30+">30m+</option>
-                        </select>
-                    </div>
-    
-                    <div class="search-group">
-                        <label><i class="fas fa-euro-sign"></i> PRICE RANGE</label>
-                        <select id="sale-price">
-                            <option value="">Any Price</option>
-                            <option value="0-1M">Up to €1M</option>
-                            <option value="1M-5M">€1M - €5M</option>
-                            <option value="5M+">€5M+</option>
-                        </select>
-                    </div>
-    
-                    <div class="search-group">
-                        <label><i class="fas fa-calendar"></i> YEAR BUILT</label>
-                        <select id="sale-year">
-                            <option value="">Any Year</option>
-                            <option value="2020+">2020+</option>
-                            <option value="2015-2020">2015-2020</option>
-                            <option value="2010-2015">2010-2015</option>
-                            <option value="pre-2010">Pre-2010</option>
-                        </select>
-                    </div>
-                </div>
-    
-                <div class="advanced-filters" id="saleAdvancedFilters">
-                    <div class="search-grid">
-                        <div class="search-group">
-                            <label><i class="fas fa-bed"></i> CABINS</label>
-                            <select id="sale-cabins">
-                                <option value="">Any</option>
-                                <option value="1-2">1-2 Cabins</option>
-                                <option value="3-4">3-4 Cabins</option>
-                                <option value="5+">5+ Cabins</option>
-                            </select>
-                        </div>
-                        <div class="search-group">
-                            <label><i class="fas fa-flag"></i> FLAG</label>
-                            <select id="sale-flag">
-                                <option value="">Any Flag</option>
-                                <option value="spain">Spain</option>
-                                <option value="uk">UK</option>
-                                <option value="usa">USA</option>
-                            </select>
-                        </div>
-                        <div class="search-group">
-                            <label><i class="fas fa-industry"></i> BUILDER</label>
-                            <select id="sale-builder">
-                                <option value="">Any Builder</option>
-                                <option value="sunseeker">Sunseeker</option>
-                                <option value="princess">Princess</option>
-                                <option value="azimut">Azimut</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="search-actions">
-                    <button class="advanced-filters-btn" id="saleAdvancedBtn">
-                        <i class="fas fa-sliders-h"></i> More Filters
-                    </button>
-                    <button class="search-button">
-                        <i class="fas fa-search"></i> Search Yachts for Sale
-                    </button>
-                </div>
-            </div>
-        </div>
-</section>
-
 <!-- Stats Bar -->
 <div class="stats-bar">
-    <div class="container">
-        <div class="stats-content">
-            <div class="stats-found">
-                FOUND <span id="yachtCount">0</span> YACHTS
-            </div>
-            <div class="stats-options">
-                <button id="toggleSearch" class="toggle-search-btn desktop-only">
-                    <i class="fas fa-filter"></i> Filters
-                  </button>
-                  
-                <span>UNITS: M</span>
-                <span>CURRENCY: EUR</span>
-                <span>SORT BY: DEFAULT</span>
-            </div>
-        </div>
+  <div class="wide-container">
+    <div class="stats-content">
+      <div class="stats-found">
+        FOUND <span id="yachtCount">0</span> YACHTS
+      </div>
+      <div class="stats-options">
+        <!-- On mobile, this button opens the filter panel -->
+        <button id="toggleSearch" class="toggle-search-btn mobile-filters-btn">
+          <i class="fas fa-filter"></i> Filters
+        </button>
+        <span>UNITS: M</span>
+        <span>CURRENCY: EUR</span>
+        <span>SORT BY: DEFAULT</span>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Dynamic Boat Listing Section -->
-<section class="boats-list section-padding" id="boatsList">
-    <div class="container">
-        <div class="row" id="boatsGrid">
-            <!-- Boat cards will be dynamically injected here -->
-        </div>
-    </div>
-</section>
+<!-- Main Content: Narrow Sidebar + 3-Column Boat Listings -->
+<div class="main-content wide-container">
+  
+  <!-- Sidebar Filters (hidden off-canvas on mobile) -->
+<aside class="filters-panel" id="filtersPanel">
+  <div class="filters-title">
+      <h2>Filters</h2>
+      <!-- Close button shown on mobile -->
+      <button class="filters-close-btn" id="closeFilters" aria-label="Close filters">×</button>
+  </div>
+  
+  <!-- Filter Group: Boat Type -->
+  <div class="filter-group">
+      <label for="boatType">Boat Type</label>
+      <select id="boatType">
+          <option value="">All Types</option>
+          <option value="motor">Motor Yacht</option>
+          <option value="sailing">Sailing Yacht</option>
+          <option value="catamaran">Catamaran</option>
+      </select>
+  </div>
+  
+  <!-- Filter Group: Number of Guests -->
+  <div class="filter-group">
+      <label for="guests">Number of Guests</label>
+      <select id="guests" onchange="checkGuests(this.value)">
+          <option value="">Any</option>
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5">5 Guests</option>
+          <option value="6">6 Guests</option>
+          <option value="7">7 Guests</option>
+          <option value="8">8 Guests</option>
+          <option value="9">9 Guests</option>
+          <option value="10">10 Guests</option>
+          <option value="11">11 Guests</option>
+          <option value="12">12 Guests</option>
+          <option value="more">More than 12</option>
+      </select>
+  </div>
+  
+  <!-- Filter Group: Price Range -->
+  <div class="filter-group">
+      <label for="priceRange">Price Range (per day)</label>
+      <input type="range" id="priceRange" min="0" max="10000" step="500">
+      <div class="range-values">
+          <span id="minPrice">€0</span>
+          <span id="maxPrice">€10,000+</span>
+      </div>
+  </div>
+  
+  <!-- Filter Group: Number of Cabins -->
+  <div class="filter-group">
+      <label for="cabins">Number of Cabins</label>
+      <select id="cabins">
+          <option value="">Any</option>
+          <option value="1-2">1-2 Cabins</option>
+          <option value="3-4">3-4 Cabins</option>
+          <option value="5+">5+ Cabins</option>
+      </select>
+  </div>
+  
+  <!-- Button Container -->
+  <button class="search-button">
+    <i class="fas fa-search"></i> SEARCH
+</button>
 
-<!-- Modified boat card template -->
+<!-- Reset link below -->
+<button class="reset-filters-link" id="resetFilters">
+    <i class="fas fa-arrow-rotate-left"></i> Reset Filters
+</button>
+</aside>
+  
+  <!-- Boat Listing Section (Firebase IDs preserved) -->
+  <section class="boats-list section-padding" id="boatsList">
+    <div class="boats-wrapper">
+      <!-- 3-column grid for boat cards -->
+      <div class="row" id="boatsGrid">
+        <!-- Boat cards dynamically injected here -->
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Boat Card Template -->
 <template id="boat-template">
-    <div class="card-wrapper">
-      <div class="yacht-card">
-        <!-- Image section -->
-        <div class="yacht-image-wrapper">
-          <img class="boat-image" src="" alt="">
-          <button class="favorite-btn" aria-label="Add to favorites">
-            <i class="far fa-heart"></i>
-          </button>
+  <div class="card-wrapper">
+    <div class="yacht-card">
+      <div class="yacht-image-wrapper">
+        <img class="boat-image" src="" alt="">
+        <button class="favorite-btn" aria-label="Add to favorites">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="yacht-content">
+        <div class="card-header">
+          <h3 class="yacht-name"></h3>
+          <div class="specs-row">
+            <span class="spec-item"><i class="fas fa-ruler-combined"></i> <span class="length"></span></span>
+            <span class="spec-item"><i class="fas fa-users"></i> <span class="guests"></span></span>
+            <span class="spec-item"><i class="fas fa-bed"></i> <span class="cabins"></span></span>
+            <span class="spec-item"><i class="fas fa-user-shield"></i> <span class="crew"></span></span>
+          </div>
         </div>
-        
-        <div class="yacht-content">
-          <!-- Header with name and compact specs -->
-          <div class="card-header">
-            <h3 class="yacht-name"></h3>
-            <div class="specs-row">
-              <span class="spec-item"><i class="fas fa-ruler-combined"></i> <span class="length"></span></span>
-              <span class="spec-item"><i class="fas fa-users"></i> <span class="guests"></span></span>
-              <span class="spec-item"><i class="fas fa-bed"></i> <span class="cabins"></span></span>
-              <span class="spec-item"><i class="fas fa-user-shield"></i> <span class="crew"></span></span>
-            </div>
+        <div class="pricing-grid">
+          <div class="price-row">
+            <span>MAY & OCTOBER</span>
+            <span class="price-value low-season"></span>
           </div>
-  
-          <!-- Compact pricing grid -->
-          <div class="pricing-grid">
-            <div class="price-row">
-              <span>MAY & OCTOBER</span>
-              <span class="price-value low-season"></span>
-            </div>
-            <div class="price-row">
-              <span>JUNE & SEPTEMBER</span>
-              <span class="price-value mid-season"></span>
-            </div>
-            <div class="price-row">
-              <span>JULY & AUGUST</span>
-              <span class="price-value high-season"></span>
-            </div>
+          <div class="price-row">
+            <span>JUNE & SEPTEMBER</span>
+            <span class="price-value mid-season"></span>
           </div>
-  
-          <!-- Action buttons -->
-          <div class="action-buttons">
-            <button class="btn-view">View Details</button>
-            <button class="btn-inquire">Book Now</button>
+          <div class="price-row">
+            <span>JULY & AUGUST</span>
+            <span class="price-value high-season"></span>
           </div>
+        </div>
+        <div class="action-buttons">
+          <button class="btn-view">View Details</button>
+          <button class="btn-inquire">Book Now</button>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
+
+
   
 
 <!-- Inquiry Modal Popup -->
@@ -432,11 +310,6 @@
               
             <div class="inquiry-field-row">
               <div class="inquiry-field-wrap">
-                <input type="number" class="inquiry-input-field" placeholder="Preferred Budget (€/day)*" min="0" required>
-              </div>
-            </div>
-            <div class="inquiry-field-row">
-              <div class="inquiry-field-wrap">
                 <textarea class="inquiry-message-field" placeholder="Tell us about your preferences or special requests"></textarea>
               </div>
             </div>
@@ -447,87 +320,102 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
   
-  
-
-<!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="loader"></div>
 </div>
 
 <!-- Footer -->
 <footer class="footer">
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="footer-column footer-about">
-                        <h3 class="footer-title">About Just Enjoy Ibiza Boat</h3>
-                        <p class="footer-about-text">At Just Enjoy Ibiza, we create unforgettable yacht experiences. With premium vessels and expert crews, your time on the Mediterranean will be nothing short of exceptional.</p>
-                        <div class="footer-language"> <i class="lni ti-world"></i>
-                            <select onchange="location = this.value;">
-                                <option value="/en">English</option>
-                                
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 offset-md-1">
-                    <div class="footer-column footer-explore clearfix">
-                        <h3 class="footer-title">Discover</h3>
-                        <ul class="footer-explore-list list-unstyled">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="yacht-rental.html">Our Fleet</a></li>
-                            <li><a href="yacht-rental.html">Day Charters</a></li>
-                            <li><a href="services.html">Food & Drinks Boat Delivery</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="news.html">News</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="footer-column footer-contact">
-                        <h3 class="footer-title">Contact</h3>
-                        <p class="footer-contact-text">Marina Botafoch<br>07800 Ibiza, Balearic Islands<br>Spain</p>
-                        <div class="footer-contact-info">
-                            <p class="footer-contact-phone"><span class="flaticon-call"></span> +34 692 688 348</p>
-                            <p class="footer-contact-mail">
-                                <a href="mailto:info@justenjoyibizaboats.com" class="footer-email-link">
-                                  info@justenjoyibizaboats.com
-                                </a>
-                              </p>
+  <div class="footer-top">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-4">
+                  <div class="footer-column footer-about">
+                      <h3 class="footer-title">About Just Enjoy Ibiza Boat</h3>
+                      <p class="footer-about-text">At Just Enjoy Ibiza, we create unforgettable yacht experiences. With premium vessels and expert crews, your time on the Mediterranean will be nothing short of exceptional.</p>
+                      <div class="footer-language"> <i class="lni ti-world"></i>
+                          <select onchange="location = this.value;">
+                              <option value="/en">English</option>
                               
-                              
-                        </div>
-                        <div class="footer-about-social-list">
-                            <a href="https://www.instagram.com/justenjoyibiza_boats_tours/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                            <a href="https://wa.me/34692688348" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  
+                          </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3 offset-md-1">
+                  <div class="footer-column footer-explore clearfix">
+                      <h3 class="footer-title">Discover</h3>
+                      <ul class="footer-explore-list list-unstyled">
+                          <li><a href="#">Home</a></li>
+                          <li><a href="yacht-rental.html">Our Fleet</a></li>
+                          <li><a href="yacht-rental.html">Day Charters</a></li>
+                          <li><a href="services.html">Food & Drinks Boat Delivery</a></li>
+                          <li><a href="contact.html">Contact</a></li>
+                          <li><a href="about.html">About Us</a></li>
+                          <li><a href="faq.html">FAQ</a></li>
+                          <li><a href="news.html">News</a></li>
+                      </ul>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="footer-column footer-contact">
+                      <h3 class="footer-title">Contact</h3>
+                      <p class="footer-contact-text">Marina Botafoch<br>07800 Ibiza, Balearic Islands<br>Spain</p>
+                      <div class="footer-contact-info">
+                          <p class="footer-contact-phone"><span class="flaticon-call"></span> +34 692 688 348</p>
+                          <p class="footer-contact-mail">
+                              <a href="mailto:info@justenjoyibizaboats.com" class="footer-email-link">
+                                info@justenjoyibizaboats.com
+                              </a>
+                            </p>
+                            
+                            
+                      </div>
+                      <div class="footer-about-social-list">
+                          <a href="https://www.instagram.com/justenjoyibiza_boats_tours/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                          <a href="https://wa.me/34692688348" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
 </footer>
-<!-- Filter Toggle -->
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-  const toggleButton = document.getElementById('toggleSearch');
-  const searchContainer = document.querySelector('.search-container');
-  
-  toggleButton.addEventListener('click', function() {
-    searchContainer.classList.toggle('active');
+  document.querySelectorAll('.favorite-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const icon = btn.querySelector('i');
+    icon.classList.toggle('fas'); // add/remove solid style
+    icon.classList.toggle('far'); // add/remove regular style
   });
 });
 
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const openBtn = document.getElementById('toggleSearch');  // Mobile "Filters" button in stats bar
+    const closeBtn = document.getElementById('closeFilters');  // "X" button in sidebar
+    const filtersPanel = document.getElementById('filtersPanel');
+
+    if (openBtn && closeBtn && filtersPanel) {
+      // Open filters panel on mobile when "Filters" button is clicked
+      openBtn.addEventListener('click', () => {
+        filtersPanel.classList.add('open');
+      });
+      // Close filters panel when "X" is clicked
+      closeBtn.addEventListener('click', () => {
+        filtersPanel.classList.remove('open');
+      });
+    }
+  });
+</script>
+
 <script>
     function checkGuests(value) {
         if (value === "more") {
