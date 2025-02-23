@@ -76,7 +76,6 @@
           }
         }
         </script>
-        <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=rvch0xlwxaassqtybayxxw" async="true"></script>
         <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
@@ -93,7 +92,7 @@
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>          
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>         
     </head>
 <body>
 
@@ -172,9 +171,7 @@
                   <!-- Updated tagline -->
                   <h4></h4>
                   <div class="cta-wrapper">
-                    <a href="yacht-rental.html" class="elegant-cta">
-                      BOOK NOW
-                    </a>
+                    <button class="elegant-cta" data-boat-name="Boat Name Here">BOOK NOW</button>
                   </div>
                 </div>
               </div>
@@ -362,11 +359,11 @@
                         <div class="boat-name">Riva Argo 90</div>
                         <div class="key-features">
                             <span class="price-tag">From €12,950/day</span>
-                            <span class="capacity">8 Guests</span>
+                            <span class="capacity">12 Guests</span>
                         </div>
                         <div class="boat-actions">
                             <button class="enquiry-btn" onclick="openInquiryForm()">BOOK NOW</button>
-                            <a href="boat-details.html" class="view-details">View Details</a>
+                            <a href="https://www.justenjoyibizaboats.com/boat-details.html?id=Fz6RIFbvZMaTTGUg1LUV" class="view-details">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -435,7 +432,7 @@
           From luxurious yachts to a range of boats for groups, couples or families, 
           Just Enjoy is the only company you need to find your perfect boat.
         </p>
-        <!-- No button, as requested -->
+        <a href="/yacht-rental.html" class="memories-cta">Explore</a>
       </div>
   
     </div>
@@ -562,7 +559,7 @@
     </div> <!-- end .container -->
 </section>
     
-  <!-- Testimonials Section -->
+<!-- Testimonials Section -->
 <section class="testimonials">
     <div class="background bg-img bg-fixed section-padding pb-0" data-background="assets/img/VQ82SeaStory73.JPG" data-overlay-dark="3">
         <div class="container">
@@ -577,10 +574,11 @@
                         <div class="owl-carousel owl-theme">
                             <!-- Testimonial 1 -->
                             <div class="item">
-                                
                                 <p>"Our day out on the yacht was incredible. The staff were attentive, the drinks were flowing, and the personalised itinerary was perfect for our group."</p>
                                 <div class="info">
-                                   
+                                    <div class="author-img">
+                                        <img src="/assets/img/testimonials/Sophie.jpg" alt="Sophia">
+                                    </div>
                                     <div class="cont"> 
                                         <span>
                                             <i class="star-rating"></i><i class="star-rating"></i>
@@ -593,10 +591,11 @@
                             </div>
                             <!-- Testimonial 2 -->
                             <div class="item">
-                               
                                 <p>"We rented a boat with Just Enjoy Ibiza for a corporate event. Everything from the catering to the Seabobs was on point. Highly recommend their services for any occasion!"</p>
                                 <div class="info">
-                                    
+                                    <div class="author-img">
+                                        <img src="/assets/img/testimonials/Wilson.jpeg" alt="Wilson">
+                                    </div>
                                     <div class="cont">
                                         <span>
                                             <i class="star-rating"></i><i class="star-rating"></i>
@@ -609,10 +608,11 @@
                             </div>
                             <!-- Testimonial 3 -->
                             <div class="item">
-                                
                                 <p>"From start to finish, the team at Just Enjoy Ibiza took care of every detail. The onboard catering was phenomenal, and the water sports equipment made the day even more fun!"</p>
                                 <div class="info">
-                                    
+                                    <div class="author-img">
+                                        <img src="/assets/img/testimonials/Isabella.jpeg" alt="Isabella">
+                                    </div>
                                     <div class="cont">
                                         <span>
                                             <i class="star-rating"></i><i class="star-rating"></i>
@@ -919,14 +919,14 @@
             </a>
             <h2 class="modal-title">Get in touch to find the perfect boat</h2>
             <p class="modal-subtitle">
-              You'll hear from us in <span class="time-highlight">15 minutes</span>. Or request a callback.
-              We assure you the best offer during the high season.
+              You'll hear from us in <span class="time-highlight">15 minutes</span>.
+              Or request a callback. We assure you the best offer during the high season.
             </p>
           </div>
         </div>
         <div class="modal-form">
           <form>
-            <!-- Your existing fields -->
+            <!-- Two fields per row on desktop, will stack on mobile -->
             <div class="field-row">
               <div class="field-wrap">
                 <input type="text" class="input-field" placeholder="First Name*" required>
@@ -935,6 +935,7 @@
                 <input type="text" class="input-field" placeholder="Last Name*" required>
               </div>
             </div>
+  
             <div class="field-row">
               <div class="field-wrap">
                 <input type="email" class="input-field" placeholder="Email Address*" required>
@@ -943,51 +944,48 @@
                 <input type="tel" class="input-field" placeholder="Phone Number*" required>
               </div>
             </div>
+  
+            <!-- Date field with a placeholder or label -->
             <div class="field-row">
               <div class="field-wrap">
-                <input type="date" class="input-field" required>
+                <!-- Type=date won't always show a placeholder in iOS Safari,
+                     but we can label it or rely on the native date picker. -->
+                <input type="date" class="input-field" required aria-label="Trip Date">
               </div>
             </div>
-            <div class="field-row">
-                <div class="field-wrap">
-                  <select class="select-field" required>
-                    <option value="" disabled selected>Number of Guests</option>
-                    <option value="1">1 Guest</option>
-                    <option value="2">2 Guests</option>
-                    <option value="3">3 Guests</option>
-                    <option value="4">4 Guests</option>
-                    <option value="5">5 Guests</option>
-                    <option value="6">6 Guests</option>
-                    <option value="7">7 Guests</option>
-                    <option value="8">8 Guests</option>
-                    <option value="9">9 Guests</option>
-                    <option value="10">10 Guests</option>
-                    <option value="11">11 Guests</option>
-                    <option value="12">12 Guests</option>
-                  </select>
-                </div>
-              </div>
-              
-            <!-- Preferred Budget Field (replaced select with input) -->
+  
+            <!-- Number of Guests -->
             <div class="field-row">
               <div class="field-wrap">
-                <input 
-                  type="number" 
-                  class="input-field" 
-                  placeholder="Preferred Budget (€/day)*" 
-                  min="0" 
-                  required
-                >
+                <select class="select-field" required>
+                  <option value="" disabled selected>Number of Guests</option>
+                  <option value="1">1 Guest</option>
+                  <option value="2">2 Guests</option>
+                  <option value="3">3 Guests</option>
+                  <option value="4">4 Guests</option>
+                  <option value="5">5 Guests</option>
+                  <option value="6">6 Guests</option>
+                  <option value="7">7 Guests</option>
+                  <option value="8">8 Guests</option>
+                  <option value="9">9 Guests</option>
+                  <option value="10">10 Guests</option>
+                  <option value="11">11 Guests</option>
+                  <option value="12">12 Guests</option>
+                </select>
               </div>
             </div>
+  
+            <!-- Notes / Special Requests -->
             <div class="field-row">
               <div class="field-wrap">
-                <textarea class="message-field" placeholder="Tell us about your preferences or special requests"></textarea>
+                <textarea class="message-field"
+                          placeholder="Notes or special requests"></textarea>
               </div>
             </div>
+  
             <!-- Hidden field for Boat Name -->
             <input type="hidden" id="boatNameInput" value="">
-    
+  
             <button type="submit" class="submit-button">Send Inquiry</button>
           </form>
         </div>
@@ -995,57 +993,129 @@
     </div>
 </div>
   
+  
+<!-- Inquiry Form  -->
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const inquiryForm = document.querySelector(".modal-form form");
-  
-      inquiryForm.addEventListener("submit", async (e) => {
-        e.preventDefault(); // Prevent page reload
-  
-        // Get form field values
-        const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]').value.trim();
-        const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]').value.trim();
-        const email = inquiryForm.querySelector('input[placeholder="Email Address*"]').value.trim();
-        const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]').value.trim();
-        const dateValue = inquiryForm.querySelector('input[type="date"]').value; // "YYYY-MM-DD"
-        const guests = inquiryForm.querySelector('.select-field').value; // Number of guests
-        const budget = inquiryForm.querySelector('input[placeholder^="Preferred Budget"]').value;
-        const message = inquiryForm.querySelector('.message-field').value.trim();
-  
-        // Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
-        let formattedDate = "";
-        if (dateValue) {
-          const parts = dateValue.split("-");
-          formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+   document.addEventListener("DOMContentLoaded", () => {
+    // Modal handling functions
+    function openInquiryModal(boatName = '') {
+        const modal = document.querySelector('.modal-inquiry');
+        const boatNameInput = document.getElementById('boatNameInput');
+        
+        if (modal) {
+            modal.style.display = 'block'; // Show the modal
+            modal.classList.add('active'); // Add active class for animations (if styled)
+            document.body.style.overflow = 'hidden'; // Prevent scrolling on the main page
+
+            // Set boat name in hidden input if provided
+            if (boatName && boatNameInput) {
+                boatNameInput.value = boatName;
+            }
         }
-  
-        try {
-          // Create a new document in the "inquiries" collection
-          const docRef = await db.collection("inquiries").add({
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone,
-            date: formattedDate, // Stored in dd-mm-yyyy format
-            guests: guests,
-            budget: budget,
-            message: message,
-            status: "new", // Default status
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          });
-  
-          console.log("Document written with ID: ", docRef.id);
-          inquiryForm.reset();
-          alert("Inquiry sent successfully!");
-        } catch (error) {
-          console.error("Error adding document: ", error);
-          alert("Something went wrong. Please try again.");
+    }
+
+    function closeInquiryModal() {
+        const modal = document.querySelector('.modal-inquiry');
+        if (modal) {
+            modal.style.display = 'none'; // Hide the modal
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
         }
-      });
+    }
+
+    // Define openInquiryForm for static HTML buttons
+    window.openInquiryForm = function(boatName) {
+        openInquiryModal(boatName); // Call the same modal-opening function
+    };
+
+    // Handle dynamically generated "Book Now" buttons (.elegant-cta)
+    const elegantCtaButtons = document.querySelectorAll('.elegant-cta');
+    elegantCtaButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const boatName = button.getAttribute('data-boat-name') || '';
+            openInquiryModal(boatName);
+        });
     });
+
+    // Handle static HTML "Book Now" buttons (.enquiry-btn)
+    const enquiryButtons = document.querySelectorAll('.enquiry-btn');
+    enquiryButtons.forEach(button => {
+        // Get boat name from the parent .boat-name element
+        const boatItem = button.closest('.boat-item');
+        const boatName = boatItem ? boatItem.querySelector('.boat-name').textContent : '';
+        button.onclick = () => openInquiryModal(boatName); // Override onclick to pass boat name
+    });
+
+    // Handle modal close button
+    const closeButton = document.querySelector('.modal-close');
+    if (closeButton) {
+        closeButton.addEventListener('click', closeInquiryModal);
+    }
+
+    // Optional: Close modal when clicking outside the content
+    const modal = document.querySelector('.modal-inquiry');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeInquiryModal();
+            }
+        });
+    }
+
+    // Form submission handling
+    const inquiryForm = document.querySelector(".modal-form form");
+    if (inquiryForm) {
+        inquiryForm.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            // Get form field values
+            const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]').value.trim();
+            const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]').value.trim();
+            const email = inquiryForm.querySelector('input[placeholder="Email Address*"]').value.trim();
+            const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]').value.trim();
+            const dateValue = inquiryForm.querySelector('input[type="date"]').value; // "YYYY-MM-DD"
+            const guests = inquiryForm.querySelector('.select-field').value; // Number of guests
+            const budget = inquiryForm.querySelector('input[placeholder^="Preferred Budget"]').value;
+            const message = inquiryForm.querySelector('.message-field').value.trim();
+            const boatName = inquiryForm.querySelector('#boatNameInput').value.trim(); // Get boat name
+
+            // Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
+            let formattedDate = "";
+            if (dateValue) {
+                const parts = dateValue.split("-");
+                formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+            }
+
+            try {
+                // Create a new document in the "inquiries" collection
+                const docRef = await db.collection("inquiries").add({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    date: formattedDate, // Stored in dd-mm-yyyy format
+                    guests: guests,
+                    budget: budget,
+                    message: message,
+                    boatName: boatName || "Not specified", // Include boat name, default if empty
+                    status: "new", // Default status
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+
+                console.log("Document written with ID: ", docRef.id);
+                inquiryForm.reset(); // Reset form fields
+                closeInquiryModal(); // Close modal after successful submission
+                alert("Inquiry sent successfully!");
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Something went wrong. Please try again.");
+            }
+        });
+    }
+});
 </script>
   
-<script>
+<!-- <script>
     function openInquiryForm() {
     const modal = document.querySelector('.modal-inquiry');
     modal.classList.add('active');
@@ -1078,7 +1148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-</script>
+</script> -->
 <!-- Numbers -->
 <script>
     // Number counter animation
