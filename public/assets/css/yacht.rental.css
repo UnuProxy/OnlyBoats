@@ -1,8 +1,4 @@
 
-
-
-
-
 #boatsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -49,12 +45,7 @@
 }
 
 /* Update specs row colors */
-.specs-row {
-    display: flex;
-    gap: 1rem;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.875rem;
-}
+
 
 /* Update yacht name color */
 .yacht-name {
@@ -811,12 +802,7 @@
     margin-bottom: 0.5rem;
   }
   
-  .specs-row {
-    display: flex;
-    gap: 1rem;
-    color: rgb(160, 174, 192);
-    font-size: 0.875rem;
-  }
+
   
   .spec-item {
     display: flex;
@@ -1648,10 +1634,22 @@ body {
 }
 .specs-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  
+  gap: 0.5rem;
   font-size: 0.875rem;
   color: #64748b;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.specs-row::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .pricing-grid {

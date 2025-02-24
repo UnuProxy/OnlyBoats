@@ -577,7 +577,7 @@
                                 <p>"Our day out on the yacht was incredible. The staff were attentive, the drinks were flowing, and the personalised itinerary was perfect for our group."</p>
                                 <div class="info">
                                     <div class="author-img">
-                                        <img src="/assets/img/testimonials/Sophie.jpg" alt="Sophia">
+                                        <img src="/assets/img/testimonials/image00044.jpg" alt="Sophia">
                                     </div>
                                     <div class="cont"> 
                                         <span>
@@ -585,7 +585,7 @@
                                             <i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i>
                                         </span>
                                         <h6>Sophia</h6>
-                                        <span>Yacht Charter Guest</span>
+                                        <span>London</span>
                                     </div>
                                 </div>
                             </div>
@@ -594,7 +594,7 @@
                                 <p>"We rented a boat with Just Enjoy Ibiza for a corporate event. Everything from the catering to the Seabobs was on point. Highly recommend their services for any occasion!"</p>
                                 <div class="info">
                                     <div class="author-img">
-                                        <img src="/assets/img/testimonials/Wilson.jpeg" alt="Wilson">
+                                        <img src="/assets/img/testimonials/image00020.jpeg" alt="Jonathan">
                                     </div>
                                     <div class="cont">
                                         <span>
@@ -602,7 +602,7 @@
                                             <i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i>
                                         </span>
                                         <h6>Wilson</h6>
-                                        <span>Corporate Client</span>
+                                        <span>Germany</span>
                                     </div>
                                 </div>
                             </div>
@@ -611,7 +611,7 @@
                                 <p>"From start to finish, the team at Just Enjoy Ibiza took care of every detail. The onboard catering was phenomenal, and the water sports equipment made the day even more fun!"</p>
                                 <div class="info">
                                     <div class="author-img">
-                                        <img src="/assets/img/testimonials/Isabella.jpeg" alt="Isabella">
+                                        <img src="/assets/img/testimonials/IMG_0896.jpeg" alt="Isabella">
                                     </div>
                                     <div class="cont">
                                         <span>
@@ -619,7 +619,7 @@
                                             <i class="star-rating"></i><i class="star-rating"></i><i class="star-rating"></i>
                                         </span>
                                         <h6>Isabella</h6>
-                                        <span>Family Charter Guest</span>
+                                        <span>United States</span>
                                     </div>
                                 </div>
                             </div>
@@ -947,11 +947,10 @@
   
             <!-- Date field with a placeholder or label -->
             <div class="field-row">
-              <div class="field-wrap">
-                <!-- Type=date won't always show a placeholder in iOS Safari,
-                     but we can label it or rely on the native date picker. -->
-                <input type="date" class="input-field" required aria-label="Trip Date">
-              </div>
+                <div class="field-wrap">
+                    <label for="tripDate"></label>
+                    <input type="date" id="tripDate" name="tripDate" class="input-field" required>
+                </div>
             </div>
   
             <!-- Number of Guests -->
@@ -1231,6 +1230,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <script src="/assets/js/jquery-3.6.3.min.js"></script>
     <!-- Hamburger -->
     <script>
+
         document.addEventListener('DOMContentLoaded', function() {
             // Get elements for the hamburger menu
             const toggler = document.querySelector('.custom-toggler');
@@ -1322,7 +1322,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     </script>
+    <!-- Date -->
+    <script>
+            // Function to format date as YYYY-MM-DD
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+// Set min date for trip date input
+function initializeDateInput() {
+    const tripDateInput = document.getElementById('tripDate');
+    if (tripDateInput) {
+        const today = new Date();
+        const minDate = formatDate(today);
         
+        // Set minimum date
+        tripDateInput.min = minDate;
+        
+        // Add event listener to validate on change
+        tripDateInput.addEventListener('change', (e) => {
+            const selectedDate = new Date(e.target.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Reset time part for accurate comparison
+            
+            if (selectedDate < today) {
+                alert('Please select a future date');
+                e.target.value = '';
+            }
+        });
+    }
+}
+
+// Initialize when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeDateInput);
+} else {
+    initializeDateInput();
+}
+    </script>
     <script>
         function toggleFavourite(boatId) {
           let store = JSON.parse(localStorage.getItem('favBoats')) || {};

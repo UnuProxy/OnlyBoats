@@ -841,6 +841,35 @@
     }
 }
   
+/* Style date input fields */
+input[type="date"] {
+    color: #343a40;
+    -webkit-text-fill-color: #343a40;
+    opacity: 1;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+    color: #343a40;
+    opacity: 1;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%227%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1%201l5%205%205-5%22%20stroke%3D%22%236c757d%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+/* Fix for iOS date inputs */
+@supports (-webkit-touch-callout: none) {
+    input[type="date"] {
+        min-height: 40px;
+       
+    }
+}
 
 
 
@@ -1157,21 +1186,22 @@
     }
   }
 
-  /* Testimonials */
   .testimonials .author-img {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
     overflow: hidden;
-    margin-right: 15px;
+    margin-right: 20px;
     flex-shrink: 0;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    padding: 3px;
 }
 
 .testimonials .author-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 8px;
 }
 
 .testimonials .info {
@@ -1180,13 +1210,6 @@
     margin-top: 30px;
 }
 
-/* Optional: Add a subtle border around the image */
-.testimonials .author-img {
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    padding: 3px;
-}
-
-/* Ensure proper spacing in the container */
 .testimonials .cont {
     display: flex;
     flex-direction: column;
@@ -1194,7 +1217,77 @@
 
 .testimonials .cont h6 {
     margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .testimonials .author-img {
+        width: 100px;
+        height: 100px;
+        margin-right: 15px;
+    }
+    
+    .testimonials .cont h6 {
+        font-size: 1rem;
+    }
 }
   
  
-  
+.field-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.field-wrap {
+    flex: 1;
+    min-width: 250px;
+    position: relative;
+}
+
+.field-wrap label {
+    display: block;
+    margin-bottom: 8px;
+    color: #343a40;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+input[type="date"] {
+    position: relative;
+    background-color: #f8f9fa;
+    padding: 12px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 15px;
+    width: 100%;
+    color: #343a40;
+}
+
+/* Add a pseudo-element for placeholder when date is empty */
+input[type="date"]:empty:before {
+    content: 'Select Date';
+    color: #6c757d;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Hide the placeholder when date is selected or field is focused */
+input[type="date"]:focus:before,
+input[type="date"]:valid:before {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .field-wrap {
+        min-width: 100%;
+    }
+    
+    input[type="date"] {
+        font-size: 16px; /* Better for mobile */
+        min-height: 44px; /* Better touch target */
+    }
+}
