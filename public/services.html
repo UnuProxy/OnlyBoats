@@ -33,53 +33,52 @@
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
     </div>
-  <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <div class="logo-wrapper">
-        <a class="logo" href="index.html">
-          <h2>Just Enjoy Ibiza <span>Boats</span></h2>
-        </a>
-      </div>
-      <button class="custom-toggler" type="button" aria-label="Toggle navigation">
-        <span class="toggler-icon">
-          <span class="line"></span>
-          <span class="line"></span>
-          <span class="line"></span>
-        </span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item">
-            <a class="nav-link" href="about.html">ABOUT US</a>
-          </li>
-          <!-- Changed BOAT RENTAL to OUR FLEET -->
-          <li class="nav-item">
-            <a class="nav-link" href="yacht-rental.html">OUR BOATS</a>
-          </li>
-          <!-- Replace ONBOARD DELIVERY with SERVICES dropdown -->
-          <li class="nav-item dropdown" id="servicesDropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownToggle" role="button">
-              SERVICES
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <div class="logo-wrapper">
+            <a class="logo" href="index.html">
+              <h2>Just Enjoy Ibiza <span>Boats</span></h2>
             </a>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="dropdown-item" href="yacht-rental.html">BOAT RENTAL</a>
+          </div>
+          <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+            <span class="toggler-icon">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav ms-auto align-items-center">
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">ABOUT US</a>
               </li>
-              <li>
-                <a class="dropdown-item" href="services.html">CATERING DELIVERY</a>
+              <!-- Changed BOAT RENTAL to OUR FLEET -->
+              <li class="nav-item">
+                <a class="nav-link" href="yacht-rental.html">OUR BOATS</a>
               </li>
+              <!-- Replace ONBOARD DELIVERY with SERVICES dropdown -->
+              <li class="nav-item dropdown" id="servicesDropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="servicesDropdownToggle" role="button">
+                  SERVICES
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="yacht-rental.html">BOAT RENTAL</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="services.html">CATERING DELIVERY</a>
+                  </li>
+                </ul>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">CONTACT</a>
+              </li>
+              <!-- WhatsApp button removed -->
             </ul>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">CONTACT</a>
-          </li>
-          <!-- WhatsApp button removed -->
-        </ul>
-      </div>
-    </div>
-</nav>
+          </div>
+        </div>
+    </nav>
      <div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4" data-background="/assets/img/YachtDelivery.JPG">
         <div class="container">
             <div class="row">
@@ -454,80 +453,100 @@
     <script src="/assets/js/datepicker.js"></script>
     <script src="/assets/js/smooth-scroll.min.js"></script>
     <script src="/assets/js/custom.js"></script>
-    <!-- Hamburger Menu -->
-    <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    // Get elements
-    const toggler = document.querySelector('.custom-toggler');
-    const navCollapse = document.querySelector('.navbar-collapse');
+     <!-- Hamburger -->
+     <script>
 
-    if (toggler && navCollapse) {
-        let isAnimating = false;
-
-        // Toggle menu with animation lock
-        toggler.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (isAnimating) return;
-            
-            isAnimating = true;
-            this.classList.toggle('active');
-            navCollapse.classList.toggle('show');
-            
-            // Toggle body classes for overflow control
-            document.body.classList.toggle('menu-open');
-            document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
-            
-            // Reset animation lock after transition
-            setTimeout(() => {
-                isAnimating = false;
-            }, 400);
-        });
-
-        // Close menu when clicking a link
-        const navLinks = navCollapse.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (isAnimating) return;
-                toggler.classList.remove('active');
-                navCollapse.classList.remove('show');
-                document.body.classList.remove('menu-open');
-                document.body.style.overflow = '';
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!isAnimating &&
-                !toggler.contains(e.target) &&
-                !navCollapse.contains(e.target) &&
-                navCollapse.classList.contains('show')) {
-                toggler.classList.remove('active');
-                navCollapse.classList.remove('show');
-                document.body.classList.remove('menu-open');
-                document.body.style.overflow = '';
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements for the hamburger menu
+            const toggler = document.querySelector('.custom-toggler');
+            const navCollapse = document.querySelector('.navbar-collapse');
+        
+            if (toggler && navCollapse) {
+                let isAnimating = false;
+        
+                // Toggle menu with animation lock
+                toggler.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (isAnimating) return;
+                    
+                    isAnimating = true;
+                    this.classList.toggle('active');
+                    navCollapse.classList.toggle('show');
+                    
+                    // Toggle body classes for overflow control
+                    document.body.classList.toggle('menu-open');
+                    document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
+                    
+                    // Reset animation lock after transition
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 400);
+                });
+        
+                // Close menu when clicking a link (exclude SERVICES dropdown toggle)
+                const navLinks = navCollapse.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    // If this link is the SERVICES dropdown toggle, skip closing the menu
+                    if(link.id === 'servicesDropdownToggle') return;
+                    link.addEventListener('click', () => {
+                        if (isAnimating) return;
+                        toggler.classList.remove('active');
+                        navCollapse.classList.remove('show');
+                        document.body.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                    });
+                });
+        
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!isAnimating &&
+                        !toggler.contains(e.target) &&
+                        !navCollapse.contains(e.target) &&
+                        navCollapse.classList.contains('show')) {
+                        toggler.classList.remove('active');
+                        navCollapse.classList.remove('show');
+                        document.body.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                    }
+                });
+        
+                // Handle clicking on navbar collapse background
+                navCollapse.addEventListener('click', function(e) {
+                    if (e.target === navCollapse) {
+                        toggler.classList.remove('active');
+                        navCollapse.classList.remove('show');
+                        document.body.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                    }
+                });
+        
+                // Window resize handler
+                window.addEventListener('resize', function() {
+                    if (window.innerWidth >= 992) {
+                        document.body.classList.remove('menu-open');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+        
+            // SERVICES dropdown toggle for mobile: on click toggle dropdown (do nothing on desktop)
+            const servicesDropdownToggle = document.getElementById('servicesDropdownToggle');
+            if (servicesDropdownToggle) {
+                servicesDropdownToggle.addEventListener('click', function(e) {
+                    // Only override click behavior on mobile (<992px)
+                    if (window.innerWidth < 992) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Toggle open class on the parent dropdown element
+                        const parentDropdown = this.closest('.dropdown');
+                        if (parentDropdown) {
+                            parentDropdown.classList.toggle('open');
+                        }
+                    }
+                });
             }
         });
-
-        // Handle clicking on navbar collapse background
-        navCollapse.addEventListener('click', function(e) {
-            if (e.target === navCollapse) {
-                toggler.classList.remove('active');
-                navCollapse.classList.remove('show');
-                document.body.classList.remove('menu-open');
-                document.body.style.overflow = '';
-            }
-        });
-
-        // Window resize handler
-        window.addEventListener('resize', function() {
-            if (window.innerWidth >= 992) {
-                document.body.classList.remove('menu-open');
-                document.body.style.overflow = '';
-            }
-        });
-    }
-});
-    </script>     
+    </script>   
     <script src="/assets/js/payment.js"></script>
 </body>
 </html>
