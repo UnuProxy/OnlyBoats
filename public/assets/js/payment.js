@@ -1,6 +1,45 @@
 // Initialize Stripe and global variables
 const stripe = Stripe("pk_live_51QmynnDMhcF3s2QS90R7gQ0zvmO3OGrBM8H528l1zih6Hogdfy8MVb3yvOBfRbbjdp8N0EyUiN853AfxDby6Ihd5002Ma68UcI");
 
+// Create flash overlay element
+const flashElement = document.createElement('div');
+flashElement.className = 'add-success-flash';
+document.body.appendChild(flashElement);
+
+// Create toast notification element
+const toastElement = document.createElement('div');
+toastElement.className = 'cart-notification';
+toastElement.innerHTML = `
+  <div class="icon"><i class="fas fa-check-circle"></i></div>
+  <div class="message">Item added to cart</div>
+`;
+document.body.appendChild(toastElement);
+
+// Function to show feedback when item is added to cart
+function showAddedToCartFeedback(productName) {
+  // 1. Flash the page
+  flashElement.classList.add('show');
+  setTimeout(() => {
+    flashElement.classList.remove('show');
+  }, 800);
+  
+  // 2. Show toast notification with product name
+  toastElement.querySelector('.message').textContent = `${productName} added to cart`;
+  toastElement.classList.add('show');
+  setTimeout(() => {
+    toastElement.classList.remove('show');
+  }, 3000);
+  
+  // 3. Add 'added' class to the clicked button for animation
+  const addButton = document.activeElement;
+  if (addButton && addButton.classList.contains('add-to-cart')) {
+    addButton.classList.add('added');
+    setTimeout(() => { 
+      addButton.classList.remove('added'); 
+    }, 500);
+  }
+}
+
 // Global variables
 let cart = [];
 let allProducts = [];
@@ -85,86 +124,94 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Update the mobile cart interaction
+// Improved Mobile Cart Interaction
 function initializeMobileCart() {
+    // Get the order summary element
     const orderSummary = document.getElementById('orderSummary');
-    if (!orderSummary || window.innerWidth > 768) return;
-
-    // Remove existing pull-up handle if any
-    const existingHandle = orderSummary.querySelector('.pull-up-handle');
-    if (existingHandle) {
-        existingHandle.remove();
-    }
-
-    // Add pull-up handle
-    const pullUpHandle = document.createElement('div');
-    pullUpHandle.className = 'pull-up-handle';
-    pullUpHandle.innerHTML = '<div class="handle-bar"></div>';
-    orderSummary.insertBefore(pullUpHandle, orderSummary.firstChild);
-
-    let startY = 0;
-    let isExpanded = false;
-
-    // Set initial position
-    orderSummary.style.transform = 'translateY(calc(100% - 80px))';
-
-    // Simple click toggle
-    pullUpHandle.addEventListener('click', () => {
-        isExpanded = !isExpanded;
-        if (isExpanded) {
-            orderSummary.style.transform = 'translateY(0)';
-        } else {
-            orderSummary.style.transform = 'translateY(calc(100% - 80px))';
-        }
-        orderSummary.classList.toggle('expanded', isExpanded);
-    });
-
-    // Touch handlers for drag
-    orderSummary.addEventListener('touchstart', (e) => {
-        startY = e.touches[0].clientY;
-        orderSummary.style.transition = 'none';
-    });
-
-    orderSummary.addEventListener('touchmove', (e) => {
-        const currentY = e.touches[0].clientY;
-        const deltaY = currentY - startY; // Changed to currentY - startY for correct direction
-
-        // Calculate the new position
-        const currentTranslateY = isExpanded ? 0 : window.innerHeight - 80;
-        const newPosition = Math.max(0, Math.min(window.innerHeight - 80, currentTranslateY + deltaY));
+    if (!orderSummary) return;
+    
+    // Only apply mobile cart behavior on mobile screens
+    if (window.innerWidth <= 768) {
+        console.log("Setting up mobile cart...");
         
-        orderSummary.style.transform = `translateY(${newPosition}px)`;
-    });
-
-    orderSummary.addEventListener('touchend', () => {
-        orderSummary.style.transition = 'transform 0.3s ease-in-out';
-        const rect = orderSummary.getBoundingClientRect();
-        const threshold = window.innerHeight / 2;
-
-        isExpanded = rect.top < threshold;
-
-        if (isExpanded) {
-            orderSummary.style.transform = 'translateY(0)';
-        } else {
-            orderSummary.style.transform = 'translateY(calc(100% - 80px))';
+        // Make sure we have a pull-up handle
+        let pullUpHandle = orderSummary.querySelector('.pull-up-handle');
+        if (!pullUpHandle) {
+            pullUpHandle = document.createElement('div');
+            pullUpHandle.className = 'pull-up-handle';
+            pullUpHandle.innerHTML = '<div class="handle-bar"></div>';
+            orderSummary.insertBefore(pullUpHandle, orderSummary.firstChild);
+            console.log("Created pull-up handle");
         }
-        orderSummary.classList.toggle('expanded', isExpanded);
-    });
-
-    // Update the cart's position when items change
-    const originalUpdateCartDisplay = window.updateCartDisplay;
-    window.updateCartDisplay = function() {
-        if (originalUpdateCartDisplay) {
-            originalUpdateCartDisplay();
+        
+        // Set initial state based on cart contents
+        const hasItems = cart && cart.length > 0;
+        orderSummary.classList.toggle('has-items', hasItems);
+        
+        // Clear previous click handlers to avoid duplicates
+        const newPullUpHandle = pullUpHandle.cloneNode(true);
+        pullUpHandle.parentNode.replaceChild(newPullUpHandle, pullUpHandle);
+        pullUpHandle = newPullUpHandle;
+        
+        // Add click handler to toggle expansion
+        pullUpHandle.addEventListener('click', function(e) {
+            console.log("Pull-up handle clicked");
+            e.preventDefault();
+            e.stopPropagation();
+            orderSummary.classList.toggle('expanded');
+        });
+        
+        // Allow clicking the header to toggle expansion too
+        const summaryHeader = orderSummary.querySelector('.summary-header');
+        if (summaryHeader) {
+            const newSummaryHeader = summaryHeader.cloneNode(true);
+            summaryHeader.parentNode.replaceChild(newSummaryHeader, summaryHeader);
+            
+            newSummaryHeader.addEventListener('click', function(e) {
+                console.log("Summary header clicked");
+                // Only toggle if we're on mobile
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    orderSummary.classList.toggle('expanded');
+                }
+            });
         }
-        if (window.innerWidth <= 768) {
-            if (!isExpanded) {
-                orderSummary.style.transform = 'translateY(calc(100% - 80px))';
-            }
-        }
-    };
+    } else {
+        // On desktop, remove mobile-specific classes
+        orderSummary.classList.remove('expanded', 'has-items');
+    }
 }
 
+// Make sure to call this when the page loads AND when the window resizes
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOMContentLoaded - Setting up mobile cart");
+    initializeMobileCart();
+    
+    // Update cart display as well
+    if (typeof updateCartDisplay === 'function') {
+        updateCartDisplay();
+    }
+});
+
+window.addEventListener('resize', function() {
+    console.log("Window resized - Reinitializing mobile cart");
+    initializeMobileCart();
+});
+
+// Also call when cart is updated
+const originalUpdateCartDisplay = window.updateCartDisplay || function() {};
+window.updateCartDisplay = function() {
+    // Call the original function
+    originalUpdateCartDisplay();
+    
+    // Update mobile cart state
+    const orderSummary = document.getElementById('orderSummary');
+    if (orderSummary) {
+        const hasItems = cart && cart.length > 0;
+        orderSummary.classList.toggle('has-items', hasItems);
+    }
+};
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', initializeMobileCart);
 
@@ -832,18 +879,25 @@ function createMerchandiseHtml(product) {
             </div>
         </div>
     `;
-}// Add to Cart
+}
+// Add to Cart
 function addToCart(itemElement) {
     const productId = itemElement.dataset.productId;
     if (!productId) {
-        console.error('No product ID found');
+        console.error('No product ID found', itemElement);
         return;
     }
 
-    const stock = parseInt(itemElement.dataset.stock);
-    const quantity = parseInt(itemElement.querySelector(".qty-input").value);
-    const priceText = itemElement.querySelector(".item-price").textContent.replace("€", "");
+    const stock = parseInt(itemElement.dataset.stock) || 0;
+    const quantityInput = itemElement.querySelector(".qty-input");
+    const quantity = parseInt(quantityInput?.value || 0);
+    const priceElement = itemElement.querySelector(".item-price");
+    const priceText = priceElement?.textContent.replace("€", "") || "0";
     const price = parseFloat(priceText);
+    const nameElement = itemElement.querySelector("h4");
+    const productName = nameElement?.textContent || "Product";
+
+    console.log("Adding to cart:", { productId, productName, price, quantity, stock });
 
     // Check for size selection if it's a merchandise item
     let selectedSize = null;
@@ -869,18 +923,32 @@ function addToCart(itemElement) {
             }
         } else {
             cart.push({
-                id: productId,  // This is the important field for stock updates
-                name: itemElement.querySelector("h4").textContent,
+                id: productId,
+                name: productName,
                 price: price,
                 quantity: quantity,
                 size: selectedSize
             });
         }
 
+        // Show feedback to user that item was added
+        showAddedToCartFeedback(productName);
+        
+        // Mobile cart indicator
+        const orderSummary = document.getElementById('orderSummary');
+        if (orderSummary) {
+            orderSummary.classList.add('has-items');
+        }
+        
+        // Update the cart UI
         updateCartDisplay();
         saveCart();
-        itemElement.querySelector(".qty-input").value = 0;
-        toggleAddButton(itemElement.querySelector(".qty-input"));
+        
+        // Reset quantity
+        if (quantityInput) {
+            quantityInput.value = 0;
+            toggleAddButton(quantityInput);
+        }
     }
 }
 
@@ -995,6 +1063,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
 
 
 

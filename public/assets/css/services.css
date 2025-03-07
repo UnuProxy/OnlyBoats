@@ -1,5 +1,7 @@
 /* Mobile Order Summary - Adding after the media query */
+/* CSS for Mobile Cart Toggle - Add to your CSS file */
 @media (max-width: 768px) {
+    /* Fixed positioning for mobile cart */
     .order-summary {
         position: fixed;
         bottom: 0;
@@ -10,54 +12,67 @@
         z-index: 1000;
         margin: 0;
         border-radius: 20px 20px 0 0;
+        transform: translateY(calc(100% - 60px)); /* Show just the handle by default */
         transition: transform 0.3s ease-in-out;
         display: block;
         border: none;
         padding: 20px 16px;
     }
 
+    /* Handle for pulling up the cart */
     .pull-up-handle {
-        height: 30px;
+        height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        margin-bottom: 10px;
-    }
-
-    .handle-bar {
-        width: 40px;
-        height: 4px;
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 2px;
+        margin-top: -20px;
+        margin-bottom: 20px;
         position: relative;
     }
 
+    /* Visual indicator (handle bar) */
+    .handle-bar {
+        width: 40px;
+        height: 5px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        position: relative;
+    }
+    
+    /* Arrow indicator */
     .handle-bar::before {
         content: '';
         position: absolute;
-        top: -8px;
+        top: -10px;
         left: 50%;
-        transform: translateX(-50%);
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-bottom: 6px solid rgba(0, 0, 0, 0.1);
+        transform: translateX(-50%) rotate(0deg);
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
     }
 
+    /* When expanded, flip the arrow */
     .order-summary.expanded .handle-bar::before {
         transform: translateX(-50%) rotate(180deg);
-        top: 6px;
     }
 
-    .summary-items {
-        max-height: 30vh;
-        overflow-y: auto;
+    /* When expanded, show the full cart */
+    .order-summary.expanded {
+        transform: translateY(0);
     }
 
-    .summary-total {
-        margin: 0 -16px 16px;
-        padding: 16px;
+    /* When there are items but not expanded */
+    .order-summary.has-items:not(.expanded) {
+        transform: translateY(calc(100% - 80px));
     }
+
+    /* Make header act as a handle too */
+    .summary-header {
+        cursor: pointer;
+    }
+
     
     /* iOS Form Fixes with proper vendor prefixes */
     input[type="number"] {
@@ -248,17 +263,72 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid #e5e7eb;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    height: 100%;
+    height: 100%; 
     overflow: hidden;
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+[class^="Available"], 
+[class*="Available"],
+[class*="available"],
+.stock-info, 
+.availability,
+.item-content .text-muted,
+.product-availability,
+.stock-status {
+    display: none !important;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select,
+.modal-body input,
+.modal-body textarea,
+.modal-body select,
+#checkoutModal input,
+#checkoutModal textarea,
+#checkoutModal select,
+.checkout-form input,
+.checkout-form textarea,
+.checkout-form select {
+    color: #1a2b3b !important; /* Dark text color with !important to override */
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+}
+
+/* Add specific focus state for form elements */
+.modal-content input:focus,
+.modal-content textarea:focus,
+.modal-content select:focus,
+.modal-body input:focus,
+.modal-body textarea:focus,
+.modal-body select:focus {
+    color: #1a2b3b !important;
+    background-color: #f8fafc;
+    border-color: #2095AE;
+    box-shadow: 0 0 0 2px rgba(32, 149, 174, 0.1);
+    outline: none;
+}
+
+/* Ensure placeholder text is visible */
+.modal-content ::placeholder,
+.modal-body ::placeholder,
+#checkoutModal ::placeholder {
+    color: #94a3b8;
+    opacity: 0.7;
 }
 
 .catering-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 24px rgba(0,0,0,0.08);
 }
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+    color: #1a2b3b; /* Ensures text appears dark on a white background */
+}
+
 
 .item-image {
     position: relative;
@@ -300,7 +370,6 @@ body {
     min-height: 36px;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* Add standard properties alongside webkit versions */
     display: -webkit-box;
     display: box;
     -webkit-line-clamp: 2;
@@ -317,7 +386,6 @@ body {
     max-height: 38px;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* Add standard properties alongside webkit versions */
     display: -webkit-box;
     display: box;
     -webkit-line-clamp: 2;
@@ -389,7 +457,7 @@ body {
     text-align: center;
     font-size: 0.9rem;
     font-weight: 500;
-    -moz-appearance: textfield;
+   
 }
 
 /* Input appearance fixes with vendor prefixes */
@@ -751,9 +819,7 @@ button.add:hover:not(:disabled) {
    Mobile specific updates
    ================================================== */
 @media (max-width: 768px) {
-    /* Mobile screen adjustments */
     
-    /* Mobile text truncation with proper vendor prefixes */
     .item-content h4 {
         font-size: 0.95rem;
         min-height: 40px;
@@ -798,6 +864,7 @@ button.add:hover:not(:disabled) {
         padding-top: 10px;
         gap: 8px;
     }
+    
 }
 
 /* ==================================================
@@ -841,4 +908,170 @@ button.add:hover:not(:disabled) {
 
 .form-control, .form-select {
     margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .item-image {
+        height: 140px; /* Further reduced height on mobile */
+    }
+    
+    /* Target specific product containers */
+    #drinks .row > div, 
+    #packages .row > div, 
+    #snacks .row > div, 
+    #merchandise .row > div {
+        width: 50%; /* Keep two items per row on mobile */
+        padding: 6px; /* Reduced padding between cards */
+    }
+    
+    .catering-item {
+        max-width: none; /* Allow cards to fill the 50% width column */
+    }
+    
+    .item-content {
+        padding: 8px 12px; /* Further reduced padding on mobile */
+    }
+    
+    .item-content h4 {
+        font-size: 0.95rem;
+        margin-bottom: 2px; /* Minimal spacing */
+    }
+    
+    .item-content p {
+        margin-bottom: 4px; /* Minimal spacing */
+        font-size: 0.8rem;
+    }
+    
+    .item-price {
+        margin-bottom: 4px; /* Minimal spacing */
+    }
+    
+    .item-actions {
+        padding-top: 5px; /* Reduced padding */
+    }
+    
+    /* Make quantity controls and buttons more compact */
+    .quantity-control {
+        height: 32px; /* Smaller height */
+    }
+    
+    .qty-btn, .qty-input {
+        height: 32px; /* Smaller height */
+        width: 28px; /* Smaller width */
+    }
+    
+    button.add, .add-to-cart {
+        height: 32px; /* Smaller height */
+        font-size: 0.8rem; /* Smaller text */
+    }
+}
+
+/* Add to cart notifications */
+
+/* Cart Add Feedback Animation */
+@keyframes addToCartPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); background-color: #1b7f94; }
+    100% { transform: scale(1); }
+}
+
+.add-to-cart.added,
+button[class*="add"].added,
+button.add.added {
+    animation: addToCartPulse 0.5s ease-out;
+}
+
+/* Cart Notification Toast */
+.cart-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2095AE;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 1100;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    max-width: 300px;
+}
+
+.cart-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cart-notification .icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.cart-notification .message {
+    flex-grow: 1;
+}
+
+/* Mobile Cart Indicator */
+@media (max-width: 768px) {
+    .order-summary {
+        transform: translateY(calc(100% - 50px));
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    .order-summary.has-items {
+        transform: translateY(calc(100% - 80px));
+    }
+    
+    .order-summary.expanded {
+        transform: translateY(0);
+    }
+    
+    .pull-up-handle {
+        cursor: pointer;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+    }
+    
+    .summary-header {
+        cursor: pointer;
+    }
+    
+    .item-count {
+        animation: pulse 1.5s infinite when-new;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); background-color: #2095AE; color: white; }
+        100% { transform: scale(1); }
+    }
+}
+
+/* Add to Cart Success Flash */
+.add-success-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(40, 167, 69, 0.2);
+    z-index: 1050;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.add-success-flash.show {
+    opacity: 1;
+    animation: flashFade 0.8s ease-out forwards;
+}
+
+@keyframes flashFade {
+    0% { opacity: 0; }
+    20% { opacity: 0.2; }
+    100% { opacity: 0; }
 }
