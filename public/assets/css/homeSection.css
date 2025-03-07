@@ -1168,10 +1168,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   /* ===== Responsive ===== */
   @media (max-width: 768px) {
     .memories-container {
-      grid-template-columns: 1fr; 
+      grid-template-columns: 1fr;
       gap: 20px;
     }
-    
+  
+    /* Move text above images on mobile */
+    .memories-gallery {
+      order: 2;
+    }
+  
+    .memories-content {
+      order: 1;
+    }
+  
     .memories-gallery {
       grid-template-columns: repeat(2, 1fr);
       grid-auto-rows: 140px;
@@ -1180,11 +1189,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     .memories-title {
       font-size: 32px;
     }
-    
+  
     .memories-description {
       font-size: 16px;
     }
   }
+  
+  
 
   .testimonials .author-img {
     width: 120px;
