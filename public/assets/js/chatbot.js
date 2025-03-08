@@ -23,9 +23,21 @@ window.initFirebase = async function() {
             firebase.initializeApp(firebaseConfig);
         }
 
-        // Initialise Firestore and sign in anonymously
+        // Initialise Firestore without anonymous sign-in
         window.db = firebase.firestore();
-        await firebase.auth().signInAnonymously();
+        
+        // Check if we already have a persistent UID in localStorage
+        const persistentUID = localStorage.getItem('persistent_chat_uid');
+        
+        if (persistentUID) {
+            // Use existing UID for this user
+            console.log('Using existing chat UID');
+        } else {
+            // Create a single persistent ID for this user's browser
+            const newUID = `chat_user_${Date.now()}_${Math.floor(Math.random() * 1000000)}`;
+            localStorage.setItem('persistent_chat_uid', newUID);
+            console.log('Created new persistent chat UID');
+        }
 
         return window.db;
     } catch (error) {
@@ -103,8 +115,35 @@ document.addEventListener('DOMContentLoaded', async () => {
         localStorage.removeItem('welcomeMessageShown'); 
     }
     
-
     // === Core Functions ===
+
+    // Display a message in the chat window immediately
+    function displayMessage(role, content, messageId) {
+        // Check if message already exists in DOM
+        if (document.querySelector(`[data-message-id="${messageId}"]`)) {
+          return;
+        }
+      
+        // Check if message is already processed
+        if (state.processedMessages.has(messageId)) {
+          return;
+        }
+      
+        const messageClass = role === 'user' ? 'user'
+          : role === 'agent' ? 'agent'
+          : role === 'system' ? 'system'
+          : 'bot';
+      
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${messageClass}`;
+        messageDiv.setAttribute('data-message-id', messageId);
+        messageDiv.textContent = content;
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        // Mark as processed
+        state.processedMessages.add(messageId);
+    }
 
     // Set up Firestore real-time listeners for conversation status and messages
     function setupMessageListeners() {
@@ -152,7 +191,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 // Process the message
                 displayMessage(message.role, message.content, messageId);
-                state.processedMessages.add(messageId);
                 
                 // Remove from processing queue
                 state.messageQueue.delete(messageId);
@@ -161,7 +199,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
         
         state.unsubscribeHandlers.add(messagesUnsubscribe);
-      }
+    }
     
     // Remove any existing listeners
     function clearExistingListeners() {
@@ -191,71 +229,82 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function showWelcomeMessage() {
         if (state.isFirstMessage && !localStorage.getItem('welcomeMessageShown')) {
           const welcomeMessage = "Hi there! 👋 I'm here to help you discover the best of Ibiza. What's your name so I can assist you better?";
-          const messageId = await saveMessageToFirestore('bot', welcomeMessage);
+          const messageId = generateUniqueId();
+          
+          // Display message immediately
+          displayMessage('bot', welcomeMessage, messageId);
+          
+          // Save to Firestore in background
+          saveMessageToFirestore('bot', welcomeMessage, messageId);
+          
           state.isWaitingForName = true;
           state.isFirstMessage = false;
           localStorage.setItem('welcomeMessageShown', 'true');
         }
-      }
-
-    // Display a message in the chat window
-    function displayMessage(role, content, messageId) {
-        // Check if message already exists in DOM
-        if (document.querySelector(`[data-message-id="${messageId}"]`)) {
-          return;
-        }
-      
-        // Check if message is already processed
-        if (state.processedMessages.has(messageId)) {
-          return;
-        }
-      
-        const messageClass = role === 'user' ? 'user'
-          : role === 'agent' ? 'agent'
-          : role === 'system' ? 'system'
-          : 'bot';
-      
-        const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${messageClass}`;
-        messageDiv.setAttribute('data-message-id', messageId);
-        messageDiv.textContent = content;
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      }
+    }
 
     // Save a message to Firestore and update the conversation document
-    async function saveMessageToFirestore(role, content) {
+    async function saveMessageToFirestore(role, content, customMessageId = null) {
         try {
           await ensureFirebaseInitialized();
-          const conversationRef = window.db.collection('chatConversations').doc(state.conversationId);
           
-          // Generate a unique ID for this message
-          const messageId = generateUniqueId();
+          // Generate a unique ID for this message or use provided one
+          const messageId = customMessageId || generateUniqueId();
           
-          return await window.db.runTransaction(async (transaction) => {
-            // Use the generated messageId instead of letting Firestore auto-generate one
+          // First try direct Firestore access since the API endpoint seems to have issues
+          try {
+            const conversationRef = window.db.collection('chatConversations').doc(state.conversationId);
             const messageRef = conversationRef.collection('messages').doc(messageId);
-            
-            transaction.set(messageRef, {
+          
+            await messageRef.set({
               role,
               content,
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               messageId: messageId
             });
-        
-            transaction.set(conversationRef, {
+            
+            await conversationRef.set({
               lastMessage: content,
               lastMessageAt: firebase.firestore.FieldValue.serverTimestamp(),
               lastMessageRole: role,
               status: role === 'agent' ? 'agent-handling' : (state.isAgentHandling ? 'agent-handling' : 'active'),
-              lastMessageId: messageId
+              lastMessageId: messageId,
+              browserUid: localStorage.getItem('persistent_chat_uid') || 'unknown'
             }, { merge: true });
-        
+            
             return messageId;
-          });
+          } catch (firestoreError) {
+            console.warn('Direct Firestore access failed, trying API:', firestoreError);
+            
+            // Fall back to API if direct access fails
+            const apiUrl = `${BASE_API_URL}/api/save-message`;
+            const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({ 
+                conversationId: state.conversationId,
+                messageId: messageId,
+                role: role,
+                content: content,
+                userName: state.userName || null,
+                browserUid: localStorage.getItem('persistent_chat_uid') || 'unknown'
+              })
+            });
+            
+            if (!response.ok) {
+              throw new Error(`API call failed with status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            return result.messageId || messageId;
+          }
         } catch (error) {
           console.error('Error saving message:', error);
-          throw error;
+          // Still return messageId even if saving failed, so we can display the message
+          return customMessageId || generateUniqueId();
         }
     }
       
@@ -274,7 +323,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Handle input when waiting for the user’s name
+    // Handle input when waiting for the user's name
     async function handleNameInput(userInput) {
         const name = userInput.trim();
         if (name.length > 0) {
@@ -283,18 +332,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             state.userDetailsSubmitted = true;
             state.isWaitingForName = false;
 
-            await window.db.collection('chatConversations')
-                .doc(state.conversationId)
-                .set({
-                    userName: state.userName,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                }, { merge: true });
+            // Update conversation with username
+            try {
+                await window.db.collection('chatConversations')
+                    .doc(state.conversationId)
+                    .set({
+                        userName: state.userName,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    }, { merge: true });
+            } catch (error) {
+                console.warn('Failed to update conversation with username:', error);
+                // Continue anyway
+            }
 
-            await saveMessageToFirestore('bot', `Nice to meet you, ${state.userName}! How can I help you explore Ibiza today?`);
+            // Display bot's response immediately
+            const responseMessage = `Nice to meet you, ${state.userName}! How can I help you explore Ibiza today?`;
+            const responseId = generateUniqueId();
+            displayMessage('bot', responseMessage, responseId);
+            
+            // Save in background
+            saveMessageToFirestore('bot', responseMessage, responseId);
+            
             return true;
         }
         
-        await saveMessageToFirestore('bot', "I didn't quite catch your name. Could you please tell me again?");
+        // Display error message immediately
+        const errorMessage = "I didn't quite catch your name. Could you please tell me again?";
+        const errorId = generateUniqueId();
+        displayMessage('bot', errorMessage, errorId);
+        
+        // Save in background
+        saveMessageToFirestore('bot', errorMessage, errorId);
+        
         return false;
     }
 
@@ -314,10 +383,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
-            const messageId = await saveMessageToFirestore('user', userInput);
-            if (!messageId) throw new Error('Failed to save message');
+            // Display user message immediately
+            const messageId = generateUniqueId();
+            displayMessage('user', userInput, messageId);
             
+            // Clear input field immediately
             if (userInputField) userInputField.value = '';
+            
+            // Save message in background
+            saveMessageToFirestore('user', userInput, messageId);
 
             if (!state.isAgentHandling) {
                 if (state.isWaitingForName) {
@@ -336,7 +410,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                             body: JSON.stringify({ 
                                 userMessage: userInput, 
                                 conversationId: state.conversationId,
-                                userName: state.userName
+                                userName: state.userName,
+                                browserUid: localStorage.getItem('persistent_chat_uid') || null
                             })
                         });
 
@@ -351,21 +426,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         if (data && data.response) {
                             displayMessage('bot', data.response, data.messageId);
-                            state.processedMessages.add(data.messageId);
                         } else {
                             throw new Error('Invalid response format from server');
                         }
                     } catch (error) {
                         removeTypingIndicator();
                         const errorMessage = "I'm sorry, I couldn't process your request. Please try again.";
-                        const systemMessageId = await saveMessageToFirestore('system', errorMessage);
+                        const systemMessageId = generateUniqueId();
                         displayMessage('system', errorMessage, systemMessageId);
+                        saveMessageToFirestore('system', errorMessage, systemMessageId);
                     }
                 }
             }
         } catch (error) {
             console.error('Error in sendMessage:', error);
-            await saveMessageToFirestore('system', 'Failed to send message. Please try again.');
+            const errorMessage = 'Failed to send message. Please try again.';
+            const errorId = generateUniqueId();
+            displayMessage('system', errorMessage, errorId);
+            saveMessageToFirestore('system', errorMessage, errorId);
         } finally {
             state.isProcessingMessage = false;
             if (sendButton) sendButton.disabled = false;
@@ -379,10 +457,42 @@ document.addEventListener('DOMContentLoaded', async () => {
         const isCurrentlyHidden = chatbotWidget.style.display === 'none' || chatbotWidget.style.display === '';
         chatbotWidget.style.display = isCurrentlyHidden ? 'flex' : 'none';
         
-        if (isCurrentlyHidden && !state.userName && !state.processedMessages.size) {
-          showWelcomeMessage();
+        // Check for existing welcome message on open
+        if (isCurrentlyHidden) {
+            // If no messages are visible, load messages from Firestore first
+            if (messagesContainer.children.length === 0) {
+                window.db.collection('chatConversations')
+                    .doc(state.conversationId)
+                    .collection('messages')
+                    .orderBy('timestamp', 'asc')
+                    .get()
+                    .then(snapshot => {
+                        if (snapshot.empty && !state.userName && state.isFirstMessage) {
+                            // No messages in Firestore yet, show welcome message
+                            showWelcomeMessage();
+                        } else {
+                            // Display existing messages
+                            snapshot.forEach(doc => {
+                                const message = doc.data();
+                                if (!state.processedMessages.has(message.messageId)) {
+                                    displayMessage(message.role, message.content, message.messageId);
+                                }
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error loading messages:', error);
+                        // Show welcome message as fallback
+                        if (!state.userName && state.isFirstMessage) {
+                            showWelcomeMessage();
+                        }
+                    });
+            } else if (!state.userName && state.isFirstMessage) {
+                // If messages container is empty, show welcome message
+                showWelcomeMessage();
+            }
         }
-      };
+    };
 
     window.closeChat = (event) => {
         if (event) {
@@ -414,12 +524,37 @@ document.addEventListener('DOMContentLoaded', async () => {
             await initFirebase();
             if (!window.db) throw new Error('Firestore not initialised');
             
-            await firebase.auth().signInAnonymously();
+            // Set up message listeners
             setupMessageListeners();
             
-            if (!state.userName) showWelcomeMessage();
-            state.initialized = true;
+            // Load existing messages
+            try {
+                const messagesSnapshot = await window.db.collection('chatConversations')
+                    .doc(state.conversationId)
+                    .collection('messages')
+                    .orderBy('timestamp', 'asc')
+                    .get();
+                    
+                messagesSnapshot.forEach(doc => {
+                    const message = doc.data();
+                    if (!state.processedMessages.has(message.messageId)) {
+                        displayMessage(message.role, message.content, message.messageId);
+                    }
+                });
+                
+                // If no messages, show welcome
+                if (messagesSnapshot.empty && !state.userName) {
+                    showWelcomeMessage();
+                }
+            } catch (error) {
+                console.warn('Failed to load initial messages:', error);
+                // Still show welcome message if needed
+                if (!state.userName) {
+                    showWelcomeMessage();
+                }
+            }
             
+            state.initialized = true;
             setDynamicAgentName();
         } catch (error) {
             console.error("Initialisation error:", error);

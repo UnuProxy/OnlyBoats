@@ -48,6 +48,74 @@ app.get('/api/firebase-config', (req, res) => {
   res.json(clientConfig);
 });
 
+// NEW: Save Message endpoint - allows saving messages without firebase auth
+app.post('/api/save-message', async (req, res) => {
+  console.log('Save message endpoint hit:', req.body);
+  try {
+    const { conversationId, messageId, role, content, userName, browserUid } = req.body;
+    
+    if (!conversationId || !messageId || !role || content === undefined) {
+      console.log('Missing required fields:', { conversationId, messageId, role, content });
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    // Create a batch operation for atomic updates
+    const batch = db.batch();
+    
+    // Reference to the conversation document
+    const conversationRef = db.collection('chatConversations').doc(conversationId);
+    
+    // Reference to the message document
+    const messageRef = conversationRef.collection('messages').doc(messageId);
+    
+    // Set the message data
+    batch.set(messageRef, {
+      role,
+      content,
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+      messageId
+    });
+    
+    // Prepare conversation update data
+    const conversationData = {
+      lastMessage: content,
+      lastMessageAt: admin.firestore.FieldValue.serverTimestamp(),
+      lastMessageRole: role,
+      status: role === 'agent' ? 'agent-handling' : 'active',
+      lastMessageId: messageId
+    };
+    
+    // Add the username if provided
+    if (userName) {
+      conversationData.userName = userName;
+    }
+    
+    // Add browser unique ID if provided (for tracking without authentication)
+    if (browserUid) {
+      conversationData.browserUid = browserUid;
+    }
+    
+    // Update the conversation document
+    batch.set(conversationRef, conversationData, { merge: true });
+    
+    // Commit both operations
+    await batch.commit();
+    console.log('Message saved successfully:', messageId);
+    
+    // Return success response
+    return res.status(200).json({ 
+      success: true, 
+      messageId 
+    });
+  } catch (error) {
+    console.error('Error saving message:', error);
+    return res.status(500).json({ 
+      error: 'Failed to save message', 
+      message: error.message 
+    });
+  }
+});
+
 // Chat endpoint
 app.post('/api/chat', async (req, res) => {
   console.log('Chat endpoint hit:', req.body);
