@@ -1,16 +1,25 @@
-/* boat-details.css */
-
 /* Root Variables for Consistent Styling */
 :root {
-    --primary-bg: #1B2838;
-    --secondary-bg: rgba(15, 22, 32, 0.9);
+    --primary-bg: #FFFFFF;
+    --secondary-bg: rgba(248, 249, 250, 0.95);
     --accent-color: #0EA5E9;
-    --text-color: #FFFFFF;
-    --subtext-color: #95A5B8;
-    --border-color: rgba(255, 255, 255, 0.1);
+    --accent-color-dark: #0b8ac7;
+    --accent-gradient: linear-gradient(145deg, #0EA5E9, #0b8ac7);
+    --primary-color: #2095AE;
+    --primary-color-dark: #1a7d93;
+    --primary-gradient: linear-gradient(145deg, #2095AE, #1a7d93);
+    --text-color: #333333;
+    --subtext-color: #666666;
+    --border-color: rgba(0, 0, 0, 0.1);
     --hover-opacity: 0.8;
     --transition-speed: 0.3s;
     --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
 }
 
 /* Global Styles */
@@ -20,22 +29,29 @@ body, html {
     font-family: var(--font-family);
     background-color: var(--primary-bg);
     color: var(--text-color);
+    line-height: 1.6;
 }
 
 a {
     color: var(--text-color);
     text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--accent-color);
 }
 
 button {
     font-family: var(--font-family);
+    cursor: pointer;
 }
 
 /* Container for the Entire Page */
 .boat-details-page {
     display: flex;
     flex-direction: column;
-    min-height: 100vh ;
+    min-height: 100vh;
     background-color: var(--primary-bg);
 }
 
@@ -44,11 +60,12 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 14px;
-    background-color: var(--primary-bg);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
+    padding: 12px 20px;
+    background-color: transparent;
+    position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
     height: 45px;
 }
@@ -59,24 +76,45 @@ button {
     gap: 8px;
     font-size: 16px;
     letter-spacing: 0.5px;
-    transition: opacity var(--transition-speed);
+    transition: all var(--transition-speed);
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 8px 15px;
+    border-radius: var(--radius-sm);
+    backdrop-filter: blur(3px);
 }
 
 .back-button:hover {
-    opacity: var(--hover-opacity);
+    background-color: #ffffff;
+    color: var(--text-color);
+    transform: translateY(-2px);
+    text-shadow: none;
+    box-shadow: var(--shadow-md);
 }
 
 .favorite-btn {
-    background: none;
+    background-color: rgba(255, 255, 255, 0.2);
     border: none;
-    color: var(--text-color);
+    color: white;
     cursor: pointer;
     font-size: 24px;
-    transition: color var(--transition-speed);
+    transition: all var(--transition-speed);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
 }
 
 .favorite-btn:hover {
-    color: var(--accent-color);
+    color: #ff3b5c;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* Main Gallery Section */
@@ -89,9 +127,21 @@ button {
 
 .main-image {
     width: 100%;
-    height: 60vh;
+    height: 70vh;
     overflow: hidden;
     position: relative;
+    box-shadow: var(--shadow-lg);
+}
+
+.main-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30%;
+    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    pointer-events: none;
 }
 
 .main-image img {
@@ -105,23 +155,98 @@ button {
     transform: scale(1.05);
 }
 
-/* Info Overlay */
+/* Hide most of the info overlay but keep the button */
 .boat-info-overlay {
-    background-color: transparent;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 5;
+    background: transparent;
+    padding: 0;
+    pointer-events: none; /* Allow clicks to pass through to the image */
+}
+
+/* Hide all elements inside the overlay */
+.boat-info-overlay .boat-title,
+.boat-info-overlay .quick-specs-bar,
+.boat-info-overlay .price-info {
+    display: none;
+}
+
+/* Show and position only the button */
+.boat-info-overlay .price-section {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    pointer-events: auto; /* Make button clickable */
+    display: block;
+    width: auto;
+}
+
+/* Style the button to match the screenshot */
+.btn-book {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background-color: #0066cc !important;
+    color: white !important;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-    z-index: 2;
-    
+    overflow: hidden;
+}
+
+.btn-book::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn-book:hover {
+    background-color: #0052a3 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 102, 204, 0.5);
+}
+
+.btn-book:hover::before {
+    left: 100%;
+}
+
+.btn-book:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 102, 204, 0.3);
+}
+
+/* Fix the icon alignment */
+.btn-book i {
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.btn-book:hover i {
+    transform: translateX(4px);
 }
 
 .boat-title {
     font-size: 28px;
     margin: 0;
     font-weight: 600;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    color: #222222;
 }
 
 .quick-specs-bar {
@@ -133,6 +258,11 @@ button {
 .spec-item {
     display: flex;
     flex-direction: column;
+    transition: all var(--transition-speed);
+}
+
+.spec-item:hover {
+    transform: translateY(-3px);
 }
 
 .spec-item .label {
@@ -148,103 +278,162 @@ button {
     color: var(--text-color);
 }
 
+/* Price section and button styling */
 .price-section {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+input, select, textarea {
+    margin-bottom: 15px;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    transition: all var(--transition-speed);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+select[name="passengers"], input[type="date"] {
+    background-color: #2095AE;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-weight: 500;
+}
+
+select[name="passengers"]:hover, input[type="date"]:hover {
+    background-color: #26a5c0;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.price-info {
+    display: flex;
+    align-items: baseline;
     gap: 8px;
 }
 
-.price-section .label {
-    font-size: 14px;
-    color: var(--subtext-color);
-    text-transform: uppercase;
-}
-
-.price-section .value {
-    font-size: 22px;
+.price-info .value {
+    font-size: 26px;
     font-weight: 600;
-    color: var(--text-color);
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.price-section .period {
+.price-info .period {
     font-size: 14px;
-    color: var(--subtext-color);
-}
-
-.inquiry-btn {
-    background-color: var(--accent-color);
-    color: var(--text-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color var(--transition-speed);
-}
-
-.inquiry-btn:hover {
-    background-color: #0b8ac7; /* Manually adjusted darker shade */
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Thumbnail Grid */
 .thumbnail-grid {
     display: flex;
-    gap: 12px;
-    padding: 16px 24px;
+    gap: 15px;
+    padding: 20px 25px;
     overflow-x: auto;
     background-color: var(--primary-bg);
     border-top: 1px solid var(--border-color);
+    margin-top: -15px;
+    position: relative;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+}
+
+.thumbnail-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.thumbnail-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.thumbnail-grid::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
 }
 
 .thumbnail {
-    width: 100px;
-    height: 70px;
+    width: 120px;
+    height: 80px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     overflow: hidden;
-    border: 2px solid transparent;
-    transition: border-color var(--transition-speed), opacity var(--transition-speed);
+    border: 3px solid white;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     flex-shrink: 0;
+    box-shadow: var(--shadow-md);
+    position: relative;
 }
 
 .thumbnail img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
 .thumbnail:hover {
-    opacity: var(--hover-opacity);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: var(--shadow-lg);
+    z-index: 2;
+    border-color: rgba(14, 165, 233, 0.3);
+}
+
+.thumbnail:hover img {
+    transform: scale(1.1);
 }
 
 .thumbnail.active {
     border-color: var(--accent-color);
-    opacity: 1;
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Add overlay marker on active thumbnail */
+.thumbnail.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 3px;
 }
 
 /* Content Tabs */
 .content-tabs {
     display: flex;
-    gap: 30px;
-    padding: 16px 24px;
+    gap: 40px;
+    padding: 0 30px;
     background-color: var(--primary-bg);
     border-bottom: 1px solid var(--border-color);
     overflow-x: auto;
+    justify-content: center;
 }
 
 .tab-btn {
     background: none;
     border: none;
     color: var(--subtext-color);
-    padding: 10px 0;
-    font-size: 14px;
-    letter-spacing: 1px;
+    padding: 16px 0;
+    font-size: 15px;
+    letter-spacing: 1.5px;
     cursor: pointer;
     position: relative;
     text-transform: uppercase;
-    transition: color var(--transition-speed);
+    transition: all var(--transition-speed);
     flex-shrink: 0;
+    font-weight: 500;
 }
 
 .tab-btn:hover {
@@ -259,11 +448,17 @@ button {
 .tab-btn.active::after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: 0;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 3px;
     background-color: var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+/* Remove underline from BOAT PRICE tab only */
+.tab-btn[data-tab="boat-price"].active::after {
+    display: none;
 }
 
 /* Tab Content */
@@ -276,6 +471,12 @@ button {
 
 .tab-pane {
     display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .tab-pane.active {
@@ -289,6 +490,15 @@ button {
 .tab-pane h2 {
     font-size: 24px;
     margin-bottom: 16px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+/* Remove all underlines that might be applied to headings */
+.tab-pane h2::after,
+.rates-header h2::after,
+h2::after {
+    display: none !important;
 }
 
 .tab-pane h3 {
@@ -316,8 +526,17 @@ button {
     display: flex;
     justify-content: space-between;
     padding: 12px 16px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-speed);
+}
+
+.spec-row:hover {
+    background-color: rgba(14, 165, 233, 0.05);
+    border-color: rgba(14, 165, 233, 0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
 .spec-label {
@@ -341,10 +560,18 @@ button {
 .season {
     background-color: var(--secondary-bg);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-speed);
+}
+
+.season:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(14, 165, 233, 0.2);
 }
 
 .season h3 {
@@ -366,6 +593,12 @@ button {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.05);
+}
+
+.rate:last-child {
+    border-bottom: none;
 }
 
 .rate span {
@@ -380,47 +613,56 @@ button {
 
 .contact-broker {
     background-color: var(--accent-color);
-    color: var(--text-color);
+    color: white;
     border: none;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: background-color var(--transition-speed);
+    transition: all var(--transition-speed);
     font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(14, 165, 233, 0.3);
 }
 
 .contact-broker:hover {
-    background-color: #0b8ac7; /* Manually adjusted darker shade */
+    background-color: var(--accent-color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(14, 165, 233, 0.4);
 }
 
 /* Footer Actions */
 .boat-actions {
     display: flex;
-    justify-content: space-around;
-    padding: 20px 24px;
+    justify-content: center;
+    padding: 25px 30px;
     background-color: var(--primary-bg);
     border-top: 1px solid var(--border-color);
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 20px;
 }
 
 .action-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    gap: 10px;
+    padding: 12px 22px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
     color: var(--text-color);
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+    transition: all var(--transition-speed);
+    box-shadow: var(--shadow-sm);
 }
 
 .action-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
     border-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Loading State */
@@ -430,11 +672,12 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(27, 40, 56, 0.95);
+    background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2000;
+    backdrop-filter: blur(5px);
 }
 
 .loading::after {
@@ -451,6 +694,479 @@ button {
     to {
         transform: rotate(360deg);
     }
+}
+
+/* Yacht Rental Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    animation: modalFade 0.4s ease-out;
+}
+
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content {
+    position: relative;
+    background: linear-gradient(145deg, #2095AE, #1a7d93);
+    margin: 5% auto;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalFade 0.3s ease-in-out;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.modal-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 0;
+}
+
+.modal-header {
+    position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-header h2::before {
+    content: '⛵';
+    font-size: 32px;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.close:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    position: relative;
+    z-index: 1;
+}
+
+.modal input,
+.modal select,
+.modal textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+}
+
+.modal input::placeholder,
+.modal textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal input:focus,
+.modal select:focus,
+.modal textarea:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Special styling for the passenger dropdown and date input */
+.modal select[name="passengers"],
+.modal input[type="date"] {
+    background-color: #2095AE;
+    color: white !important;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-weight: 500;
+    position: relative;
+    cursor: pointer;
+}
+
+.modal select[name="passengers"]:hover,
+.modal input[type="date"]:hover {
+    background-color: #26a5c0;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.modal select[name="passengers"] option {
+    background-color: #1a7d93;
+    color: white;
+}
+
+.modal textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.modal button[type="submit"] {
+    background: var(--accent-color);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modal button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.modal button[type="submit"]:hover {
+    background: var(--accent-color-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+}
+
+.modal button[type="submit"]:hover::before {
+    left: 100%;
+}
+
+.modal button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+.modal button[type="submit"]::after {
+    content: '→';
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.modal button[type="submit"]:hover::after {
+    transform: translateX(4px);
+}
+
+/* Form field labels */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Rates Container */
+.rates-container {
+    background: linear-gradient(145deg, #f8f9fa, #eef0f2);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    margin-top: 2rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-speed);
+}
+
+.rates-container:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.rates-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.rates-header h2 {
+    color: var(--text-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-family: 'Gilda Display', serif;
+}
+
+.season-title {
+    display: block;
+    color: #00c2cb;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.date-range {
+    color: var(--subtext-color);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.rates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.rate-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.rate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.rate-card.highlight {
+    background: linear-gradient(145deg, rgba(0, 194, 203, 0.1), rgba(0, 194, 203, 0.03));
+    border-color: rgba(0, 194, 203, 0.3);
+}
+
+.rate-period {
+    color: var(--text-color);
+    font-size: 1rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.rate-amount {
+    text-align: center;
+}
+
+.rate-amount .label {
+    display: block;
+    color: var(--subtext-color);
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+}
+
+.rate-amount .price {
+    display: block;
+    color: #00c2cb;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.rate-amount .period {
+    display: block;
+    color: var(--subtext-color);
+    font-size: 0.8rem;
+}
+
+.rates-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+}
+
+.rate-notes p {
+    color: var(--subtext-color);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Seasonal Rates Section */
+.seasonal-rates {
+    padding: 30px 0;
+}
+
+.seasonal-rates-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+/* Comprehensive fix to remove underlines from SEASONAL RATES */
+.seasonal-rates-title::after,
+h2.seasonal-rates-title::after,
+.seasonal-rates h2::after,
+h2:contains("SEASONAL RATES")::after,
+[class*="seasonal"]::after,
+[class*="rates"]::after,
+.rates-header h2::after {
+    display: none !important;
+}
+
+/* More specific selectors to ensure the underline is removed */
+h2[class*="seasonal"],
+h2[class*="rates"],
+.rates-container h2,
+.seasonal-rates h2 {
+    position: relative;
+}
+
+h2[class*="seasonal"]::after,
+h2[class*="rates"]::after,
+.rates-container h2::after,
+.seasonal-rates h2::after {
+    display: none !important;
+}
+
+.season-name {
+    display: inline-block;
+    color: #00c2cb;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.season-name::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #00c2cb;
+}
+
+.season-date {
+    color: var(--subtext-color);
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+/* Season header with inline date */
+.season-header {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.season-date-range {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+/* Avoid duplicate date displays */
+.season-date-duplicate {
+    display: none;
+}
+
+/* Check Availability Button - Smaller & More Refined */
+.check-availability-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 102, 204, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.check-availability-btn:hover {
+    background-color: #0052a3;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 102, 204, 0.3);
+}
+
+.check-availability-btn i {
+    font-size: 11px;
 }
 
 /* Responsive Design */
@@ -477,7 +1193,11 @@ button {
     }
 
     .boat-actions {
-        padding: 16px 16px;
+        padding: 16px;
+    }
+    
+    .rates-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -530,13 +1250,17 @@ button {
     }
 
     .content-tabs {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 5px 16px;
         gap: 16px;
     }
 
     .tab-btn {
-        padding: 8px 0;
+        padding: 12px 5px;
         font-size: 12px;
+        white-space: nowrap;
     }
 
     .tab-content {
@@ -558,6 +1282,46 @@ button {
 
     .action-btn {
         justify-content: center;
+    }
+    
+    .modal-content {
+        margin: 10% auto;
+        padding: 25px;
+    }
+    
+    .modal-header h2 {
+        font-size: 24px;
+    }
+    
+    .modal input,
+    .modal select,
+    .modal textarea {
+        padding: 12px 16px;
+        font-size: 15px;
+    }
+    
+    .modal button[type="submit"] {
+        padding: 14px;
+    }
+    
+    .rates-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .rate-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem;
+    }
+
+    .rate-period {
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    .rate-amount {
+        text-align: right;
     }
 }
 
@@ -599,292 +1363,33 @@ button {
     .spec-label, .spec-value, .rate span, .price {
         font-size: 12px;
     }
-}
-
-/* Yacht Rental Modal */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-   }
-   
-   .modal-content {
-    position: relative;
-    background: #1B2838;
-    margin: 5% auto;
-    padding: 30px;
-    width: 90%;
-    max-width: 500px;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    animation: modalFade 0.3s ease-in-out;
-   }
-   
-   .modal-header {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-   }
-   
-   .modal-header h2 {
-    margin: 0;
-    font-size: 24px;
-    color: #333;
-   }
-   
-   .close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #999;
-    cursor: pointer;
-    transition: color 0.2s;
-   }
-   
-   .close:hover {
-    color: #333;
-   }
-   
-   .modal form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-   }
-   
-   .modal input,
-   .modal textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: #1B2838;
-    color: #999;
-   }
-   
-   .modal textarea {
-    height: 120px;
-    resize: vertical;
-   
-   }
-   
-   .modal button[type="submit"] {
-    background: #ff4757;
-    color: #999;
-    padding: 12px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-   }
-   
-   .modal button[type="submit"]:hover {
-    background: #ff2e44;
-    color: #FFFFFF;
-   }
-   
-   @keyframes modalFade {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
+    
+    .modal-content {
+        margin: 15% auto;
+        padding: 20px;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    
+    .modal-header h2 {
+        font-size: 22px;
     }
-   }
-   
-   /* Form field labels */
-   .form-group {
-    margin-bottom: 15px;
-   }
-   
-   .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #666;
-    font-size: 14px;
-   }
-   .btn-book {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background-color: #0066cc;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.btn-book:hover {
-    background-color: #0052a3;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-    transform: translateY(-1px);
-}
-
-.btn-book:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.btn-book i {
-    font-size: 14px;
-}
-
-@media (max-width: 768px) {
-    .btn-book {
-        padding: 8px 16px;
-        font-size: 13px;
+    
+    .close {
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
     }
-}
-
-
-        .rates-container {
-    background: linear-gradient(145deg, rgba(45, 65, 90, 0.95), rgba(35, 50, 70, 0.95));
-    border-radius: 12px;
-    padding: 2.5rem;
-    margin-top: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.rates-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.rates-header h2 {
-    color: #fff;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-family: 'Gilda Display', serif;
-}
-
-.season-title {
-    display: block;
-    color: #00c2cb;
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    letter-spacing: 2px;
-}
-
-.date-range {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-}
-
-.rates-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-}
-
-.rate-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.rate-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.rate-card.highlight {
-    background: linear-gradient(145deg, rgba(0, 194, 203, 0.1), rgba(0, 194, 203, 0.05));
-    border-color: rgba(0, 194, 203, 0.3);
-}
-
-.rate-period {
-    color: #fff;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.rate-amount {
-    text-align: center;
-}
-
-.rate-amount .label {
-    display: block;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.8rem;
-    margin-bottom: 0.25rem;
-}
-
-.rate-amount .price {
-    display: block;
-    color: #00c2cb;
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin: 0.5rem 0;
-}
-
-.rate-amount .period {
-    display: block;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.8rem;
-}
-
-.rates-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 1.5rem;
-    margin-top: 1rem;
-}
-
-.rate-notes p {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.85rem;
-    margin-bottom: 0.5rem;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .rates-container {
-        padding: 1.5rem;
+    
+    .modal form {
+        gap: 14px;
     }
-
-    .rates-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+    
+    .modal input,
+    .modal select,
+    .modal textarea {
+        padding: 10px 14px;
+        font-size: 14px;
     }
-
-    .rate-card {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1.25rem;
-    }
-
-    .rate-period {
-        margin-bottom: 0;
-        text-align: left;
-    }
-
-    .rate-amount {
-        text-align: right;
-    }
-
+    
     .rate-amount .price {
         font-size: 1.5rem;
     }
