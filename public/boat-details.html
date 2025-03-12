@@ -86,7 +86,7 @@
                     <span class="period">per day</span>
                 </div>
                 <button class="btn btn-sm btn-book" onclick="openInquiryModal(this)">
-                    <i class="fas fa-envelope"></i> Inquire Now
+                    <i class="fas fa-envelope"></i> Check Availability
                 </button>
             </div>
         </div>
@@ -95,11 +95,26 @@
     <div id="inquiryModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Yacht Inquiry</h2>
+            <h2>Check Boat Availability</h2>
             <form id="inquiryForm">
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="tel" name="phone" placeholder="Phone">
+                <select name="passengers" required>
+                <option value="" disabled selected>Number of Passengers</option>
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers</option>
+                <option value="5">5 Passengers</option>
+                <option value="6">6 Passengers</option>
+                <option value="7">7 Passengers</option>
+                <option value="8">8 Passengers</option>
+                <option value="9">9 Passengers</option>
+                <option value="10">10 Passengers</option>
+                <option value="11">11 Passengers</option>
+                <option value="12">12 Passengers</option>
+                </select>
                 <input type="date" name="date" required>
                 <textarea name="message" placeholder="Message"></textarea>
                 <button type="submit">Send Inquiry</button>
@@ -244,6 +259,10 @@ function openInquiryModal(btn) {
     const modal = document.getElementById('inquiryModal');
     const priceSection = btn.closest('.price-section');
     const price = priceSection.querySelector('#price').textContent;
+    
+    // Get the boat name from the page
+    const boatName = document.getElementById('boatName').textContent;
+    
     modal.style.display = "block";
     
     const form = modal.querySelector('#inquiryForm');
@@ -262,10 +281,12 @@ function openInquiryModal(btn) {
         try {
             // Get form data
             const formData = {
+                boatName: boatName, // Add boat name to form data
                 price: price,
                 name: form.querySelector('[name="name"]').value,
                 email: form.querySelector('[name="email"]').value,
                 phone: form.querySelector('[name="phone"]').value,
+                passengers: form.querySelector('[name="passengers"]').value, // Add passengers to form data
                 date: form.querySelector('[name="date"]').value,
                 message: form.querySelector('[name="message"]').value,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
