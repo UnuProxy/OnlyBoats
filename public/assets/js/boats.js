@@ -168,12 +168,23 @@ async function displayBoats(filters = {}, isLoadMore = false) {
             }
         }
 
+        // Create the initial query
         let query = db.collection('boats');
+        
+        // Get all documents from the collection
         const snapshot = await query.get();
         let boats = [];
 
         snapshot.forEach(doc => {
             const boat = doc.data();
+            
+            // Check visibility first - only include visible boats
+            // If visible is undefined (for backwards compatibility), consider the boat visible
+            if (boat.visible === false) {
+                // Skip hidden boats
+                return;
+            }
+            
             let includeBoat = true;
 
             if (filters.boatType && filters.boatType !== '') {
