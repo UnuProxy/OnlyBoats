@@ -29,16 +29,95 @@
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script> 
-        
+          <style>
+      .inquiry-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000; /* Very high z-index to appear above everything */
+    overflow-y: auto;
+}
+
+.inquiry-modal.active {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style the modal container */
+.inquiry-modal-container {
+    background: white;
+    border-radius: 16px;
+    max-width: 900px;
+    width: 100%;
+    margin: auto;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    z-index: 10001; /* Higher than the overlay */
+}
+
+/* Force black text in form fields */
+.inquiry-modal-form .inquiry-input-field,
+.inquiry-modal-form .inquiry-select-field,
+.inquiry-modal-form .inquiry-message-field {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    border: 1px solid #ddd !important;
+    background-color: #f8f9fa !important;
+}
+
+/* Style the submit button */
+.inquiry-modal-form .inquiry-submit-button {
+    background: #2095AE !important;
+    color: white !important;
+    font-weight: bold;
+    position: relative;
+    z-index: 100;
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .inquiry-modal-container {
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    .inquiry-modal-form {
+        padding: 20px !important;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    .inquiry-field-row {
+        flex-direction: column;
+    }
+    
+    .inquiry-field-wrap {
+        margin-bottom: 10px;
+    }
+    
+    .inquiry-submit-button {
+        margin-bottom: 30px !important;
+    }
+}
+
+          </style>
     </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader-bg"></div>
-    <div id="preloader">
-        <div id="preloader-status">
-            <div class="preloader-position loader"> <span></span> </div>
-        </div>
-    </div>
+    
     <!-- Progress scroll totop -->
     <div class="progress-wrap cursor-pointer">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
@@ -388,6 +467,116 @@
 </footer>
 
 <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Modal handling functions for inquiry modal
+    function openInquiryModal(boatName = '') {
+        const modal = document.querySelector('.inquiry-modal');
+        const boatNameInput = document.querySelector('.inquiry-modal-form #boatNameInput');
+        
+        if (modal) {
+            modal.style.display = 'block'; // Show the modal
+            modal.classList.add('active'); // Add active class for animations
+            document.body.style.overflow = 'hidden'; // Prevent scrolling on the main page
+
+            // Set boat name in hidden input if provided
+            if (boatName && boatNameInput) {
+                boatNameInput.value = boatName;
+            }
+        }
+    }
+
+    function closeInquiryModal() {
+        const modal = document.querySelector('.inquiry-modal');
+        if (modal) {
+            modal.style.display = 'none'; // Hide the modal
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+    }
+
+    // Define openInquiryPage for static HTML buttons
+    window.openInquiryPage = function(boatName) {
+        openInquiryModal(boatName); // Call the same modal-opening function
+    };
+
+    // Handle the "Book Now" buttons for this page (.inquiry-btn)
+    const inquiryButtons = document.querySelectorAll('.inquiry-btn');
+    inquiryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const boatName = button.getAttribute('data-boat-name') || '';
+            openInquiryModal(boatName);
+        });
+    });
+
+    // Handle modal close button
+    const closeButton = document.querySelector('.inquiry-modal-close');
+    if (closeButton) {
+        closeButton.addEventListener('click', closeInquiryModal);
+    }
+
+    // Optional: Close modal when clicking outside the content
+    const modal = document.querySelector('.inquiry-modal');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeInquiryModal();
+            }
+        });
+    }
+
+    // Form submission handling
+    const inquiryForm = document.querySelector(".inquiry-modal-form form");
+    if (inquiryForm) {
+        inquiryForm.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Prevent page reload
+
+            // Get form field values - using optional chaining to prevent null errors
+            const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]')?.value.trim() || '';
+            const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]')?.value.trim() || '';
+            const email = inquiryForm.querySelector('input[placeholder="Email Address*"]')?.value.trim() || '';
+            const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]')?.value.trim() || '';
+            const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || ''; // "YYYY-MM-DD"
+            const guests = inquiryForm.querySelector('.inquiry-select-field')?.value || ''; // Number of guests
+            const message = inquiryForm.querySelector('.inquiry-message-field')?.value.trim() || '';
+            const boatName = inquiryForm.querySelector('#boatNameInput')?.value.trim() || '';
+
+            // Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
+            let formattedDate = "";
+            if (dateValue) {
+                const parts = dateValue.split("-");
+                formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+            }
+
+            try {
+                // Create a new document in the "inquiries" collection
+                const docRef = await db.collection("inquiries").add({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    date: formattedDate, // Stored in dd-mm-yyyy format
+                    guests: guests,
+                    message: message,
+                    boatName: boatName || "Not specified", // Include boat name, default if empty
+                    status: "new", // Default status
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    source: "inquiry-page", // To track which form was used
+                });
+
+                console.log("Document written with ID: ", docRef.id);
+                inquiryForm.reset(); // Reset form fields
+                closeInquiryModal(); // Close modal after successful submission
+                alert("Inquiry sent successfully!");
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Something went wrong. Please try again.");
+            }
+        });
+    }
+});
+</script>
+
+<script>
   document.querySelectorAll('.favorite-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const icon = btn.querySelector('i');
@@ -664,7 +853,8 @@ document.addEventListener("click", function(e) {
 
     container.appendChild(clone);
 }
-        </script>
+  </script>
+  
     <!-- Main Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
