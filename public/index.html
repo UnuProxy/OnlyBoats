@@ -92,7 +92,74 @@
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
         <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>         
+        <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>     
+        <style>
+            /* Force input text color to be black/dark */
+.modal-form .input-field,
+.modal-form .select-field,
+.modal-form .message-field {
+    color: #000 !important; /* Using !important to override any conflicting styles */
+    -webkit-text-fill-color: #000 !important; /* For Safari/iOS */
+}
+
+/* Fix placeholder color to be visible but distinct */
+.modal-form .input-field::placeholder,
+.modal-form .select-field::placeholder,
+.modal-form .message-field::placeholder {
+    color: #666 !important;
+    -webkit-text-fill-color: #666 !important;
+    opacity: 1;
+}
+
+/* Fix selected option in dropdown */
+.modal-form .select-field option {
+    color: #000;
+    background-color: #fff;
+}
+
+/* Fix date inputs which often have special styling */
+.modal-form input[type="date"] {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* Fix submit button for mobile */
+@media (max-width: 768px) {
+    .modal-form .submit-button {
+        padding: 12px;
+        margin-top: 10px;
+        height: 44px;
+        background: #2095AE !important;
+        color: white !important;
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        display: block;
+        font-weight: bold;
+        margin-bottom: 20px; /* Add space at bottom */
+    }
+    
+    /* Ensure the form container allows scrolling */
+    .modal-form {
+        overflow-y: auto !important;
+        padding-bottom: 80px !important; /* Extra padding to ensure button is visible */
+    }
+    
+    /* Ensure the form is properly padded within the container */
+    .modal-form form {
+        padding-bottom: 40px;
+    }
+}
+
+/* General fix to ensure submit button is always visible */
+.modal-form .submit-button {
+    background: #2095AE !important;
+    color: white !important;
+    font-weight: bold;
+    position: relative;
+    z-index: 5;
+}
+        </style>    
     </head>
 <body>
 
@@ -1003,7 +1070,7 @@
         
         if (modal) {
             modal.style.display = 'block'; // Show the modal
-            modal.classList.add('active'); // Add active class for animations (if styled)
+            modal.classList.add('active'); // Add active class for animations
             document.body.style.overflow = 'hidden'; // Prevent scrolling on the main page
 
             // Set boat name in hidden input if provided
@@ -1041,7 +1108,7 @@
     enquiryButtons.forEach(button => {
         // Get boat name from the parent .boat-name element
         const boatItem = button.closest('.boat-item');
-        const boatName = boatItem ? boatItem.querySelector('.boat-name').textContent : '';
+        const boatName = boatItem ? boatItem.querySelector('.boat-name')?.textContent : '';
         button.onclick = () => openInquiryModal(boatName); // Override onclick to pass boat name
     });
 
@@ -1067,16 +1134,18 @@
         inquiryForm.addEventListener("submit", async (e) => {
             e.preventDefault(); // Prevent page reload
 
-            // Get form field values
-            const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]').value.trim();
-            const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]').value.trim();
-            const email = inquiryForm.querySelector('input[placeholder="Email Address*"]').value.trim();
-            const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]').value.trim();
-            const dateValue = inquiryForm.querySelector('input[type="date"]').value; // "YYYY-MM-DD"
-            const guests = inquiryForm.querySelector('.select-field').value; // Number of guests
-            const budget = inquiryForm.querySelector('input[placeholder^="Preferred Budget"]').value;
-            const message = inquiryForm.querySelector('.message-field').value.trim();
-            const boatName = inquiryForm.querySelector('#boatNameInput').value.trim(); // Get boat name
+            // Get form field values - using optional chaining to prevent null errors
+            const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]')?.value.trim() || '';
+            const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]')?.value.trim() || '';
+            const email = inquiryForm.querySelector('input[placeholder="Email Address*"]')?.value.trim() || '';
+            const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]')?.value.trim() || '';
+            const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || ''; // "YYYY-MM-DD"
+            const guests = inquiryForm.querySelector('.select-field')?.value || ''; // Number of guests
+            const message = inquiryForm.querySelector('.message-field')?.value.trim() || '';
+            const boatName = inquiryForm.querySelector('#boatNameInput')?.value.trim() || '';
+            
+            // REMOVED: The budget field that was causing the error
+            // const budget = inquiryForm.querySelector('input[placeholder^="Preferred Budget"]').value;
 
             // Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
             let formattedDate = "";
@@ -1094,11 +1163,11 @@
                     phone: phone,
                     date: formattedDate, // Stored in dd-mm-yyyy format
                     guests: guests,
-                    budget: budget,
                     message: message,
                     boatName: boatName || "Not specified", // Include boat name, default if empty
                     status: "new", // Default status
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    // REMOVED: budget field that was causing errors
                 });
 
                 console.log("Document written with ID: ", docRef.id);
