@@ -1823,7 +1823,7 @@ color: #aa8453;
 /*******************************************
   THREE-COLUMN MEGA MENU
 ********************************************/
-.mega-menu {
+/* .mega-menu {
     position: absolute;
     top: 100%;
     left: 0;
@@ -1836,7 +1836,7 @@ color: #aa8453;
     border-radius: 10px;
 }
 
-/* Show mega menu on .dropdown.show OR on desktop hover */
+
 .dropdown.show .mega-menu {
     display: block;
 }
@@ -1847,7 +1847,7 @@ color: #aa8453;
   }
 }
 
-/* Mega Menu Layout: 3 columns (or more) */
+
 .mega-menu-content {
     display: flex;
     justify-content: space-between;
@@ -1856,7 +1856,7 @@ color: #aa8453;
     gap: 30px; 
 }
 
-/* Common style for textual columns (if you are using .menu-column, etc.) */
+
 .menu-column {
     color: #fff;
     flex: 1; 
@@ -1896,7 +1896,7 @@ color: #aa8453;
     width: 100%;
     height: 250px;
     object-fit: cover;
-}
+} */
 
 /* ======= Header style ======= */
 .header {
