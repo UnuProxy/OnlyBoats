@@ -117,26 +117,18 @@
           </style>
     </head>
 <body>
-  <div id="cavaPromoBanner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 9999;">
-    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; width: 450px; background-color: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden;">
-      <!-- Banner Header with Champagne Image -->
-      <div style="background-color: #2095AE; padding: 20px; position: relative; text-align: center;">
-        <img src="https://cdn-icons-png.flaticon.com/512/920/920582.png" alt="Champagne" style="height: 60px; width: auto;">
-        <button id="closePromoBanner" style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
-      </div>
-      
-      <!-- Banner Content -->
-      <div style="padding: 25px; text-align: center;">
-        <h2 style="margin: 0 0 15px; color: #2095AE; font-family: 'Barlow', sans-serif; font-size: 24px;">🍾 Special Offer!</h2>
-        <p style="margin: 0 0 20px; font-family: 'Barlow', sans-serif; font-size: 16px; line-height: 1.5; color: #333;">
-          <b>Enjoy a complimentary bottle of cava</b> on your boat trip when you book using your special promo code:
-        </p>
-        <div id="promoCodeDisplay" style="background-color: #f0f9ff; border: 2px dashed #2095AE; padding: 10px; margin: 0 auto 20px; width: 150px; border-radius: 6px; font-weight: bold; font-size: 18px; letter-spacing: 1px; color: #2095AE;">
-          CAVA-CODE
+  <div id="bottomPromoBanner" style="display: none; position: fixed; bottom: 0; left: 0; width: 100%; background-color: #2095AE; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); z-index: 9999; padding: 0;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px;">
+      <div style="display: flex; align-items: center;">
+        <img src="https://cdn-icons-png.flaticon.com/512/920/920582.png" alt="Champagne" style="height: 40px; width: auto; margin-right: 15px;">
+        <div>
+          <p style="margin: 0; color: white; font-weight: bold; font-size: 16px;">🍾 Special Offer: Free Cava with Your Booking!</p>
+          <p style="margin: 5px 0 0; color: white; font-size: 14px;">Use code <span id="bottomPromoCode" style="background-color: white; color: #2095AE; padding: 2px 8px; border-radius: 4px; font-weight: bold;">CAVA-CODE</span> when booking</p>
         </div>
-        <button id="bookNowWithPromo" style="background-color: #2095AE; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">
-          BOOK NOW & GET FREE CAVA
-        </button>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <button id="bookWithPromoBtn" style="background-color: white; color: #2095AE; border: none; padding: 8px 16px; border-radius: 4px; font-weight: bold; margin-right: 15px; cursor: pointer;">BOOK NOW</button>
+        <button id="closeBottomPromoBanner" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer;">×</button>
       </div>
     </div>
   </div>
@@ -686,188 +678,151 @@ document.addEventListener("click", function(e) {
 }
     </script>
     <!-- PROMO CODE -->
-   
-<script>
-  // Immediate execution to test banner
-  (function() {
-    console.log('CAVA PROMO: Script executing');
-    
-    // 1. Check URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const promoCode = urlParams.get('promo');
-    console.log('CAVA PROMO: URL parameters:', Object.fromEntries(urlParams));
-    console.log('CAVA PROMO: Promo code from URL:', promoCode);
-    
-    // 2. Function to force show the banner (for testing)
-    function showPromoBanner(code) {
-      console.log('CAVA PROMO: Attempting to show banner with code:', code);
-      
-      // Find the banner element
-      const promoBanner = document.getElementById('cavaPromoBanner');
-      console.log('CAVA PROMO: Banner element found:', !!promoBanner);
-      
-      if (!promoBanner) {
-        console.error('CAVA PROMO: Banner element not found in DOM!');
-        return;
-      }
-      
-      // Set the promo code text
-      const promoCodeDisplay = document.getElementById('promoCodeDisplay');
-      if (promoCodeDisplay) {
-        promoCodeDisplay.textContent = code;
-        console.log('CAVA PROMO: Updated promo code display with:', code);
-      } else {
-        console.error('CAVA PROMO: Promo code display element not found!');
-      }
-      
-      // Show the banner by setting display:block
-      promoBanner.style.display = 'block';
-      
-      // Make absolutely sure it's visible with !important
-      promoBanner.setAttribute('style', 'display: block !important; z-index: 99999 !important;');
-      
-      // Store in localStorage
-      localStorage.setItem('boatPromoCode', code);
-      console.log('CAVA PROMO: Saved promo code to localStorage');
-      
-      // Prevent scrolling
-      document.body.style.overflow = 'hidden';
-      console.log('CAVA PROMO: Banner should now be visible');
-      
-      // Setup event handlers for buttons
-      setupBannerButtons();
-    }
-    
-    // 3. Setup banner buttons
-    function setupBannerButtons() {
-      // Close button
-      const closeButton = document.getElementById('closePromoBanner');
-      if (closeButton) {
-        closeButton.addEventListener('click', function() {
-          document.getElementById('cavaPromoBanner').style.display = 'none';
-          document.body.style.overflow = '';
-          console.log('CAVA PROMO: Banner closed');
-        });
-        console.log('CAVA PROMO: Close button handler attached');
-      }
-      
-      // Book Now button
-      const bookNowButton = document.getElementById('bookNowWithPromo');
-      if (bookNowButton) {
-        bookNowButton.addEventListener('click', function() {
-          console.log('CAVA PROMO: Book Now button clicked');
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Check for promo code in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const promoCode = urlParams.get('promo');
+        
+        console.log("Checking for promo code:", promoCode);
+        
+        if (promoCode && promoCode.startsWith('CAVA-')) {
+          console.log("Found valid promo code:", promoCode);
           
-          // Hide banner
-          document.getElementById('cavaPromoBanner').style.display = 'none';
-          document.body.style.overflow = '';
+          // Save to localStorage
+          localStorage.setItem('boatPromoCode', promoCode);
           
-          // Open booking form
-          const inquiryButtons = document.querySelectorAll('.btn-inquire');
-          if (inquiryButtons && inquiryButtons.length > 0) {
-            console.log('CAVA PROMO: Clicking inquiry button');
-            inquiryButtons[0].click();
-          } else {
-            console.log('CAVA PROMO: No inquiry buttons found, opening modal directly');
-            const modal = document.querySelector('.inquiry-modal');
-            if (modal) {
-              modal.classList.add('active');
-              modal.style.display = 'flex'; // Ensure it's visible
-            }
+          // Update the promo code in the banner
+          const promoCodeElement = document.getElementById('bottomPromoCode');
+          if (promoCodeElement) {
+            promoCodeElement.textContent = promoCode;
           }
           
-          // Add promo field to form
-          setTimeout(function() {
-            const promoCode = localStorage.getItem('boatPromoCode');
-            const inquiryForm = document.querySelector('.inquiry-modal-form form');
-            
-            if (inquiryForm && promoCode) {
-              console.log('CAVA PROMO: Adding promo code to booking form:', promoCode);
+          // Show the banner
+          const banner = document.getElementById('bottomPromoBanner');
+          if (banner) {
+            // Make sure banner is visible by using both display and visibility properties
+            banner.style.display = 'block';
+            banner.style.visibility = 'visible';
+            console.log("Bottom promo banner should be visible now");
+          } else {
+            console.error("Could not find bottom promo banner element");
+          }
+          
+          // Close button functionality
+          const closeButton = document.getElementById('closeBottomPromoBanner');
+          if (closeButton) {
+            closeButton.addEventListener('click', function() {
+              document.getElementById('bottomPromoBanner').style.display = 'none';
+            });
+          }
+          
+          // Book now button functionality
+          const bookButton = document.getElementById('bookWithPromoBtn');
+          if (bookButton) {
+            bookButton.addEventListener('click', function() {
+              // Try to click the first "Book Now" button on the page
+              const inquiryButtons = document.querySelectorAll('.btn-inquire');
+              if (inquiryButtons && inquiryButtons.length > 0) {
+                inquiryButtons[0].click();
+              } else {
+                // If no button found, open the inquiry modal directly
+                const modal = document.querySelector('.inquiry-modal');
+                if (modal) {
+                  modal.classList.add('active');
+                }
+              }
               
-              // Create hidden field
+              // Add the promo code to the form
+              setTimeout(function() {
+                const inquiryForm = document.querySelector('.inquiry-modal-form form');
+                if (inquiryForm) {
+                  // Create hidden promo code field
+                  let promoField = inquiryForm.querySelector('#promoCodeInput');
+                  if (!promoField) {
+                    promoField = document.createElement('input');
+                    promoField.type = 'hidden';
+                    promoField.id = 'promoCodeInput';
+                    promoField.name = 'promoCode';
+                    promoField.value = promoCode;
+                    inquiryForm.appendChild(promoField);
+                  }
+                  
+                  // Create visible promo code confirmation
+                  const promoRow = document.createElement('div');
+                  promoRow.className = 'inquiry-field-row';
+                  promoRow.innerHTML = `
+                    <div class="inquiry-field-wrap" style="position: relative;">
+                      <input type="text" class="inquiry-input-field" value="${promoCode}" readonly style="background-color: #e6f7ff !important; color: #0077b6 !important;">
+                      <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #10b981; font-size: 12px;">
+                        <i class="fas fa-check-circle"></i> Free Cava Included
+                      </div>
+                    </div>
+                  `;
+                  
+                  // Insert before the submit button
+                  const submitButton = inquiryForm.querySelector('.inquiry-submit-button');
+                  if (submitButton) {
+                    inquiryForm.insertBefore(promoRow, submitButton);
+                  }
+                }
+              }, 500);
+            });
+          }
+        } else {
+          console.log("No valid promo code found in URL parameters");
+          
+          // Check if there's a saved promo code in localStorage (for returning visitors)
+          const savedPromoCode = localStorage.getItem('boatPromoCode');
+          if (savedPromoCode) {
+            console.log("Found saved promo code:", savedPromoCode);
+            
+            // Update the promo code in the banner
+            const promoCodeElement = document.getElementById('bottomPromoCode');
+            if (promoCodeElement) {
+              promoCodeElement.textContent = savedPromoCode;
+            }
+            
+            // Show the banner
+            const banner = document.getElementById('bottomPromoBanner');
+            if (banner) {
+              banner.style.display = 'block';
+            }
+            
+            // Add close button functionality
+            document.getElementById('closeBottomPromoBanner').addEventListener('click', function() {
+              document.getElementById('bottomPromoBanner').style.display = 'none';
+            });
+          }
+        }
+        
+        // Modify inquiry form submission to include promo code
+        const inquiryForm = document.querySelector('.inquiry-modal-form form');
+        if (inquiryForm) {
+          const originalSubmit = inquiryForm.onsubmit;
+          
+          inquiryForm.addEventListener('submit', function(e) {
+            const promoCode = localStorage.getItem('boatPromoCode');
+            
+            if (promoCode) {
+              // Make sure the promo code is included
               let promoField = inquiryForm.querySelector('#promoCodeInput');
               if (!promoField) {
                 promoField = document.createElement('input');
                 promoField.type = 'hidden';
                 promoField.id = 'promoCodeInput';
                 promoField.name = 'promoCode';
-                promoField.value = promoCode;
                 inquiryForm.appendChild(promoField);
               }
+              promoField.value = promoCode;
               
-              // Add visible confirmation field
-              const existingPromoRow = inquiryForm.querySelector('.promo-code-row');
-              if (!existingPromoRow) {
-                const promoRow = document.createElement('div');
-                promoRow.className = 'inquiry-field-row promo-code-row';
-                promoRow.innerHTML = `
-                  <div class="inquiry-field-wrap" style="position: relative;">
-                    <input type="text" class="inquiry-input-field" value="${promoCode}" readonly style="background-color: #e6f7ff !important; color: #0077b6 !important;">
-                    <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #10b981; font-size: 12px;">
-                      <i class="fas fa-check-circle"></i> Free Cava Included
-                    </div>
-                  </div>
-                `;
-                
-                // Insert before submit button
-                const submitButton = inquiryForm.querySelector('.inquiry-submit-button');
-                if (submitButton) {
-                  inquiryForm.insertBefore(promoRow, submitButton);
-                } else {
-                  inquiryForm.appendChild(promoRow);
-                }
-              }
-            } else {
-              console.error('CAVA PROMO: Could not find inquiry form or promo code');
+              // If submitting via Firebase, modify the data
+              // (This is already handled in your existing form submit logic)
             }
-          }, 500);
-        });
-        console.log('CAVA PROMO: Book Now button handler attached');
-      }
-    }
-    
-    // 4. Main execution
-    // First check if there's a promo parameter in the URL
-    if (promoCode && promoCode.startsWith('CAVA-')) {
-      console.log('CAVA PROMO: Valid promo code found in URL, showing banner');
-      // Wait a moment to ensure DOM is fully loaded
-      setTimeout(function() {
-        showPromoBanner(promoCode);
-      }, 500);
-    } else {
-      // For testing - force show banner even without URL param
-      // Comment out this section in production
-      console.log('CAVA PROMO: No valid promo code in URL, using test code');
-      const testCode = 'CAVA-TEST123';
-      
-      // Uncomment the following line to force-show the banner for testing
-      // setTimeout(function() { showPromoBanner(testCode); }, 500);
-    }
-    
-    // 5. Add promo code to inquiry form submission
-    const inquiryForm = document.querySelector('.inquiry-modal-form form');
-    if (inquiryForm) {
-      inquiryForm.addEventListener('submit', function(e) {
-        const promoCode = localStorage.getItem('boatPromoCode');
-        if (promoCode) {
-          console.log('CAVA PROMO: Adding promo code to form submission:', promoCode);
-          
-          // Create or update hidden field
-          let promoField = this.querySelector('#promoCodeInput');
-          if (!promoField) {
-            promoField = document.createElement('input');
-            promoField.type = 'hidden';
-            promoField.id = 'promoCodeInput';
-            promoField.name = 'promoCode';
-            this.appendChild(promoField);
-          }
-          promoField.value = promoCode;
+          }, true); // Run before any existing handlers
         }
-      }, true); // Run before other handlers
-      
-      console.log('CAVA PROMO: Added form submission handler');
-    }
-  })();
-  </script>
+      });
+    </script>
     <script src="/assets/js/boats.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
