@@ -673,14 +673,27 @@ document.addEventListener("click", function(e) {
         var urlParams = new URLSearchParams(window.location.search);
         var promoCode = urlParams.get('promo');
         
+        // Log all URL parameters for debugging
+        console.log("All URL parameters:", Object.fromEntries(urlParams.entries()));
         console.log("URL parameters checked, promo code:", promoCode);
         
-        // Only show banner if there's a promo code in the URL (from QR scan)
-        if (promoCode && promoCode.startsWith('CAVA-')) {
-          console.log("Valid promo code found in URL, showing banner");
+        // Check for promo in localStorage as fallback
+        var storedPromoCode = localStorage.getItem('boatPromoCode');
+        
+        // Only show banner if there's a promo code in the URL (from QR scan) or in storage
+        if ((promoCode && promoCode.startsWith('CAVA-')) || (storedPromoCode && storedPromoCode.startsWith('CAVA-'))) {
+          // Use either the URL promo code or the stored one
+          var activePromoCode = promoCode || storedPromoCode;
+          console.log("Valid promo code found, showing banner for:", activePromoCode);
           
           // Store in localStorage for returning visitors
-          localStorage.setItem('boatPromoCode', promoCode);
+          localStorage.setItem('boatPromoCode', activePromoCode);
+          
+          // Check if banner already exists (avoid duplicates)
+          if (document.getElementById('direct-promo-banner')) {
+            console.log("Banner already exists, not creating duplicate");
+            return;
+          }
           
           // Create banner element
           var banner = document.createElement('div');
@@ -701,7 +714,7 @@ document.addEventListener("click", function(e) {
             <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto;">
               <div>
                 <span style="font-weight: bold; font-size: 16px;">🍾 Special Offer!</span> 
-                <span style="font-size: 14px;">Use code <strong style="background: white; color: #2095AE; padding: 2px 6px; border-radius: 4px;">${promoCode}</strong> when booking for free cava</span>
+                <span style="font-size: 14px;">Use code <strong style="background: white; color: #2095AE; padding: 2px 6px; border-radius: 4px;">${activePromoCode}</strong> when booking for free cava</span>
               </div>
               <div>
                 <button id="direct-book-btn" style="background: white; color: #2095AE; border: none; padding: 8px 15px; border-radius: 4px; margin-right: 10px; font-weight: bold; cursor: pointer;">BOOK NOW</button>
@@ -733,7 +746,7 @@ document.addEventListener("click", function(e) {
                 modal.classList.add('active');
                 modal.style.display = 'flex';
               } else {
-                alert("Use code " + promoCode + " when booking to receive a free bottle of cava!");
+                alert("Use code " + activePromoCode + " when booking to receive a free bottle of cava!");
               }
             }
             
@@ -746,7 +759,7 @@ document.addEventListener("click", function(e) {
                 promoField.type = 'hidden';
                 promoField.id = 'promoCodeInput';
                 promoField.name = 'promoCode';
-                promoField.value = promoCode;
+                promoField.value = activePromoCode;
                 inquiryForm.appendChild(promoField);
                   
                 // Add visible confirmation
@@ -754,7 +767,7 @@ document.addEventListener("click", function(e) {
                 promoRow.className = 'inquiry-field-row';
                 promoRow.innerHTML = `
                   <div class="inquiry-field-wrap" style="position: relative;">
-                    <input type="text" class="inquiry-input-field" value="${promoCode}" readonly style="background-color: #e6f7ff !important; color: #0077b6 !important;">
+                    <input type="text" class="inquiry-input-field" value="${activePromoCode}" readonly style="background-color: #e6f7ff !important; color: #0077b6 !important;">
                     <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #10b981; font-size: 12px;">
                       <i class="fas fa-check-circle"></i> Free Cava Included
                     </div>
