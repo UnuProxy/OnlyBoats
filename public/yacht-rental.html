@@ -665,68 +665,113 @@ document.addEventListener("click", function(e) {
     </script>
     <!-- PROMO CODE -->
     <script>
-      // Execute immediately
-      (function createBanner() {
-        console.log("Direct banner script executing");
+      // Execute immediately but only show banner when QR code is scanned
+      (function createConditionalBanner() {
+        console.log("Conditional banner script executing");
         
-        // Create banner element
-        var banner = document.createElement('div');
-        banner.id = "direct-promo-banner";
+        // Check URL parameters for promo code (from QR scan)
+        var urlParams = new URLSearchParams(window.location.search);
+        var promoCode = urlParams.get('promo');
         
-        // Set styles directly on the element
-        banner.style.position = "fixed";
-        banner.style.bottom = "0";
-        banner.style.left = "0";
-        banner.style.width = "100%";
-        banner.style.zIndex = "999999";
-        banner.style.backgroundColor = "#2095AE";
-        banner.style.color = "white";
-        banner.style.boxShadow = "0 -2px 5px rgba(0,0,0,0.2)";
+        console.log("URL parameters checked, promo code:", promoCode);
         
-        // Add inner HTML content
-        banner.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto;">
-            <div>
-              <span style="font-weight: bold; font-size: 16px;">🍾 Special Offer!</span> 
-              <span style="font-size: 14px;">Use code <strong style="background: white; color: #2095AE; padding: 2px 6px; border-radius: 4px;">CAVA-TEST123</strong> when booking for free cava</span>
-            </div>
-            <div>
-              <button id="direct-book-btn" style="background: white; color: #2095AE; border: none; padding: 8px 15px; border-radius: 4px; margin-right: 10px; font-weight: bold; cursor: pointer;">BOOK NOW</button>
-              <button id="direct-close-btn" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;">×</button>
-            </div>
-          </div>
-        `;
-        
-        // Add to document body
-        document.body.appendChild(banner);
-        console.log("Banner added to page");
-        
-        // Add event listeners
-        document.getElementById('direct-close-btn').addEventListener('click', function() {
-          document.getElementById('direct-promo-banner').style.display = 'none';
-        });
-        
-        document.getElementById('direct-book-btn').addEventListener('click', function() {
-          console.log("Book button clicked");
+        // Only show banner if there's a promo code in the URL (from QR scan)
+        if (promoCode && promoCode.startsWith('CAVA-')) {
+          console.log("Valid promo code found in URL, showing banner");
           
-          // Try to find Book Now buttons
-          var bookButtons = document.querySelectorAll('.btn-inquire');
-          if (bookButtons.length > 0) {
-            bookButtons[0].click();
-          } else {
-            // Try to open modal directly
-            var modal = document.querySelector('.inquiry-modal');
-            if (modal) {
-              modal.classList.add('active');
-              modal.style.display = 'flex';
+          // Store in localStorage for returning visitors
+          localStorage.setItem('boatPromoCode', promoCode);
+          
+          // Create banner element
+          var banner = document.createElement('div');
+          banner.id = "direct-promo-banner";
+          
+          // Set styles directly on the element
+          banner.style.position = "fixed";
+          banner.style.bottom = "0";
+          banner.style.left = "0";
+          banner.style.width = "100%";
+          banner.style.zIndex = "999999";
+          banner.style.backgroundColor = "#2095AE";
+          banner.style.color = "white";
+          banner.style.boxShadow = "0 -2px 5px rgba(0,0,0,0.2)";
+          
+          // Add inner HTML content with the actual promo code
+          banner.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto;">
+              <div>
+                <span style="font-weight: bold; font-size: 16px;">🍾 Special Offer!</span> 
+                <span style="font-size: 14px;">Use code <strong style="background: white; color: #2095AE; padding: 2px 6px; border-radius: 4px;">${promoCode}</strong> when booking for free cava</span>
+              </div>
+              <div>
+                <button id="direct-book-btn" style="background: white; color: #2095AE; border: none; padding: 8px 15px; border-radius: 4px; margin-right: 10px; font-weight: bold; cursor: pointer;">BOOK NOW</button>
+                <button id="direct-close-btn" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;">×</button>
+              </div>
+            </div>
+          `;
+          
+          // Add to document body
+          document.body.appendChild(banner);
+          console.log("QR promo banner added to page");
+          
+          // Add event listeners
+          document.getElementById('direct-close-btn').addEventListener('click', function() {
+            document.getElementById('direct-promo-banner').style.display = 'none';
+          });
+          
+          document.getElementById('direct-book-btn').addEventListener('click', function() {
+            console.log("Book button clicked");
+            
+            // Try to find Book Now buttons
+            var bookButtons = document.querySelectorAll('.btn-inquire');
+            if (bookButtons.length > 0) {
+              bookButtons[0].click();
             } else {
-              alert("Use code CAVA-TEST123 when booking to receive a free bottle of cava!");
+              // Try to open modal directly
+              var modal = document.querySelector('.inquiry-modal');
+              if (modal) {
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+              } else {
+                alert("Use code " + promoCode + " when booking to receive a free bottle of cava!");
+              }
             }
-          }
-          
-          // Save promo code to localStorage
-          localStorage.setItem('boatPromoCode', 'CAVA-TEST123');
-        });
+            
+            // Add promo code to booking form (with timeout to let modal open)
+            setTimeout(function() {
+              var inquiryForm = document.querySelector('.inquiry-modal-form form');
+              if (inquiryForm) {
+                // Create hidden promo code field
+                var promoField = document.createElement('input');
+                promoField.type = 'hidden';
+                promoField.id = 'promoCodeInput';
+                promoField.name = 'promoCode';
+                promoField.value = promoCode;
+                inquiryForm.appendChild(promoField);
+                  
+                // Add visible confirmation
+                var promoRow = document.createElement('div');
+                promoRow.className = 'inquiry-field-row';
+                promoRow.innerHTML = `
+                  <div class="inquiry-field-wrap" style="position: relative;">
+                    <input type="text" class="inquiry-input-field" value="${promoCode}" readonly style="background-color: #e6f7ff !important; color: #0077b6 !important;">
+                    <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #10b981; font-size: 12px;">
+                      <i class="fas fa-check-circle"></i> Free Cava Included
+                    </div>
+                  </div>
+                `;
+                  
+                // Insert before submit button
+                var submitButton = inquiryForm.querySelector('.inquiry-submit-button');
+                if (submitButton) {
+                  inquiryForm.insertBefore(promoRow, submitButton);
+                }
+              }
+            }, 500);
+          });
+        } else {
+          console.log("No valid promo code in URL, not showing banner");
+        }
       })();
       </script>
     <script src="/assets/js/boats.js"></script>
