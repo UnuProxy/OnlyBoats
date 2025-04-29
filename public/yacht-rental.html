@@ -745,6 +745,12 @@ document.addEventListener("click", function(e) {
     
     // Create personalized message using the place name
     var personalizedMessage = `Thanks for scanning our code at <strong>${activePlaceName}</strong>!`;
+  
+  // Add explanation about the promo code if it contains recognizable location info
+  if (activePromoCode.includes(activePlaceName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8))) {
+    // The promo code contains the location name
+    console.log("Promo code contains location name");
+  }
     
     // Add inner HTML content with the actual promo code and responsive design
     banner.innerHTML = `
