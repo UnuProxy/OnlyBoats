@@ -668,25 +668,33 @@ document.addEventListener("click", function(e) {
       (function createConditionalBanner() {
   console.log("Conditional banner script executing");
   
-  // Check URL parameters for promo code (from QR scan)
+  // Check URL parameters for promo code and place name (from QR scan)
   var urlParams = new URLSearchParams(window.location.search);
   var promoCode = urlParams.get('promo');
+  var placeName = urlParams.get('placeName') || 'this location';
+  var category = urlParams.get('category') || '';
   
   // Log all URL parameters for debugging
   console.log("All URL parameters:", Object.fromEntries(urlParams.entries()));
   console.log("URL parameters checked, promo code:", promoCode);
+  console.log("Place name:", placeName);
   
   // Check for promo in localStorage as fallback
   var storedPromoCode = localStorage.getItem('boatPromoCode');
+  var storedPlaceName = localStorage.getItem('promoPlaceName') || 'this location';
   
   // Only show banner if there's a promo code in the URL (from QR scan) or in storage
   if ((promoCode && promoCode.startsWith('CAVA-')) || (storedPromoCode && storedPromoCode.startsWith('CAVA-'))) {
     // Use either the URL promo code or the stored one
     var activePromoCode = promoCode || storedPromoCode;
+    var activePlaceName = placeName || storedPlaceName;
+    
     console.log("Valid promo code found, showing banner for:", activePromoCode);
+    console.log("Using place name:", activePlaceName);
     
     // Store in localStorage for returning visitors
     localStorage.setItem('boatPromoCode', activePromoCode);
+    localStorage.setItem('promoPlaceName', activePlaceName);
     
     // Check if banner already exists (avoid duplicates)
     if (document.getElementById('direct-promo-banner')) {
@@ -708,15 +716,18 @@ document.addEventListener("click", function(e) {
     banner.style.color = "white";
     banner.style.boxShadow = "0 -2px 5px rgba(0,0,0,0.2)";
     
+    // Create personalized message using the place name
+    var personalizedMessage = `Thanks for scanning our code at <strong>${activePlaceName}</strong>!`;
+    
     // Add inner HTML content with the actual promo code and responsive design
     banner.innerHTML = `
       <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 12px 15px; max-width: 1200px; margin: 0 auto;">
         <div style="margin-bottom: 10px; margin-right: 10px; flex: 1 1 auto;">
           <span style="font-weight: bold; font-size: 16px;">🍾 Special Offer!</span> 
-          <span style="font-size: 14px; display: inline-block;">Use code <strong style="background: white; color: #2095AE; padding: 2px 6px; border-radius: 4px;">${activePromoCode}</strong> when booking for free cava</span>
+          <span style="font-size: 14px; display: inline-block;">${personalizedMessage} Use code <strong style="background: white; color: #2095AE; padding: 2px 6px; border-radius: 4px;">${activePromoCode}</strong> for free cava</span>
         </div>
         <div style="display: flex; align-items: center; white-space: nowrap;">
-          <button id="direct-book-btn" style="background: white; color: #2095AE; border: none; padding: 8px 15px; border-radius: 4px; margin-right: 10px; font-weight: bold; cursor: pointer;">BOOK NOW</button>
+          <button id="direct-book-btn" style="background: white; color: #2095AE; border: none; padding: 8px 15px; border-radius: 4px; margin-right: 10px; font-weight: bold; cursor: pointer;">APPLY NOW</button>
           <button id="direct-close-btn" style="background: none; border: none; color: white; font-size: 24px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">×</button>
         </div>
       </div>
@@ -753,13 +764,22 @@ document.addEventListener("click", function(e) {
     `;
     document.head.appendChild(mobileStyle);
     
+    // Flag to ensure code is applied only once
+    var promoApplied = false;
+    
     // Add event listeners
     document.getElementById('direct-close-btn').addEventListener('click', function() {
       document.getElementById('direct-promo-banner').style.display = 'none';
     });
     
     document.getElementById('direct-book-btn').addEventListener('click', function() {
-      console.log("Book button clicked");
+      console.log("Apply button clicked");
+      
+      // If promo already applied, just alert the user
+      if (promoApplied) {
+        alert("Promo code " + activePromoCode + " has already been applied!");
+        return;
+      }
       
       // Try to find Book Now buttons
       var bookButtons = document.querySelectorAll('.btn-inquire');
@@ -780,6 +800,12 @@ document.addEventListener("click", function(e) {
       setTimeout(function() {
         var inquiryForm = document.querySelector('.inquiry-modal-form form');
         if (inquiryForm) {
+          // Check if promo code is already applied
+          if (document.getElementById('promoCodeInput') || document.querySelector('.promo-confirmation-row')) {
+            console.log("Promo code already applied to form");
+            return;
+          }
+          
           // Create hidden promo code field
           var promoField = document.createElement('input');
           promoField.type = 'hidden';
@@ -790,12 +816,12 @@ document.addEventListener("click", function(e) {
             
           // Add visible confirmation
           var promoRow = document.createElement('div');
-          promoRow.className = 'inquiry-field-row';
+          promoRow.className = 'inquiry-field-row promo-confirmation-row';
           promoRow.innerHTML = `
             <div class="inquiry-field-wrap" style="position: relative;">
               <input type="text" class="inquiry-input-field" value="${activePromoCode}" readonly style="background-color: #e6f7ff !important; color: #0077b6 !important;">
               <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #10b981; font-size: 12px;">
-                <i class="fas fa-check-circle"></i> Free Cava Included
+                <i class="fas fa-check-circle"></i> Free Cava from ${activePlaceName}
               </div>
             </div>
           `;
@@ -804,6 +830,8 @@ document.addEventListener("click", function(e) {
           var submitButton = inquiryForm.querySelector('.inquiry-submit-button');
           if (submitButton) {
             inquiryForm.insertBefore(promoRow, submitButton);
+            promoApplied = true;
+            console.log("Promo code applied to form");
           }
         }
       }, 500);
