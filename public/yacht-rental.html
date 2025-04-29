@@ -674,16 +674,23 @@ document.addEventListener("click", function(e) {
   var placeName = urlParams.get('placeName');
   var category = urlParams.get('category') || '';
   
-  // If no place name in URL, try to get from locationId in promo code
-  if (!placeName && promoCode) {
-    // Try to extract a location name from the promo code if possible
-    placeName = localStorage.getItem('promoPlaceName');
+  // Log all URL parameters for debugging
+  console.log("All URL parameters:", Object.fromEntries(urlParams.entries()));
+  console.log("URL parameters checked, promo code:", promoCode);
+  console.log("Place name from URL:", placeName);
+  
+  // Check for promo and place name in localStorage as fallback
+  var storedPromoCode = localStorage.getItem('boatPromoCode');
+  var storedPlaceName = localStorage.getItem('promoPlaceName');
+  
+  // Set default place name only if we don't have one from URL or storage
+  if (!placeName && !storedPlaceName) {
+    placeName = 'our QR code';
+  } else if (!placeName && storedPlaceName) {
+    placeName = storedPlaceName;
   }
   
-  // Default to a more generic term if no place name available
-  if (!placeName) {
-    placeName = 'our QR code';
-  }
+  console.log("Final place name to use:", placeName);
   
   // Log all URL parameters for debugging
   console.log("All URL parameters:", Object.fromEntries(urlParams.entries()));
@@ -714,7 +721,7 @@ document.addEventListener("click", function(e) {
       && !isPromoApplied) {
     // Use either the URL promo code or the stored one
     var activePromoCode = promoCode || storedPromoCode;
-    var activePlaceName = placeName || storedPlaceName;
+    var activePlaceName = placeName || storedPlaceName || 'our QR code';
     
     console.log("Valid promo code found, showing banner for:", activePromoCode);
     console.log("Using place name:", activePlaceName);
