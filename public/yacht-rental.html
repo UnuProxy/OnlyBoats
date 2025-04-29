@@ -671,8 +671,19 @@ document.addEventListener("click", function(e) {
   // Check URL parameters for promo code and place name (from QR scan)
   var urlParams = new URLSearchParams(window.location.search);
   var promoCode = urlParams.get('promo');
-  var placeName = urlParams.get('placeName') || 'this location';
+  var placeName = urlParams.get('placeName');
   var category = urlParams.get('category') || '';
+  
+  // If no place name in URL, try to get from locationId in promo code
+  if (!placeName && promoCode) {
+    // Try to extract a location name from the promo code if possible
+    placeName = localStorage.getItem('promoPlaceName');
+  }
+  
+  // Default to a more generic term if no place name available
+  if (!placeName) {
+    placeName = 'our QR code';
+  }
   
   // Log all URL parameters for debugging
   console.log("All URL parameters:", Object.fromEntries(urlParams.entries()));
@@ -683,8 +694,24 @@ document.addEventListener("click", function(e) {
   var storedPromoCode = localStorage.getItem('boatPromoCode');
   var storedPlaceName = localStorage.getItem('promoPlaceName') || 'this location';
   
-  // Only show banner if there's a promo code in the URL (from QR scan) or in storage
-  if ((promoCode && promoCode.startsWith('CAVA-')) || (storedPromoCode && storedPromoCode.startsWith('CAVA-'))) {
+  // Check if promo has already been applied
+  var isPromoApplied = localStorage.getItem('promoApplied') === 'true';
+  
+  // Check if the form already has the promo code applied
+  var promoAlreadyInForm = false;
+  setTimeout(function() {
+    var promoField = document.getElementById('promoCodeInput');
+    var promoRow = document.querySelector('.promo-confirmation-row');
+    if (promoField || promoRow) {
+      promoAlreadyInForm = true;
+      // If found on page load, record that promo is applied
+      localStorage.setItem('promoApplied', 'true');
+    }
+  }, 1000);
+  
+  // Only show banner if there's a promo code AND it hasn't been applied yet
+  if (((promoCode && promoCode.startsWith('CAVA-')) || (storedPromoCode && storedPromoCode.startsWith('CAVA-'))) 
+      && !isPromoApplied) {
     // Use either the URL promo code or the stored one
     var activePromoCode = promoCode || storedPromoCode;
     var activePlaceName = placeName || storedPlaceName;
@@ -832,6 +859,15 @@ document.addEventListener("click", function(e) {
             inquiryForm.insertBefore(promoRow, submitButton);
             promoApplied = true;
             console.log("Promo code applied to form");
+            
+            // Hide the banner after successful application
+            var promoBanner = document.getElementById('direct-promo-banner');
+            if (promoBanner) {
+              promoBanner.style.display = 'none';
+              
+              // Store in localStorage that this promo has been applied
+              localStorage.setItem('promoApplied', 'true');
+            }
           }
         }
       }, 500);
