@@ -532,36 +532,43 @@
 
             // Get form field values - using optional chaining to prevent null errors
             const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]')?.value.trim() || '';
-            const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]')?.value.trim() || '';
-            const email = inquiryForm.querySelector('input[placeholder="Email Address*"]')?.value.trim() || '';
-            const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]')?.value.trim() || '';
-            const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || ''; // "YYYY-MM-DD"
-            const guests = inquiryForm.querySelector('.inquiry-select-field')?.value || ''; // Number of guests
-            const message = inquiryForm.querySelector('.inquiry-message-field')?.value.trim() || '';
-            const boatName = inquiryForm.querySelector('#boatNameInput')?.value.trim() || '';
+const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]')?.value.trim() || '';
+const email = inquiryForm.querySelector('input[placeholder="Email Address*"]')?.value.trim() || '';
+const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]')?.value.trim() || '';
+const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || ''; // "YYYY-MM-DD"
+const guests = inquiryForm.querySelector('.inquiry-select-field')?.value || ''; // Number of guests
+const message = inquiryForm.querySelector('.inquiry-message-field')?.value.trim() || '';
+const boatName = inquiryForm.querySelector('#boatNameInput')?.value.trim() || '';
 
-            // Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
-            let formattedDate = "";
-            if (dateValue) {
-                const parts = dateValue.split("-");
-                formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
-            }
+// ADD THIS SECTION TO CAPTURE PROMO CODE
+const promoCode = inquiryForm.querySelector('#promoCodeInput')?.value.trim() || '';
+const promoSource = localStorage.getItem('promoPlaceName') || '';
 
-            try {
-                // Create a new document in the "inquiries" collection
-                const docRef = await db.collection("inquiries").add({
-                    firstName: firstName,
-                    lastName: lastName,
-                    email: email,
-                    phone: phone,
-                    date: formattedDate, // Stored in dd-mm-yyyy format
-                    guests: guests,
-                    message: message,
-                    boatName: boatName || "Not specified", // Include boat name, default if empty
-                    status: "new", // Default status
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    source: "inquiry-page", // To track which form was used
-                });
+// Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
+let formattedDate = "";
+if (dateValue) {
+    const parts = dateValue.split("-");
+    formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+}
+
+try {
+    // Create a new document in the "inquiries" collection with the promo code
+    const docRef = await db.collection("inquiries").add({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        date: formattedDate, // Stored in dd-mm-yyyy format
+        guests: guests,
+        message: message,
+        boatName: boatName || "Not specified", // Include boat name, default if empty
+        status: "new", // Default status
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        source: "inquiry-page", // To track which form was used
+        // ADD THESE FIELDS
+        promoCode: promoCode || null, // Save promo code if available
+        promoSource: promoSource || null // Save promo source if available
+    });
 
                 console.log("Document written with ID: ", docRef.id);
                 inquiryForm.reset(); // Reset form fields
