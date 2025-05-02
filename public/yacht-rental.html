@@ -468,10 +468,29 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    // Check for auto promo code on page load
+    const autoPromoCode = localStorage.getItem('autoPromoCode');
+    const promoPlaceName = localStorage.getItem('promoPlaceName');
+    
+    // If we have URL parameters, extract them
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlPromoCode = urlParams.get('promo');
+    const urlPlaceName = urlParams.get('placeName');
+    
+    // If URL has parameters, store them in localStorage too (in case of direct links)
+    if (urlPromoCode) {
+        localStorage.setItem('autoPromoCode', urlPromoCode);
+    }
+    
+    if (urlPlaceName) {
+        localStorage.setItem('promoPlaceName', urlPlaceName);
+    }
+    
     // Modal handling functions for inquiry modal
     function openInquiryModal(boatName = '') {
         const modal = document.querySelector('.inquiry-modal');
         const boatNameInput = document.querySelector('.inquiry-modal-form #boatNameInput');
+        const promoCodeInput = document.querySelector('.inquiry-modal-form #promoCodeInput');
         
         if (modal) {
             modal.style.display = 'block'; // Show the modal
@@ -481,6 +500,15 @@
             // Set boat name in hidden input if provided
             if (boatName && boatNameInput) {
                 boatNameInput.value = boatName;
+            }
+            
+            // Auto-apply promo code if it exists
+            if (promoCodeInput) {
+                // Priority: URL param, then localStorage
+                const finalPromoCode = urlPromoCode || autoPromoCode;
+                if (finalPromoCode) {
+                    promoCodeInput.value = finalPromoCode;
+                }
             }
         }
     }
@@ -523,6 +551,70 @@
             }
         });
     }
+    
+    // Add this function to display a subtle notification instead of a popup
+    function showPromoNotification() {
+        const finalPromoCode = urlPromoCode || autoPromoCode;
+        const finalPlaceName = urlPlaceName || (promoPlaceName ? decodeURIComponent(promoPlaceName) : '');
+        
+        if (finalPromoCode && finalPlaceName) {
+            const notification = document.createElement('div');
+            notification.className = 'promo-notification';
+            notification.innerHTML = `
+                <p>Special offer from ${finalPlaceName} applied!</p>
+                <p>Promo code: <strong>${finalPromoCode}</strong> will be used when you inquire.</p>
+            `;
+            
+            // Style the notification to be subtle
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            notification.style.color = 'white';
+            notification.style.padding = '15px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '999';
+            notification.style.maxWidth = '300px';
+            notification.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+            notification.style.animation = 'fadeIn 0.5s, fadeOut 0.5s 7s forwards';
+            
+            // Add animation styles
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(20px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes fadeOut {
+                    from { opacity: 1; transform: translateY(0); }
+                    to { opacity: 0; transform: translateY(20px); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Remove after 8 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 8000);
+        }
+    }
+    
+    // Show notification once when page loads - COMMENT OUT THIS LINE TO COMPLETELY HIDE
+    // THE NOTIFICATION IF YOU DON'T WANT USERS TO SEE ANY INDICATION OF PROMO CODE
+    showPromoNotification();
+    
+    // Auto-fill promo code in all inquiry forms (not just modal)
+    const allPromoInputs = document.querySelectorAll('input[id="promoCodeInput"]');
+    const finalPromoCode = urlPromoCode || autoPromoCode;
+    
+    if (allPromoInputs.length > 0 && finalPromoCode) {
+        allPromoInputs.forEach(input => {
+            input.value = finalPromoCode;
+        });
+    }
 
     // Form submission handling
     const inquiryForm = document.querySelector(".inquiry-modal-form form");
@@ -532,43 +624,50 @@
 
             // Get form field values - using optional chaining to prevent null errors
             const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]')?.value.trim() || '';
-const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]')?.value.trim() || '';
-const email = inquiryForm.querySelector('input[placeholder="Email Address*"]')?.value.trim() || '';
-const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]')?.value.trim() || '';
-const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || ''; // "YYYY-MM-DD"
-const guests = inquiryForm.querySelector('.inquiry-select-field')?.value || ''; // Number of guests
-const message = inquiryForm.querySelector('.inquiry-message-field')?.value.trim() || '';
-const boatName = inquiryForm.querySelector('#boatNameInput')?.value.trim() || '';
+            const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]')?.value.trim() || '';
+            const email = inquiryForm.querySelector('input[placeholder="Email Address*"]')?.value.trim() || '';
+            const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]')?.value.trim() || '';
+            const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || ''; // "YYYY-MM-DD"
+            const guests = inquiryForm.querySelector('.inquiry-select-field')?.value || ''; // Number of guests
+            const message = inquiryForm.querySelector('.inquiry-message-field')?.value.trim() || '';
+            const boatName = inquiryForm.querySelector('#boatNameInput')?.value.trim() || '';
 
-// ADD THIS SECTION TO CAPTURE PROMO CODE
-const promoCode = inquiryForm.querySelector('#promoCodeInput')?.value.trim() || '';
-const promoSource = localStorage.getItem('promoPlaceName') || '';
+            // Get promo code from input or localStorage if available
+            const promoCodeInput = inquiryForm.querySelector('#promoCodeInput');
+            let promoCode = promoCodeInput ? promoCodeInput.value.trim() : '';
+            
+            // If no promo code in the form, use the one from URL or localStorage
+            if (!promoCode) {
+                promoCode = urlPromoCode || autoPromoCode || '';
+            }
+            
+            // Get promo source from localStorage
+            const promoSource = localStorage.getItem('promoPlaceName') || '';
 
-// Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
-let formattedDate = "";
-if (dateValue) {
-    const parts = dateValue.split("-");
-    formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
-}
+            // Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
+            let formattedDate = "";
+            if (dateValue) {
+                const parts = dateValue.split("-");
+                formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+            }
 
-try {
-    // Create a new document in the "inquiries" collection with the promo code
-    const docRef = await db.collection("inquiries").add({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: phone,
-        date: formattedDate, // Stored in dd-mm-yyyy format
-        guests: guests,
-        message: message,
-        boatName: boatName || "Not specified", // Include boat name, default if empty
-        status: "new", // Default status
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        source: "inquiry-page", // To track which form was used
-        // ADD THESE FIELDS
-        promoCode: promoCode || null, // Save promo code if available
-        promoSource: promoSource || null // Save promo source if available
-    });
+            try {
+                // Create a new document in the "inquiries" collection with the promo code
+                const docRef = await db.collection("inquiries").add({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    date: formattedDate, // Stored in dd-mm-yyyy format
+                    guests: guests,
+                    message: message,
+                    boatName: boatName || "Not specified", // Include boat name, default if empty
+                    status: "new", // Default status
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    source: "inquiry-page", // To track which form was used
+                    promoCode: promoCode || null, // Save promo code if available
+                    promoSource: promoSource || null // Save promo source if available
+                });
 
                 console.log("Document written with ID: ", docRef.id);
                 inquiryForm.reset(); // Reset form fields
