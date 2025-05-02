@@ -468,16 +468,20 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Check for auto promo code on page load
-    const autoPromoCode = localStorage.getItem('autoPromoCode');
-    const promoPlaceName = localStorage.getItem('promoPlaceName');
+    console.log("DOM loaded - initializing promo code handling");
     
-    // If we have URL parameters, extract them
+    // 1. GET PROMO CODE - Check all possible sources
     const urlParams = new URLSearchParams(window.location.search);
     const urlPromoCode = urlParams.get('promo');
     const urlPlaceName = urlParams.get('placeName');
+    const storedPromoCode = localStorage.getItem('autoPromoCode');
+    const storedPlaceName = localStorage.getItem('promoPlaceName');
     
-    // If URL has parameters, store them in localStorage too (in case of direct links)
+    // Use URL parameters first, then localStorage values
+    const finalPromoCode = urlPromoCode || storedPromoCode || '';
+    const finalPlaceName = urlPlaceName || (storedPlaceName ? decodeURIComponent(storedPlaceName) : '');
+    
+    // Always update localStorage with the latest values
     if (urlPromoCode) {
         localStorage.setItem('autoPromoCode', urlPromoCode);
     }
@@ -486,48 +490,122 @@
         localStorage.setItem('promoPlaceName', urlPlaceName);
     }
     
-    // Modal handling functions for inquiry modal
+    console.log("Promo code detected:", finalPromoCode);
+    console.log("Place name detected:", finalPlaceName);
+    
+    // 2. APPLY PROMO CODE TO ALL FORMS IMMEDIATELY
+    function applyPromoCodeToAllForms() {
+        if (!finalPromoCode) {
+            console.log("No promo code to apply");
+            return;
+        }
+        
+        // Try multiple possible selectors to find promo code input fields
+        const selectors = [
+            'input[id="promoCodeInput"]',
+            '#promoCodeInput',
+            'input[name="promoCode"]',
+            '.promo-code-input',
+            'input[placeholder*="Promo"]',
+            'input[placeholder*="promo"]',
+            'input[placeholder*="Code"]',
+            'input[placeholder*="code"]'
+        ];
+        
+        let found = false;
+        
+        // Try each selector
+        selectors.forEach(selector => {
+            const inputs = document.querySelectorAll(selector);
+            if (inputs.length > 0) {
+                inputs.forEach(input => {
+                    input.value = finalPromoCode;
+                    console.log(`Applied promo code ${finalPromoCode} to:`, input);
+                    found = true;
+                });
+            }
+        });
+        
+        if (!found) {
+            console.log("Could not find promo code input fields. Will try again when modal opens.");
+        }
+    }
+    
+    // Apply promo codes immediately on page load
+    applyPromoCodeToAllForms();
+    
+    // 3. APPLY PROMO CODE WHEN MODAL OPENS
     function openInquiryModal(boatName = '') {
         const modal = document.querySelector('.inquiry-modal');
         const boatNameInput = document.querySelector('.inquiry-modal-form #boatNameInput');
-        const promoCodeInput = document.querySelector('.inquiry-modal-form #promoCodeInput');
         
         if (modal) {
-            modal.style.display = 'block'; // Show the modal
-            modal.classList.add('active'); // Add active class for animations
-            document.body.style.overflow = 'hidden'; // Prevent scrolling on the main page
+            modal.style.display = 'block';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
 
             // Set boat name in hidden input if provided
             if (boatName && boatNameInput) {
                 boatNameInput.value = boatName;
             }
             
-            // Auto-apply promo code if it exists
-            if (promoCodeInput) {
-                // Priority: URL param, then localStorage
-                const finalPromoCode = urlPromoCode || autoPromoCode;
-                if (finalPromoCode) {
-                    promoCodeInput.value = finalPromoCode;
+            // Apply promo code with a slight delay to ensure the modal is fully loaded
+            setTimeout(() => {
+                // Try multiple possible selectors to find promo code input in the modal
+                const modalSelectors = [
+                    '.inquiry-modal-form #promoCodeInput',
+                    '.inquiry-modal-form input[name="promoCode"]',
+                    '.inquiry-modal-form .promo-code-input',
+                    '.inquiry-modal input[id="promoCodeInput"]',
+                    '.inquiry-modal input[name="promoCode"]'
+                ];
+                
+                let found = false;
+                
+                // Try each selector
+                modalSelectors.forEach(selector => {
+                    const input = document.querySelector(selector);
+                    if (input) {
+                        input.value = finalPromoCode;
+                        console.log(`Applied promo code ${finalPromoCode} to modal input:`, input);
+                        found = true;
+                    }
+                });
+                
+                if (!found && finalPromoCode) {
+                    console.log("Could not find promo code input in modal.");
+                    
+                    // As a fallback, try to create a hidden input if it doesn't exist
+                    const form = document.querySelector('.inquiry-modal-form form');
+                    if (form && !document.querySelector('#promoCodeInput')) {
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.id = 'promoCodeInput';
+                        hiddenInput.name = 'promoCode';
+                        hiddenInput.value = finalPromoCode;
+                        form.appendChild(hiddenInput);
+                        console.log("Created hidden promo code input with value:", finalPromoCode);
+                    }
                 }
-            }
+            }, 100);
         }
     }
 
     function closeInquiryModal() {
         const modal = document.querySelector('.inquiry-modal');
         if (modal) {
-            modal.style.display = 'none'; // Hide the modal
+            modal.style.display = 'none';
             modal.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
+            document.body.style.overflow = '';
         }
     }
 
     // Define openInquiryPage for static HTML buttons
     window.openInquiryPage = function(boatName) {
-        openInquiryModal(boatName); // Call the same modal-opening function
+        openInquiryModal(boatName);
     };
 
-    // Handle the "Book Now" buttons for this page (.inquiry-btn)
+    // Handle the "Book Now" buttons
     const inquiryButtons = document.querySelectorAll('.inquiry-btn');
     inquiryButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -542,7 +620,7 @@
         closeButton.addEventListener('click', closeInquiryModal);
     }
 
-    // Optional: Close modal when clicking outside the content
+    // Close modal when clicking outside the content
     const modal = document.querySelector('.inquiry-modal');
     if (modal) {
         modal.addEventListener('click', (e) => {
@@ -551,133 +629,91 @@
             }
         });
     }
-    
-    // Add this function to display a subtle notification instead of a popup
-    function showPromoNotification() {
-        const finalPromoCode = urlPromoCode || autoPromoCode;
-        const finalPlaceName = urlPlaceName || (promoPlaceName ? decodeURIComponent(promoPlaceName) : '');
-        
-        if (finalPromoCode && finalPlaceName) {
-            const notification = document.createElement('div');
-            notification.className = 'promo-notification';
-            notification.innerHTML = `
-                <p>Special offer from ${finalPlaceName} applied!</p>
-                <p>Promo code: <strong>${finalPromoCode}</strong> will be used when you inquire.</p>
-            `;
-            
-            // Style the notification to be subtle
-            notification.style.position = 'fixed';
-            notification.style.bottom = '20px';
-            notification.style.right = '20px';
-            notification.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            notification.style.color = 'white';
-            notification.style.padding = '15px';
-            notification.style.borderRadius = '5px';
-            notification.style.zIndex = '999';
-            notification.style.maxWidth = '300px';
-            notification.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
-            notification.style.animation = 'fadeIn 0.5s, fadeOut 0.5s 7s forwards';
-            
-            // Add animation styles
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                @keyframes fadeOut {
-                    from { opacity: 1; transform: translateY(0); }
-                    to { opacity: 0; transform: translateY(20px); }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            // Add to page
-            document.body.appendChild(notification);
-            
-            // Remove after 8 seconds
-            setTimeout(() => {
-                notification.remove();
-            }, 8000);
-        }
-    }
-    
-    // Show notification once when page loads - COMMENT OUT THIS LINE TO COMPLETELY HIDE
-    // THE NOTIFICATION IF YOU DON'T WANT USERS TO SEE ANY INDICATION OF PROMO CODE
-    showPromoNotification();
-    
-    // Auto-fill promo code in all inquiry forms (not just modal)
-    const allPromoInputs = document.querySelectorAll('input[id="promoCodeInput"]');
-    const finalPromoCode = urlPromoCode || autoPromoCode;
-    
-    if (allPromoInputs.length > 0 && finalPromoCode) {
-        allPromoInputs.forEach(input => {
-            input.value = finalPromoCode;
-        });
-    }
 
-    // Form submission handling
+    // 4. HANDLE FORM SUBMISSION
     const inquiryForm = document.querySelector(".inquiry-modal-form form");
     if (inquiryForm) {
         inquiryForm.addEventListener("submit", async (e) => {
-            e.preventDefault(); // Prevent page reload
+            e.preventDefault();
 
-            // Get form field values - using optional chaining to prevent null errors
+            // Get form field values
             const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]')?.value.trim() || '';
             const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]')?.value.trim() || '';
             const email = inquiryForm.querySelector('input[placeholder="Email Address*"]')?.value.trim() || '';
             const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]')?.value.trim() || '';
-            const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || ''; // "YYYY-MM-DD"
-            const guests = inquiryForm.querySelector('.inquiry-select-field')?.value || ''; // Number of guests
+            const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || '';
+            const guests = inquiryForm.querySelector('.inquiry-select-field')?.value || '';
             const message = inquiryForm.querySelector('.inquiry-message-field')?.value.trim() || '';
             const boatName = inquiryForm.querySelector('#boatNameInput')?.value.trim() || '';
 
-            // Get promo code from input or localStorage if available
-            const promoCodeInput = inquiryForm.querySelector('#promoCodeInput');
-            let promoCode = promoCodeInput ? promoCodeInput.value.trim() : '';
+            // Get promo code from form or use the stored one
+            let promoCode = '';
+            const promoInput = inquiryForm.querySelector('#promoCodeInput');
             
-            // If no promo code in the form, use the one from URL or localStorage
-            if (!promoCode) {
-                promoCode = urlPromoCode || autoPromoCode || '';
+            if (promoInput && promoInput.value) {
+                promoCode = promoInput.value.trim();
+            } else {
+                // If no form field found, use our stored value
+                promoCode = finalPromoCode;
+                console.log("Using stored promo code for submission:", promoCode);
             }
             
-            // Get promo source from localStorage
-            const promoSource = localStorage.getItem('promoPlaceName') || '';
+            // Always log what we're using for debugging
+            console.log("Submitting form with promo code:", promoCode);
+            console.log("Promo source:", finalPlaceName);
 
-            // Convert date from "YYYY-MM-DD" to "DD-MM-YYYY"
+            // Convert date
             let formattedDate = "";
             if (dateValue) {
                 const parts = dateValue.split("-");
-                formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // dd-mm-yyyy
+                formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
             }
 
             try {
-                // Create a new document in the "inquiries" collection with the promo code
+                // Create a new document in the "inquiries" collection
                 const docRef = await db.collection("inquiries").add({
                     firstName: firstName,
                     lastName: lastName,
                     email: email,
                     phone: phone,
-                    date: formattedDate, // Stored in dd-mm-yyyy format
+                    date: formattedDate,
                     guests: guests,
                     message: message,
-                    boatName: boatName || "Not specified", // Include boat name, default if empty
-                    status: "new", // Default status
+                    boatName: boatName || "Not specified",
+                    status: "new",
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    source: "inquiry-page", // To track which form was used
-                    promoCode: promoCode || null, // Save promo code if available
-                    promoSource: promoSource || null // Save promo source if available
+                    source: "inquiry-page",
+                    promoCode: promoCode || null,
+                    promoSource: finalPlaceName || null
                 });
 
-                console.log("Document written with ID: ", docRef.id);
-                inquiryForm.reset(); // Reset form fields
-                closeInquiryModal(); // Close modal after successful submission
+                console.log("Document written with ID:", docRef.id);
+                inquiryForm.reset();
+                closeInquiryModal();
                 alert("Inquiry sent successfully!");
             } catch (error) {
-                console.error("Error adding document: ", error);
+                console.error("Error adding document:", error);
                 alert("Something went wrong. Please try again.");
             }
         });
+    }
+    
+    // 5. CHECK FORM EXISTENCE PERIODICALLY (FOR DYNAMIC FORMS)
+    // Some sites load forms dynamically, so we need to check periodically
+    let checkCount = 0;
+    const maxChecks = 5;
+    
+    function checkForForms() {
+        if (checkCount < maxChecks) {
+            applyPromoCodeToAllForms();
+            checkCount++;
+            setTimeout(checkForForms, 1000);
+        }
+    }
+    
+    // Start checking for dynamically loaded forms
+    if (finalPromoCode) {
+        checkForForms();
     }
 });
 </script>
