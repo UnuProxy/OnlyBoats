@@ -467,254 +467,183 @@
 </footer>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM loaded - initializing promo code handling");
+  document.addEventListener("DOMContentLoaded", function() {
+  console.log("DOM loaded - initializing automatic promo code handling");
+  
+  // 1. GET PROMO CODE FROM ALL POSSIBLE SOURCES
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlPromoCode = urlParams.get('promo');
+  const urlPlaceName = urlParams.get('placeName');
+  const storedPromoCode = localStorage.getItem('autoPromoCode') || localStorage.getItem('boatPromoCode');
+  const storedPlaceName = localStorage.getItem('promoPlaceName');
+  
+  // Use URL parameters first, then localStorage values
+  const finalPromoCode = urlPromoCode || storedPromoCode || '';
+  const finalPlaceName = urlPlaceName || storedPlaceName ? decodeURIComponent(storedPlaceName || '') : '';
+  
+  console.log("Detected promo code:", finalPromoCode);
+  console.log("Detected place name:", finalPlaceName);
+  
+  // Store in localStorage for persistence
+  if (finalPromoCode) {
+    localStorage.setItem('autoPromoCode', finalPromoCode);
+    localStorage.setItem('boatPromoCode', finalPromoCode);
+  }
+  
+  if (finalPlaceName) {
+    localStorage.setItem('promoPlaceName', finalPlaceName);
+  }
+  
+  // 2. MODIFY THE INQUIRY FORM TO INCLUDE PROMO CODE FIELD
+  function modifyInquiryForm() {
+    if (!finalPromoCode) return; // No promo code to apply
     
-    // 1. GET PROMO CODE - Check all possible sources
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlPromoCode = urlParams.get('promo');
-    const urlPlaceName = urlParams.get('placeName');
-    const storedPromoCode = localStorage.getItem('autoPromoCode');
-    const storedPlaceName = localStorage.getItem('promoPlaceName');
-    
-    // Use URL parameters first, then localStorage values
-    const finalPromoCode = urlPromoCode || storedPromoCode || '';
-    const finalPlaceName = urlPlaceName || (storedPlaceName ? decodeURIComponent(storedPlaceName) : '');
-    
-    // Always update localStorage with the latest values
-    if (urlPromoCode) {
-        localStorage.setItem('autoPromoCode', urlPromoCode);
+    const inquiryForm = document.querySelector('.inquiry-modal-form form');
+    if (!inquiryForm) {
+      console.log("Form not found, will try again later");
+      return false;
     }
     
-    if (urlPlaceName) {
-        localStorage.setItem('promoPlaceName', urlPlaceName);
+    // Check if promo field already exists
+    if (document.getElementById('promoCodeInput')) {
+      console.log("Promo code input already exists");
+      return true;
     }
     
-    console.log("Promo code detected:", finalPromoCode);
-    console.log("Place name detected:", finalPlaceName);
+    // First, create the hidden field for the promo code
+    const hiddenPromoField = document.createElement('input');
+    hiddenPromoField.type = 'hidden';
+    hiddenPromoField.id = 'promoCodeInput';
+    hiddenPromoField.name = 'promoCode';
+    hiddenPromoField.value = finalPromoCode;
+    inquiryForm.appendChild(hiddenPromoField);
     
-    // 2. APPLY PROMO CODE TO ALL FORMS IMMEDIATELY
-    function applyPromoCodeToAllForms() {
-        if (!finalPromoCode) {
-            console.log("No promo code to apply");
-            return;
+    // Optional: Add visual confirmation below the existing fields
+    const submitButton = inquiryForm.querySelector('.inquiry-submit-button');
+    if (submitButton) {
+      const promoConfirmation = document.createElement('div');
+      promoConfirmation.className = 'promo-confirmation-row';
+      promoConfirmation.style.margin = '10px 0';
+      promoConfirmation.style.padding = '8px 12px';
+      promoConfirmation.style.backgroundColor = '#e6f7ff';
+      promoConfirmation.style.color = '#0077b6';
+      promoConfirmation.style.borderRadius = '4px';
+      promoConfirmation.style.fontSize = '14px';
+      promoConfirmation.innerHTML = `
+        <i class="fas fa-check-circle" style="color: #10b981; margin-right: 6px;"></i>
+        Special offer: <strong>${finalPromoCode}</strong> from ${finalPlaceName || 'QR code'} applied automatically
+      `;
+      
+      // Insert before submit button
+      inquiryForm.insertBefore(promoConfirmation, submitButton);
+    }
+    
+    console.log("Successfully modified form to include promo code:", finalPromoCode);
+    return true;
+  }
+  
+  // Try to modify form immediately
+  let formModified = modifyInquiryForm();
+  
+  // If form wasn't found initially, set up observers and retry mechanisms
+  if (!formModified && finalPromoCode) {
+    // 3. SET UP OBSERVERS TO CATCH FORM OPENING
+    // Watch for modal becoming visible
+    const modalObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && 
+            mutation.attributeName === 'class' && 
+            mutation.target.classList.contains('active')) {
+          console.log("Modal has become active, modifying form");
+          formModified = modifyInquiryForm();
+          if (formModified) {
+            console.log("Form modified after modal activation");
+          }
         }
-        
-        // Try multiple possible selectors to find promo code input fields
-        const selectors = [
-            'input[id="promoCodeInput"]',
-            '#promoCodeInput',
-            'input[name="promoCode"]',
-            '.promo-code-input',
-            'input[placeholder*="Promo"]',
-            'input[placeholder*="promo"]',
-            'input[placeholder*="Code"]',
-            'input[placeholder*="code"]'
-        ];
-        
-        let found = false;
-        
-        // Try each selector
-        selectors.forEach(selector => {
-            const inputs = document.querySelectorAll(selector);
-            if (inputs.length > 0) {
-                inputs.forEach(input => {
-                    input.value = finalPromoCode;
-                    console.log(`Applied promo code ${finalPromoCode} to:`, input);
-                    found = true;
-                });
-            }
-        });
-        
-        if (!found) {
-            console.log("Could not find promo code input fields. Will try again when modal opens.");
-        }
-    }
-    
-    // Apply promo codes immediately on page load
-    applyPromoCodeToAllForms();
-    
-    // 3. APPLY PROMO CODE WHEN MODAL OPENS
-    function openInquiryModal(boatName = '') {
-        const modal = document.querySelector('.inquiry-modal');
-        const boatNameInput = document.querySelector('.inquiry-modal-form #boatNameInput');
-        
-        if (modal) {
-            modal.style.display = 'block';
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-
-            // Set boat name in hidden input if provided
-            if (boatName && boatNameInput) {
-                boatNameInput.value = boatName;
-            }
-            
-            // Apply promo code with a slight delay to ensure the modal is fully loaded
-            setTimeout(() => {
-                // Try multiple possible selectors to find promo code input in the modal
-                const modalSelectors = [
-                    '.inquiry-modal-form #promoCodeInput',
-                    '.inquiry-modal-form input[name="promoCode"]',
-                    '.inquiry-modal-form .promo-code-input',
-                    '.inquiry-modal input[id="promoCodeInput"]',
-                    '.inquiry-modal input[name="promoCode"]'
-                ];
-                
-                let found = false;
-                
-                // Try each selector
-                modalSelectors.forEach(selector => {
-                    const input = document.querySelector(selector);
-                    if (input) {
-                        input.value = finalPromoCode;
-                        console.log(`Applied promo code ${finalPromoCode} to modal input:`, input);
-                        found = true;
-                    }
-                });
-                
-                if (!found && finalPromoCode) {
-                    console.log("Could not find promo code input in modal.");
-                    
-                    // As a fallback, try to create a hidden input if it doesn't exist
-                    const form = document.querySelector('.inquiry-modal-form form');
-                    if (form && !document.querySelector('#promoCodeInput')) {
-                        const hiddenInput = document.createElement('input');
-                        hiddenInput.type = 'hidden';
-                        hiddenInput.id = 'promoCodeInput';
-                        hiddenInput.name = 'promoCode';
-                        hiddenInput.value = finalPromoCode;
-                        form.appendChild(hiddenInput);
-                        console.log("Created hidden promo code input with value:", finalPromoCode);
-                    }
-                }
-            }, 100);
-        }
-    }
-
-    function closeInquiryModal() {
-        const modal = document.querySelector('.inquiry-modal');
-        if (modal) {
-            modal.style.display = 'none';
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-
-    // Define openInquiryPage for static HTML buttons
-    window.openInquiryPage = function(boatName) {
-        openInquiryModal(boatName);
-    };
-
-    // Handle the "Book Now" buttons
-    const inquiryButtons = document.querySelectorAll('.inquiry-btn');
-    inquiryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const boatName = button.getAttribute('data-boat-name') || '';
-            openInquiryModal(boatName);
-        });
+      });
     });
-
-    // Handle modal close button
-    const closeButton = document.querySelector('.inquiry-modal-close');
-    if (closeButton) {
-        closeButton.addEventListener('click', closeInquiryModal);
-    }
-
-    // Close modal when clicking outside the content
+    
+    // Start observing modal for visibility changes
     const modal = document.querySelector('.inquiry-modal');
     if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeInquiryModal();
-            }
-        });
-    }
-
-    // 4. HANDLE FORM SUBMISSION
-    const inquiryForm = document.querySelector(".inquiry-modal-form form");
-    if (inquiryForm) {
-        inquiryForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            // Get form field values
-            const firstName = inquiryForm.querySelector('input[placeholder="First Name*"]')?.value.trim() || '';
-            const lastName = inquiryForm.querySelector('input[placeholder="Last Name*"]')?.value.trim() || '';
-            const email = inquiryForm.querySelector('input[placeholder="Email Address*"]')?.value.trim() || '';
-            const phone = inquiryForm.querySelector('input[placeholder="Phone Number*"]')?.value.trim() || '';
-            const dateValue = inquiryForm.querySelector('input[type="date"]')?.value || '';
-            const guests = inquiryForm.querySelector('.inquiry-select-field')?.value || '';
-            const message = inquiryForm.querySelector('.inquiry-message-field')?.value.trim() || '';
-            const boatName = inquiryForm.querySelector('#boatNameInput')?.value.trim() || '';
-
-            // Get promo code from form or use the stored one
-            let promoCode = '';
-            const promoInput = inquiryForm.querySelector('#promoCodeInput');
-            
-            if (promoInput && promoInput.value) {
-                promoCode = promoInput.value.trim();
-            } else {
-                // If no form field found, use our stored value
-                promoCode = finalPromoCode;
-                console.log("Using stored promo code for submission:", promoCode);
-            }
-            
-            // Always log what we're using for debugging
-            console.log("Submitting form with promo code:", promoCode);
-            console.log("Promo source:", finalPlaceName);
-
-            // Convert date
-            let formattedDate = "";
-            if (dateValue) {
-                const parts = dateValue.split("-");
-                formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-            }
-
-            try {
-                // Create a new document in the "inquiries" collection
-                const docRef = await db.collection("inquiries").add({
-                    firstName: firstName,
-                    lastName: lastName,
-                    email: email,
-                    phone: phone,
-                    date: formattedDate,
-                    guests: guests,
-                    message: message,
-                    boatName: boatName || "Not specified",
-                    status: "new",
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    source: "inquiry-page",
-                    promoCode: promoCode || null,
-                    promoSource: finalPlaceName || null
-                });
-
-                console.log("Document written with ID:", docRef.id);
-                inquiryForm.reset();
-                closeInquiryModal();
-                alert("Inquiry sent successfully!");
-            } catch (error) {
-                console.error("Error adding document:", error);
-                alert("Something went wrong. Please try again.");
-            }
-        });
+      modalObserver.observe(modal, { attributes: true });
+      console.log("Set up observer for modal activation");
     }
     
-    // 5. CHECK FORM EXISTENCE PERIODICALLY (FOR DYNAMIC FORMS)
-    // Some sites load forms dynamically, so we need to check periodically
-    let checkCount = 0;
-    const maxChecks = 5;
+    // 4. BACKUP: RETRY PERIODICALLY
+    let attempts = 0;
+    const maxAttempts = 5;
     
-    function checkForForms() {
-        if (checkCount < maxChecks) {
-            applyPromoCodeToAllForms();
-            checkCount++;
-            setTimeout(checkForForms, 1000);
+    function attemptFormModification() {
+      if (formModified || attempts >= maxAttempts) return;
+      
+      attempts++;
+      console.log(`Attempt ${attempts} to modify form`);
+      formModified = modifyInquiryForm();
+      
+      if (!formModified) {
+        setTimeout(attemptFormModification, 1000);
+      }
+    }
+    
+    // Start retry process
+    attemptFormModification();
+    
+    // 5. INTERCEPT FORM SUBMISSION IF ALL ELSE FAILS
+    document.addEventListener('submit', function(e) {
+      // Check if this is our inquiry form
+      if (e.target.closest('.inquiry-modal-form')) {
+        // If we haven't modified the form yet, add the promo code to FormData
+        if (!document.getElementById('promoCodeInput') && finalPromoCode) {
+          console.log("Form submission intercepted, adding promo code");
+          
+          // Create hidden field at the last moment
+          const hiddenPromoField = document.createElement('input');
+          hiddenPromoField.type = 'hidden';
+          hiddenPromoField.id = 'promoCodeInput';
+          hiddenPromoField.name = 'promoCode';
+          hiddenPromoField.value = finalPromoCode;
+          e.target.appendChild(hiddenPromoField);
         }
+      }
+    }, true);
+  }
+  
+  // 6. HANDLE EXISTING BANNER IF IT APPEARS
+  // If the promo banner from the existing script appears, modify its behavior
+  setTimeout(function() {
+    const existingBanner = document.getElementById('direct-promo-banner');
+    if (existingBanner) {
+      console.log("Found existing banner, modifying behavior");
+      
+      // Get the apply button and modify its behavior to just hide the banner
+      const applyButton = document.getElementById('direct-book-btn');
+      if (applyButton) {
+        // Replace the original click handler
+        applyButton.replaceWith(applyButton.cloneNode(true));
+        
+        // Add our new handler that just hides the banner (promo already applied)
+        document.getElementById('direct-book-btn').addEventListener('click', function() {
+          existingBanner.style.display = 'none';
+          
+          // Possibly open the inquiry form
+          const bookButtons = document.querySelectorAll('.btn-inquire');
+          if (bookButtons.length > 0) {
+            bookButtons[0].click();
+          }
+        });
+      }
+      
+      // Make sure close button just closes banner without removing promo
+      const closeButton = document.getElementById('direct-close-btn');
+      if (closeButton) {
+        closeButton.replaceWith(closeButton.cloneNode(true));
+        document.getElementById('direct-close-btn').addEventListener('click', function() {
+          existingBanner.style.display = 'none';
+        });
+      }
     }
-    
-    // Start checking for dynamically loaded forms
-    if (finalPromoCode) {
-        checkForForms();
-    }
+  }, 1000);
 });
 </script>
 
