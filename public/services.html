@@ -18,6 +18,67 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Gilda+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <meta http-equiv="Content-Security-Policy" content="font-src 'self' https://fonts.gstatic.com https://*.firebaseapp.com https://*.googleapis.com https://cdnjs.cloudflare.com data:;">
+        <style>
+          /* Add to your CSS */
+.elegant-whatsapp {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 99;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.elegant-whatsapp-inner {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: rgba(32, 149, 174, 0.9); /* Using your site's teal color */
+    color: white;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.elegant-whatsapp-inner i {
+    font-size: 22px;
+    margin-right: 8px;
+}
+
+.elegant-whatsapp-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.elegant-whatsapp:hover .elegant-whatsapp-inner {
+    background-color: rgba(32, 149, 174, 1);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 767px) {
+    .elegant-whatsapp {
+        bottom: 30px;
+        right: 20px;
+    }
+    
+    .elegant-whatsapp-inner {
+        padding: 10px 16px;
+    }
+    
+    .elegant-whatsapp-text {
+        display: none; /* On mobile, just show the icon */
+    }
+    
+    .elegant-whatsapp-inner i {
+        margin-right: 0;
+        font-size: 24px;
+    }
+}
+        </style>
     </head>
 <body>
     
@@ -373,6 +434,13 @@
     </div>
   </div>
   
+  <!-- Elegant WhatsApp Button (add before closing </body> tag) -->
+<a href="https://wa.me/34692688348" class="elegant-whatsapp" target="_blank">
+  <div class="elegant-whatsapp-inner">
+      <i class="fab fa-whatsapp"></i>
+      <span class="elegant-whatsapp-text">Contact Us</span>
+  </div>
+</a>
   <!-- Add this script separately to your JavaScript file -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
