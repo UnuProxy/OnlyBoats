@@ -12,7 +12,7 @@ const admin          = require("firebase-admin");
 const config   = functions.config();
 const stripe   = require("stripe")(config.stripe.secret_key);
 const sgMail   = require("@sendgrid/mail");
-const WEBHOOK_SECRET = config.stripe.webhook_secret || "";          // set this if you have it
+const WEBHOOK_SECRET = config.stripe.webhook_secret || "";          
 
 admin.initializeApp();
 sgMail.setApiKey(config.sendgrid.api_key);
