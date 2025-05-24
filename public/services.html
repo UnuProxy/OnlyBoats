@@ -1601,23 +1601,29 @@
                 });
             }
 
-            // Update checkout modal list as well
-            if (checkoutItemsList) {
-                checkoutItemsList.innerHTML = '';
-                cart.forEach(item => {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item d-flex justify-content-between align-items-center';
-                    li.innerHTML = `
-                        <div>
-                            <span class="item-name">${item.name}</span>
-                            <small class="text-muted d-block">Quantity: <span class="item-quantity" data-quantity="${item.quantity}">${item.quantity}</span></small>
-                        </div>
-                        <span class="item-price" data-price="${item.price}">€${(item.quantity * item.price).toFixed(2)}</span>
-                    `;
-                    li.dataset.id = item.id;
-                    checkoutItemsList.appendChild(li);
-                });
-            }
+            
+          if (checkoutItemsList) {
+              checkoutItemsList.innerHTML = '';
+              cart.forEach(item => {
+                  const li = document.createElement('li');
+                  li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                  li.innerHTML = `
+                      <div>
+                          <span class="item-name">${item.name}</span>
+                          <small class="text-muted d-block">Quantity: <span class="item-quantity" data-quantity="${item.quantity}">${item.quantity}</span></small>
+                      </div>
+                      <span class="item-price" data-price="${item.price}">€${(item.quantity * item.price).toFixed(2)}</span>
+                  `;
+                  li.dataset.id = item.id;
+                  checkoutItemsList.appendChild(li);
+              });
+          }
+
+          // Update checkout modal total
+          const checkoutTotal = document.getElementById('checkoutTotal');
+          if (checkoutTotal) {
+              checkoutTotal.textContent = `€${total.toFixed(2)}`;
+          }
             
             if (totalAmount) {
                 totalAmount.textContent = `€${total.toFixed(2)}`;
