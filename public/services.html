@@ -100,22 +100,27 @@
               box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
           }
 
-          .product-image-container {
-              position: relative;
-              height: 200px;
-              overflow: hidden;
-          }
+         .product-image-container {
+    position: relative;
+    height: 250px; /* Increased height to show more of the bottle */
+    overflow: hidden;
+    background-color: #f8f9fa; /* Light background for better presentation */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-          .product-image {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-              transition: transform 0.3s ease;
-          }
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Changed from 'cover' to 'contain' */
+    transition: transform 0.3s ease;
+    padding: 10px; /* Add some padding around the image */
+}
 
-          .product-card:hover .product-image {
-              transform: scale(1.05);
-          }
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
 
           /* UPDATED: Hide the price overlay */
           .product-overlay {
@@ -738,6 +743,105 @@
             color: #333; /* Darker on hover */
             opacity: 0.8;
           }
+          /* Pagination Styles */
+.pagination-container {
+    margin-top: 40px;
+}
+
+.pagination {
+    gap: 8px;
+}
+
+.pagination .page-item .page-link {
+    border: 2px solid #e0e0e0;
+    color: #333;
+    background-color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 48px;
+}
+
+.pagination .page-item .page-link:hover {
+    border-color: #2095AE;
+    background-color: rgba(32, 149, 174, 0.1);
+    color: #2095AE;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(32, 149, 174, 0.2);
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, #2095AE 0%, #1a7a8a 100%);
+    border-color: #2095AE;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(32, 149, 174, 0.4);
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: #f8f9fa;
+    border-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.pagination .page-item.disabled .page-link:hover {
+    background-color: #f8f9fa;
+    border-color: #e9ecef;
+    color: #6c757d;
+    transform: none;
+    box-shadow: none;
+}
+
+.pagination .page-item .page-link i {
+    font-size: 14px;
+}
+
+/* Results counter styling */
+.pagination-container .text-muted {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: #666 !important;
+}
+
+/* Mobile pagination adjustments */
+@media (max-width: 768px) {
+    .pagination {
+        gap: 4px;
+    }
+    
+    .pagination .page-item .page-link {
+        padding: 10px 12px;
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 14px;
+    }
+    
+    /* Hide page numbers on very small screens, keep only prev/next */
+    @media (max-width: 480px) {
+        .pagination .page-item:not(:first-child):not(:last-child):not(.active) {
+            display: none;
+        }
+        
+        .pagination .page-item.active {
+            order: 1;
+        }
+        
+        .pagination .page-item:first-child {
+            order: 0;
+        }
+        
+        .pagination .page-item:last-child {
+            order: 2;
+        }
+    }
+}
         </style>
     </head>
 <body>
@@ -1698,8 +1802,8 @@
 
             const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
             const endpoint = isLocalhost 
-? 'http://localhost:5001/crm-boats/us-central1/apiNew/checkout'
-: 'https://us-central1-crm-boats.cloudfunctions.net/apiNew/checkout';
+            ? 'http://localhost:5001/crm-boats/us-central1/apiNew/checkout'
+            : 'https://us-central1-crm-boats.cloudfunctions.net/apiNew/checkout';
 
             fetch(endpoint, {
                 method: 'POST',
@@ -2143,6 +2247,277 @@
         window.showAllIngredients = showAllIngredients; 
         window.clearFilters = clearFilters; // Make clearFilters available globally
         window.applyMobileFilters = applyMobileFilters; // Make applyMobileFilters available globally
+    </script>
+    <script>
+      // Pagination variables
+let currentPage = 1;
+let itemsPerPage = 9; // 3 rows of 3 items each
+let filteredProducts = [];
+
+// Update renderProducts function to handle pagination
+function renderProducts(products, container) {
+    filteredProducts = [...products]; // Store filtered products for pagination
+    currentPage = 1; // Reset to first page when filtering
+    
+    renderProductsPage(container);
+    renderPagination(container.closest('.tab-pane'));
+}
+
+function renderProductsPage(container) {
+    container.innerHTML = '';
+    
+    if (filteredProducts.length === 0) {
+        container.innerHTML = `
+            <div class="col-12 text-center">
+                <div style="padding: 50px; color: #333;">
+                    <i class="fas fa-search-minus" style="font-size: 3rem; color: #2095AE; margin-bottom: 20px;"></i>
+                    <h4 style="color: #333; margin-bottom: 15px; font-family: 'Gilda Display', serif;">No Products Match Your Filters</h4>
+                    <p style="color: #666;">Try adjusting your search or filter criteria.</p>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    // Calculate pagination
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+    productsToShow.forEach((product, index) => {
+        const col = document.createElement('div');
+        col.className = 'col-lg-4 col-md-6 mb-4';
+        col.style.animationDelay = `${index * 0.1}s`;
+        
+        const fallbackImage = 'https://placehold.co/400x200/2095AE/ffffff?text=No+Image';
+        let productImage = product.imageUrl || fallbackImage;
+        
+        if (productImage.includes('.heic')) {
+            productImage = fallbackImage;
+        }
+        
+        const contentsList = product.contents ? 
+            product.contents.split('•').map(item => item.trim()).filter(item => item.length > 0) : [];
+        
+        col.innerHTML = `
+            <div class="product-card" data-product-id="${product.id}">
+                <div class="product-image-container">
+                    <img src="${productImage}" 
+                         alt="${product.name}" 
+                         onerror="this.src='${fallbackImage}';"
+                         loading="lazy"
+                         class="product-image">
+                </div>
+                
+                <div class="product-content">
+                    <h3 class="product-name">${product.name}</h3>
+                    <div class="product-price">€${product.price}</div>
+                    <p class="product-description">${product.description || ''}</p>
+                    
+                    ${contentsList.length > 0 ? `
+                        <div class="contents-preview">
+                            <div class="contents-title">Includes</div>
+                            <div class="contents-list">
+                                ${contentsList.slice(0, 4).map(item => `
+                                    <span class="content-tag">${item}</span>
+                                `).join('')}
+                                ${contentsList.length > 4 ? `
+                                    <button class="content-tag view-all-btn" onclick="showAllIngredients('${product.id}')">
+                                        +${contentsList.length - 4} more
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="product-actions">
+                        <div class="quantity-controls">
+                            <button class="qty-btn" onclick="updateQuantity('${product.id}', -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="quantity-display" id="qty-${product.id}">0</span>
+                            <button class="qty-btn" onclick="updateQuantity('${product.id}', 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        
+                        <button class="add-to-cart-btn" onclick="addToCart('${product.id}')">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(col);
+    });
+}
+
+function renderPagination(tabPane) {
+    const paginationContainer = tabPane.querySelector('.pagination-container');
+    if (!paginationContainer) return;
+    
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    
+    if (totalPages <= 1) {
+        paginationContainer.innerHTML = '';
+        return;
+    }
+    
+    let paginationHTML = `
+        <nav aria-label="Product pagination" class="mt-4">
+            <ul class="pagination justify-content-center">
+    `;
+    
+    // Previous button
+    paginationHTML += `
+        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+            <button class="page-link" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </li>
+    `;
+    
+    // Page numbers
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Adjust start page if we're near the end
+    if (endPage - startPage < maxVisiblePages - 1) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    // First page and ellipsis
+    if (startPage > 1) {
+        paginationHTML += `
+            <li class="page-item">
+                <button class="page-link" onclick="changePage(1)">1</button>
+            </li>
+        `;
+        if (startPage > 2) {
+            paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+        }
+    }
+    
+    // Visible page numbers
+    for (let i = startPage; i <= endPage; i++) {
+        paginationHTML += `
+            <li class="page-item ${i === currentPage ? 'active' : ''}">
+                <button class="page-link" onclick="changePage(${i})">${i}</button>
+            </li>
+        `;
+    }
+    
+    // Last page and ellipsis
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+        }
+        paginationHTML += `
+            <li class="page-item">
+                <button class="page-link" onclick="changePage(${totalPages})">${totalPages}</button>
+            </li>
+        `;
+    }
+    
+    // Next button
+    paginationHTML += `
+        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+            <button class="page-link" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </li>
+    `;
+    
+    paginationHTML += `
+            </ul>
+        </nav>
+        <div class="text-center mt-3">
+            <small class="text-muted">
+                Showing ${Math.min((currentPage - 1) * itemsPerPage + 1, filteredProducts.length)} - 
+                ${Math.min(currentPage * itemsPerPage, filteredProducts.length)} of ${filteredProducts.length} products
+            </small>
+        </div>
+    `;
+    
+    paginationContainer.innerHTML = paginationHTML;
+}
+
+function changePage(page) {
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    
+    if (page < 1 || page > totalPages) return;
+    
+    currentPage = page;
+    
+    const container = document.getElementById(`${currentCategory}Container`);
+    renderProductsPage(container);
+    renderPagination(container.closest('.tab-pane'));
+    updateQuantitiesFromCart();
+    
+    // Scroll to top of products section
+    const productsSection = document.querySelector('.categories');
+    if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// Update applyFilters function to work with pagination
+function applyFilters() {
+    let products = [...allProducts[currentCategory]]; // Start with all products for the current category
+
+    const { search, priceRange, sortOrder, subCategory } = getFilterValues();
+    const container = document.getElementById(`${currentCategory}Container`);
+
+    // 1. Filter by Search
+    if (search) {
+        products = products.filter(product =>
+            product.name.toLowerCase().includes(search) ||
+            (product.description && product.description.toLowerCase().includes(search)) ||
+            (product.contents && product.contents.toLowerCase().includes(search))
+        );
+    }
+
+    // 2. Filter by Price Range
+    if (priceRange) {
+        const [minPriceStr, maxPriceStr] = priceRange.split('-');
+        const minPrice = parseFloat(minPriceStr);
+        const maxPrice = maxPriceStr ? parseFloat(maxPriceStr) : Infinity;
+
+        products = products.filter(product => {
+            const price = parseFloat(product.price);
+            return price >= minPrice && price <= maxPrice;
+        });
+    }
+
+    // 3. Filter by Sub-Category
+    if (subCategory) {
+        products = products.filter(product =>
+            product.subCategory && product.subCategory.toLowerCase() === subCategory.toLowerCase()
+        );
+    }
+
+    // 4. Sort Products
+    if (sortOrder) {
+        products.sort((a, b) => {
+            if (sortOrder === 'price-asc') {
+                return parseFloat(a.price) - parseFloat(b.price);
+            } else if (sortOrder === 'price-desc') {
+                return parseFloat(b.price) - parseFloat(a.price);
+            } else if (sortOrder === 'name-asc') {
+                return a.name.localeCompare(b.name);
+            } else if (sortOrder === 'name-desc') {
+                return b.name.localeCompare(a.name);
+            }
+            return 0;
+        });
+    }
+
+    renderProducts(products, container);
+    updateQuantitiesFromCart(); // Ensure quantities from cart are reflected on filtered products
+}
     </script>
 </body>
 </html>
