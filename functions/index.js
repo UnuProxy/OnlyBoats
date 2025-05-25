@@ -63,6 +63,10 @@ async function sendOrderConfirmationEmail(data) {
         phone_number: data.phoneNumber || "",
         special_notes: data.specialNotes || "",
         boat_location: data.boatLocation || "",
+        berth_number: data.berthNumber || "",
+        berth_name: data.berthName || "",
+        marina: data.marina || "",
+        delivery_address: data.deliveryAddress || "",
         total_price: data.totalPrice || 0,
         items: data.items || [],
         track_link: `https://your-site.com/track-order/${data.orderId}`
@@ -83,15 +87,24 @@ async function sendOrderConfirmationEmail(data) {
   }
 }
 
-// Checkout handler
+// UPDATED: Checkout handler with all location fields
 async function handleCheckout(req, res) {
   try {
+    console.log('CHECKOUT: Received request body:', JSON.stringify(req.body, null, 2));
+    
     const {
       cart, boatName, orderDate,
       customerEmail, email: rawEmail,
       fullName, rentalCompany,
       phoneNumber, specialNotes,
-      paymentMethod, boatLocation
+      paymentMethod, boatLocation,
+      // NEW: Extract all location fields
+      marina, berthNumber, berthName,
+      deliveryAddress, deliveryInstructions,
+      contactRental, contactMe,
+      // Additional fields from enhanced frontend
+      orderSource, status, amount_total,
+      currency, items, createdAt, updatedAt
     } = req.body;
 
     const finalEmail = customerEmail || rawEmail;
@@ -108,6 +121,33 @@ async function handleCheckout(req, res) {
       quantity: item.quantity
     }));
 
+    // UPDATED: Include all fields in Stripe metadata
+    const metadata = {
+      orderId: Date.now().toString(),
+      boatName: boatName || "",
+      orderDate: orderDate || "",
+      customerEmail: finalEmail,
+      fullName: fullName || "",
+      rentalCompany: rentalCompany || "",
+      phoneNumber: phoneNumber || "",
+      specialNotes: specialNotes || "",
+      paymentMethod: paymentMethod || "card",
+      boatLocation: boatLocation || "",
+      // NEW: Location fields
+      marina: marina || "",
+      berthNumber: berthNumber || "",
+      berthName: berthName || "",
+      deliveryAddress: deliveryAddress || "",
+      deliveryInstructions: deliveryInstructions || "",
+      contactRental: contactRental ? "true" : "false",
+      contactMe: contactMe ? "true" : "false",
+      // Additional fields
+      orderSource: orderSource || "Website",
+      cart: JSON.stringify(cart)
+    };
+
+    console.log('CHECKOUT: Metadata being sent to Stripe:', metadata);
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       customer_email: finalEmail,
@@ -115,19 +155,7 @@ async function handleCheckout(req, res) {
       mode: "payment",
       success_url: `${req.headers.origin}/success.html`,
       cancel_url: `${req.headers.origin}/services.html`,
-      metadata: {
-        orderId: Date.now().toString(),
-        boatName,
-        orderDate,
-        customerEmail: finalEmail,
-        fullName,
-        rentalCompany,
-        phoneNumber,
-        specialNotes,
-        paymentMethod,
-        boatLocation: boatLocation || "",
-        cart: JSON.stringify(cart)
-      }
+      metadata
     });
 
     return res.json({ sessionId: session.id });
@@ -144,7 +172,7 @@ async function handleCheckout(req, res) {
 app.post("/checkout", handleCheckout);
 app.post("/createCheckoutSession", handleCheckout);
 
-// Webhook handler
+// UPDATED: Webhook handler with all location fields
 app.post(
   "/webhook",
   express.json({ verify: (req, _res, buf) => { req.rawBody = buf; } }),
@@ -168,6 +196,7 @@ app.post(
 
     console.log('WEBHOOK: Processing session', session.id);
     console.log('WEBHOOK: Customer email', session.customer_email);
+    console.log('WEBHOOK: Metadata received:', m);
 
     if (m.cart) {
       items = JSON.parse(m.cart);
@@ -178,29 +207,44 @@ app.post(
       }
     }
 
+    // UPDATED: Include all location fields in the record
     const record = {
       sessionId: session.id,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       amount_total: session.amount_total / 100,
       currency: session.currency,
       paymentStatus: session.payment_status,
-      boatName: m.boatName,
-      orderDate: m.orderDate,
+      status: 'paid', // Set initial status
+      boatName: m.boatName || "",
+      orderDate: m.orderDate || "",
       customerEmail: session.customer_email,
-      fullName: m.fullName,
-      rentalCompany: m.rentalCompany,
-      phoneNumber: m.phoneNumber,
-      specialNotes: m.specialNotes,
-      paymentMethod: m.paymentMethod,
+      fullName: m.fullName || "",
+      rentalCompany: m.rentalCompany || "",
+      phoneNumber: m.phoneNumber || "",
+      specialNotes: m.specialNotes || "",
+      paymentMethod: m.paymentMethod || "card",
       orderId: m.orderId,
       boatLocation: m.boatLocation || "Not specified",
+      // NEW: All location fields
+      marina: m.marina || "",
+      berthNumber: m.berthNumber || "",
+      berthName: m.berthName || "",
+      deliveryAddress: m.deliveryAddress || "",
+      deliveryInstructions: m.deliveryInstructions || "",
+      contactRental: m.contactRental === "true",
+      contactMe: m.contactMe === "true",
+      orderSource: m.orderSource || "Website",
       items
     };
 
+    console.log('WEBHOOK: Saving record to Firebase:', record);
+
     try {
       await admin.firestore().collection("orders").add(record);
-      console.log('WEBHOOK: Order saved');
+      console.log('WEBHOOK: Order saved successfully');
 
+      // UPDATED: Send email with all location details
       await sendOrderConfirmationEmail({
         email: session.customer_email,
         boatName: m.boatName,
@@ -208,9 +252,13 @@ app.post(
         fullName: m.fullName,
         phoneNumber: m.phoneNumber,
         specialNotes: m.specialNotes,
+        boatLocation: m.boatLocation,
+        marina: m.marina,
+        berthNumber: m.berthNumber,
+        berthName: m.berthName,
+        deliveryAddress: m.deliveryAddress,
         items,
         totalPrice: session.amount_total / 100,
-        boatLocation: m.boatLocation,
         orderId: m.orderId
       });
 
@@ -236,9 +284,13 @@ app.post("/test-email", async (req, res) => {
       orderDate: "2025-05-24",
       phoneNumber: "+34 123 456 789",
       specialNotes: "Test order",
+      boatLocation: "Marina Ibiza",
+      marina: "Marina Ibiza",
+      berthNumber: "A-15",
+      berthName: "Test Berth",
+      deliveryAddress: "Marina Ibiza, Berth A-15",
       items: [{ name: "Test Item", quantity: 1, price: 99.99 }],
       totalPrice: 99.99,
-      boatLocation: "Test Marina",
       orderId: "TEST-" + Date.now()
     });
     

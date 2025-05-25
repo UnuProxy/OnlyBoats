@@ -1751,93 +1751,148 @@
         }
 
         // Submit order function
-        function submitOrder() {
-            const confirmBtn = document.querySelector('.modal-footer .btn-primary');
-            const originalText = confirmBtn.textContent;
-            confirmBtn.disabled = true;
-            confirmBtn.innerHTML = '<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Processing...';
+        // Updated submitOrder function with proper location data structure
+function submitOrder() {
+    const confirmBtn = document.querySelector('.modal-footer .btn-primary');
+    const originalText = confirmBtn.textContent;
+    confirmBtn.disabled = true;
+    confirmBtn.innerHTML = '<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Processing...';
 
-            const email = document.getElementById('email').value;
-            
-            const orderData = {
-                cart: getCartItems(),
-                fullName: document.getElementById('fullName').value,
-                boatName: document.getElementById('boatName').value || 'Not specified',
-                rentalCompany: document.getElementById('rentalCompany').value || 'Not specified',
-                phoneNumber: document.getElementById('phoneNumber').value,
-                customerEmail: email,
-                email: email,
-                orderDate: document.getElementById('orderDate').value,
-                specialNotes: document.getElementById('specialNotes').value || '',
-                paymentMethod: document.getElementById('paymentMethod').value
-            };
+    const email = document.getElementById('email').value;
+    
+    // Base order data
+    const orderData = {
+        cart: getCartItems(),
+        fullName: document.getElementById('fullName').value,
+        boatName: document.getElementById('boatName').value || 'Not specified',
+        rentalCompany: document.getElementById('rentalCompany').value || 'Not specified',
+        phoneNumber: document.getElementById('phoneNumber').value,
+        customerEmail: email,
+        email: email,
+        orderDate: document.getElementById('orderDate').value,
+        specialNotes: document.getElementById('specialNotes').value || '',
+        paymentMethod: document.getElementById('paymentMethod').value
+    };
 
-            const locationKnownRadio = document.getElementById('locationKnown');
-            const locationUnknownRadio = document.getElementById('locationUnknown');
+    const locationKnownRadio = document.getElementById('locationKnown');
+    const locationUnknownRadio = document.getElementById('locationUnknown');
 
-            if (locationKnownRadio && locationKnownRadio.checked) {
-                orderData.deliveryLocation = 'Marina Ibiza';
-                orderData.berthNumber = document.getElementById('berthNumber').value;
-                orderData.berthName = document.getElementById('berthName').value || 'Not specified';
-                if (!orderData.berthNumber) {
-                    showCustomAlert('Please enter the Berth Number for Marina Ibiza delivery.');
-                    confirmBtn.disabled = false;
-                    confirmBtn.textContent = originalText;
-                    return;
-                }
-            } else if (locationUnknownRadio && locationUnknownRadio.checked) {
-                orderData.deliveryLocation = 'Marina Ibiza (Coordination Needed)';
-                orderData.contactRental = document.getElementById('contactRental').checked;
-                orderData.contactMe = document.getElementById('contactMe').checked;
-                
-                if (!orderData.contactMe && !orderData.contactRental) {
-                    showCustomAlert('Please select at least one contact method for delivery coordination.');
-                    confirmBtn.disabled = false;
-                    confirmBtn.textContent = originalText;
-                    return;
-                }
-            }
+    if (locationKnownRadio && locationKnownRadio.checked) {
+        // Known location - Marina Ibiza
+        const berthNumber = document.getElementById('berthNumber').value;
+        const berthName = document.getElementById('berthName').value;
+        const marinaLocation = document.getElementById('marinaLocation').value;
+        
+        if (!berthNumber) {
+            showCustomAlert('Please enter the Berth Number for Marina Ibiza delivery.');
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = originalText;
+            return;
+        }
 
+        // Structure location data properly for Firebase and display
+        orderData.boatLocation = marinaLocation; // Main location field
+        orderData.marina = marinaLocation; // Marina name
+        orderData.berthNumber = berthNumber; // Berth number
+        orderData.berthName = berthName || ''; // Berth name (optional)
+        
+        // Create full delivery address for display
+        let deliveryAddress = marinaLocation;
+        if (berthNumber) {
+            deliveryAddress += `, Berth ${berthNumber}`;
+        }
+        if (berthName) {
+            deliveryAddress += ` (${berthName})`;
+        }
+        orderData.deliveryAddress = deliveryAddress;
+        
+        // Legacy field for compatibility
+        orderData.deliveryLocation = 'Marina Ibiza';
+        
+    } else if (locationUnknownRadio && locationUnknownRadio.checked) {
+        // Unknown location - coordination needed
+        const contactRental = document.getElementById('contactRental').checked;
+        const contactMe = document.getElementById('contactMe').checked;
+        
+        if (!contactMe && !contactRental) {
+            showCustomAlert('Please select at least one contact method for delivery coordination.');
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = originalText;
+            return;
+        }
 
-            if (!orderData.fullName || !orderData.phoneNumber || !orderData.email) {
-                showCustomAlert('Please fill in all required fields.');
-                confirmBtn.disabled = false;
-                confirmBtn.textContent = originalText;
-                return;
-            }
+        // Structure location data for coordination case
+        orderData.boatLocation = 'Marina Ibiza (Location TBD)';
+        orderData.marina = 'Marina Ibiza';
+        orderData.deliveryAddress = 'Marina Ibiza - Coordination Required';
+        orderData.deliveryInstructions = 'Location coordination needed before delivery';
+        orderData.contactRental = contactRental;
+        orderData.contactMe = contactMe;
+        
+        // Legacy field for compatibility
+        orderData.deliveryLocation = 'Marina Ibiza (Coordination Needed)';
+    }
 
-            const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-            const endpoint = isLocalhost 
-            ? 'http://localhost:5001/crm-boats/us-central1/apiNew/checkout'
-            : 'https://us-central1-crm-boats.cloudfunctions.net/apiNew/checkout';
+    // Validation
+    if (!orderData.fullName || !orderData.phoneNumber || !orderData.email) {
+        showCustomAlert('Please fill in all required fields.');
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = originalText;
+        return;
+    }
 
-            fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.text().then(text => {
-                        throw new Error(`Network response was not ok: ${response.status}`);
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.sessionId) {
-                    stripe.redirectToCheckout({ sessionId: data.sessionId });
-                } else {
-                    throw new Error('No session ID returned');
-                }
-            })
-            .catch(error => {
-                console.error('Payment error:', error);
-                showCustomAlert('Payment processing failed. Please try again.');
-                confirmBtn.disabled = false;
-                confirmBtn.textContent = originalText;
+    // Add additional fields that might be useful for orders management
+    orderData.orderSource = 'Website';
+    orderData.createdAt = new Date().toISOString();
+    orderData.updatedAt = new Date().toISOString();
+    orderData.status = 'pending';
+    
+    // Calculate total
+    orderData.amount_total = cart.reduce((sum, item) => sum + (item.quantity * item.price), 0);
+    orderData.currency = 'eur';
+
+    // Create items array with proper structure
+    orderData.items = cart.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: parseFloat(item.price),
+        quantity: parseInt(item.quantity)
+    }));
+
+    console.log('Submitting order data:', orderData); // For debugging
+
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const endpoint = isLocalhost 
+        ? 'http://localhost:5001/crm-boats/us-central1/apiNew/checkout'
+        : 'https://us-central1-crm-boats.cloudfunctions.net/apiNew/checkout';
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => {
+                throw new Error(`Network response was not ok: ${response.status}`);
             });
         }
+        return response.json();
+    })
+    .then(data => {
+        if (data.sessionId) {
+            stripe.redirectToCheckout({ sessionId: data.sessionId });
+        } else {
+            throw new Error('No session ID returned');
+        }
+    })
+    .catch(error => {
+        console.error('Payment error:', error);
+        showCustomAlert('Payment processing failed. Please try again.');
+        confirmBtn.disabled = false;
+        confirmBtn.textContent = originalText;
+    });
+}
 
         function getCartItems() {
             return cart.map(item => ({
