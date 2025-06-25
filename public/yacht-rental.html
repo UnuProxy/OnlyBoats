@@ -382,9 +382,6 @@
   </div>
 </template>
 
-
-  
-
 <!-- Inquiry Modal Popup -->
 <div class="inquiry-modal">
     <div class="inquiry-modal-container">
@@ -533,51 +530,94 @@
       <span class="elegant-whatsapp-text">Contact Us</span>
   </div>
 </a>
+
+<!-- ENHANCED QR CODE AND FORM SUBMISSION SYSTEM -->
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-  console.log("DOM loaded - initializing automatic promo code handling");
+// 1. ENHANCED QR CODE LOCATION EXTRACTION
+function extractLocationFromPromoCode(promoCode) {
+  if (!promoCode || !promoCode.startsWith('CAVA-')) {
+    return null;
+  }
   
-  // 1. GET PROMO CODE FROM ALL POSSIBLE SOURCES
+  // Extract location from promo code format: CAVA-LOCATION-RANDOMNUMBERS
+  const parts = promoCode.split('-');
+  if (parts.length >= 2) {
+    const locationPart = parts[1];
+    
+    // Convert abbreviated location codes to full names
+    const locationMap = {
+      'MARINA': 'Marina Botafoch',
+      'PLAYA': 'Playa d\'en Bossa',
+      'SANTA': 'Santa Eulalia',
+      'IBIZA': 'Ibiza Town',
+      'CALA': 'Cala Jondal',
+      'TALAMANCA': 'Talamanca Beach',
+      'BOSSA': 'Playa d\'en Bossa',
+      'FIGUERETAS': 'Figueretas Beach',
+      'SALINAS': 'Ses Salines Beach',
+      'BENIRRAS': 'Benirràs Beach'
+    };
+    
+    return locationMap[locationPart.toUpperCase()] || locationPart.replace(/[^A-Z]/g, ' ').trim();
+  }
+  
+  return 'QR Location';
+}
+
+// 2. ENHANCED PROMO CODE HANDLER
+document.addEventListener("DOMContentLoaded", function() {
+  console.log("Enhanced QR code handler initializing...");
+  
+  // Get promo code from URL or localStorage
   const urlParams = new URLSearchParams(window.location.search);
   const urlPromoCode = urlParams.get('promo');
   const urlPlaceName = urlParams.get('placeName');
   const storedPromoCode = localStorage.getItem('autoPromoCode') || localStorage.getItem('boatPromoCode');
   const storedPlaceName = localStorage.getItem('promoPlaceName');
   
-  // Use URL parameters first, then localStorage values
+  // Determine final promo code and location
   const finalPromoCode = urlPromoCode || storedPromoCode || '';
-  const finalPlaceName = urlPlaceName || storedPlaceName ? decodeURIComponent(storedPlaceName || '') : '';
+  let finalPlaceName = urlPlaceName || storedPlaceName;
   
-  console.log("Detected promo code:", finalPromoCode);
-  console.log("Detected place name:", finalPlaceName);
+  // If no place name provided, extract from promo code
+  if (!finalPlaceName && finalPromoCode) {
+    finalPlaceName = extractLocationFromPromoCode(finalPromoCode);
+  }
   
-  // Store in localStorage for persistence
+  // Fallback if still no location
+  if (!finalPlaceName) {
+    finalPlaceName = 'our location';
+  }
+  
+  console.log("Final promo code:", finalPromoCode);
+  console.log("Final location:", finalPlaceName);
+  
+  // Store for persistence
   if (finalPromoCode) {
     localStorage.setItem('autoPromoCode', finalPromoCode);
     localStorage.setItem('boatPromoCode', finalPromoCode);
   }
-  
   if (finalPlaceName) {
     localStorage.setItem('promoPlaceName', finalPlaceName);
   }
   
-  // 2. MODIFY THE INQUIRY FORM TO INCLUDE PROMO CODE FIELD
+  // Modify inquiry form
   function modifyInquiryForm() {
-    if (!finalPromoCode) return; // No promo code to apply
+    if (!finalPromoCode) return false;
     
     const inquiryForm = document.querySelector('.inquiry-modal-form form');
     if (!inquiryForm) {
-      console.log("Form not found, will try again later");
+      console.log("Form not found, will retry...");
       return false;
     }
     
-    // Check if promo field already exists
+    // Check if already modified
     if (document.getElementById('promoCodeInput')) {
-      console.log("Promo code input already exists");
+      console.log("Form already modified");
       return true;
     }
     
-    // First, create the hidden field for the promo code
+    // Add hidden promo code field
     const hiddenPromoField = document.createElement('input');
     hiddenPromoField.type = 'hidden';
     hiddenPromoField.id = 'promoCodeInput';
@@ -585,133 +625,414 @@
     hiddenPromoField.value = finalPromoCode;
     inquiryForm.appendChild(hiddenPromoField);
     
-    // Optional: Add visual confirmation below the existing fields
+    // Add hidden location field
+    const hiddenLocationField = document.createElement('input');
+    hiddenLocationField.type = 'hidden';
+    hiddenLocationField.id = 'qrLocationInput';
+    hiddenLocationField.name = 'qrLocation';
+    hiddenLocationField.value = finalPlaceName;
+    inquiryForm.appendChild(hiddenLocationField);
+    
+    // Add visual confirmation
     const submitButton = inquiryForm.querySelector('.inquiry-submit-button');
     if (submitButton) {
       const promoConfirmation = document.createElement('div');
       promoConfirmation.className = 'promo-confirmation-row';
-      promoConfirmation.style.margin = '10px 0';
-      promoConfirmation.style.padding = '8px 12px';
-      promoConfirmation.style.backgroundColor = '#e6f7ff';
-      promoConfirmation.style.color = '#0077b6';
-      promoConfirmation.style.borderRadius = '4px';
-      promoConfirmation.style.fontSize = '14px';
-      promoConfirmation.innerHTML = `
-        <i class="fas fa-check-circle" style="color: #10b981; margin-right: 6px;"></i>
-        Special offer: <strong>${finalPromoCode}</strong> from ${finalPlaceName || 'QR code'} applied automatically
+      promoConfirmation.style.cssText = `
+        margin: 15px 0;
+        padding: 12px;
+        background: linear-gradient(135deg, #e6f7ff 0%, #f0fdf4 100%);
+        border-left: 4px solid #10b981;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #0f766e;
       `;
       
-      // Insert before submit button
+      promoConfirmation.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <i class="fas fa-check-circle" style="color: #10b981; font-size: 16px;"></i>
+          <div>
+            <strong>Special Offer Applied!</strong><br>
+            <span style="font-size: 13px;">Code: <strong>${finalPromoCode}</strong> from ${finalPlaceName}</span>
+          </div>
+        </div>
+      `;
+      
       inquiryForm.insertBefore(promoConfirmation, submitButton);
     }
     
-    console.log("Successfully modified form to include promo code:", finalPromoCode);
+    console.log("Form successfully modified with promo:", finalPromoCode, "and location:", finalPlaceName);
     return true;
   }
   
-  // Try to modify form immediately
+  // Try to modify form immediately and set up observers
   let formModified = modifyInquiryForm();
   
-  // If form wasn't found initially, set up observers and retry mechanisms
   if (!formModified && finalPromoCode) {
-    // 3. SET UP OBSERVERS TO CATCH FORM OPENING
-    // Watch for modal becoming visible
+    // Set up mutation observer for modal activation
     const modalObserver = new MutationObserver(function(mutations) {
       mutations.forEach(function(mutation) {
         if (mutation.type === 'attributes' && 
             mutation.attributeName === 'class' && 
             mutation.target.classList.contains('active')) {
-          console.log("Modal has become active, modifying form");
-          formModified = modifyInquiryForm();
-          if (formModified) {
-            console.log("Form modified after modal activation");
-          }
+          setTimeout(() => modifyInquiryForm(), 100);
+        }
+      });
+
+// 5. OVERRIDE ANY CONFLICTING ERROR HANDLERS
+document.addEventListener('DOMContentLoaded', function() {
+  // Override the original alert function temporarily during form submission
+  const originalAlert = window.alert;
+  
+  window.alert = function(message) {
+    // If our form submission is active and it's an error message, don't show it
+    if (window.formSubmissionActive && 
+        message && 
+        (message.includes('Form submission is currently unavailable') || 
+         message.includes('unavailable') ||
+         message.includes('contact us directly'))) {
+      console.log("Suppressed conflicting error message:", message);
+      return;
+    }
+    // Otherwise, show the alert normally
+    return originalAlert.call(this, message);
+  };
+  
+  // Also try to find and disable any existing error handlers
+  setTimeout(() => {
+    const forms = document.querySelectorAll('.inquiry-modal-form form');
+    forms.forEach(form => {
+      // Remove any data attributes that might trigger old handlers
+      form.removeAttribute('data-handler-attached');
+      
+      // Look for any scripts that might be showing error dialogs
+      const scripts = document.querySelectorAll('script');
+      scripts.forEach(script => {
+        if (script.textContent && script.textContent.includes('Form submission is currently unavailable')) {
+          console.log("Found conflicting script, attempting to neutralize...");
+          // Try to override the function if we can find it
         }
       });
     });
+  }, 1000);
+});
+    });
     
-    // Start observing modal for visibility changes
     const modal = document.querySelector('.inquiry-modal');
     if (modal) {
       modalObserver.observe(modal, { attributes: true });
-      console.log("Set up observer for modal activation");
     }
     
-    // 4. BACKUP: RETRY PERIODICALLY
+    // Retry mechanism
     let attempts = 0;
-    const maxAttempts = 5;
-    
-    function attemptFormModification() {
-      if (formModified || attempts >= maxAttempts) return;
-      
+    const retryInterval = setInterval(() => {
       attempts++;
-      console.log(`Attempt ${attempts} to modify form`);
-      formModified = modifyInquiryForm();
-      
-      if (!formModified) {
-        setTimeout(attemptFormModification, 1000);
+      if (modifyInquiryForm() || attempts >= 10) {
+        clearInterval(retryInterval);
       }
-    }
-    
-    // Start retry process
-    attemptFormModification();
-    
-    // 5. INTERCEPT FORM SUBMISSION IF ALL ELSE FAILS
-    document.addEventListener('submit', function(e) {
-      // Check if this is our inquiry form
-      if (e.target.closest('.inquiry-modal-form')) {
-        // If we haven't modified the form yet, add the promo code to FormData
-        if (!document.getElementById('promoCodeInput') && finalPromoCode) {
-          console.log("Form submission intercepted, adding promo code");
-          
-          // Create hidden field at the last moment
-          const hiddenPromoField = document.createElement('input');
-          hiddenPromoField.type = 'hidden';
-          hiddenPromoField.id = 'promoCodeInput';
-          hiddenPromoField.name = 'promoCode';
-          hiddenPromoField.value = finalPromoCode;
-          e.target.appendChild(hiddenPromoField);
-        }
+    }, 1000);
+  }
+});
+
+// 3. FIREBASE FORM SUBMISSION HANDLER
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("Setting up Firebase form submission...");
+  
+  // Flag to prevent other error handlers from interfering
+  window.formSubmissionActive = false;
+  
+  // Wait for Firebase to be available
+  function waitForFirebase() {
+    return new Promise((resolve) => {
+      if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
+        console.log("Firebase already initialized");
+        resolve(firebase.firestore());
+      } else {
+        console.log("Waiting for Firebase to initialize...");
+        const checkFirebase = setInterval(() => {
+          if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
+            console.log("Firebase now available");
+            clearInterval(checkFirebase);
+            resolve(firebase.firestore());
+          }
+        }, 100);
       }
-    }, true);
+    });
   }
   
-  // 6. HANDLE EXISTING BANNER IF IT APPEARS
-  // If the promo banner from the existing script appears, modify its behavior
-  setTimeout(function() {
-    const existingBanner = document.getElementById('direct-promo-banner');
-    if (existingBanner) {
-      console.log("Found existing banner, modifying behavior");
+  // Form submission handler
+  async function handleFormSubmission(event) {
+    event.preventDefault();
+    event.stopPropagation(); // Prevent other handlers from interfering
+    console.log("Form submission intercepted");
+    
+    // Set flag to prevent other error handlers
+    window.formSubmissionActive = true;
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    // Extract form data
+    const submissionData = {
+      firstName: form.querySelector('input[placeholder*="First Name"]')?.value || '',
+      lastName: form.querySelector('input[placeholder*="Last Name"]')?.value || '',
+      email: form.querySelector('input[placeholder*="Email"]')?.value || '',
+      phone: form.querySelector('input[placeholder*="Phone"]')?.value || '',
+      date: form.querySelector('input[type="date"]')?.value || '',
+      guests: form.querySelector('select')?.value || '',
+      message: form.querySelector('textarea')?.value || '',
+      boatName: document.getElementById('boatNameInput')?.value || '',
+      promoCode: document.getElementById('promoCodeInput')?.value || '',
+      qrLocation: document.getElementById('qrLocationInput')?.value || '',
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      status: 'new'
+    };
+    
+    console.log("Submission data:", submissionData);
+    
+    // Validate required fields
+    if (!submissionData.firstName || !submissionData.email || !submissionData.phone) {
+      alert('Please fill in all required fields.');
+      window.formSubmissionActive = false;
+      return;
+    }
+    
+    // Show loading state
+    const submitButton = form.querySelector('.inquiry-submit-button');
+    const originalText = submitButton.textContent;
+    submitButton.textContent = 'Sending...';
+    submitButton.disabled = true;
+    
+    try {
+      // Wait for Firebase to be ready
+      const db = await waitForFirebase();
+      console.log("Firebase ready, submitting form...");
       
-      // Get the apply button and modify its behavior to just hide the banner
-      const applyButton = document.getElementById('direct-book-btn');
-      if (applyButton) {
-        // Replace the original click handler
-        applyButton.replaceWith(applyButton.cloneNode(true));
+      // Submit to Firebase
+      const docRef = await db.collection('inquiries').add(submissionData);
+      console.log('Form submitted successfully with ID:', docRef.id);
+      
+      // Success handling
+      submitButton.textContent = 'Sent Successfully!';
+      submitButton.style.backgroundColor = '#10b981';
+      
+      // Show success message
+      setTimeout(() => {
+        alert('Thank you! Your inquiry has been submitted successfully. We\'ll contact you within 15 minutes.');
+      }, 100);
+      
+      // Close modal after delay
+      setTimeout(() => {
+        const modal = document.querySelector('.inquiry-modal');
+        if (modal) {
+          modal.classList.remove('active');
+        }
         
-        // Add our new handler that just hides the banner (promo already applied)
-        document.getElementById('direct-book-btn').addEventListener('click', function() {
-          existingBanner.style.display = 'none';
-          
-          // Possibly open the inquiry form
-          const bookButtons = document.querySelectorAll('.btn-inquire');
-          if (bookButtons.length > 0) {
-            bookButtons[0].click();
-          }
-        });
-      }
+        // Reset form
+        form.reset();
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+        submitButton.style.backgroundColor = '#2095AE';
+        
+        // Mark promo as applied if there was one
+        if (submissionData.promoCode) {
+          localStorage.setItem('promoApplied', 'true');
+        }
+        
+        // Reset flag
+        window.formSubmissionActive = false;
+      }, 2500);
       
-      // Make sure close button just closes banner without removing promo
-      const closeButton = document.getElementById('direct-close-btn');
-      if (closeButton) {
-        closeButton.replaceWith(closeButton.cloneNode(true));
-        document.getElementById('direct-close-btn').addEventListener('click', function() {
-          existingBanner.style.display = 'none';
-        });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      
+      // Error handling
+      submitButton.textContent = 'Error - Try Again';
+      submitButton.style.backgroundColor = '#ef4444';
+      submitButton.disabled = false;
+      
+      setTimeout(() => {
+        alert('There was an error submitting your inquiry. Please try again or contact us directly.');
+      }, 100);
+      
+      // Reset button after delay
+      setTimeout(() => {
+        submitButton.textContent = originalText;
+        submitButton.style.backgroundColor = '#2095AE';
+        window.formSubmissionActive = false;
+      }, 3000);
+    }
+  }
+  
+  // Attach form submission handler with high priority
+  function attachFormHandler() {
+    const form = document.querySelector('.inquiry-modal-form form');
+    if (form && !form.hasAttribute('data-enhanced-handler-attached')) {
+      // Remove any existing submit handlers first
+      const newForm = form.cloneNode(true);
+      form.parentNode.replaceChild(newForm, form);
+      
+      // Attach our enhanced handler
+      newForm.addEventListener('submit', handleFormSubmission, true); // Use capture phase
+      newForm.setAttribute('data-enhanced-handler-attached', 'true');
+      console.log("Enhanced form submission handler attached");
+      return true;
+    }
+    return false;
+  }
+  
+  // Try to attach immediately and set up retry
+  if (!attachFormHandler()) {
+    const attachInterval = setInterval(() => {
+      if (attachFormHandler()) {
+        clearInterval(attachInterval);
+      }
+    }, 1000);
+    
+    // Stop trying after 10 seconds
+    setTimeout(() => clearInterval(attachInterval), 10000);
+  }
+});
+
+// 4. ENHANCED BANNER CREATION
+(function createEnhancedBanner() {
+  console.log("Enhanced banner script executing");
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const promoCode = urlParams.get('promo') || localStorage.getItem('boatPromoCode');
+  const isPromoApplied = localStorage.getItem('promoApplied') === 'true';
+  
+  if (!promoCode || !promoCode.startsWith('CAVA-') || isPromoApplied) {
+    console.log("No valid promo or already applied");
+    return;
+  }
+  
+  // Extract location from promo code
+  const placeName = extractLocationFromPromoCode(promoCode) || 'our location';
+  
+  // Store for later use
+  localStorage.setItem('boatPromoCode', promoCode);
+  localStorage.setItem('promoPlaceName', placeName);
+  
+  // Check if banner already exists
+  if (document.getElementById('direct-promo-banner')) {
+    return;
+  }
+  
+  // Create enhanced banner
+  const banner = document.createElement('div');
+  banner.id = "direct-promo-banner";
+  banner.style.cssText = `
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999999;
+    background: linear-gradient(135deg, #2095AE 0%, #1a7a8a 100%);
+    color: white;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+    animation: slideUp 0.5s ease-out;
+  `;
+  
+  // Add animation keyframes
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(0); }
+      to { transform: translateY(100%); }
+    }
+    @media (max-width: 767px) {
+      #direct-promo-banner .banner-content {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 15px 12px !important;
+      }
+      #direct-promo-banner .banner-text {
+        margin-bottom: 12px !important;
+        margin-right: 0 !important;
+      }
+      #direct-promo-banner .banner-actions {
+        width: 100% !important;
+        justify-content: center !important;
       }
     }
-  }, 1000);
-});
+  `;
+  document.head.appendChild(style);
+  
+  banner.innerHTML = `
+    <div class="banner-content" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto;">
+      <div class="banner-text" style="flex: 1; margin-right: 20px;">
+        <div style="font-weight: bold; font-size: 18px; margin-bottom: 4px;">
+          🍾 Special Offer from ${placeName}!
+        </div>
+        <div style="font-size: 14px; opacity: 0.95;">
+          Use code <strong style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px; letter-spacing: 1px;">${promoCode}</strong> for complimentary cava with your booking
+        </div>
+      </div>
+      <div class="banner-actions" style="display: flex; align-items: center; gap: 12px;">
+        <button id="direct-book-btn" style="background: white; color: #2095AE; border: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px; transition: all 0.3s ease;">
+          CLAIM OFFER
+        </button>
+        <button id="direct-close-btn" style="background: none; border: none; color: white; font-size: 28px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; transition: background 0.3s ease;">
+          ×
+        </button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(banner);
+  
+  // Add hover effects
+  const bookBtn = banner.querySelector('#direct-book-btn');
+  const closeBtn = banner.querySelector('#direct-close-btn');
+  
+  bookBtn.addEventListener('mouseenter', () => {
+    bookBtn.style.transform = 'translateY(-2px)';
+    bookBtn.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+  });
+  
+  bookBtn.addEventListener('mouseleave', () => {
+    bookBtn.style.transform = 'translateY(0)';
+    bookBtn.style.boxShadow = 'none';
+  });
+  
+  closeBtn.addEventListener('mouseenter', () => {
+    closeBtn.style.background = 'rgba(255,255,255,0.1)';
+  });
+  
+  closeBtn.addEventListener('mouseleave', () => {
+    closeBtn.style.background = 'none';
+  });
+  
+  // Event handlers
+  closeBtn.addEventListener('click', () => {
+    banner.style.animation = 'slideDown 0.3s ease-out forwards';
+    setTimeout(() => banner.remove(), 300);
+  });
+  
+  bookBtn.addEventListener('click', () => {
+    // Find and click a "Book Now" button to open the modal
+    const bookButtons = document.querySelectorAll('.btn-inquire');
+    if (bookButtons.length > 0) {
+      bookButtons[0].click();
+    } else {
+      // Fallback: directly open modal
+      const modal = document.querySelector('.inquiry-modal');
+      if (modal) {
+        modal.classList.add('active');
+      }
+    }
+    
+    // Hide banner after successful application
+    banner.style.animation = 'slideDown 0.3s ease-out forwards';
+    setTimeout(() => banner.remove(), 300);
+  });
+})();
 </script>
 
 <script>
@@ -801,233 +1122,6 @@ document.addEventListener("click", function(e) {
     filterBoats(); // Reload all boats
 }
     </script>
-    <!-- PROMO CODE -->
-    <script>
-      (function createConditionalBanner() {
-  console.log("Conditional banner script executing");
-  
-  // Check URL parameters for promo code and place name (from QR scan)
-  var urlParams = new URLSearchParams(window.location.search);
-  var promoCode = urlParams.get('promo');
-  var placeName = urlParams.get('placeName');
-  var category = urlParams.get('category') || '';
-  
-  // Log all URL parameters for debugging
-  console.log("All URL parameters:", Object.fromEntries(urlParams.entries()));
-  console.log("URL parameters checked, promo code:", promoCode);
-  console.log("Place name from URL:", placeName);
-  
-  // Check for promo and place name in localStorage as fallback
-  var storedPromoCode = localStorage.getItem('boatPromoCode');
-  var storedPlaceName = localStorage.getItem('promoPlaceName');
-  
-  // Set default place name only if we don't have one from URL or storage
-  if (!placeName && !storedPlaceName) {
-    placeName = 'our QR code';
-  } else if (!placeName && storedPlaceName) {
-    placeName = storedPlaceName;
-  }
-  
-  console.log("Final place name to use:", placeName);
-  
-  // Log all URL parameters for debugging
-  console.log("All URL parameters:", Object.fromEntries(urlParams.entries()));
-  console.log("URL parameters checked, promo code:", promoCode);
-  console.log("Place name:", placeName);
-  
-  // Check for promo in localStorage as fallback
-  var storedPromoCode = localStorage.getItem('boatPromoCode');
-  var storedPlaceName = localStorage.getItem('promoPlaceName') || 'this location';
-  
-  // Check if promo has already been applied
-  var isPromoApplied = localStorage.getItem('promoApplied') === 'true';
-  
-  // Check if the form already has the promo code applied
-  var promoAlreadyInForm = false;
-  setTimeout(function() {
-    var promoField = document.getElementById('promoCodeInput');
-    var promoRow = document.querySelector('.promo-confirmation-row');
-    if (promoField || promoRow) {
-      promoAlreadyInForm = true;
-      // If found on page load, record that promo is applied
-      localStorage.setItem('promoApplied', 'true');
-    }
-  }, 1000);
-  
-  // Only show banner if there's a promo code AND it hasn't been applied yet
-  if (((promoCode && promoCode.startsWith('CAVA-')) || (storedPromoCode && storedPromoCode.startsWith('CAVA-'))) 
-      && !isPromoApplied) {
-    // Use either the URL promo code or the stored one
-    var activePromoCode = promoCode || storedPromoCode;
-    var activePlaceName = placeName || storedPlaceName || 'our QR code';
-    
-    console.log("Valid promo code found, showing banner for:", activePromoCode);
-    console.log("Using place name:", activePlaceName);
-    
-    // Store in localStorage for returning visitors
-    localStorage.setItem('boatPromoCode', activePromoCode);
-    localStorage.setItem('promoPlaceName', activePlaceName);
-    
-    // Check if banner already exists (avoid duplicates)
-    if (document.getElementById('direct-promo-banner')) {
-      console.log("Banner already exists, not creating duplicate");
-      return;
-    }
-    
-    // Create banner element
-    var banner = document.createElement('div');
-    banner.id = "direct-promo-banner";
-    
-    // Set styles directly on the element - with mobile-friendly adjustments
-    banner.style.position = "fixed";
-    banner.style.bottom = "0";
-    banner.style.left = "0";
-    banner.style.width = "100%";
-    banner.style.zIndex = "999999";
-    banner.style.backgroundColor = "#2095AE";
-    banner.style.color = "white";
-    banner.style.boxShadow = "0 -2px 5px rgba(0,0,0,0.2)";
-    
-    // Create personalized message using the place name
-    var personalizedMessage = `Thanks for scanning our code at <strong>${activePlaceName}</strong>!`;
-  
-  // Add explanation about the promo code if it contains recognizable location info
-  if (activePromoCode.includes(activePlaceName.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 8))) {
-    // The promo code contains the location name
-    console.log("Promo code contains location name");
-  }
-    
-    // Add inner HTML content with the actual promo code and responsive design
-    banner.innerHTML = `
-      <div style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 12px 15px; max-width: 1200px; margin: 0 auto;">
-        <div style="margin-bottom: 10px; margin-right: 10px; flex: 1 1 auto;">
-          <span style="font-weight: bold; font-size: 16px;">🍾 Special Offer!</span> 
-          <span style="font-size: 14px; display: inline-block;">${personalizedMessage} Use code <strong style="background: white; color: #2095AE; padding: 2px 6px; border-radius: 4px;">${activePromoCode}</strong> for free cava</span>
-        </div>
-        <div style="display: flex; align-items: center; white-space: nowrap;">
-          <button id="direct-book-btn" style="background: white; color: #2095AE; border: none; padding: 8px 15px; border-radius: 4px; margin-right: 10px; font-weight: bold; cursor: pointer;">APPLY NOW</button>
-          <button id="direct-close-btn" style="background: none; border: none; color: white; font-size: 24px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer;">×</button>
-        </div>
-      </div>
-    `;
-    
-    // Add to document body
-    document.body.appendChild(banner);
-    console.log("QR promo banner added to page");
-    
-    // Add media query for mobile devices
-    var mobileStyle = document.createElement('style');
-    mobileStyle.textContent = `
-      @media (max-width: 767px) {
-        #direct-promo-banner > div {
-          padding: 10px 12px !important;
-          flex-direction: column !important;
-          align-items: stretch !important;
-        }
-        #direct-promo-banner span {
-          font-size: 14px !important;
-        }
-        #direct-promo-banner > div > div:first-child {
-          margin-bottom: 8px !important;
-          text-align: center !important;
-        }
-        #direct-promo-banner > div > div:last-child {
-          justify-content: center !important;
-        }
-        #direct-book-btn {
-          padding: 6px 12px !important;
-          font-size: 14px !important;
-        }
-      }
-    `;
-    document.head.appendChild(mobileStyle);
-    
-    // Flag to ensure code is applied only once
-    var promoApplied = false;
-    
-    // Add event listeners
-    document.getElementById('direct-close-btn').addEventListener('click', function() {
-      document.getElementById('direct-promo-banner').style.display = 'none';
-    });
-    
-    document.getElementById('direct-book-btn').addEventListener('click', function() {
-      console.log("Apply button clicked");
-      
-      // If promo already applied, just alert the user
-      if (promoApplied) {
-        alert("Promo code " + activePromoCode + " has already been applied!");
-        return;
-      }
-      
-      // Try to find Book Now buttons
-      var bookButtons = document.querySelectorAll('.btn-inquire');
-      if (bookButtons.length > 0) {
-        bookButtons[0].click();
-      } else {
-        // Try to open modal directly
-        var modal = document.querySelector('.inquiry-modal');
-        if (modal) {
-          modal.classList.add('active');
-          modal.style.display = 'flex';
-        } else {
-          alert("Use code " + activePromoCode + " when booking to receive a free bottle of cava!");
-        }
-      }
-      
-      // Add promo code to booking form (with timeout to let modal open)
-      setTimeout(function() {
-        var inquiryForm = document.querySelector('.inquiry-modal-form form');
-        if (inquiryForm) {
-          // Check if promo code is already applied
-          if (document.getElementById('promoCodeInput') || document.querySelector('.promo-confirmation-row')) {
-            console.log("Promo code already applied to form");
-            return;
-          }
-          
-          // Create hidden promo code field
-          var promoField = document.createElement('input');
-          promoField.type = 'hidden';
-          promoField.id = 'promoCodeInput';
-          promoField.name = 'promoCode';
-          promoField.value = activePromoCode;
-          inquiryForm.appendChild(promoField);
-            
-          // Add visible confirmation
-          var promoRow = document.createElement('div');
-          promoRow.className = 'inquiry-field-row promo-confirmation-row';
-          promoRow.innerHTML = `
-            <div class="inquiry-field-wrap" style="position: relative;">
-              <input type="text" class="inquiry-input-field" value="${activePromoCode}" readonly style="background-color: #e6f7ff !important; color: #0077b6 !important;">
-              <div style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #10b981; font-size: 12px;">
-                <i class="fas fa-check-circle"></i> Free Cava from ${activePlaceName}
-              </div>
-            </div>
-          `;
-            
-          // Insert before submit button
-          var submitButton = inquiryForm.querySelector('.inquiry-submit-button');
-          if (submitButton) {
-            inquiryForm.insertBefore(promoRow, submitButton);
-            promoApplied = true;
-            console.log("Promo code applied to form");
-            
-            // Hide the banner after successful application
-            var promoBanner = document.getElementById('direct-promo-banner');
-            if (promoBanner) {
-              promoBanner.style.display = 'none';
-              
-              // Store in localStorage that this promo has been applied
-              localStorage.setItem('promoApplied', 'true');
-            }
-          }
-        }
-      }, 500);
-    });
-  } else {
-    console.log("No valid promo code in URL, not showing banner");
-  }
-})();
-      </script>
     <script src="/assets/js/boats.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
