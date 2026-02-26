@@ -379,9 +379,29 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`API endpoints available at http://localhost:${PORT}/api/`);
-});
+const parsedPort = Number.parseInt(process.env.PORT || '3000', 10);
+const START_PORT = Number.isNaN(parsedPort) ? 3000 : parsedPort;
+const MAX_PORT_ATTEMPTS = process.env.NODE_ENV === 'production' ? 1 : 10;
 
+function startServer(port, attempt = 1) {
+  const server = app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+    console.log(`API endpoints available at http://localhost:${port}/api/`);
+  });
+
+  server.on('error', (error) => {
+    const canRetry = error.code === 'EADDRINUSE' && attempt < MAX_PORT_ATTEMPTS;
+
+    if (canRetry) {
+      const nextPort = port + 1;
+      console.warn(`Port ${port} is in use. Trying port ${nextPort}...`);
+      startServer(nextPort, attempt + 1);
+      return;
+    }
+
+    console.error(`Failed to start server on port ${port}:`, error.message);
+    process.exit(1);
+  });
+}
+
+startServer(START_PORT);
