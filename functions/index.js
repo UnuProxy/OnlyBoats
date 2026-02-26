@@ -282,7 +282,7 @@ app.post("/test-email", async (req, res) => {
       fullName: "Test Customer",
       boatName: "Test Boat",
       orderDate: "2025-05-24",
-      phoneNumber: "+34 123 456 789",
+      phoneNumber: "+34 642 45 39 52",
       specialNotes: "Test order",
       boatLocation: "Marina Ibiza",
       marina: "Marina Ibiza",
@@ -311,7 +311,6 @@ app.get("/healthz", (req, res) => res.send("OK"));
 
 // Export as V1 function - EXPLICIT V1 ONLY
 exports.apiNew = functions.https.onRequest(app);
-
 
 
 
