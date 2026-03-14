@@ -73,6 +73,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const sendButton = document.getElementById('send-btn');
     const BASE_API_URL = window.location.origin;
 
+    // The homepage currently ships without the chat widget markup.
+    // Exit early so chat initialisation does not throw on null DOM nodes.
+    if (!chatbotWidget || !messagesContainer || !userInputField || !sendButton) {
+        return;
+    }
+
     // === Typing Indicator Utility Functions ===
     function showTypingIndicator() {
         if (document.getElementById('typing-indicator')) return;
@@ -562,4 +568,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 });
-
