@@ -115,6 +115,16 @@
 .modal-form input[type="date"] {
     color: #000 !important;
     -webkit-text-fill-color: #000 !important;
+    position: relative;
+    z-index: 2;
+}
+.modal-form input[type="date"]::before,
+.modal-form input[type="date"]::after {
+    content: none !important;
+    display: none !important;
+}
+.modal-form .field-wrap label {
+    display: none !important;
 }
 @media (max-width: 768px) {
     .modal-form .submit-button {
@@ -243,7 +253,7 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-10 offset-md-1 text-center">
-                  <h1>Arrive as a Client, Leave as a Friend</h1>
+                  <h1>Arrive as Clients, Leave as Friends</h1>
                   <h4></h4>
                   <div class="cta-wrapper">
                     <button class="elegant-cta" data-boat-name="Boat Name Here">BOOK NOW</button>
