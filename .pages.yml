@@ -1,12 +1,12 @@
 media:
-  input: assets/img
+  input: public/assets/img
   output: /assets/img
   categories: [image]
 
 content:
   - name: fleet
     label: "Boats Fleet"
-    path: content/boats.json
+    path: public/content/boats.json
     type: file
     format: json
     fields:
