@@ -69,17 +69,33 @@ content:
             type: boolean
             default: false
 
-          - name: price_may_october
-            label: "Price — May & October (€/day)"
+          - name: price_may
+            label: "Price — May (€/day)"
             type: number
             required: true
+            description: "Set to 0 to show 'On request' instead of a price"
 
-          - name: price_june_september
-            label: "Price — June & September (€/day)"
+          - name: price_june
+            label: "Price — June (€/day)"
             type: number
             description: "Set to 0 to show 'On request' instead of a price"
 
-          - name: price_july_august
-            label: "Price — July & August (€/day)"
+          - name: price_july
+            label: "Price — July (€/day)"
+            type: number
+            description: "Set to 0 to show 'On request' instead of a price"
+
+          - name: price_august
+            label: "Price — August (€/day)"
+            type: number
+            description: "Set to 0 to show 'On request' instead of a price"
+
+          - name: price_september
+            label: "Price — September (€/day)"
+            type: number
+            description: "Set to 0 to show 'On request' instead of a price"
+
+          - name: price_october
+            label: "Price — October (€/day)"
             type: number
             description: "Set to 0 to show 'On request' instead of a price"
