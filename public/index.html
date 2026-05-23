@@ -112,6 +112,51 @@
     color: #000;
     background-color: #fff;
 }
+/* Hero eyebrow — matches justenjoyibiza.com .pe style */
+.hero-eyebrow {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: #B8943C;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 0 28px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 1px;
+    background: #B8943C;
+}
+.hero-eyebrow::before { left: 0; }
+.hero-eyebrow::after  { right: 0; }
+
+/* Gold book button — matches justenjoyibiza.com */
+.hero-book-btn {
+    background: #B8943C !important;
+    border: 1px solid #B8943C !important;
+    color: #0a0a3c !important;
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-size: 12px !important;
+    letter-spacing: 0.32em !important;
+    font-weight: 700 !important;
+    padding: 18px 44px !important;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 0 !important;
+}
+.hero-book-btn:hover {
+    background: transparent !important;
+    color: #B8943C !important;
+}
+
 .modal-form input[type="date"] {
     color: #000 !important;
     -webkit-text-fill-color: #000 !important;
@@ -253,10 +298,15 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-10 offset-md-1 text-center">
-                  <h1>Arrive as a Client, Leave as a Friend</h1>
-                  <h4></h4>
+                  <!-- Eyebrow with gold lines -->
+                  <span class="hero-eyebrow">BOAT RENTAL IBIZA</span>
+                  <!-- Main heading -->
+                  <h1 style="font-family:'Gilda Display',serif; font-size:clamp(40px,7vw,88px); color:#fff; font-weight:400; line-height:1.05; margin:0 0 20px;">Just Enjoy Ibiza,<br>by boat.</h1>
+                  <!-- Subtitle -->
+                  <p style="font-family:'Gilda Display',serif; font-style:italic; font-size:clamp(17px,2.2vw,24px); color:rgba(255,255,255,0.88); margin:0 0 40px; font-weight:300;">Arrive as a Client, Leave as a Friend</p>
+                  <!-- Gold CTA Button -->
                   <div class="cta-wrapper">
-                    <button class="elegant-cta" data-boat-name="Boat Name Here">BOOK NOW</button>
+                    <button class="elegant-cta hero-book-btn" data-boat-name="Boat Name Here">RENT YOUR BOAT</button>
                   </div>
                 </div>
               </div>
