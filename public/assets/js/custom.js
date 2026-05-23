@@ -453,7 +453,8 @@ $(function () {
     });
     
     //  Scroll back to top
-    var progressPath = document.querySelector('.progress-wrap path');
+var progressPath = document.querySelector('.progress-wrap path');
+if (progressPath) {
     var pathLength = progressPath.getTotalLength();
     progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
     progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
@@ -468,6 +469,7 @@ $(function () {
     }
     updateProgress();
     $(window).scroll(updateProgress);
+}
     var offset = 150;
     var duration = 550;
     jQuery(window).on('scroll', function () {
