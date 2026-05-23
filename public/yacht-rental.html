@@ -92,23 +92,28 @@
             .elegant-whatsapp-text { display: none; }
             .elegant-whatsapp-inner i { margin-right: 0; }
         }
-        /* No results message */
-        .no-results {
+        /* No results / loading */
+        .no-results,
+        .loading-boats {
             text-align: center; padding: 60px 20px; width: 100%;
             color: #666; font-family: 'Barlow Condensed', sans-serif;
             font-size: 18px; letter-spacing: 1px;
         }
+        /* Boat photo with focus-point support (this is what makes "center the boat" work) */
+        .boat-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         </style>
     </head>
 <body>
-
     <!-- Progress scroll totop -->
     <div class="progress-wrap cursor-pointer">
         <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
         </svg>
     </div>
-
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-special">
         <div class="container">
@@ -131,13 +136,12 @@
             </div>
         </div>
     </nav>
-
     <!-- Stats Bar -->
     <div class="stats-bar">
         <div class="wide-container">
             <div class="stats-content">
                 <div class="stats-found">
-                    FOUND <span id="yachtCount">15</span> YACHTS
+                    FOUND <span id="yachtCount">0</span> YACHTS
                 </div>
                 <div class="stats-options">
                     <button id="toggleSearch" class="toggle-search-btn mobile-filters-btn">
@@ -150,10 +154,8 @@
             </div>
         </div>
     </div>
-
     <!-- Main Content -->
     <div class="main-content wide-container">
-
         <!-- Sidebar Filters -->
         <aside class="filters-panel" id="filtersPanel">
             <div class="filters-title">
@@ -196,452 +198,17 @@
                 <i class="fas fa-arrow-rotate-left"></i> Reset Filters
             </button>
         </aside>
-
         <!-- Boat Listing -->
         <section class="boats-list section-padding" id="boatsList">
             <div class="boats-wrapper">
                 <div class="row" id="boatsGrid">
-
-                    <!-- BOAT 1: Quicksilver 875 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="11" data-price="762">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/SeaRAy290.JPEG" alt="Quicksilver 875 boat rental Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Quicksilver 875</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 9m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 11 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€762</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€914</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€1,067</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Quicksilver 875">View Details</button>
-                                    <button class="btn-inquire" data-boat="Quicksilver 875">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="loading-boats">
+                        <i class="fas fa-spinner fa-spin"></i> Loading boats...
                     </div>
-
-                    <!-- BOAT 2: Key Largo 27 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="7" data-price="822">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/Rand30.jpg" alt="Key Largo 27 boat rental Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Key Largo 27</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 8.05m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 7 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€822</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€986</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€1,151</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Key Largo 27">View Details</button>
-                                    <button class="btn-inquire" data-boat="Key Largo 27">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 3: Sea Ray 290 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="11" data-price="900">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/SeaRAy290.JPEG" alt="Sea Ray 290 boat rental Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Sea Ray 290</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 10m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 11 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€900</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€1,080</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€1,260</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Sea Ray 290">View Details</button>
-                                    <button class="btn-inquire" data-boat="Sea Ray 290">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 4: Rand 27 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="9" data-price="1064">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/Rand30.jpg" alt="Rand 27 boat rental Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Rand 27</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 8.5m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 9 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€1,064</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€1,277</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€1,490</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Rand 27">View Details</button>
-                                    <button class="btn-inquire" data-boat="Rand 27">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 5: Alfastreet Marine 28 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="11" data-price="1185">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/EcoFriendly.jpeg" alt="Alfastreet Marine 28 boat rental Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Alfastreet Marine 28</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 10m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 11 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€1,185</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€1,422</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€1,659</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Alfastreet Marine 28">View Details</button>
-                                    <button class="btn-inquire" data-boat="Alfastreet Marine 28">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 6: Pershing 37 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="11" data-price="1285">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/CranchiA46.jpeg" alt="Pershing 37 yacht charter Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Pershing 37</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 11.20m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 11 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€1,285</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€1,542</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€1,799</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Pershing 37">View Details</button>
-                                    <button class="btn-inquire" data-boat="Pershing 37">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 7: De Antonio 34 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="9" data-price="1400">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/DeAntonio36Paradise.jpg" alt="DeAntonio 34 yacht rental Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">DeAntonio 34</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 10m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 9 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€1,400</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€1,680</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€1,960</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="DeAntonio 34">View Details</button>
-                                    <button class="btn-inquire" data-boat="DeAntonio 34">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 8: De Antonio 36 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="12" data-price="1385">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/DeAntonio36Paradise.jpg" alt="De Antonio 36 yacht rental Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">De Antonio 36</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 11m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 12 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€1,385</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€1,662</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€1,939</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="De Antonio 36">View Details</button>
-                                    <button class="btn-inquire" data-boat="De Antonio 36">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 9: Sessa Marine 52 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="10" data-price="1800">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/SessaMarine.jpg" alt="Sessa Marine 52 luxury yacht Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Sessa Marine 52</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 16m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 10 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€1,800</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€2,160</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€2,520</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Sessa Marine 52">View Details</button>
-                                    <button class="btn-inquire" data-boat="Sessa Marine 52">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 10: Cranchi A46 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="12" data-price="1800">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/CranchiA46.jpeg" alt="Cranchi A46 luxury yacht Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Cranchi A46</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 14m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 12 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€1,800</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€2,160</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€2,520</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Cranchi A46">View Details</button>
-                                    <button class="btn-inquire" data-boat="Cranchi A46">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 11: Pardo 50 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="12" data-price="3450">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/SessaMarine.jpg" alt="Pardo 50 yacht charter Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Pardo 50</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 18m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 12 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€3,450</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€4,140</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€4,830</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Pardo 50">View Details</button>
-                                    <button class="btn-inquire" data-boat="Pardo 50">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 12: Sunseeker Predator 62 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="12" data-price="3490">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/Nomad-142.jpg" alt="Sunseeker Predator 62 charter Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Sunseeker Predator 62</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 18m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 12 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€3,490</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€4,188</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€4,886</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Sunseeker Predator 62">View Details</button>
-                                    <button class="btn-inquire" data-boat="Sunseeker Predator 62">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 13: Vanquish 58 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="12" data-price="4000">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/Nomad-142.jpg" alt="Vanquish 58 luxury yacht Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Vanquish 58</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 18m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 12 guests</span>
-                                        <span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€4,000</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">€4,800</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">€5,600</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Vanquish 58">View Details</button>
-                                    <button class="btn-inquire" data-boat="Vanquish 58">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 14: Mangusta 108 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="12" data-price="12250">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/Nomad-142.jpg" alt="Mangusta 108 superyacht Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Mangusta 108</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 33m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 12 guests</span>
-                                        <span class="spec-item"><i class="fas fa-bed"></i> Overnight</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€12,250</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">On request</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">On request</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Mangusta 108">View Details</button>
-                                    <button class="btn-inquire" data-boat="Mangusta 108">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BOAT 15: Riva Argo 90 -->
-                    <div class="card-wrapper" data-type="motor" data-guests="12" data-price="12950">
-                        <div class="yacht-card">
-                            <div class="yacht-image-wrapper">
-                                <img class="boat-image" src="/assets/img/RivaArgo90.jpeg" alt="Riva Argo 90 superyacht Ibiza" loading="lazy">
-                                <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
-                            </div>
-                            <div class="yacht-content">
-                                <div class="card-header">
-                                    <h3 class="yacht-name">Riva Argo 90</h3>
-                                    <div class="specs-row">
-                                        <span class="spec-item"><i class="fas fa-ruler-combined"></i> 28.70m</span>
-                                        <span class="spec-item"><i class="fas fa-users"></i> 12 guests</span>
-                                        <span class="spec-item"><i class="fas fa-bed"></i> Overnight</span>
-                                    </div>
-                                </div>
-                                <div class="pricing-grid">
-                                    <div class="price-row"><span>MAY &amp; OCTOBER</span><span class="price-value">€12,950</span></div>
-                                    <div class="price-row"><span>JUNE &amp; SEPTEMBER</span><span class="price-value">On request</span></div>
-                                    <div class="price-row"><span>JULY &amp; AUGUST</span><span class="price-value">On request</span></div>
-                                </div>
-                                <div class="action-buttons">
-                                    <button class="btn-view btn-inquire" data-boat="Riva Argo 90">View Details</button>
-                                    <button class="btn-inquire" data-boat="Riva Argo 90">Book Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div><!-- end #boatsGrid -->
+                </div>
             </div>
         </section>
     </div><!-- end .main-content -->
-
     <!-- Inquiry Modal -->
     <div class="inquiry-modal" id="inquiryModal">
         <div class="inquiry-modal-container">
@@ -724,7 +291,6 @@
             </div>
         </div>
     </div>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-top">
@@ -770,7 +336,6 @@
             </div>
         </div>
     </footer>
-
     <!-- WhatsApp Button -->
     <a href="https://wa.me/34642453952" class="elegant-whatsapp" target="_blank">
         <div class="elegant-whatsapp-inner">
@@ -778,13 +343,106 @@
             <span class="elegant-whatsapp-text">Contact Us</span>
         </div>
     </a>
-
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/custom.js"></script>
-
     <script>
+    // ──────────────────────────────────────────────────────────
+    //  BOATS: load from content/boats.json (edited via Pages CMS)
+    // ──────────────────────────────────────────────────────────
+    function formatPrice(value) {
+        if (!value || value <= 0) return 'On request';
+        return '€' + value.toLocaleString('en-US');
+    }
+
+    function escapeHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function renderBoatCard(boat) {
+        const name = escapeHtml(boat.name);
+        const image = escapeHtml(boat.image || '/assets/img/RivaArgo90.jpeg');
+        const imagePosition = escapeHtml(boat.image_position || 'center');
+        const length = escapeHtml(boat.length || '');
+        const guests = parseInt(boat.guests) || 0;
+        const type = escapeHtml(boat.type || 'motor');
+        const captainOrOvernight = boat.overnight
+            ? '<span class="spec-item"><i class="fas fa-bed"></i> Overnight</span>'
+            : (boat.captain_included !== false
+                ? '<span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>'
+                : '');
+        const priceMay  = parseInt(boat.price_may)       || 0;
+        const priceJun  = parseInt(boat.price_june)      || 0;
+        const priceJul  = parseInt(boat.price_july)      || 0;
+        const priceAug  = parseInt(boat.price_august)    || 0;
+        const priceSep  = parseInt(boat.price_september) || 0;
+        const priceOct  = parseInt(boat.price_october)   || 0;
+        // For the "max price" filter we use the lowest non-zero price (shoulder season)
+        const filterPrice = priceMay || priceOct || priceJun || priceSep || priceJul || priceAug || 0;
+
+        return `
+        <div class="card-wrapper" data-type="${type}" data-guests="${guests}" data-price="${filterPrice}">
+            <div class="yacht-card">
+                <div class="yacht-image-wrapper">
+                    <img class="boat-image" src="${image}" alt="${name} boat rental Ibiza" loading="lazy" style="object-position: ${imagePosition};">
+                    <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="yacht-content">
+                    <div class="card-header">
+                        <h3 class="yacht-name">${name}</h3>
+                        <div class="specs-row">
+                            <span class="spec-item"><i class="fas fa-ruler-combined"></i> ${length}</span>
+                            <span class="spec-item"><i class="fas fa-users"></i> ${guests} guests</span>
+                            ${captainOrOvernight}
+                        </div>
+                    </div>
+                    <div class="pricing-grid">
+                        <div class="price-row"><span>MAY</span><span class="price-value">${formatPrice(priceMay)}</span></div>
+                        <div class="price-row"><span>JUNE</span><span class="price-value">${formatPrice(priceJun)}</span></div>
+                        <div class="price-row"><span>JULY</span><span class="price-value">${formatPrice(priceJul)}</span></div>
+                        <div class="price-row"><span>AUGUST</span><span class="price-value">${formatPrice(priceAug)}</span></div>
+                        <div class="price-row"><span>SEPTEMBER</span><span class="price-value">${formatPrice(priceSep)}</span></div>
+                        <div class="price-row"><span>OCTOBER</span><span class="price-value">${formatPrice(priceOct)}</span></div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-view btn-inquire" data-boat="${name}">View Details</button>
+                        <button class="btn-inquire" data-boat="${name}">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    async function loadBoats() {
+        const grid = document.getElementById('boatsGrid');
+        try {
+            // Cache-buster ensures Pages CMS edits show immediately
+            const resp = await fetch('/content/boats.json?v=' + Date.now());
+            if (!resp.ok) throw new Error('Could not load boats');
+            const data = await resp.json();
+            const boats = Array.isArray(data.boats) ? data.boats : [];
+
+            if (boats.length === 0) {
+                grid.innerHTML = '<div class="no-results"><p>No boats are listed yet. Please check back soon.</p></div>';
+                document.getElementById('yachtCount').textContent = '0';
+                return;
+            }
+
+            grid.innerHTML = boats.map(renderBoatCard).join('');
+            document.getElementById('yachtCount').textContent = boats.length;
+            applyFilters();
+        } catch (err) {
+            console.error('Failed to load boats:', err);
+            grid.innerHTML = '<div class="no-results"><p>Unable to load our fleet right now. Please refresh, or contact us on WhatsApp: <a href="https://wa.me/34642453952">+34 642 45 39 52</a></p></div>';
+        }
+    }
+
     // ── FILTERS ──────────────────────────────────────────────
     function applyFilters() {
         const type      = document.getElementById('boatType').value;
@@ -792,16 +450,13 @@
         const maxPrice  = document.getElementById('priceRange').value;
         const cards     = document.querySelectorAll('#boatsGrid .card-wrapper');
         let visible = 0;
-
         cards.forEach(card => {
             const cardType   = card.dataset.type;
             const cardGuests = parseInt(card.dataset.guests);
             const cardPrice  = parseInt(card.dataset.price);
-
             const typeOk  = !type    || cardType === type;
             const guestOk = !guests  || cardGuests <= parseInt(guests);
             const priceOk = !maxPrice|| cardPrice  <= parseInt(maxPrice);
-
             if (typeOk && guestOk && priceOk) {
                 card.style.display = '';
                 visible++;
@@ -809,12 +464,10 @@
                 card.style.display = 'none';
             }
         });
-
         document.getElementById('yachtCount').textContent = visible;
-
         // Show no-results message if needed
         let noMsg = document.getElementById('noResults');
-        if (visible === 0) {
+        if (visible === 0 && cards.length > 0) {
             if (!noMsg) {
                 noMsg = document.createElement('div');
                 noMsg.id = 'noResults';
@@ -826,26 +479,22 @@
             noMsg.remove();
         }
     }
-
     function resetFilters() {
         document.getElementById('boatType').value  = '';
         document.getElementById('guests').value    = '';
         document.getElementById('priceRange').value= '';
         applyFilters();
     }
-
     // ── MODAL ────────────────────────────────────────────────
     function openModal(boatName) {
         document.getElementById('boatNameInput').value = boatName || '';
         document.getElementById('inquiryModal').classList.add('active');
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.getElementById('inquiryModal').classList.remove('active');
         document.body.style.overflow = '';
     }
-
     // Book Now / View Details buttons
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('.btn-inquire');
@@ -860,10 +509,19 @@
         if (e.target.id === 'inquiryModal') {
             closeModal();
         }
+        // Favourite buttons (delegated because boats are now dynamic)
+        const fav = e.target.closest('.favorite-btn');
+        if (fav) {
+            e.stopPropagation();
+            const icon = fav.querySelector('i');
+            icon.classList.toggle('fas');
+            icon.classList.toggle('far');
+        }
     });
-
     // ── FORM SUBMISSION ──────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
+        // Kick off boat loading
+        loadBoats();
 
         // Filters sidebar mobile toggle
         const openBtn    = document.getElementById('toggleSearch');
@@ -873,40 +531,25 @@
             openBtn.addEventListener('click',  () => filtersPanel.classList.add('open'));
             closeBtn.addEventListener('click', () => filtersPanel.classList.remove('open'));
         }
-
-        // Favourite buttons
-        document.querySelectorAll('.favorite-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fas');
-                icon.classList.toggle('far');
-            });
-        });
-
         // Date min = today
         document.querySelectorAll('input[type="date"]').forEach(input => {
             input.setAttribute('min', new Date().toISOString().split('T')[0]);
         });
-
         // Form submit
         const form = document.getElementById('inquiryForm');
         if (form) {
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
-
                 // Block sanctioned countries
                 const country = form.querySelector('select[name="country"]').value;
                 if (['IR','KP','VE'].includes(country)) {
                     alert('Sorry, we are unable to process bookings from your country.');
                     return;
                 }
-
                 const btn = form.querySelector('.inquiry-submit-button');
                 const orig = btn.textContent;
                 btn.textContent = 'Sending...';
                 btn.disabled = true;
-
                 try {
                     const resp = await fetch(form.action, {
                         method: 'POST',
@@ -926,7 +569,6 @@
             });
         }
     });
-
     // ── HAMBURGER ────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
         const toggler    = document.querySelector('.custom-toggler');
@@ -961,7 +603,6 @@
             });
         }
     });
-
     // ── SCROLL ANIMATION ─────────────────────────────────────
     window.addEventListener('scroll', () => {
         document.querySelectorAll('.yacht-card').forEach(card => {
@@ -972,6 +613,5 @@
         });
     });
     </script>
-
 </body>
 </html>
