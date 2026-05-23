@@ -9,9 +9,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 762,
-      "price_june_september": 914,
-      "price_july_august": 1067
+      "price_may": 762,
+      "price_june": 914,
+      "price_july": 1067,
+      "price_august": 1067,
+      "price_september": 914,
+      "price_october": 762
     },
     {
       "name": "Key Largo 27",
@@ -22,9 +25,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 822,
-      "price_june_september": 986,
-      "price_july_august": 1151
+      "price_may": 822,
+      "price_june": 986,
+      "price_july": 1151,
+      "price_august": 1151,
+      "price_september": 986,
+      "price_october": 822
     },
     {
       "name": "Sea Ray 290",
@@ -35,9 +41,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 900,
-      "price_june_september": 1080,
-      "price_july_august": 1260
+      "price_may": 900,
+      "price_june": 1080,
+      "price_july": 1260,
+      "price_august": 1260,
+      "price_september": 1080,
+      "price_october": 900
     },
     {
       "name": "Rand 27",
@@ -48,9 +57,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 1064,
-      "price_june_september": 1277,
-      "price_july_august": 1490
+      "price_may": 1064,
+      "price_june": 1277,
+      "price_july": 1490,
+      "price_august": 1490,
+      "price_september": 1277,
+      "price_october": 1064
     },
     {
       "name": "Alfastreet Marine 28",
@@ -61,9 +73,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 1185,
-      "price_june_september": 1422,
-      "price_july_august": 1659
+      "price_may": 1185,
+      "price_june": 1422,
+      "price_july": 1659,
+      "price_august": 1659,
+      "price_september": 1422,
+      "price_october": 1185
     },
     {
       "name": "Pershing 37",
@@ -74,9 +89,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 1285,
-      "price_june_september": 1542,
-      "price_july_august": 1799
+      "price_may": 1285,
+      "price_june": 1542,
+      "price_july": 1799,
+      "price_august": 1799,
+      "price_september": 1542,
+      "price_october": 1285
     },
     {
       "name": "DeAntonio 34",
@@ -87,9 +105,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 1400,
-      "price_june_september": 1680,
-      "price_july_august": 1960
+      "price_may": 1400,
+      "price_june": 1680,
+      "price_july": 1960,
+      "price_august": 1960,
+      "price_september": 1680,
+      "price_october": 1400
     },
     {
       "name": "De Antonio 36",
@@ -100,9 +121,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 1385,
-      "price_june_september": 1662,
-      "price_july_august": 1939
+      "price_may": 1385,
+      "price_june": 1662,
+      "price_july": 1939,
+      "price_august": 1939,
+      "price_september": 1662,
+      "price_october": 1385
     },
     {
       "name": "Sessa Marine 52",
@@ -113,9 +137,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 1800,
-      "price_june_september": 2160,
-      "price_july_august": 2520
+      "price_may": 1800,
+      "price_june": 2160,
+      "price_july": 2520,
+      "price_august": 2520,
+      "price_september": 2160,
+      "price_october": 1800
     },
     {
       "name": "Cranchi A46",
@@ -126,9 +153,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 1800,
-      "price_june_september": 2160,
-      "price_july_august": 2520
+      "price_may": 1800,
+      "price_june": 2160,
+      "price_july": 2520,
+      "price_august": 2520,
+      "price_september": 2160,
+      "price_october": 1800
     },
     {
       "name": "Pardo 50",
@@ -139,9 +169,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 3450,
-      "price_june_september": 4140,
-      "price_july_august": 4830
+      "price_may": 3450,
+      "price_june": 4140,
+      "price_july": 4830,
+      "price_august": 4830,
+      "price_september": 4140,
+      "price_october": 3450
     },
     {
       "name": "Sunseeker Predator 62",
@@ -152,9 +185,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 3490,
-      "price_june_september": 4188,
-      "price_july_august": 4886
+      "price_may": 3490,
+      "price_june": 4188,
+      "price_july": 4886,
+      "price_august": 4886,
+      "price_september": 4188,
+      "price_october": 3490
     },
     {
       "name": "Vanquish 58",
@@ -165,9 +201,12 @@
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may_october": 4000,
-      "price_june_september": 4800,
-      "price_july_august": 5600
+      "price_may": 4000,
+      "price_june": 4800,
+      "price_july": 5600,
+      "price_august": 5600,
+      "price_september": 4800,
+      "price_october": 4000
     },
     {
       "name": "Mangusta 108",
@@ -178,9 +217,12 @@
       "image_position": "center",
       "captain_included": false,
       "overnight": true,
-      "price_may_october": 12250,
-      "price_june_september": 0,
-      "price_july_august": 0
+      "price_may": 12250,
+      "price_june": 0,
+      "price_july": 0,
+      "price_august": 0,
+      "price_september": 0,
+      "price_october": 12250
     },
     {
       "name": "Riva Argo 90",
@@ -191,9 +233,12 @@
       "image_position": "center",
       "captain_included": false,
       "overnight": true,
-      "price_may_october": 12950,
-      "price_june_september": 0,
-      "price_july_august": 0
+      "price_may": 12950,
+      "price_june": 0,
+      "price_july": 0,
+      "price_august": 0,
+      "price_september": 0,
+      "price_october": 12950
     }
   ]
 }
