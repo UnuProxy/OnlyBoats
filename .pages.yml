@@ -21,7 +21,7 @@ content:
             type: string
             required: true
 
-            - name: published
+          - name: published
             label: "Published — show on website"
             type: boolean
             default: true
