@@ -120,21 +120,21 @@
       "price_october": 1550
     },
     {
-      "name": "De Antonio 36",
+      "name": "Bellini 36",
       "published": true,
       "type": "motor",
-      "length": "11m",
+      "length": "12m",
       "guests": 12,
-      "image": "/assets/img/DeAntonio36Paradise.jpg",
+      "image": "/assets/img/1-1920x1080-2.jpg",
       "image_position": "center",
       "captain_included": true,
       "overnight": false,
-      "price_may": 1385,
-      "price_june": 1662,
-      "price_july": 1939,
-      "price_august": 1939,
-      "price_september": 1662,
-      "price_october": 1385
+      "price_may": 1700,
+      "price_june": 2100,
+      "price_july": 2450,
+      "price_august": 2450,
+      "price_september": 1950,
+      "price_october": 1700
     },
     {
       "name": "Pardo 43",
