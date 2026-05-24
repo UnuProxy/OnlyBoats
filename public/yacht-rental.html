@@ -466,7 +466,9 @@
             const resp = await fetch('/content/boats.json?v=' + Date.now());
             if (!resp.ok) throw new Error('Could not load boats');
             const data = await resp.json();
-            const boats = Array.isArray(data.boats) ? data.boats : [];
+            let boats = Array.isArray(data.boats) ? data.boats : [];
+            // Only show published boats (drafts hidden from live site)
+            boats = boats.filter(b => b.published !== false);
 
             if (boats.length === 0) {
                 grid.innerHTML = '<div class="no-results"><p>No boats are listed yet. Please check back soon.</p></div>';
