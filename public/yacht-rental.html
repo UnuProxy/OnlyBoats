@@ -2,18 +2,18 @@
 <html lang="en">
     <head>
         <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRDCG93F2Z"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-JRDCG93F2Z');
-</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRDCG93F2Z"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-JRDCG93F2Z');
+        </script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <title>Our Fleet | Just Enjoy Ibiza Boats - Luxury Yacht Charter Ibiza</title>
-        <meta name="description" content="Browse our full fleet of<meta name="description" content="Browse our luxury yacht fleet in Ibiza — 15+ boats from speedboats to superyachts. Captain included. Book direct from €790/day.">
+        <meta name="description" content="Browse our luxury yacht fleet in Ibiza — 15+ boats from speedboats to superyachts. Captain included. Book direct from €762/day.">
         <meta name="robots" content="index, follow">
         <link rel="canonical" href="https://justenjoyibizaboats.com/yacht-rental.html" />
         <link rel="shortcut icon" href="/assets/img/favicon-16x16.png" type="image/x-icon">
@@ -107,7 +107,7 @@
             color: #666; font-family: 'Barlow Condensed', sans-serif;
             font-size: 18px; letter-spacing: 1px;
         }
-        /* Boat photo with focus-point support (this is what makes "center the boat" work) */
+        /* Boat photo with focus-point support */
         .boat-image {
             width: 100%;
             height: 100%;
@@ -145,39 +145,39 @@
         </div>
     </nav>
     <!-- Page Header with H1 -->
-<header class="page-header-banner">
-    <div class="wide-container">
-        <h1 class="page-h1-title">Boat &amp; Yacht Charter in Ibiza</h1>
-        <p class="page-h1-subtitle">Browse our handpicked fleet — from speedboats to superyachts</p>
-    </div>
-</header>
-<style>
-.page-header-banner {
-    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
-    padding: 30px 20px 20px;
-    text-align: center;
-    border-bottom: 1px solid #eaeaea;
-}
-.page-h1-title {
-    font-family: 'Gilda Display', serif;
-    font-size: clamp(26px, 4vw, 38px);
-    color: #1a3540;
-    margin: 0 0 8px;
-    font-weight: 400;
-    line-height: 1.2;
-}
-.page-h1-subtitle {
-    font-family: 'Barlow Condensed', sans-serif;
-    color: #666;
-    font-size: 15px;
-    letter-spacing: 1.5px;
-    margin: 0;
-    text-transform: uppercase;
-}
-@media (max-width: 768px) {
-    .page-header-banner { padding: 20px 16px 14px; }
-}
-</style>
+    <header class="page-header-banner">
+        <div class="wide-container">
+            <h1 class="page-h1-title">Boat &amp; Yacht Charter in Ibiza</h1>
+            <p class="page-h1-subtitle">Browse our handpicked fleet — from speedboats to superyachts</p>
+        </div>
+    </header>
+    <style>
+    .page-header-banner {
+        background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+        padding: 30px 20px 20px;
+        text-align: center;
+        border-bottom: 1px solid #eaeaea;
+    }
+    .page-h1-title {
+        font-family: 'Gilda Display', serif;
+        font-size: clamp(26px, 4vw, 38px);
+        color: #1a3540;
+        margin: 0 0 8px;
+        font-weight: 400;
+        line-height: 1.2;
+    }
+    .page-h1-subtitle {
+        font-family: 'Barlow Condensed', sans-serif;
+        color: #666;
+        font-size: 15px;
+        letter-spacing: 1.5px;
+        margin: 0;
+        text-transform: uppercase;
+    }
+    @media (max-width: 768px) {
+        .page-header-banner { padding: 20px 16px 14px; }
+    }
+    </style>
     <!-- Stats Bar -->
     <div class="stats-bar">
         <div class="wide-container">
@@ -425,7 +425,6 @@
         const priceAug  = parseInt(boat.price_august)    || 0;
         const priceSep  = parseInt(boat.price_september) || 0;
         const priceOct  = parseInt(boat.price_october)   || 0;
-        // For the "max price" filter we use the lowest non-zero price (shoulder season)
         const filterPrice = priceMay || priceOct || priceJun || priceSep || priceJul || priceAug || 0;
 
         return `
@@ -464,7 +463,6 @@
     async function loadBoats() {
         const grid = document.getElementById('boatsGrid');
         try {
-            // Cache-buster ensures Pages CMS edits show immediately
             const resp = await fetch('/content/boats.json?v=' + Date.now());
             if (!resp.ok) throw new Error('Could not load boats');
             const data = await resp.json();
@@ -485,7 +483,6 @@
         }
     }
 
-    // ── FILTERS ──────────────────────────────────────────────
     function applyFilters() {
         const type      = document.getElementById('boatType').value;
         const guests    = document.getElementById('guests').value;
@@ -507,7 +504,6 @@
             }
         });
         document.getElementById('yachtCount').textContent = visible;
-        // Show no-results message if needed
         let noMsg = document.getElementById('noResults');
         if (visible === 0 && cards.length > 0) {
             if (!noMsg) {
@@ -527,7 +523,6 @@
         document.getElementById('priceRange').value= '';
         applyFilters();
     }
-    // ── MODAL ────────────────────────────────────────────────
     function openModal(boatName) {
         document.getElementById('boatNameInput').value = boatName || '';
         document.getElementById('inquiryModal').classList.add('active');
@@ -537,7 +532,6 @@
         document.getElementById('inquiryModal').classList.remove('active');
         document.body.style.overflow = '';
     }
-    // Book Now / View Details buttons
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('.btn-inquire');
         if (btn) {
@@ -547,11 +541,9 @@
         if (e.target.closest('.inquiry-modal-close')) {
             closeModal();
         }
-        // Close on backdrop click
         if (e.target.id === 'inquiryModal') {
             closeModal();
         }
-        // Favourite buttons (delegated because boats are now dynamic)
         const fav = e.target.closest('.favorite-btn');
         if (fav) {
             e.stopPropagation();
@@ -560,12 +552,8 @@
             icon.classList.toggle('far');
         }
     });
-    // ── FORM SUBMISSION ──────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
-        // Kick off boat loading
         loadBoats();
-
-        // Filters sidebar mobile toggle
         const openBtn    = document.getElementById('toggleSearch');
         const closeBtn   = document.getElementById('closeFilters');
         const filtersPanel = document.getElementById('filtersPanel');
@@ -573,16 +561,13 @@
             openBtn.addEventListener('click',  () => filtersPanel.classList.add('open'));
             closeBtn.addEventListener('click', () => filtersPanel.classList.remove('open'));
         }
-        // Date min = today
         document.querySelectorAll('input[type="date"]').forEach(input => {
             input.setAttribute('min', new Date().toISOString().split('T')[0]);
         });
-        // Form submit
         const form = document.getElementById('inquiryForm');
         if (form) {
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                // Block sanctioned countries
                 const country = form.querySelector('select[name="country"]').value;
                 if (['IR','KP','VE'].includes(country)) {
                     alert('Sorry, we are unable to process bookings from your country.');
@@ -611,7 +596,6 @@
             });
         }
     });
-    // ── HAMBURGER ────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
         const toggler    = document.querySelector('.custom-toggler');
         const navCollapse= document.querySelector('.navbar-collapse');
@@ -645,7 +629,6 @@
             });
         }
     });
-    // ── SCROLL ANIMATION ─────────────────────────────────────
     window.addEventListener('scroll', () => {
         document.querySelectorAll('.yacht-card').forEach(card => {
             if (card.getBoundingClientRect().top < window.innerHeight * 0.9) {
