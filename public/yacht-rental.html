@@ -330,7 +330,47 @@
                                 <input type="email" name="email" class="inquiry-input-field" placeholder="Email Address*" required>
                             </div>
                             <div class="inquiry-field-wrap">
-                                <input type="tel" name="phone" class="inquiry-input-field" placeholder="Phone Number*" required>
+                                <div style="display:flex;gap:6px;width:100%;">
+                                <select name="phoneCode" class="inquiry-select-field" required style="flex:0 0 110px;padding-right:6px;">
+                                    <option value="+34" selected>+34 🇪🇸</option>
+                                    <option value="+1">+1 🇺🇸/🇨🇦</option>
+                                    <option value="+44">+44 🇬🇧</option>
+                                    <option value="+33">+33 🇫🇷</option>
+                                    <option value="+49">+49 🇩🇪</option>
+                                    <option value="+39">+39 🇮🇹</option>
+                                    <option value="+31">+31 🇳🇱</option>
+                                    <option value="+32">+32 🇧🇪</option>
+                                    <option value="+41">+41 🇨🇭</option>
+                                    <option value="+43">+43 🇦🇹</option>
+                                    <option value="+45">+45 🇩🇰</option>
+                                    <option value="+46">+46 🇸🇪</option>
+                                    <option value="+47">+47 🇳🇴</option>
+                                    <option value="+48">+48 🇵🇱</option>
+                                    <option value="+351">+351 🇵🇹</option>
+                                    <option value="+353">+353 🇮🇪</option>
+                                    <option value="+358">+358 🇫🇮</option>
+                                    <option value="+420">+420 🇨🇿</option>
+                                    <option value="+90">+90 🇹🇷</option>
+                                    <option value="+971">+971 🇦🇪</option>
+                                    <option value="+972">+972 🇮🇱</option>
+                                    <option value="+966">+966 🇸🇦</option>
+                                    <option value="+7">+7 🇷🇺</option>
+                                    <option value="+86">+86 🇨🇳</option>
+                                    <option value="+81">+81 🇯🇵</option>
+                                    <option value="+82">+82 🇰🇷</option>
+                                    <option value="+61">+61 🇦🇺</option>
+                                    <option value="+64">+64 🇳🇿</option>
+                                    <option value="+27">+27 🇿🇦</option>
+                                    <option value="+55">+55 🇧🇷</option>
+                                    <option value="+52">+52 🇲🇽</option>
+                                    <option value="+54">+54 🇦🇷</option>
+                                    <option value="+56">+56 🇨🇱</option>
+                                    <option value="+57">+57 🇨🇴</option>
+                                    <option value="+91">+91 🇮🇳</option>
+                                </select>
+                                <input type="tel" name="phoneNumber" class="inquiry-input-field" placeholder="Phone Number*" required style="flex:1;min-width:0;">
+                            </div>
+                            <input type="hidden" name="phone" id="combinedPhone">
                             </div>
                         </div>
                         <div class="inquiry-field-row">
@@ -354,6 +394,20 @@
                                     <option value="10">10 Passengers</option>
                                     <option value="11">11 Passengers</option>
                                     <option value="12">12 Passengers</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Budget range -->
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap">
+                                <select name="budget" class="inquiry-select-field" required>
+                                    <option value="" disabled selected>Your Budget Range (per day)*</option>
+                                    <option value="Under €1,000/day">Under €1,000/day</option>
+                                    <option value="€1,000 - €2,500/day">€1,000 - €2,500/day</option>
+                                    <option value="€2,500 - €5,000/day">€2,500 - €5,000/day</option>
+                                    <option value="€5,000 - €10,000/day">€5,000 - €10,000/day</option>
+                                    <option value="€10,000+/day">€10,000+/day</option>
+                                    <option value="Open to suggestions">Open to suggestions</option>
                                 </select>
                             </div>
                         </div>
@@ -633,6 +687,11 @@
         if (form) {
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
+                // Combine country code + phone number into one international format
+                const phoneCode = form.querySelector('select[name="phoneCode"]').value;
+                const phoneNumber = form.querySelector('input[name="phoneNumber"]').value.trim().replace(/^\+?\d{1,4}\s?/, '');
+                const combinedPhone = document.getElementById('combinedPhone');
+                if (combinedPhone) combinedPhone.value = phoneCode + ' ' + phoneNumber;
                 const country = form.querySelector('select[name="country"]').value;
                 if (['IR','KP','VE'].includes(country)) {
                     alert('Sorry, we are unable to process bookings from your country.');
