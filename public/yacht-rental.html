@@ -113,6 +113,51 @@
             height: 100%;
             object-fit: cover;
         }
+
+            /* ── Compact horizontal pricing grid ──────────── */
+        .pricing-grid-h {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0;
+            padding: 14px 4px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 10px;
+            margin: 14px 0 18px;
+            border: 1px solid #eaeaea;
+        }
+        .price-col {
+            text-align: center;
+            padding: 2px 3px;
+            border-right: 1px solid #ececec;
+        }
+        .price-col:last-child { border-right: none; }
+        .price-month {
+            display: block;
+            font-size: 9px;
+            color: #888;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .price-amount {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #2095AE;
+            font-family: 'Barlow', sans-serif;
+            line-height: 1.1;
+            letter-spacing: -0.3px;
+        }
+        .price-amount.no-price {
+            color: #aaa;
+            font-weight: 500;
+        }
+        @media (max-width: 480px) {
+            .price-amount { font-size: 11px; }
+            .price-month { font-size: 8px; }
+        }
         </style>
     </head>
 <body>
@@ -443,13 +488,31 @@
                             ${captainOrOvernight}
                         </div>
                     </div>
-                    <div class="pricing-grid">
-                        <div class="price-row"><span>MAY</span><span class="price-value">${formatPrice(priceMay)}</span></div>
-                        <div class="price-row"><span>JUNE</span><span class="price-value">${formatPrice(priceJun)}</span></div>
-                        <div class="price-row"><span>JULY</span><span class="price-value">${formatPrice(priceJul)}</span></div>
-                        <div class="price-row"><span>AUGUST</span><span class="price-value">${formatPrice(priceAug)}</span></div>
-                        <div class="price-row"><span>SEPTEMBER</span><span class="price-value">${formatPrice(priceSep)}</span></div>
-                        <div class="price-row"><span>OCTOBER</span><span class="price-value">${formatPrice(priceOct)}</span></div>
+                    <div class="pricing-grid-h">
+                        <div class="price-col">
+                            <div class="price-month">May</div>
+                            <div class="price-amount ${priceMay > 0 ? '' : 'no-price'}">${priceMay > 0 ? '€' + priceMay.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Jun</div>
+                            <div class="price-amount ${priceJun > 0 ? '' : 'no-price'}">${priceJun > 0 ? '€' + priceJun.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Jul</div>
+                            <div class="price-amount ${priceJul > 0 ? '' : 'no-price'}">${priceJul > 0 ? '€' + priceJul.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Aug</div>
+                            <div class="price-amount ${priceAug > 0 ? '' : 'no-price'}">${priceAug > 0 ? '€' + priceAug.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Sep</div>
+                            <div class="price-amount ${priceSep > 0 ? '' : 'no-price'}">${priceSep > 0 ? '€' + priceSep.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Oct</div>
+                            <div class="price-amount ${priceOct > 0 ? '' : 'no-price'}">${priceOct > 0 ? '€' + priceOct.toLocaleString('en-US') : '—'}</div>
+                        </div>
                     </div>
                     <div class="action-buttons">
                         <a href="/boat-details.html?slug=${boat.name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '')}" class="btn-view">View Details</a>
