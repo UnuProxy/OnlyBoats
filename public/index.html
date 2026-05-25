@@ -1567,7 +1567,7 @@ if (!localStorage.getItem('welcomePopupShown')) {
             </div>
             <div class="boat-actions">
               <button class="enquiry-btn" onclick="openInquiryForm('${nameForJs}')">BOOK NOW</button>
-              <a href="/yacht-rental.html" class="view-details">View Details</a>
+             <a href="/boat-details.html?slug=${nameForJs.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '')}" class="view-details">View Details</a>
             </div>
           </div>
         </div>
