@@ -127,6 +127,10 @@
         padding-right: 38px !important;
     }
     .inquiry-modal-form .inquiry-select-field::-ms-expand { display: none; }
+    /* BOOK NOW button in navbar */
+    .nav-book-btn { background: #2095AE !important; color: #fff !important; border: none; padding: 9px 24px !important; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px !important; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; margin-left: 18px; cursor: pointer; transition: all 0.3s ease; text-decoration: none !important; display: inline-block; line-height: 1; box-shadow: 0 2px 8px rgba(32,149,174,0.25); }
+    .nav-book-btn:hover { background: #197a8d !important; color: #fff !important; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(32,149,174,0.4); text-decoration: none !important; }
+    @media (max-width: 991px) { .nav-book-btn { display: inline-block; margin: 12px 0 0 16px; padding: 10px 28px !important; } }
     @media (max-width: 768px) {
         .inquiry-modal-container { width: 95%; max-height: 90vh; overflow-y: auto; }
         .inquiry-modal-form { padding: 20px !important; max-height: 60vh; overflow-y: auto; }
@@ -158,6 +162,7 @@
                     <li class="nav-item"><a class="nav-link" href="about.html">ABOUT US</a></li>
                     <li class="nav-item"><a class="nav-link" href="yacht-rental.html">OUR BOATS</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">CONTACT</a></li>
+                    <li class="nav-item"><button type="button" class="nav-book-btn" onclick="document.getElementById('inquiryModal').classList.add('active');document.body.style.overflow='hidden';">BOOK NOW</button></li>
                 </ul>
             </div>
         </div>
