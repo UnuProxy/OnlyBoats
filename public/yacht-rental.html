@@ -452,7 +452,7 @@
                         <div class="price-row"><span>OCTOBER</span><span class="price-value">${formatPrice(priceOct)}</span></div>
                     </div>
                     <div class="action-buttons">
-                        <button class="btn-view btn-inquire" data-boat="${name}">View Details</button>
+                        <a href="/boat-details.html?slug=${boat.name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '')}" class="btn-view">View Details</a>
                         <button class="btn-inquire" data-boat="${name}">Book Now</button>
                     </div>
                 </div>
