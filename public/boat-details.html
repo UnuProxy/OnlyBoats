@@ -12,426 +12,93 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-
     <!-- These meta tags are updated dynamically by JavaScript based on boat data -->
     <title>Boat Charter Ibiza | Just Enjoy Ibiza Boats</title>
     <meta name="description" content="Luxury boat charter in Ibiza — book direct from Just Enjoy Ibiza Boats.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://justenjoyibizaboats.com/boat-details.html" id="canonicalLink" />
-
     <!-- Open Graph -->
     <meta property="og:title" content="Boat Charter Ibiza" id="ogTitle">
     <meta property="og:description" content="Luxury boat charter in Ibiza" id="ogDescription">
     <meta property="og:url" content="https://justenjoyibizaboats.com/boat-details.html" id="ogUrl">
     <meta property="og:image" content="https://justenjoyibizaboats.com/assets/img/RivaArgo90.jpeg" id="ogImage">
     <meta property="og:type" content="product">
-
     <link rel="shortcut icon" href="/assets/img/favicon-16x16.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/plugins.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/navbar.css">
-
     <style>
-    /* ════════════════════════════════════════════════════════════
-       BOAT DETAIL PAGE STYLES
-       ════════════════════════════════════════════════════════════ */
-
-    body {
-        font-family: 'Barlow', sans-serif;
-        color: #1a3540;
-        background: #ffffff;
-        margin: 0;
-        padding: 0;
-    }
-
-    /* Loading state */
-    .bd-loading {
-        text-align: center;
-        padding: 120px 20px;
-        color: #888;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 18px;
-        letter-spacing: 1.5px;
-    }
+    /* BOAT DETAIL PAGE STYLES */
+    body { font-family: 'Barlow', sans-serif; color: #1a3540; background: #ffffff; margin: 0; padding: 0; }
+    .bd-loading { text-align: center; padding: 120px 20px; color: #888; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; letter-spacing: 1.5px; }
     .bd-loading i { font-size: 32px; color: #2095AE; margin-bottom: 16px; display: block; }
-
-    /* Not found state */
-    .bd-notfound {
-        text-align: center;
-        padding: 120px 20px;
-        max-width: 600px;
-        margin: 0 auto;
-    }
+    .bd-notfound { text-align: center; padding: 120px 20px; max-width: 600px; margin: 0 auto; }
     .bd-notfound h1 { font-family: 'Gilda Display', serif; font-size: 36px; color: #1a3540; margin-bottom: 16px; }
     .bd-notfound p { color: #666; font-size: 16px; margin-bottom: 24px; }
-    .bd-notfound a {
-        display: inline-block;
-        padding: 12px 28px;
-        background: #2095AE;
-        color: white;
-        border-radius: 30px;
-        text-decoration: none;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-weight: 600;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-    }
-
-    /* ── HERO ──────────────────────────────────────── */
-    .bd-hero {
-        position: relative;
-        height: 60vh;
-        min-height: 480px;
-        overflow: hidden;
-        background: #1a3540;
-    }
-    .bd-hero-img {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 1;
-    }
-    .bd-hero-overlay {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(to bottom, rgba(26,53,64,0.3) 0%, rgba(26,53,64,0.7) 100%);
-        z-index: 2;
-    }
-    .bd-hero-content {
-        position: absolute;
-        bottom: 60px;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        z-index: 3;
-        color: white;
-        width: 90%;
-        max-width: 900px;
-    }
-    .bd-hero-eyebrow {
-        display: inline-block;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 12px;
-        letter-spacing: 0.4em;
-        color: #B8943C;
-        font-weight: 600;
-        margin-bottom: 18px;
-        text-transform: uppercase;
-        position: relative;
-        padding: 0 28px;
-    }
-    .bd-hero-eyebrow::before,
-    .bd-hero-eyebrow::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        width: 20px;
-        height: 1px;
-        background: #B8943C;
-    }
+    .bd-notfound a { display: inline-block; padding: 12px 28px; background: #2095AE; color: white; border-radius: 30px; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+    /* HERO */
+    .bd-hero { position: relative; height: 60vh; min-height: 480px; overflow: hidden; background: #1a3540; }
+    .bd-hero-img { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+    .bd-hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(26,53,64,0.3) 0%, rgba(26,53,64,0.7) 100%); z-index: 2; }
+    .bd-hero-content { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 3; color: white; width: 90%; max-width: 900px; }
+    .bd-hero-eyebrow { display: inline-block; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 0.4em; color: #B8943C; font-weight: 600; margin-bottom: 18px; text-transform: uppercase; position: relative; padding: 0 28px; }
+    .bd-hero-eyebrow::before, .bd-hero-eyebrow::after { content: ""; position: absolute; top: 50%; width: 20px; height: 1px; background: #B8943C; }
     .bd-hero-eyebrow::before { left: 0; }
-    .bd-hero-eyebrow::after  { right: 0; }
-    .bd-hero h1 {
-        font-family: 'Gilda Display', serif;
-        font-size: clamp(36px, 6vw, 64px);
-        font-weight: 400;
-        line-height: 1.1;
-        margin: 0 0 14px;
-        color: white;
-    }
-    .bd-hero-tagline {
-        font-family: 'Gilda Display', serif;
-        font-style: italic;
-        font-size: clamp(16px, 2vw, 20px);
-        color: rgba(255,255,255,0.9);
-        margin: 0;
-        font-weight: 300;
-    }
-    .bd-hero-back {
-        position: absolute;
-        top: 24px;
-        left: 24px;
-        z-index: 4;
-        color: white;
-        text-decoration: none;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 13px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        opacity: 0.9;
-        transition: opacity 0.2s;
-        background: rgba(0,0,0,0.4);
-        padding: 8px 16px;
-        border-radius: 20px;
-        backdrop-filter: blur(8px);
-    }
+    .bd-hero-eyebrow::after { right: 0; }
+    .bd-hero h1 { font-family: 'Gilda Display', serif; font-size: clamp(36px, 6vw, 64px); font-weight: 400; line-height: 1.1; margin: 0 0 14px; color: white; }
+    .bd-hero-tagline { font-family: 'Gilda Display', serif; font-style: italic; font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.9); margin: 0; font-weight: 300; }
+    .bd-hero-back { position: absolute; top: 24px; left: 24px; z-index: 4; color: white; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.9; transition: opacity 0.2s; background: rgba(0,0,0,0.4); padding: 8px 16px; border-radius: 20px; backdrop-filter: blur(8px); }
     .bd-hero-back:hover { opacity: 1; color: white; text-decoration: none; }
     .bd-hero-back i { margin-right: 6px; }
-
-    /* ── SPECS BADGES ──────────────────────────────── */
-    .bd-specs {
-        background: #f8f9fa;
-        padding: 36px 20px;
-        border-bottom: 1px solid #eaeaea;
-    }
-    .bd-specs-row {
-        max-width: 1100px;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 24px;
-    }
-    .bd-spec {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 0 18px;
-        min-width: 160px;
-    }
-    .bd-spec-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        background: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #2095AE;
-        font-size: 18px;
-        box-shadow: 0 2px 8px rgba(32,149,174,0.15);
-        flex-shrink: 0;
-    }
+    /* SPECS BADGES */
+    .bd-specs { background: #f8f9fa; padding: 36px 20px; border-bottom: 1px solid #eaeaea; }
+    .bd-specs-row { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
+    .bd-spec { display: flex; align-items: center; gap: 12px; padding: 0 18px; min-width: 160px; }
+    .bd-spec-icon { width: 42px; height: 42px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; color: #2095AE; font-size: 18px; box-shadow: 0 2px 8px rgba(32,149,174,0.15); flex-shrink: 0; }
     .bd-spec-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Barlow Condensed', sans-serif; margin-bottom: 2px; }
     .bd-spec-value { font-size: 17px; font-weight: 600; color: #1a3540; font-family: 'Barlow', sans-serif; }
-
-    /* ── ABOUT SECTION ─────────────────────────────── */
-    .bd-about {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 70px 20px 40px;
-        text-align: center;
-    }
-    .bd-about h2 {
-        font-family: 'Gilda Display', serif;
-        font-size: clamp(28px, 4vw, 38px);
-        color: #1a3540;
-        margin: 0 0 24px;
-        font-weight: 400;
-    }
-    .bd-about p {
-        font-size: 17px;
-        line-height: 1.7;
-        color: #444;
-        max-width: 720px;
-        margin: 0 auto 16px;
-    }
-
-    /* ── PRICING TABLE ─────────────────────────────── */
-    .bd-pricing {
-        background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-        padding: 60px 20px;
-        border-top: 1px solid #eaeaea;
-    }
+    /* ABOUT */
+    .bd-about { max-width: 900px; margin: 0 auto; padding: 70px 20px 40px; text-align: center; }
+    .bd-about h2 { font-family: 'Gilda Display', serif; font-size: clamp(28px, 4vw, 38px); color: #1a3540; margin: 0 0 24px; font-weight: 400; }
+    .bd-about p { font-size: 17px; line-height: 1.7; color: #444; max-width: 720px; margin: 0 auto 16px; }
+    /* PRICING */
+    .bd-pricing { background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%); padding: 60px 20px; border-top: 1px solid #eaeaea; }
     .bd-pricing-container { max-width: 800px; margin: 0 auto; }
-    .bd-pricing h2 {
-        font-family: 'Gilda Display', serif;
-        font-size: clamp(28px, 4vw, 38px);
-        color: #1a3540;
-        text-align: center;
-        margin: 0 0 8px;
-        font-weight: 400;
-    }
-    .bd-pricing-subtitle {
-        text-align: center;
-        font-family: 'Barlow Condensed', sans-serif;
-        color: #666;
-        font-size: 14px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        margin-bottom: 36px;
-    }
-    .bd-price-rows {
-        background: white;
-        border-radius: 14px;
-        overflow: hidden;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-    }
-    .bd-price-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 18px 24px;
-        border-bottom: 1px solid #f0f0f0;
-        transition: background 0.2s;
-    }
+    .bd-pricing h2 { font-family: 'Gilda Display', serif; font-size: clamp(28px, 4vw, 38px); color: #1a3540; text-align: center; margin: 0 0 8px; font-weight: 400; }
+    .bd-pricing-subtitle { text-align: center; font-family: 'Barlow Condensed', sans-serif; color: #666; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 36px; }
+    .bd-price-rows { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+    .bd-price-row { display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid #f0f0f0; transition: background 0.2s; }
     .bd-price-row:last-child { border-bottom: none; }
     .bd-price-row:hover { background: #fafafa; }
-    .bd-price-row.is-lowest {
-        background: linear-gradient(135deg, #f0fafa 0%, #ffffff 100%);
-        border-left: 3px solid #2095AE;
-    }
-    .bd-price-month {
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 15px;
-        font-weight: 600;
-        color: #444;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-    }
-    .bd-price-value {
-        font-family: 'Barlow', sans-serif;
-        font-weight: 700;
-        font-size: 22px;
-        color: #2095AE;
-    }
-    .bd-price-value.on-request {
-        font-size: 14px;
-        color: #888;
-        font-style: italic;
-        font-weight: 500;
-    }
-    .bd-price-lowest-badge {
-        display: inline-block;
-        background: #2095AE;
-        color: white;
-        font-size: 10px;
-        padding: 2px 8px;
-        border-radius: 10px;
-        margin-left: 10px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: 600;
-        vertical-align: middle;
-    }
-
-    /* ── INQUIRY CTA ──────────────────────────────── */
-    .bd-inquiry-cta {
-        text-align: center;
-        padding: 50px 20px 70px;
-        background: #f8f9fa;
-    }
-    .bd-inquiry-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        background: linear-gradient(135deg, #2095AE 0%, #197a8d 100%);
-        color: white;
-        padding: 18px 40px;
-        border: none;
-        border-radius: 30px;
-        font-family: 'Barlow Condensed', sans-serif;
-        font-weight: 600;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        font-size: 15px;
-        cursor: pointer;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        box-shadow: 0 6px 16px rgba(32,149,174,0.3);
-    }
-    .bd-inquiry-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 24px rgba(32,149,174,0.4);
-        color: white;
-        text-decoration: none;
-    }
-    .bd-inquiry-note {
-        margin-top: 16px;
-        font-size: 14px;
-        color: #666;
-    }
+    .bd-price-row.is-lowest { background: linear-gradient(135deg, #f0fafa 0%, #ffffff 100%); border-left: 3px solid #2095AE; }
+    .bd-price-month { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 600; color: #444; text-transform: uppercase; letter-spacing: 1.5px; }
+    .bd-price-value { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: 22px; color: #2095AE; }
+    .bd-price-value.on-request { font-size: 14px; color: #888; font-style: italic; font-weight: 500; }
+    .bd-price-lowest-badge { display: inline-block; background: #2095AE; color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-left: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; vertical-align: middle; }
+    /* INQUIRY CTA */
+    .bd-inquiry-cta { text-align: center; padding: 50px 20px 70px; background: #f8f9fa; }
+    .bd-inquiry-btn { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #2095AE 0%, #197a8d 100%); color: white; padding: 18px 40px; border: none; border-radius: 30px; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; font-size: 15px; cursor: pointer; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 6px 16px rgba(32,149,174,0.3); }
+    .bd-inquiry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(32,149,174,0.4); color: white; text-decoration: none; }
+    .bd-inquiry-note { margin-top: 16px; font-size: 14px; color: #666; }
     .bd-inquiry-note strong { color: #2095AE; }
-
-    /* ── RELATED BOATS ─────────────────────────────── */
-    .bd-related {
-        padding: 70px 20px;
-        background: white;
-    }
+    /* RELATED BOATS */
+    .bd-related { padding: 70px 20px; background: white; }
     .bd-related-container { max-width: 1200px; margin: 0 auto; }
-    .bd-related h2 {
-        font-family: 'Gilda Display', serif;
-        font-size: clamp(26px, 4vw, 36px);
-        color: #1a3540;
-        text-align: center;
-        margin: 0 0 12px;
-        font-weight: 400;
-    }
-    .bd-related-subtitle {
-        text-align: center;
-        font-family: 'Barlow Condensed', sans-serif;
-        color: #666;
-        font-size: 14px;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        margin-bottom: 40px;
-    }
-    .bd-related-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 24px;
-    }
-    .bd-related-card {
-        background: white;
-        border-radius: 14px;
-        overflow: hidden;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-    }
-    .bd-related-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 28px rgba(0,0,0,0.12);
-        text-decoration: none;
-        color: inherit;
-    }
-    .bd-related-card-img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
+    .bd-related h2 { font-family: 'Gilda Display', serif; font-size: clamp(26px, 4vw, 36px); color: #1a3540; text-align: center; margin: 0 0 12px; font-weight: 400; }
+    .bd-related-subtitle { text-align: center; font-family: 'Barlow Condensed', sans-serif; color: #666; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 40px; }
+    .bd-related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .bd-related-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+    .bd-related-card:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(0,0,0,0.12); text-decoration: none; color: inherit; }
+    .bd-related-card-img { width: 100%; height: 200px; object-fit: cover; }
     .bd-related-card-body { padding: 20px; }
-    .bd-related-card-name {
-        font-family: 'Gilda Display', serif;
-        font-size: 20px;
-        color: #1a3540;
-        margin: 0 0 10px;
-        font-weight: 400;
-    }
-    .bd-related-card-meta {
-        font-family: 'Barlow Condensed', sans-serif;
-        color: #666;
-        font-size: 13px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-    }
-    .bd-related-card-price {
-        margin-top: 12px;
-        color: #2095AE;
-        font-weight: 700;
-        font-size: 18px;
-    }
-
-    /* ── WHATSAPP BUTTON ──────────────────────────── */
-    .elegant-whatsapp {
-        position: fixed; bottom: 40px; right: 40px;
-        z-index: 99; text-decoration: none; transition: all 0.3s ease;
-    }
-    .elegant-whatsapp-inner {
-        display: flex; align-items: center;
-        padding: 12px 20px;
-        background-color: rgba(32,149,174,0.95);
-        color: white; border-radius: 30px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.18);
-        transition: all 0.3s ease;
-    }
+    .bd-related-card-name { font-family: 'Gilda Display', serif; font-size: 20px; color: #1a3540; margin: 0 0 10px; font-weight: 400; }
+    .bd-related-card-meta { font-family: 'Barlow Condensed', sans-serif; color: #666; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+    .bd-related-card-price { margin-top: 12px; color: #2095AE; font-weight: 700; font-size: 18px; }
+    /* WHATSAPP BUTTON */
+    .elegant-whatsapp { position: fixed; bottom: 40px; right: 40px; z-index: 99; text-decoration: none; transition: all 0.3s ease; }
+    .elegant-whatsapp-inner { display: flex; align-items: center; padding: 12px 20px; background-color: rgba(32,149,174,0.95); color: white; border-radius: 30px; box-shadow: 0 4px 14px rgba(0,0,0,0.18); transition: all 0.3s ease; }
     .elegant-whatsapp-inner i { font-size: 22px; margin-right: 8px; }
     .elegant-whatsapp-text { font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:1px; text-transform:uppercase; }
     .elegant-whatsapp:hover .elegant-whatsapp-inner { background-color: rgba(32,149,174,1); transform: translateY(-5px); }
@@ -440,52 +107,26 @@
         .elegant-whatsapp-text { display: none; }
         .elegant-whatsapp-inner i { margin-right: 0; }
     }
-
-    /* ── INQUIRY MODAL ────────────────────────────── */
-    .inquiry-modal {
-        display: none;
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background-color: rgba(0,0,0,0.5);
-        z-index: 10000;
-        overflow-y: auto;
-    }
-    .inquiry-modal.active {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-    }
-    .inquiry-modal-container {
-        background: white;
-        border-radius: 16px;
-        max-width: 900px;
-        width: 95%;
-        margin: auto;
-        position: relative;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    }
+    /* INQUIRY MODAL */
+    .inquiry-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10000; overflow-y: auto; }
+    .inquiry-modal.active { display: flex !important; align-items: center; justify-content: center; }
+    .inquiry-modal-container { background: white; border-radius: 16px; max-width: 900px; width: 95%; margin: auto; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
     .inquiry-modal-form .inquiry-input-field,
     .inquiry-modal-form .inquiry-select-field,
-    .inquiry-modal-form .inquiry-message-field {
-        color: #000 !important;
-        -webkit-text-fill-color: #000 !important;
-        border: 1px solid #ddd !important;
-        background-color: #f8f9fa !important;
+    .inquiry-modal-form .inquiry-message-field { color: #000 !important; -webkit-text-fill-color: #000 !important; border: 1px solid #ddd !important; background-color: #f8f9fa !important; }
+    .inquiry-modal-form .inquiry-submit-button { background: #2095AE !important; color: white !important; font-weight: bold; display: block; width: 100%; padding: 12px; border: none; border-radius: 8px; margin-top: 20px; cursor: pointer; font-size: 16px; }
+    /* Clean dropdown arrow — fixes overlap with placeholder text */
+    .inquiry-modal-form .inquiry-select-field {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%232095AE' d='M6 8L0 0h12z'/></svg>") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 14px center !important;
+        background-size: 12px 8px !important;
+        padding-right: 38px !important;
     }
-    .inquiry-modal-form .inquiry-submit-button {
-        background: #2095AE !important;
-        color: white !important;
-        font-weight: bold;
-        display: block;
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 8px;
-        margin-top: 20px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+    .inquiry-modal-form .inquiry-select-field::-ms-expand { display: none; }
     @media (max-width: 768px) {
         .inquiry-modal-container { width: 95%; max-height: 90vh; overflow-y: auto; }
         .inquiry-modal-form { padding: 20px !important; max-height: 60vh; overflow-y: auto; }
@@ -499,9 +140,7 @@
     </style>
 </head>
 <body>
-    <!-- ════════════════════════════════════════════════════════ -->
-    <!-- NAVBAR (matches yacht-rental.html)                          -->
-    <!-- ════════════════════════════════════════════════════════ -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-special">
         <div class="container">
             <div class="logo-wrapper">
@@ -523,21 +162,18 @@
             </div>
         </div>
     </nav>
-
     <!-- LOADING STATE -->
     <div id="loadingState" class="bd-loading">
         <i class="fas fa-spinner fa-spin"></i>
         Loading boat details...
     </div>
-
     <!-- NOT FOUND STATE -->
     <div id="notFoundState" class="bd-notfound" style="display:none;">
         <h1>Boat Not Found</h1>
         <p>The boat you're looking for is no longer available or the link is incorrect.</p>
         <a href="/yacht-rental.html">← Back to all boats</a>
     </div>
-
-    <!-- BOAT CONTENT (populated by JS) -->
+    <!-- BOAT CONTENT -->
     <div id="boatContent" style="display:none;">
         <!-- HERO -->
         <section class="bd-hero" id="boatHero">
@@ -550,18 +186,15 @@
                 <p class="bd-hero-tagline" id="heroTagline"></p>
             </div>
         </section>
-
         <!-- SPECS BADGES -->
         <section class="bd-specs">
             <div class="bd-specs-row" id="specsRow"></div>
         </section>
-
         <!-- ABOUT -->
         <section class="bd-about">
             <h2 id="aboutHeading">About this boat</h2>
             <p id="aboutText"></p>
         </section>
-
         <!-- PRICING -->
         <section class="bd-pricing">
             <div class="bd-pricing-container">
@@ -570,7 +203,6 @@
                 <div class="bd-price-rows" id="priceRows"></div>
             </div>
         </section>
-
         <!-- INQUIRY CTA -->
         <section class="bd-inquiry-cta">
             <button class="bd-inquiry-btn" id="inquiryBtnMain">
@@ -579,7 +211,6 @@
             </button>
             <p class="bd-inquiry-note">We reply within <strong>15 minutes</strong> · Or WhatsApp <a href="https://wa.me/34642453952" style="color:#25D366;font-weight:600;">+34 642 45 39 52</a></p>
         </section>
-
         <!-- RELATED BOATS -->
         <section class="bd-related" id="relatedSection" style="display:none;">
             <div class="bd-related-container">
@@ -589,7 +220,6 @@
             </div>
         </section>
     </div>
-
     <!-- WHATSAPP BUTTON -->
     <a href="https://wa.me/34642453952" class="elegant-whatsapp" target="_blank">
         <div class="elegant-whatsapp-inner">
@@ -597,8 +227,7 @@
             <span class="elegant-whatsapp-text">Contact Us</span>
         </div>
     </a>
-
-    <!-- INQUIRY MODAL (matches yacht-rental.html) -->
+    <!-- INQUIRY MODAL -->
     <div class="inquiry-modal" id="inquiryModal">
         <div class="inquiry-modal-container">
             <button class="inquiry-modal-close">✕</button>
@@ -620,19 +249,134 @@
                 <div class="inquiry-modal-form">
                     <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm">
                         <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap"><input type="text" name="firstName" class="inquiry-input-field" placeholder="First Name*" required></div>
+                            <div class="inquiry-field-wrap"><input type="text" name="lastName" class="inquiry-input-field" placeholder="Last Name*" required></div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap"><input type="email" name="email" class="inquiry-input-field" placeholder="Email Address*" required></div>
                             <div class="inquiry-field-wrap">
-                                <input type="text" name="firstName" class="inquiry-input-field" placeholder="First Name*" required>
-                            </div>
-                            <div class="inquiry-field-wrap">
-                                <input type="text" name="lastName" class="inquiry-input-field" placeholder="Last Name*" required>
+                                <select name="countryPhone" id="countrySelect" class="inquiry-select-field" required>
+                                    <option value="" disabled>Select Your Country*</option>
+                                    <option value="ES|+34" selected>🇪🇸 Spain</option>
+                                    <option value="AF|+93">🇦🇫 Afghanistan</option>
+                                    <option value="AL|+355">🇦🇱 Albania</option>
+                                    <option value="DZ|+213">🇩🇿 Algeria</option>
+                                    <option value="AD|+376">🇦🇩 Andorra</option>
+                                    <option value="AO|+244">🇦🇴 Angola</option>
+                                    <option value="AR|+54">🇦🇷 Argentina</option>
+                                    <option value="AM|+374">🇦🇲 Armenia</option>
+                                    <option value="AU|+61">🇦🇺 Australia</option>
+                                    <option value="AT|+43">🇦🇹 Austria</option>
+                                    <option value="AZ|+994">🇦🇿 Azerbaijan</option>
+                                    <option value="BS|+1">🇧🇸 Bahamas</option>
+                                    <option value="BH|+973">🇧🇭 Bahrain</option>
+                                    <option value="BD|+880">🇧🇩 Bangladesh</option>
+                                    <option value="BY|+375">🇧🇾 Belarus</option>
+                                    <option value="BE|+32">🇧🇪 Belgium</option>
+                                    <option value="BZ|+501">🇧🇿 Belize</option>
+                                    <option value="BO|+591">🇧🇴 Bolivia</option>
+                                    <option value="BA|+387">🇧🇦 Bosnia and Herzegovina</option>
+                                    <option value="BW|+267">🇧🇼 Botswana</option>
+                                    <option value="BR|+55">🇧🇷 Brazil</option>
+                                    <option value="BN|+673">🇧🇳 Brunei</option>
+                                    <option value="BG|+359">🇧🇬 Bulgaria</option>
+                                    <option value="CA|+1">🇨🇦 Canada</option>
+                                    <option value="CL|+56">🇨🇱 Chile</option>
+                                    <option value="CN|+86">🇨🇳 China</option>
+                                    <option value="CO|+57">🇨🇴 Colombia</option>
+                                    <option value="CR|+506">🇨🇷 Costa Rica</option>
+                                    <option value="HR|+385">🇭🇷 Croatia</option>
+                                    <option value="CY|+357">🇨🇾 Cyprus</option>
+                                    <option value="CZ|+420">🇨🇿 Czech Republic</option>
+                                    <option value="DK|+45">🇩🇰 Denmark</option>
+                                    <option value="DO|+1">🇩🇴 Dominican Republic</option>
+                                    <option value="EC|+593">🇪🇨 Ecuador</option>
+                                    <option value="EG|+20">🇪🇬 Egypt</option>
+                                    <option value="EE|+372">🇪🇪 Estonia</option>
+                                    <option value="ET|+251">🇪🇹 Ethiopia</option>
+                                    <option value="FI|+358">🇫🇮 Finland</option>
+                                    <option value="FR|+33">🇫🇷 France</option>
+                                    <option value="GE|+995">🇬🇪 Georgia</option>
+                                    <option value="DE|+49">🇩🇪 Germany</option>
+                                    <option value="GH|+233">🇬🇭 Ghana</option>
+                                    <option value="GR|+30">🇬🇷 Greece</option>
+                                    <option value="GT|+502">🇬🇹 Guatemala</option>
+                                    <option value="HN|+504">🇭🇳 Honduras</option>
+                                    <option value="HU|+36">🇭🇺 Hungary</option>
+                                    <option value="IS|+354">🇮🇸 Iceland</option>
+                                    <option value="IN|+91">🇮🇳 India</option>
+                                    <option value="ID|+62">🇮🇩 Indonesia</option>
+                                    <option value="IQ|+964">🇮🇶 Iraq</option>
+                                    <option value="IE|+353">🇮🇪 Ireland</option>
+                                    <option value="IL|+972">🇮🇱 Israel</option>
+                                    <option value="IT|+39">🇮🇹 Italy</option>
+                                    <option value="JM|+1">🇯🇲 Jamaica</option>
+                                    <option value="JP|+81">🇯🇵 Japan</option>
+                                    <option value="JO|+962">🇯🇴 Jordan</option>
+                                    <option value="KZ|+7">🇰🇿 Kazakhstan</option>
+                                    <option value="KE|+254">🇰🇪 Kenya</option>
+                                    <option value="KW|+965">🇰🇼 Kuwait</option>
+                                    <option value="LV|+371">🇱🇻 Latvia</option>
+                                    <option value="LB|+961">🇱🇧 Lebanon</option>
+                                    <option value="LT|+370">🇱🇹 Lithuania</option>
+                                    <option value="LU|+352">🇱🇺 Luxembourg</option>
+                                    <option value="MY|+60">🇲🇾 Malaysia</option>
+                                    <option value="MT|+356">🇲🇹 Malta</option>
+                                    <option value="MX|+52">🇲🇽 Mexico</option>
+                                    <option value="MD|+373">🇲🇩 Moldova</option>
+                                    <option value="MC|+377">🇲🇨 Monaco</option>
+                                    <option value="MA|+212">🇲🇦 Morocco</option>
+                                    <option value="NL|+31">🇳🇱 Netherlands</option>
+                                    <option value="NZ|+64">🇳🇿 New Zealand</option>
+                                    <option value="NG|+234">🇳🇬 Nigeria</option>
+                                    <option value="NO|+47">🇳🇴 Norway</option>
+                                    <option value="OM|+968">🇴🇲 Oman</option>
+                                    <option value="PK|+92">🇵🇰 Pakistan</option>
+                                    <option value="PA|+507">🇵🇦 Panama</option>
+                                    <option value="PY|+595">🇵🇾 Paraguay</option>
+                                    <option value="PE|+51">🇵🇪 Peru</option>
+                                    <option value="PH|+63">🇵🇭 Philippines</option>
+                                    <option value="PL|+48">🇵🇱 Poland</option>
+                                    <option value="PT|+351">🇵🇹 Portugal</option>
+                                    <option value="QA|+974">🇶🇦 Qatar</option>
+                                    <option value="RO|+40">🇷🇴 Romania</option>
+                                    <option value="RU|+7">🇷🇺 Russia</option>
+                                    <option value="SA|+966">🇸🇦 Saudi Arabia</option>
+                                    <option value="RS|+381">🇷🇸 Serbia</option>
+                                    <option value="SG|+65">🇸🇬 Singapore</option>
+                                    <option value="SK|+421">🇸🇰 Slovakia</option>
+                                    <option value="SI|+386">🇸🇮 Slovenia</option>
+                                    <option value="ZA|+27">🇿🇦 South Africa</option>
+                                    <option value="LK|+94">🇱🇰 Sri Lanka</option>
+                                    <option value="SE|+46">🇸🇪 Sweden</option>
+                                    <option value="CH|+41">🇨🇭 Switzerland</option>
+                                    <option value="SY|+963">🇸🇾 Syria</option>
+                                    <option value="TW|+886">🇹🇼 Taiwan</option>
+                                    <option value="TZ|+255">🇹🇿 Tanzania</option>
+                                    <option value="TH|+66">🇹🇭 Thailand</option>
+                                    <option value="TN|+216">🇹🇳 Tunisia</option>
+                                    <option value="TR|+90">🇹🇷 Turkey</option>
+                                    <option value="UA|+380">🇺🇦 Ukraine</option>
+                                    <option value="AE|+971">🇦🇪 United Arab Emirates</option>
+                                    <option value="GB|+44">🇬🇧 United Kingdom</option>
+                                    <option value="US|+1">🇺🇸 United States</option>
+                                    <option value="UY|+598">🇺🇾 Uruguay</option>
+                                    <option value="UZ|+998">🇺🇿 Uzbekistan</option>
+                                    <option value="VN|+84">🇻🇳 Vietnam</option>
+                                    <option value="YE|+967">🇾🇪 Yemen</option>
+                                    <option value="ZM|+260">🇿🇲 Zambia</option>
+                                    <option value="ZW|+263">🇿🇼 Zimbabwe</option>
+                                </select>
                             </div>
                         </div>
                         <div class="inquiry-field-row">
-                            <div class="inquiry-field-wrap">
-                                <input type="email" name="email" class="inquiry-input-field" placeholder="Email Address*" required>
-                            </div>
-                            <div class="inquiry-field-wrap">
-                                <input type="tel" name="phone" class="inquiry-input-field" placeholder="Phone Number*" required>
+                            <div class="inquiry-field-wrap" style="width:100%;">
+                                <div style="display:flex;align-items:stretch;gap:6px;width:100%;">
+                                    <span id="dialCodeDisplay" style="background:#e9f5f8;color:#2095AE;padding:0 14px;border-radius:6px;font-weight:700;display:flex;align-items:center;white-space:nowrap;border:1px solid #ddd;font-family:'Barlow',sans-serif;min-width:70px;justify-content:center;">+34</span>
+                                    <input type="tel" name="phoneNumber" class="inquiry-input-field" placeholder="Phone Number*" required style="flex:1;min-width:0;">
+                                </div>
+                                <input type="hidden" name="phone" id="combinedPhone">
+                                <input type="hidden" name="country" id="countryCodeHidden" value="ES">
                             </div>
                         </div>
                         <div class="inquiry-field-row">
@@ -650,9 +394,16 @@
                         </div>
                         <div class="inquiry-field-row">
                             <div class="inquiry-field-wrap">
-                                <select name="country" class="inquiry-select-field" required>
-                                    <option value="" disabled selected>Select Your Country*</option>
-                                    <option value="AF">Afghanistan</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BO">Bolivia</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BR">Brazil</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="CA">Canada</option><option value="CL">Chile</option><option value="CN">China</option><option value="CO">Colombia</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CY">Cyprus</option><option value="CZ">Czech Republic</option><option value="DK">Denmark</option><option value="DO">Dominican Republic</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="EE">Estonia</option><option value="ET">Ethiopia</option><option value="FI">Finland</option><option value="FR">France</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GR">Greece</option><option value="GT">Guatemala</option><option value="HN">Honduras</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KW">Kuwait</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MY">Malaysia</option><option value="MT">Malta</option><option value="MX">Mexico</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MA">Morocco</option><option value="NL">Netherlands</option><option value="NZ">New Zealand</option><option value="NG">Nigeria</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PA">Panama</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="QA">Qatar</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="SA">Saudi Arabia</option><option value="RS">Serbia</option><option value="SG">Singapore</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="ZA">South Africa</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US">United States</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VN">Vietnam</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option>
+                                <select name="budget" class="inquiry-select-field" required>
+                                    <option value="" disabled selected>Your Budget Range (per day)*</option>
+                                    <option value="€0 - €1,000/day">€0 - €1,000/day</option>
+                                    <option value="€1,000 - €2,000/day">€1,000 - €2,000/day</option>
+                                    <option value="€2,000 - €3,000/day">€2,000 - €3,000/day</option>
+                                    <option value="€3,000 - €5,000/day">€3,000 - €5,000/day</option>
+                                    <option value="€5,000 - €7,000/day">€5,000 - €7,000/day</option>
+                                    <option value="€7,000 - €10,000/day">€7,000 - €10,000/day</option>
+                                    <option value="€10,000+/day">€10,000+/day</option>
+                                    <option value="Open to suggestions">Open to suggestions</option>
                                 </select>
                             </div>
                         </div>
@@ -668,8 +419,7 @@
             </div>
         </div>
     </div>
-
-    <!-- FOOTER (matches yacht-rental.html) -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-top">
             <div class="container">
@@ -714,38 +464,20 @@
             </div>
         </div>
     </footer>
-
     <!-- SCRIPTS -->
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
-    // ════════════════════════════════════════════════════════════
-    //  BOAT DETAIL PAGE LOGIC
-    //  Loads boat data based on ?slug= or ?id= URL parameter
-    //  Renders full detail page + injects SEO meta + schema markup
-    // ════════════════════════════════════════════════════════════
-
     function slugify(name) {
-        return String(name || '')
-            .toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-+|-+$/g, '');
+        return String(name || '').toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
     }
-
     function escapeHtml(s) {
-        return String(s || '')
-            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+        return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
     }
-
     function formatPrice(value) {
         if (!value || value <= 0) return null;
         return '€' + value.toLocaleString('en-US');
     }
-
     function getBoatTagline(guests, overnight, type) {
         if (overnight) return 'A luxury overnight experience on the Mediterranean';
         if (guests >= 12) return 'Perfect for large groups exploring Ibiza by sea';
@@ -753,7 +485,6 @@
         if (guests >= 7) return 'Great for small groups and special occasions';
         return 'Intimate charter for couples and small parties';
     }
-
     function getBoatDescription(boat) {
         const type = boat.type || 'motor';
         const typeLabel = type === 'motor' ? 'motor yacht' : (type === 'sailing' ? 'sailing yacht' : 'catamaran');
@@ -761,7 +492,6 @@
         const length = boat.length || '';
         const captain = boat.captain_included !== false ? 'with a professional captain' : '';
         const overnight = boat.overnight ? 'and equipped for overnight stays' : '';
-
         let desc = `The ${boat.name} is a ${length} ${typeLabel} `;
         if (captain) desc += `${captain} `;
         if (overnight) desc += `${overnight} `;
@@ -769,7 +499,6 @@
         desc += `Explore Ibiza's most iconic spots — Cala Bassa, Cala Comte, Es Vedra, Formentera — in style, departing from Marina Botafoch in Ibiza Town. Captained by an experienced local skipper, your charter day is fully tailored to your wishes.`;
         return desc;
     }
-
     function renderSpecs(boat) {
         const guests = parseInt(boat.guests) || 0;
         const length = boat.length || '—';
@@ -777,81 +506,33 @@
         const typeLabel = type === 'motor' ? 'Motor Yacht' : (type === 'sailing' ? 'Sailing Yacht' : 'Catamaran');
         const captain = boat.captain_included !== false ? 'Included' : 'Not included';
         const overnight = boat.overnight ? 'Yes' : 'Day charter';
-
         return `
-            <div class="bd-spec">
-                <div class="bd-spec-icon"><i class="fas fa-ruler-combined"></i></div>
-                <div>
-                    <div class="bd-spec-label">Length</div>
-                    <div class="bd-spec-value">${escapeHtml(length)}</div>
-                </div>
-            </div>
-            <div class="bd-spec">
-                <div class="bd-spec-icon"><i class="fas fa-users"></i></div>
-                <div>
-                    <div class="bd-spec-label">Capacity</div>
-                    <div class="bd-spec-value">${guests} guests</div>
-                </div>
-            </div>
-            <div class="bd-spec">
-                <div class="bd-spec-icon"><i class="fas fa-ship"></i></div>
-                <div>
-                    <div class="bd-spec-label">Type</div>
-                    <div class="bd-spec-value">${typeLabel}</div>
-                </div>
-            </div>
-            <div class="bd-spec">
-                <div class="bd-spec-icon"><i class="fas fa-user-shield"></i></div>
-                <div>
-                    <div class="bd-spec-label">Captain</div>
-                    <div class="bd-spec-value">${captain}</div>
-                </div>
-            </div>
-            <div class="bd-spec">
-                <div class="bd-spec-icon"><i class="fas fa-${boat.overnight ? 'bed' : 'sun'}"></i></div>
-                <div>
-                    <div class="bd-spec-label">Charter type</div>
-                    <div class="bd-spec-value">${overnight}</div>
-                </div>
-            </div>
+            <div class="bd-spec"><div class="bd-spec-icon"><i class="fas fa-ruler-combined"></i></div><div><div class="bd-spec-label">Length</div><div class="bd-spec-value">${escapeHtml(length)}</div></div></div>
+            <div class="bd-spec"><div class="bd-spec-icon"><i class="fas fa-users"></i></div><div><div class="bd-spec-label">Capacity</div><div class="bd-spec-value">${guests} guests</div></div></div>
+            <div class="bd-spec"><div class="bd-spec-icon"><i class="fas fa-ship"></i></div><div><div class="bd-spec-label">Type</div><div class="bd-spec-value">${typeLabel}</div></div></div>
+            <div class="bd-spec"><div class="bd-spec-icon"><i class="fas fa-user-shield"></i></div><div><div class="bd-spec-label">Captain</div><div class="bd-spec-value">${captain}</div></div></div>
+            <div class="bd-spec"><div class="bd-spec-icon"><i class="fas fa-${boat.overnight ? 'bed' : 'sun'}"></i></div><div><div class="bd-spec-label">Charter type</div><div class="bd-spec-value">${overnight}</div></div></div>
         `;
     }
-
     function renderPriceRows(boat) {
         const months = [
-            { key: 'price_may', label: 'May' },
-            { key: 'price_june', label: 'June' },
-            { key: 'price_july', label: 'July' },
-            { key: 'price_august', label: 'August' },
-            { key: 'price_september', label: 'September' },
-            { key: 'price_october', label: 'October' }
+            { key: 'price_may', label: 'May' }, { key: 'price_june', label: 'June' },
+            { key: 'price_july', label: 'July' }, { key: 'price_august', label: 'August' },
+            { key: 'price_september', label: 'September' }, { key: 'price_october', label: 'October' }
         ];
-
-        // Find lowest non-zero price for highlighting
-        const validPrices = months
-            .map(m => parseInt(boat[m.key]) || 0)
-            .filter(p => p > 0);
+        const validPrices = months.map(m => parseInt(boat[m.key]) || 0).filter(p => p > 0);
         const lowest = validPrices.length > 0 ? Math.min(...validPrices) : 0;
-
         return months.map(m => {
             const price = parseInt(boat[m.key]) || 0;
             const formatted = formatPrice(price);
             const isLowest = price === lowest && price > 0;
-            return `
-                <div class="bd-price-row ${isLowest ? 'is-lowest' : ''}">
-                    <span class="bd-price-month">${m.label}${isLowest ? '<span class="bd-price-lowest-badge">Best value</span>' : ''}</span>
-                    <span class="bd-price-value ${formatted ? '' : 'on-request'}">${formatted || 'On request'}</span>
-                </div>
-            `;
+            return `<div class="bd-price-row ${isLowest ? 'is-lowest' : ''}"><span class="bd-price-month">${m.label}${isLowest ? '<span class="bd-price-lowest-badge">Best value</span>' : ''}</span><span class="bd-price-value ${formatted ? '' : 'on-request'}">${formatted || 'On request'}</span></div>`;
         }).join('');
     }
-
     function findRelated(currentBoat, allBoats) {
         const currentSlug = slugify(currentBoat.name);
         const currentType = currentBoat.type;
         const currentPrice = parseInt(currentBoat.price_may) || 0;
-
-        // Score: same type +3, similar price (±50%) +2, similar guests (±3) +1
         const scored = allBoats
             .filter(b => b.published !== false && slugify(b.name) !== currentSlug)
             .map(b => {
@@ -868,10 +549,8 @@
             })
             .sort((a, b) => b.score - a.score)
             .slice(0, 3);
-
         return scored.map(s => s.boat);
     }
-
     function renderRelatedCard(boat) {
         const slug = slugify(boat.name);
         const name = escapeHtml(boat.name);
@@ -882,33 +561,20 @@
         const lowestPrice = parseInt(boat.price_may) || parseInt(boat.price_october) || 0;
         const priceLabel = lowestPrice > 0 ? `From €${lowestPrice.toLocaleString('en-US')}/day` : 'Price on request';
         const meta = `${length} · ${guests} guests${overnight ? ' · Overnight' : ''}`;
-
-        return `
-            <a href="/boat-details.html?slug=${slug}" class="bd-related-card">
-                <img class="bd-related-card-img" src="${image}" alt="${name}" loading="lazy">
-                <div class="bd-related-card-body">
-                    <h3 class="bd-related-card-name">${name}</h3>
-                    <div class="bd-related-card-meta">${meta}</div>
-                    <div class="bd-related-card-price">${priceLabel}</div>
-                </div>
-            </a>
-        `;
+        return `<a href="/boat-details.html?slug=${slug}" class="bd-related-card"><img class="bd-related-card-img" src="${image}" alt="${name}" loading="lazy"><div class="bd-related-card-body"><h3 class="bd-related-card-name">${name}</h3><div class="bd-related-card-meta">${meta}</div><div class="bd-related-card-price">${priceLabel}</div></div></a>`;
     }
-
     function updateSEO(boat, slug) {
         const name = boat.name || 'Boat';
         const guests = parseInt(boat.guests) || 0;
         const length = boat.length || '';
         const lowestPrice = parseInt(boat.price_may) || 0;
         const captain = boat.captain_included !== false ? ' with captain' : '';
-
         const title = `${name} | Boat Charter Ibiza | Just Enjoy Ibiza Boats`;
         const description = lowestPrice > 0
             ? `Charter the ${name} in Ibiza — ${length} ${boat.type || 'motor'} yacht for up to ${guests} guests${captain}. From €${lowestPrice}/day. Book direct.`
             : `Charter the ${name} in Ibiza — ${length} for up to ${guests} guests${captain}. Contact us for pricing.`;
         const canonical = `https://justenjoyibizaboats.com/boat-details.html?slug=${slug}`;
         const image = boat.image && boat.image.startsWith('http') ? boat.image : `https://justenjoyibizaboats.com${boat.image || '/assets/img/RivaArgo90.jpeg'}`;
-
         document.title = title;
         document.querySelector('meta[name="description"]').setAttribute('content', description.slice(0, 158));
         document.getElementById('canonicalLink').setAttribute('href', canonical);
@@ -917,13 +583,11 @@
         document.getElementById('ogUrl').setAttribute('content', canonical);
         document.getElementById('ogImage').setAttribute('content', image);
     }
-
     function injectSchema(boat, slug) {
         const guests = parseInt(boat.guests) || 0;
         const length = boat.length || '';
         const lowestPrice = parseInt(boat.price_may) || 0;
         const image = boat.image && boat.image.startsWith('http') ? boat.image : `https://justenjoyibizaboats.com${boat.image || '/assets/img/RivaArgo90.jpeg'}`;
-
         const schema = {
             "@context": "https://schema.org",
             "@type": "Service",
@@ -946,12 +610,8 @@
                     "addressCountry": "ES"
                 }
             },
-            "areaServed": {
-                "@type": "Place",
-                "name": "Ibiza, Spain"
-            }
+            "areaServed": { "@type": "Place", "name": "Ibiza, Spain" }
         };
-
         if (lowestPrice > 0) {
             schema.offers = {
                 "@type": "Offer",
@@ -966,95 +626,60 @@
                 "availability": "https://schema.org/InStock"
             };
         }
-
         const script = document.createElement('script');
         script.type = 'application/ld+json';
         script.textContent = JSON.stringify(schema);
         document.head.appendChild(script);
     }
-
     function showNotFound() {
         document.getElementById('loadingState').style.display = 'none';
         document.getElementById('notFoundState').style.display = 'block';
         document.title = 'Boat Not Found | Just Enjoy Ibiza Boats';
     }
-
     function showBoat(boat, allBoats) {
         const slug = slugify(boat.name);
-
-        // Update SEO
         updateSEO(boat, slug);
         injectSchema(boat, slug);
-
-        // Hero
         document.getElementById('heroImg').src = boat.image || '/assets/img/RivaArgo90.jpeg';
         document.getElementById('heroImg').alt = boat.name + ' boat charter Ibiza';
         document.getElementById('heroImg').style.objectPosition = boat.image_position || 'center';
         document.getElementById('heroName').textContent = boat.name;
         document.getElementById('heroTagline').textContent = getBoatTagline(parseInt(boat.guests) || 0, !!boat.overnight, boat.type);
-
-        // About
         document.getElementById('aboutText').textContent = getBoatDescription(boat);
         document.getElementById('aboutHeading').textContent = `About the ${boat.name}`;
-
-        // Specs
         document.getElementById('specsRow').innerHTML = renderSpecs(boat);
-
-        // Pricing
         document.getElementById('priceRows').innerHTML = renderPriceRows(boat);
-
-        // Inquiry button
         document.getElementById('inquiryBtnText').textContent = `Inquire about the ${boat.name}`;
         document.getElementById('inquiryBtnMain').addEventListener('click', function() {
             document.getElementById('boatNameInput').value = boat.name;
             document.getElementById('inquiryModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         });
-
-        // Related boats
         const related = findRelated(boat, allBoats);
         if (related.length > 0) {
             document.getElementById('relatedSection').style.display = 'block';
             document.getElementById('relatedGrid').innerHTML = related.map(renderRelatedCard).join('');
         }
-
-        // Show content
         document.getElementById('loadingState').style.display = 'none';
         document.getElementById('boatContent').style.display = 'block';
     }
-
     async function init() {
-        // Get slug from URL (supports ?slug= or ?id= for backward compat)
         const params = new URLSearchParams(window.location.search);
         const slug = params.get('slug') || params.get('id');
-
-        if (!slug) {
-            showNotFound();
-            return;
-        }
-
+        if (!slug) { showNotFound(); return; }
         try {
             const resp = await fetch('/content/boats.json?v=' + Date.now());
             if (!resp.ok) throw new Error('Could not load boats');
             const data = await resp.json();
             const allBoats = Array.isArray(data.boats) ? data.boats : [];
-
-            // Find boat by matching slug
             const boat = allBoats.find(b => slugify(b.name) === slug && b.published !== false);
-
-            if (!boat) {
-                showNotFound();
-                return;
-            }
-
+            if (!boat) { showNotFound(); return; }
             showBoat(boat, allBoats);
         } catch (err) {
             console.error('Boat detail page error:', err);
             showNotFound();
         }
     }
-
-    // ── INQUIRY MODAL HANDLERS ─────────────────────────
     document.addEventListener('click', function(e) {
         if (e.target.closest('.inquiry-modal-close')) {
             document.getElementById('inquiryModal').classList.remove('active');
@@ -1065,26 +690,40 @@
             document.body.style.overflow = '';
         }
     });
-
-    // ── FORM SUBMIT ────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
         init();
-
-        // Min date = today
         document.querySelectorAll('input[type="date"]').forEach(input => {
             input.setAttribute('min', new Date().toISOString().split('T')[0]);
         });
 
-        // Form handler
+        // Country dropdown → live update of dial-code badge + hidden country field
+        const countrySelect = document.getElementById('countrySelect');
+        const dialCodeDisplay = document.getElementById('dialCodeDisplay');
+        const countryCodeHidden = document.getElementById('countryCodeHidden');
+        if (countrySelect) {
+            countrySelect.addEventListener('change', function() {
+                const parts = (this.value || '').split('|');
+                const ccode = parts[0] || '';
+                const dial = parts[1] || '';
+                if (dialCodeDisplay) dialCodeDisplay.textContent = dial || '+';
+                if (countryCodeHidden) countryCodeHidden.value = ccode;
+            });
+        }
+
         const form = document.getElementById('inquiryForm');
         if (form) {
             form.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                const country = form.querySelector('select[name="country"]').value;
-                if (['IR','KP','VE'].includes(country)) {
-                    alert('Sorry, we are unable to process bookings from your country.');
-                    return;
-                }
+                // Combine country dial code + phone number into international format
+                const sel = form.querySelector('select[name="countryPhone"]');
+                const parts = (sel && sel.value ? sel.value : 'ES|+34').split('|');
+                const dialCode = parts[1] || '+34';
+                const countryISO = parts[0] || 'ES';
+                const phoneNumber = form.querySelector('input[name="phoneNumber"]').value.trim().replace(/^\+?\d{1,4}\s?/, '');
+                const combinedPhone = document.getElementById('combinedPhone');
+                if (combinedPhone) combinedPhone.value = dialCode + ' ' + phoneNumber;
+                if (countryCodeHidden) countryCodeHidden.value = countryISO;
+
                 const btn = form.querySelector('.inquiry-submit-button');
                 const orig = btn.textContent;
                 btn.textContent = 'Sending...';
@@ -1097,6 +736,7 @@
                     });
                     if (!resp.ok) throw new Error('Failed');
                     form.reset();
+                    if (dialCodeDisplay) dialCodeDisplay.textContent = '+34';
                     document.getElementById('inquiryModal').classList.remove('active');
                     document.body.style.overflow = '';
                     alert("Thank you! Your inquiry has been submitted. We'll contact you within 15 minutes.");
@@ -1108,10 +748,8 @@
                 }
             });
         }
-
-        // Hamburger menu
-        const toggler    = document.querySelector('.custom-toggler');
-        const navCollapse= document.querySelector('.navbar-collapse');
+        const toggler = document.querySelector('.custom-toggler');
+        const navCollapse = document.querySelector('.navbar-collapse');
         if (toggler && navCollapse) {
             toggler.addEventListener('click', function(e) {
                 e.preventDefault();
