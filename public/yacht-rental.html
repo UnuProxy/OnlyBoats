@@ -160,8 +160,8 @@
             </div>
             <div class="filter-group">
                 <label for="boatType">Boat Type</label>
-                <select id="boatType" onchange="applyFilters()">
-                    <option value="">All Types</option>
+                <select id="boatType" autocomplete="off" onchange="applyFilters()">
+                    <option value="" selected>All Types</option>
                     <option value="motor">Motor Yacht</option>
                     <option value="sailing">Sailing Yacht</option>
                     <option value="catamaran">Catamaran</option>
@@ -169,22 +169,24 @@
             </div>
             <div class="filter-group">
                 <label for="guests">Number of Guests</label>
-                <select id="guests" onchange="applyFilters()">
-                    <option value="">Any</option>
+                <select id="guests" autocomplete="off" onchange="applyFilters()">
+                    <option value="" selected>Any</option>
                     <option value="7">Up to 7</option>
                     <option value="9">Up to 9</option>
                     <option value="11">Up to 11</option>
                     <option value="12">Up to 12</option>
+                    <option value="30">Up to 30 (large groups)</option>
                 </select>
             </div>
             <div class="filter-group">
                 <label for="priceRange">Max Price per Day</label>
-                <select id="priceRange" onchange="applyFilters()">
-                    <option value="">Any Budget</option>
+                <select id="priceRange" autocomplete="off" onchange="applyFilters()">
+                    <option value="" selected>Any Budget</option>
                     <option value="1000">Under €1,000</option>
                     <option value="2000">Under €2,000</option>
                     <option value="5000">Under €5,000</option>
-                    <option value="99999">All</option>
+                    <option value="10000">Under €10,000</option>
+                    <option value="99999">All Budgets</option>
                 </select>
             </div>
             <button class="search-button" onclick="applyFilters()"><i class="fas fa-search"></i> SEARCH</button>
@@ -517,6 +519,10 @@
     }
     async function loadBoats() {
         const grid = document.getElementById('boatsGrid');
+        // Force-reset all filters to default empty values (prevents browser autocomplete from caching old selections)
+        document.getElementById('boatType').value = '';
+        document.getElementById('guests').value = '';
+        document.getElementById('priceRange').value = '';
         try {
             const resp = await fetch('/content/boats.json?v=' + Date.now());
             if (!resp.ok) throw new Error('Could not load boats');
