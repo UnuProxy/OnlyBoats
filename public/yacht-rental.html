@@ -670,11 +670,16 @@
                 const sel = form.querySelector('select[name="countryPhone"]');
                 const parts = (sel && sel.value ? sel.value : 'ES|+34').split('|');
                 const dialCode = parts[1] || '+34';
-                const countryISO = parts[0] || 'ES';
-                const phoneNumber = form.querySelector('input[name="phoneNumber"]').value.trim().replace(/^\+?\d{1,4}\s?/, '');
+                let phoneNumber = form.querySelector('input[name="phoneNumber"]').value.trim();
+                // Strip country code ONLY if user explicitly typed one with + prefix
+                phoneNumber = phoneNumber.replace(/^\+\d{1,4}[\s\-]*/, '').replace(/[^\d\s]/g, '').trim();
                 const combinedPhone = document.getElementById('combinedPhone');
                 if (combinedPhone) combinedPhone.value = dialCode + ' ' + phoneNumber;
-                if (countryCodeHidden) countryCodeHidden.value = countryISO;
+                // Hide internal fields from email submission (only keep clean "phone" field)
+                const phoneNumberInput = form.querySelector('input[name="phoneNumber"]');
+                if (phoneNumberInput) phoneNumberInput.removeAttribute('name');
+                if (sel) sel.removeAttribute('name');
+                if (countryCodeHidden) countryCodeHidden.removeAttribute('name');
                 const btn = form.querySelector('.inquiry-submit-button');
                 const orig = btn.textContent;
                 btn.textContent = 'Sending...';
@@ -694,6 +699,10 @@
                 } finally {
                     btn.textContent = orig;
                     btn.disabled = false;
+                    // Restore name attributes for next form submission
+                    if (phoneNumberInput) phoneNumberInput.setAttribute('name', 'phoneNumber');
+                    if (sel) sel.setAttribute('name', 'countryPhone');
+                    if (countryCodeHidden) countryCodeHidden.setAttribute('name', 'country');
                 }
             });
         }
