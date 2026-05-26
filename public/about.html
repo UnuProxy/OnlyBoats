@@ -233,6 +233,16 @@
         .cta-btn:hover { background: #fff; color: var(--brand); transform: translateY(-2px); }
         .cta-btn + .cta-btn { margin-left: 12px; background: transparent; border: 1px solid #fff; }
         .cta-btn + .cta-btn:hover { background: #fff; color: var(--brand-dark); }
+        /* === FIX: Remove duplicate/ghost "Our Story" text in hero banner === */
+        /* Original style.css template has an animated "background text" effect that doubles the H1 */
+        .banner-header .caption::before,
+        .banner-header .caption::after,
+        .banner-header h1::before,
+        .banner-header h1::after,
+        .banner-header h5::before,
+        .banner-header h5::after { display: none !important; content: none !important; }
+        .banner-header .caption { position: relative !important; }
+        .banner-header h1 { text-shadow: none !important; -webkit-text-stroke: 0 !important; }
         /* BOOK NOW button in navbar */
         .nav-book-btn { background: #2095AE !important; color: #fff !important; border: none; padding: 9px 24px !important; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px !important; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; margin-left: 18px; cursor: pointer; transition: all 0.3s ease; text-decoration: none !important; display: inline-block; line-height: 1; box-shadow: 0 2px 8px rgba(32,149,174,0.25); }
         .nav-book-btn:hover { background: #197a8d !important; color: #fff !important; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(32,149,174,0.4); text-decoration: none !important; }
@@ -281,23 +291,74 @@
                     <li class="nav-item"><a class="nav-link" href="about.html">ABOUT US</a></li>
                     <li class="nav-item"><a class="nav-link" href="yacht-rental.html">OUR BOATS</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">CONTACT</a></li>
-                    <li class="nav-item"><a class="nav-link nav-book-btn" href="yacht-rental.html#book">BOOK NOW</a></li>
+                    <li class="nav-item"><button type="button" class="nav-book-btn" onclick="document.getElementById('inquiryModal').classList.add('active');document.body.style.overflow='hidden';">BOOK NOW</button></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Header Banner -->
-    <div class="banner-header section-padding valign bg-img bg-fixed" data-overlay-dark="4" data-background="/assets/img/Music-sailing-yacht.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 caption mt-90">
-                    <h5>The People Behind The Boats</h5>
-                    <h1>Our Story</h1>
-                </div>
-            </div>
+    <!-- Custom hero (replaces broken template banner-header) -->
+    <header class="about-hero">
+        <picture>
+            <source media="(max-width: 768px)" srcset="/assets/img/alin-portrait-boat.jpg">
+            <img class="about-hero-img" src="/assets/img/catamaran-group.jpg" alt="The team and clients of Just Enjoy Ibiza Boats on a catamaran charter">
+        </picture>
+        <div class="about-hero-overlay"></div>
+        <div class="about-hero-content">
+            <span class="about-hero-eyebrow">The People Behind The Boats</span>
+            <h1>Our Story</h1>
         </div>
-    </div>
+    </header>
+    <style>
+    .about-hero {
+        position: relative;
+        height: 360px;
+        background-color: #1B2838;
+        overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .about-hero-img {
+        position: absolute; top: 0; left: 0;
+        width: 100%; height: 100%; object-fit: cover; object-position: center;
+        z-index: 1;
+    }
+    .about-hero-overlay {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, rgba(27,40,56,0.75) 0%, rgba(32,149,174,0.55) 100%);
+        z-index: 2;
+    }
+    .about-hero-content {
+        position: relative; z-index: 3;
+        text-align: center; color: #fff; padding: 24px;
+        max-width: 800px;
+    }
+    .about-hero-eyebrow {
+        display: inline-block;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 13px; letter-spacing: 4px;
+        color: #B8943C; font-weight: 600;
+        margin-bottom: 14px; text-transform: uppercase;
+        padding: 0 24px; position: relative;
+    }
+    .about-hero-eyebrow::before, .about-hero-eyebrow::after {
+        content: ""; position: absolute; top: 50%;
+        width: 18px; height: 1px; background: #B8943C;
+    }
+    .about-hero-eyebrow::before { left: 0; }
+    .about-hero-eyebrow::after { right: 0; }
+    .about-hero h1 {
+        font-family: 'Gilda Display', serif;
+        font-size: clamp(38px, 5.5vw, 64px);
+        color: #fff; font-weight: 400; margin: 0;
+        line-height: 1.1; letter-spacing: -0.5px;
+        text-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 768px) {
+        .about-hero { height: 240px; }
+        .about-hero-eyebrow { font-size: 11px; letter-spacing: 3px; padding: 0 20px; }
+        .about-hero-eyebrow::before, .about-hero-eyebrow::after { width: 14px; }
+    }
+    </style>
 
     <!-- ============ FOUNDER STORY ============ -->
     <section class="founder-story">
@@ -444,6 +505,174 @@
             <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:1px;text-transform:uppercase;">WhatsApp</span>
         </div>
     </a>
+
+    <!-- ============================================================
+         INQUIRY MODAL (same form as homepage/yacht-rental)
+         BOOK NOW button opens this directly — no redirect to other page
+         ============================================================ -->
+    <style>
+    .inquiry-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10000; overflow-y: auto; }
+    .inquiry-modal.active { display: flex !important; align-items: center; justify-content: center; }
+    .inquiry-modal-container { background: white; border-radius: 16px; max-width: 900px; width: 95%; margin: auto; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+    .inquiry-modal-close { position: absolute; top: 16px; right: 20px; width: 36px; height: 36px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; font-size: 16px; cursor: pointer; z-index: 5; transition: background 0.2s; }
+    .inquiry-modal-close:hover { background: rgba(0,0,0,0.12); }
+    .inquiry-modal-content { display: grid; grid-template-columns: 380px 1fr; min-height: 580px; }
+    .inquiry-modal-info { background: linear-gradient(135deg, #1B2838 0%, #2095AE 100%); padding: 40px 32px; border-radius: 16px 0 0 16px; color: #fff; display: flex; flex-direction: column; justify-content: center; }
+    .inquiry-modal-logo h2 { font-family: 'Gilda Display', serif; color: #fff; font-size: 22px; margin: 0 0 4px; font-weight: 400; }
+    .inquiry-modal-logo span { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 3px; color: rgba(255,255,255,0.7); text-transform: uppercase; }
+    .inquiry-modal-title { font-family: 'Gilda Display', serif; font-size: 26px; margin: 28px 0 14px; color: #fff; font-weight: 400; line-height: 1.2; }
+    .inquiry-modal-subtitle { font-family: 'Barlow', sans-serif; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,0.85); margin: 0; }
+    .inquiry-time-highlight { color: #B8943C; font-weight: 600; }
+    .inquiry-modal-form { padding: 36px 32px; }
+    .inquiry-field-row { display: flex; gap: 12px; margin-bottom: 14px; }
+    .inquiry-field-wrap { flex: 1; min-width: 0; }
+    .inquiry-modal-form .inquiry-input-field, .inquiry-modal-form .inquiry-select-field, .inquiry-modal-form .inquiry-message-field { color: #000 !important; -webkit-text-fill-color: #000 !important; border: 1px solid #ddd !important; background-color: #f8f9fa !important; width: 100%; padding: 10px 12px; border-radius: 6px; font-family: 'Barlow', sans-serif; font-size: 14px; }
+    .inquiry-modal-form .inquiry-message-field { min-height: 80px; resize: vertical; }
+    .inquiry-modal-form .inquiry-select-field { -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%232095AE' d='M6 8L0 0h12z'/></svg>") !important; background-repeat: no-repeat !important; background-position: right 14px center !important; background-size: 12px 8px !important; padding-right: 38px !important; }
+    .inquiry-submit-button { background: #2095AE !important; color: white !important; font-weight: bold; display: block; width: 100%; padding: 12px; border: none; border-radius: 8px; margin-top: 20px; cursor: pointer; font-size: 16px; transition: background 0.2s; }
+    .inquiry-submit-button:hover { background: #197a8d !important; }
+    @media (max-width: 768px) {
+        .inquiry-modal-container { width: 95%; max-height: 90vh; overflow-y: auto; }
+        .inquiry-modal-content { grid-template-columns: 1fr; }
+        .inquiry-modal-info { border-radius: 16px 16px 0 0; padding: 28px 24px; }
+        .inquiry-modal-form { padding: 24px 20px; max-height: 60vh; overflow-y: auto; }
+        .inquiry-field-row { flex-direction: column; gap: 14px; }
+    }
+    </style>
+
+    <div class="inquiry-modal" id="inquiryModal">
+        <div class="inquiry-modal-container">
+            <button class="inquiry-modal-close" type="button" onclick="document.getElementById('inquiryModal').classList.remove('active');document.body.style.overflow='';">✕</button>
+            <div class="inquiry-modal-content">
+                <div class="inquiry-modal-info">
+                    <div class="inquiry-modal-logo">
+                        <h2>Just Enjoy Ibiza</h2>
+                        <span>Boats</span>
+                    </div>
+                    <h2 class="inquiry-modal-title">Get in touch to find the perfect boat</h2>
+                    <p class="inquiry-modal-subtitle">You'll hear from us in <span class="inquiry-time-highlight">15 minutes</span>. Or request a callback. We assure you the best offer during the high season.</p>
+                </div>
+                <div class="inquiry-modal-form">
+                    <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm">
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap"><input type="text" name="firstName" class="inquiry-input-field" placeholder="First Name*" required></div>
+                            <div class="inquiry-field-wrap"><input type="text" name="lastName" class="inquiry-input-field" placeholder="Last Name*" required></div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap"><input type="email" name="email" class="inquiry-input-field" placeholder="Email Address*" required></div>
+                            <div class="inquiry-field-wrap">
+                                <select name="countryPhone" id="countrySelect" class="inquiry-select-field" required>
+                                    <option value="" disabled>Select Your Country*</option>
+                                    <option value="ES|+34" selected>🇪🇸 Spain</option>
+                                    <option value="AF|+93">🇦🇫 Afghanistan</option><option value="AL|+355">🇦🇱 Albania</option><option value="DZ|+213">🇩🇿 Algeria</option><option value="AD|+376">🇦🇩 Andorra</option><option value="AO|+244">🇦🇴 Angola</option><option value="AR|+54">🇦🇷 Argentina</option><option value="AM|+374">🇦🇲 Armenia</option><option value="AU|+61">🇦🇺 Australia</option><option value="AT|+43">🇦🇹 Austria</option><option value="AZ|+994">🇦🇿 Azerbaijan</option><option value="BS|+1">🇧🇸 Bahamas</option><option value="BH|+973">🇧🇭 Bahrain</option><option value="BD|+880">🇧🇩 Bangladesh</option><option value="BY|+375">🇧🇾 Belarus</option><option value="BE|+32">🇧🇪 Belgium</option><option value="BZ|+501">🇧🇿 Belize</option><option value="BO|+591">🇧🇴 Bolivia</option><option value="BA|+387">🇧🇦 Bosnia and Herzegovina</option><option value="BW|+267">🇧🇼 Botswana</option><option value="BR|+55">🇧🇷 Brazil</option><option value="BN|+673">🇧🇳 Brunei</option><option value="BG|+359">🇧🇬 Bulgaria</option><option value="CA|+1">🇨🇦 Canada</option><option value="CL|+56">🇨🇱 Chile</option><option value="CN|+86">🇨🇳 China</option><option value="CO|+57">🇨🇴 Colombia</option><option value="CR|+506">🇨🇷 Costa Rica</option><option value="HR|+385">🇭🇷 Croatia</option><option value="CY|+357">🇨🇾 Cyprus</option><option value="CZ|+420">🇨🇿 Czech Republic</option><option value="DK|+45">🇩🇰 Denmark</option><option value="DO|+1">🇩🇴 Dominican Republic</option><option value="EC|+593">🇪🇨 Ecuador</option><option value="EG|+20">🇪🇬 Egypt</option><option value="EE|+372">🇪🇪 Estonia</option><option value="ET|+251">🇪🇹 Ethiopia</option><option value="FI|+358">🇫🇮 Finland</option><option value="FR|+33">🇫🇷 France</option><option value="GE|+995">🇬🇪 Georgia</option><option value="DE|+49">🇩🇪 Germany</option><option value="GH|+233">🇬🇭 Ghana</option><option value="GR|+30">🇬🇷 Greece</option><option value="GT|+502">🇬🇹 Guatemala</option><option value="HN|+504">🇭🇳 Honduras</option><option value="HU|+36">🇭🇺 Hungary</option><option value="IS|+354">🇮🇸 Iceland</option><option value="IN|+91">🇮🇳 India</option><option value="ID|+62">🇮🇩 Indonesia</option><option value="IQ|+964">🇮🇶 Iraq</option><option value="IE|+353">🇮🇪 Ireland</option><option value="IL|+972">🇮🇱 Israel</option><option value="IT|+39">🇮🇹 Italy</option><option value="JM|+1">🇯🇲 Jamaica</option><option value="JP|+81">🇯🇵 Japan</option><option value="JO|+962">🇯🇴 Jordan</option><option value="KZ|+7">🇰🇿 Kazakhstan</option><option value="KE|+254">🇰🇪 Kenya</option><option value="KW|+965">🇰🇼 Kuwait</option><option value="LV|+371">🇱🇻 Latvia</option><option value="LB|+961">🇱🇧 Lebanon</option><option value="LT|+370">🇱🇹 Lithuania</option><option value="LU|+352">🇱🇺 Luxembourg</option><option value="MY|+60">🇲🇾 Malaysia</option><option value="MT|+356">🇲🇹 Malta</option><option value="MX|+52">🇲🇽 Mexico</option><option value="MD|+373">🇲🇩 Moldova</option><option value="MC|+377">🇲🇨 Monaco</option><option value="MA|+212">🇲🇦 Morocco</option><option value="NL|+31">🇳🇱 Netherlands</option><option value="NZ|+64">🇳🇿 New Zealand</option><option value="NG|+234">🇳🇬 Nigeria</option><option value="NO|+47">🇳🇴 Norway</option><option value="OM|+968">🇴🇲 Oman</option><option value="PK|+92">🇵🇰 Pakistan</option><option value="PA|+507">🇵🇦 Panama</option><option value="PY|+595">🇵🇾 Paraguay</option><option value="PE|+51">🇵🇪 Peru</option><option value="PH|+63">🇵🇭 Philippines</option><option value="PL|+48">🇵🇱 Poland</option><option value="PT|+351">🇵🇹 Portugal</option><option value="QA|+974">🇶🇦 Qatar</option><option value="RO|+40">🇷🇴 Romania</option><option value="RU|+7">🇷🇺 Russia</option><option value="SA|+966">🇸🇦 Saudi Arabia</option><option value="RS|+381">🇷🇸 Serbia</option><option value="SG|+65">🇸🇬 Singapore</option><option value="SK|+421">🇸🇰 Slovakia</option><option value="SI|+386">🇸🇮 Slovenia</option><option value="ZA|+27">🇿🇦 South Africa</option><option value="LK|+94">🇱🇰 Sri Lanka</option><option value="SE|+46">🇸🇪 Sweden</option><option value="CH|+41">🇨🇭 Switzerland</option><option value="SY|+963">🇸🇾 Syria</option><option value="TW|+886">🇹🇼 Taiwan</option><option value="TZ|+255">🇹🇿 Tanzania</option><option value="TH|+66">🇹🇭 Thailand</option><option value="TN|+216">🇹🇳 Tunisia</option><option value="TR|+90">🇹🇷 Turkey</option><option value="UA|+380">🇺🇦 Ukraine</option><option value="AE|+971">🇦🇪 United Arab Emirates</option><option value="GB|+44">🇬🇧 United Kingdom</option><option value="US|+1">🇺🇸 United States</option><option value="UY|+598">🇺🇾 Uruguay</option><option value="UZ|+998">🇺🇿 Uzbekistan</option><option value="VN|+84">🇻🇳 Vietnam</option><option value="YE|+967">🇾🇪 Yemen</option><option value="ZM|+260">🇿🇲 Zambia</option><option value="ZW|+263">🇿🇼 Zimbabwe</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap" style="width:100%;">
+                                <div style="display:flex;align-items:stretch;gap:6px;width:100%;">
+                                    <span id="dialCodeDisplay" style="background:#e9f5f8;color:#2095AE;padding:0 14px;border-radius:6px;font-weight:700;display:flex;align-items:center;white-space:nowrap;border:1px solid #ddd;font-family:'Barlow',sans-serif;min-width:70px;justify-content:center;">+34</span>
+                                    <input type="tel" name="phoneNumber" class="inquiry-input-field" placeholder="Phone Number*" required style="flex:1;min-width:0;">
+                                </div>
+                                <input type="hidden" name="phone" id="combinedPhone">
+                                <input type="hidden" name="country" id="countryCodeHidden" value="ES">
+                            </div>
+                        </div>
+                        <div class="inquiry-field-row"><div class="inquiry-field-wrap"><input type="date" name="tripDate" class="inquiry-input-field" required></div></div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap">
+                                <select name="guests" class="inquiry-select-field" required>
+                                    <option value="" disabled selected>Number of Guests</option>
+                                    <option value="1">1 Passenger</option><option value="2">2 Passengers</option><option value="3">3 Passengers</option><option value="4">4 Passengers</option><option value="5">5 Passengers</option><option value="6">6 Passengers</option><option value="7">7 Passengers</option><option value="8">8 Passengers</option><option value="9">9 Passengers</option><option value="10">10 Passengers</option><option value="11">11 Passengers</option><option value="12">12 Passengers</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap">
+                                <select name="budget" class="inquiry-select-field" required>
+                                    <option value="" disabled selected>Your Budget Range (per day)*</option>
+                                    <option value="€0 - €1,000/day">€0 - €1,000/day</option><option value="€1,000 - €2,000/day">€1,000 - €2,000/day</option><option value="€2,000 - €3,000/day">€2,000 - €3,000/day</option><option value="€3,000 - €5,000/day">€3,000 - €5,000/day</option><option value="€5,000 - €7,000/day">€5,000 - €7,000/day</option><option value="€7,000 - €10,000/day">€7,000 - €10,000/day</option><option value="€10,000+/day">€10,000+/day</option><option value="Open to suggestions">Open to suggestions</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="inquiry-field-row"><div class="inquiry-field-wrap"><textarea name="message" class="inquiry-message-field" placeholder="Tell us about your preferences or special requests"></textarea></div></div>
+                        <input type="hidden" id="boatNameInput" name="boatName" value="">
+                        <button type="submit" class="inquiry-submit-button">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Modal: close on backdrop click + ESC key
+    document.addEventListener('click', function(e) {
+        const modal = document.getElementById('inquiryModal');
+        if (e.target === modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('inquiryModal');
+            if (modal.classList.contains('active')) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+        }
+    });
+    // Date min = today
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('input[type="date"]').forEach(input => { input.setAttribute('min', new Date().toISOString().split('T')[0]); });
+
+        // Country select → update dial code badge
+        const countrySelect = document.getElementById('countrySelect');
+        const dialCodeDisplay = document.getElementById('dialCodeDisplay');
+        const countryCodeHidden = document.getElementById('countryCodeHidden');
+        if (countrySelect) {
+            countrySelect.addEventListener('change', function() {
+                const parts = (this.value || '').split('|');
+                if (dialCodeDisplay) dialCodeDisplay.textContent = parts[1] || '+';
+                if (countryCodeHidden) countryCodeHidden.value = parts[0] || '';
+            });
+        }
+
+        // Form submission with combined phone + clean fields
+        const form = document.getElementById('inquiryForm');
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const sel = form.querySelector('select[name="countryPhone"]');
+                const parts = (sel && sel.value ? sel.value : 'ES|+34').split('|');
+                const dialCode = parts[1] || '+34';
+                let phoneNumber = form.querySelector('input[name="phoneNumber"]').value.trim();
+                phoneNumber = phoneNumber.replace(/^\+\d{1,4}[\s\-]*/, '').replace(/[^\d\s]/g, '').trim();
+                const combinedPhone = document.getElementById('combinedPhone');
+                if (combinedPhone) combinedPhone.value = dialCode + ' ' + phoneNumber;
+                const phoneNumberInput = form.querySelector('input[name="phoneNumber"]');
+                if (phoneNumberInput) phoneNumberInput.removeAttribute('name');
+                if (sel) sel.removeAttribute('name');
+                if (countryCodeHidden) countryCodeHidden.removeAttribute('name');
+                const btn = form.querySelector('.inquiry-submit-button');
+                const orig = btn.textContent;
+                btn.textContent = 'Sending...';
+                btn.disabled = true;
+                try {
+                    const resp = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    if (!resp.ok) throw new Error('Failed');
+                    form.reset();
+                    if (dialCodeDisplay) dialCodeDisplay.textContent = '+34';
+                    document.getElementById('inquiryModal').classList.remove('active');
+                    document.body.style.overflow = '';
+                    alert("Thank you! Your inquiry has been submitted. We'll contact you within 15 minutes.");
+                } catch(err) {
+                    alert('Something went wrong. Please try again or WhatsApp us directly at +34 642 45 39 52.');
+                } finally {
+                    btn.textContent = orig;
+                    btn.disabled = false;
+                    if (phoneNumberInput) phoneNumberInput.setAttribute('name', 'phoneNumber');
+                    if (sel) sel.setAttribute('name', 'countryPhone');
+                    if (countryCodeHidden) countryCodeHidden.setAttribute('name', 'country');
+                }
+            });
+        }
+    });
+    </script>
 
     <!-- Footer -->
     <footer class="footer">
