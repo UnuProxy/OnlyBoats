@@ -1,0 +1,33 @@
+# Netlify URL redirects + pretty URLs
+# This file goes in your public/ folder. Netlify reads it on every deploy.
+
+# ===== PRETTY URLS FOR BOAT DETAIL PAGES =====
+# Allows /boat/searay-290sl/ to serve /boat-details.html?slug=searay-290sl
+# The 200 status means URL stays pretty in the browser (rewrite, not redirect)
+
+/boat/:slug          /boat-details.html?slug=:slug    200
+/boat/:slug/         /boat-details.html?slug=:slug    200
+
+# Spanish equivalent (for when we build /es/boat-details.html)
+/es/barco/:slug      /es/boat-details.html?slug=:slug    200
+/es/barco/:slug/     /es/boat-details.html?slug=:slug    200
+
+# ===== OLD URL REDIRECTS (preserve any existing inbound links) =====
+# If someone has a bookmark to the old query-string URL, it still works
+# (no redirect needed since the file still exists at that path)
+
+# ===== TRAILING SLASH NORMALIZATION =====
+# Optional: makes /about/ same as /about.html
+/about/              /about.html                       200
+/contact/            /contact.html                     200
+/services/           /services.html                    200
+/faq/                /faq.html                         200
+/yacht-rental/       /yacht-rental.html                200
+
+# Spanish version
+/es/sobre-nosotros/  /es/about.html                    200
+/es/contacto/        /es/contact.html                  200
+/es/servicios/       /es/services.html                 200
+
+# ===== 404 FALLBACK =====
+# If nothing matches, serve a 404 page (Netlify default works fine)
