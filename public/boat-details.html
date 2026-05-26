@@ -566,7 +566,7 @@
         const lowestPrice = parseInt(boat.price_may) || parseInt(boat.price_october) || 0;
         const priceLabel = lowestPrice > 0 ? `From €${lowestPrice.toLocaleString('en-US')}/day` : 'Price on request';
         const meta = `${length} · ${guests} guests${overnight ? ' · Overnight' : ''}`;
-        return `<a href="/boat-details.html?slug=${slug}" class="bd-related-card"><img class="bd-related-card-img" src="${image}" alt="${name}" loading="lazy"><div class="bd-related-card-body"><h3 class="bd-related-card-name">${name}</h3><div class="bd-related-card-meta">${meta}</div><div class="bd-related-card-price">${priceLabel}</div></div></a>`;
+        return `<a href="/boat/${slug}/" class="bd-related-card"><img class="bd-related-card-img" src="${image}" alt="${name}" loading="lazy"><div class="bd-related-card-body"><h3 class="bd-related-card-name">${name}</h3><div class="bd-related-card-meta">${meta}</div><div class="bd-related-card-price">${priceLabel}</div></div></a>`;
     }
     function updateSEO(boat, slug) {
         const name = boat.name || 'Boat';
@@ -578,7 +578,7 @@
         const description = lowestPrice > 0
             ? `Charter the ${name} in Ibiza — ${length} ${boat.type || 'motor'} yacht for up to ${guests} guests${captain}. From €${lowestPrice}/day. Book direct.`
             : `Charter the ${name} in Ibiza — ${length} for up to ${guests} guests${captain}. Contact us for pricing.`;
-        const canonical = `https://justenjoyibizaboats.com/boat-details.html?slug=${slug}`;
+        const canonical = `https://justenjoyibizaboats.com/boat/${slug}/`;
         const image = boat.image && boat.image.startsWith('http') ? boat.image : `https://justenjoyibizaboats.com${boat.image || '/assets/img/RivaArgo90.jpeg'}`;
         document.title = title;
         document.querySelector('meta[name="description"]').setAttribute('content', description.slice(0, 158));
@@ -669,8 +669,14 @@
         document.getElementById('boatContent').style.display = 'block';
     }
     async function init() {
+        // 1. Try query string first (legacy URL: /boat-details.html?slug=searay-290sl)
         const params = new URLSearchParams(window.location.search);
-        const slug = params.get('slug') || params.get('id');
+        let slug = params.get('slug') || params.get('id');
+        // 2. Fall back to parsing from URL path (pretty URL: /boat/searay-290sl/)
+        if (!slug) {
+            const pathMatch = window.location.pathname.match(/\/boat\/([^\/]+)\/?$/);
+            if (pathMatch) slug = pathMatch[1];
+        }
         if (!slug) { showNotFound(); return; }
         try {
             const resp = await fetch('/content/boats.json?v=' + Date.now());
