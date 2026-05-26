@@ -935,11 +935,16 @@
             const sel = inquiryForm.querySelector('select[name="countryPhone"]');
             const parts = (sel && sel.value ? sel.value : 'ES|+34').split('|');
             const dialCode = parts[1] || '+34';
-            const countryISO = parts[0] || 'ES';
-            const phoneNumber = inquiryForm.querySelector('input[name="phoneNumber"]').value.trim().replace(/^\+?\d{1,4}\s?/, '');
+            let phoneNumber = inquiryForm.querySelector('input[name="phoneNumber"]').value.trim();
+            // Strip country code ONLY if user explicitly typed one with + prefix
+            phoneNumber = phoneNumber.replace(/^\+\d{1,4}[\s\-]*/, '').replace(/[^\d\s]/g, '').trim();
             const combinedPhone = document.getElementById('combinedPhone');
             if (combinedPhone) combinedPhone.value = dialCode + ' ' + phoneNumber;
-            if (countryCodeHidden) countryCodeHidden.value = countryISO;
+            // Hide internal fields from email (only keep clean "phone" field)
+            const phoneNumberInput = inquiryForm.querySelector('input[name="phoneNumber"]');
+            if (phoneNumberInput) phoneNumberInput.removeAttribute('name');
+            if (sel) sel.removeAttribute('name');
+            if (countryCodeHidden) countryCodeHidden.removeAttribute('name');
 
             const submitButton = inquiryForm.querySelector('.submit-button');
             const originalButtonText = submitButton.textContent;
@@ -962,6 +967,10 @@
             } finally {
                 submitButton.textContent = originalButtonText;
                 submitButton.disabled = false;
+                // Restore name attributes for next submission
+                if (phoneNumberInput) phoneNumberInput.setAttribute('name', 'phoneNumber');
+                if (sel) sel.setAttribute('name', 'countryPhone');
+                if (countryCodeHidden) countryCodeHidden.setAttribute('name', 'country');
             }
         });
     }
