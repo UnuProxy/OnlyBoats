@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- ===== MAIN PAGES ===== -->
+  <!-- ===== MAIN PAGES (English) ===== -->
   <url>
     <loc>https://justenjoyibizaboats.com/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justenjoyibizaboats.com/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://justenjoyibizaboats.com/es/" />
   </url>
   <url>
     <loc>https://justenjoyibizaboats.com/yacht-rental.html</loc>
@@ -39,129 +42,139 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- ===== INDIVIDUAL BOAT PAGES (21 boats — all dynamically rendered via boat-details.html?slug=) ===== -->
+  <!-- ===== SPANISH HOMEPAGE ===== -->
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=searay-290sl</loc>
+    <loc>https://justenjoyibizaboats.com/es/</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justenjoyibizaboats.com/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://justenjoyibizaboats.com/es/" />
+  </url>
+
+  <!-- ===== INDIVIDUAL BOAT PAGES (21 boats — pretty URLs via Netlify _redirects) ===== -->
+  <url>
+    <loc>https://justenjoyibizaboats.com/boat/searay-290sl/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=key-largo-27</loc>
+    <loc>https://justenjoyibizaboats.com/boat/key-largo-27/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=rand-27</loc>
+    <loc>https://justenjoyibizaboats.com/boat/rand-27/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=deantonio-d28</loc>
+    <loc>https://justenjoyibizaboats.com/boat/deantonio-d28/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=pershing-37</loc>
+    <loc>https://justenjoyibizaboats.com/boat/pershing-37/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=deantonio-d32</loc>
+    <loc>https://justenjoyibizaboats.com/boat/deantonio-d32/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=deantonio-d36</loc>
+    <loc>https://justenjoyibizaboats.com/boat/deantonio-d36/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=bellini-36</loc>
+    <loc>https://justenjoyibizaboats.com/boat/bellini-36/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=pardo-43</loc>
+    <loc>https://justenjoyibizaboats.com/boat/pardo-43/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=fjord-41xl</loc>
+    <loc>https://justenjoyibizaboats.com/boat/fjord-41xl/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=cranchi-46</loc>
+    <loc>https://justenjoyibizaboats.com/boat/cranchi-46/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=princess-v53</loc>
+    <loc>https://justenjoyibizaboats.com/boat/princess-v53/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=pardo-50</loc>
+    <loc>https://justenjoyibizaboats.com/boat/pardo-50/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=azimut-60</loc>
+    <loc>https://justenjoyibizaboats.com/boat/azimut-60/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=princess-v65</loc>
+    <loc>https://justenjoyibizaboats.com/boat/princess-v65/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=princess-v72</loc>
+    <loc>https://justenjoyibizaboats.com/boat/princess-v72/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=mangusta-108</loc>
+    <loc>https://justenjoyibizaboats.com/boat/mangusta-108/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=ferreti-920</loc>
+    <loc>https://justenjoyibizaboats.com/boat/ferreti-920/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=riva-argo-90</loc>
+    <loc>https://justenjoyibizaboats.com/boat/riva-argo-90/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=explored-92</loc>
+    <loc>https://justenjoyibizaboats.com/boat/explored-92/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://justenjoyibizaboats.com/boat-details.html?slug=catmaran-bali-52</loc>
+    <loc>https://justenjoyibizaboats.com/boat/catmaran-bali-52/</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
