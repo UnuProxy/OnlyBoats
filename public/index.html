@@ -220,6 +220,17 @@
 .lang-switcher a.active { color: #fff; border-color: #fff; font-weight: 600; }
 .lang-switcher a:hover { color: #fff; border-color: rgba(255,255,255,0.6); }
 @media (max-width: 991px) { .lang-switcher { margin: 12px 0 0 16px; } }
+/* === FIX: Empty space between Show More button and Stats === */
+#homepageBoatsGrid { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+.boats.section-padding > .container > .row.mt-5 { margin-top: 12px !important; }
+.view-all-boats { padding: 14px 0 0 !important; margin: 0 !important; }
+.view-all-boats > *:first-child { margin-top: 0 !important; }
+.view-all-boats > *:last-child { margin-bottom: 0 !important; }
+.view-all-boats p { padding: 0 !important; }
+/* === FIX: Owl Carousel fallback so Exclusive Services shows even if Owl init fails === */
+.owl-carousel:not(.owl-loaded) { display: flex !important; gap: 20px !important; overflow-x: auto !important; padding-bottom: 8px !important; }
+.owl-carousel:not(.owl-loaded) .item { flex: 0 0 280px !important; min-width: 280px !important; }
+.owl-carousel .item { display: block !important; }
 /* === COMPACT LAYOUT: tighter vertical spacing throughout the page === */
 /* Cut excessive padding so scrolling feels fluid, less dead space */
 section.section-padding { padding-top: 50px !important; padding-bottom: 50px !important; }
@@ -1119,6 +1130,27 @@ if (!localStorage.getItem('welcomePopupShown')) { setTimeout(createWelcomePopup,
 <!-- Lean script set (was 17 legacy files, now 2 essential ones). Removed: Firebase, jquery-migrate, modernizr, imagesloaded, isotope, pace, popper+bootstrap duplicates, scrollIt, waypoints, stellar, magnific-popup, YouTubePopUp, select2, datepicker, smooth-scroll. -->
 <script src="/assets/js/owl.carousel.min.js"></script>
 <script src="/assets/js/custom.js"></script>
+<!-- Owl Carousel init (Exclusive Services section) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+<script>
+jQuery(function($) {
+    try {
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 20,
+            nav: false,
+            dots: true,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: true,
+            responsive: { 0: { items: 1 }, 600: { items: 2 }, 1000: { items: 3 } }
+        });
+    } catch (e) {
+        console.warn('Owl Carousel init failed (fallback CSS will display items):', e);
+    }
+});
+</script>
 <!-- Email obfuscation: bots see "Click to reveal email", users get real mailto: link -->
 <script>
 document.addEventListener('DOMContentLoaded',function(){
