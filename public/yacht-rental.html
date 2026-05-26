@@ -230,6 +230,11 @@
                 <div class="row" id="boatsGrid">
                     <div class="loading-boats"><i class="fas fa-spinner fa-spin"></i> Loading boats...</div>
                 </div>
+                <div id="showMoreRowFleet" style="display:none;text-align:center;padding:30px 0 10px;">
+                    <button id="showMoreFleetBtn" type="button" onclick="showMoreFleetBoats()" style="background:#2095AE;color:#fff;border:none;padding:14px 36px;border-radius:30px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(32,149,174,0.25);">
+                        Show More Boats
+                    </button>
+                </div>
             </div>
         </section>
     </div>
@@ -582,12 +587,23 @@
             grid.innerHTML = '<div class="no-results"><p>Unable to load our fleet right now. Please refresh, or contact us on WhatsApp: <a href="https://wa.me/34642453952">+34 642 45 39 52</a></p></div>';
         }
     }
+    // Pagination: show 6 of the filtered matching boats, "Show More" reveals next 6
+    const FLEET_BATCH = 6;
+    let fleetVisibleCount = FLEET_BATCH;
+
     function applyFilters() {
+        // Filter changed → reset to first batch
+        fleetVisibleCount = FLEET_BATCH;
+        renderFleetVisible();
+    }
+
+    function renderFleetVisible() {
         const type = document.getElementById('boatType').value;
         const guests = document.getElementById('guests').value;
         const maxPrice = document.getElementById('priceRange').value;
         const cards = document.querySelectorAll('#boatsGrid .card-wrapper');
-        let visible = 0;
+        let matchCount = 0;
+        let shownCount = 0;
         cards.forEach(card => {
             const cardType = card.dataset.type;
             const cardGuests = parseInt(card.dataset.guests);
@@ -595,11 +611,37 @@
             const typeOk = !type || cardType === type;
             const guestOk = !guests || cardGuests <= parseInt(guests);
             const priceOk = !maxPrice || cardPrice <= parseInt(maxPrice);
-            if (typeOk && guestOk && priceOk) { card.style.display = ''; visible++; } else { card.style.display = 'none'; }
+            const match = typeOk && guestOk && priceOk;
+            if (match) {
+                matchCount++;
+                if (shownCount < fleetVisibleCount) {
+                    card.style.display = '';
+                    shownCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            } else {
+                card.style.display = 'none';
+            }
         });
-        document.getElementById('yachtCount').textContent = visible;
+        document.getElementById('yachtCount').textContent = matchCount;
+
+        // Show More button visibility + label
+        const row = document.getElementById('showMoreRowFleet');
+        const btn = document.getElementById('showMoreFleetBtn');
+        if (row && btn) {
+            if (fleetVisibleCount >= matchCount) {
+                row.style.display = 'none';
+            } else {
+                const remaining = matchCount - fleetVisibleCount;
+                const nextBatch = Math.min(FLEET_BATCH, remaining);
+                btn.textContent = `Show ${nextBatch} More Boats (${remaining} remaining)`;
+                row.style.display = 'block';
+            }
+        }
+
         let noMsg = document.getElementById('noResults');
-        if (visible === 0 && cards.length > 0) {
+        if (matchCount === 0 && cards.length > 0) {
             if (!noMsg) {
                 noMsg = document.createElement('div');
                 noMsg.id = 'noResults';
@@ -609,6 +651,11 @@
             }
         } else if (noMsg) { noMsg.remove(); }
     }
+
+    window.showMoreFleetBoats = function() {
+        fleetVisibleCount += FLEET_BATCH;
+        renderFleetVisible();
+    };
     function resetFilters() {
         document.getElementById('boatType').value = '';
         document.getElementById('guests').value = '';
