@@ -75,6 +75,16 @@
         /* Boat photo with focus-point support */
         .boat-image { width: 100%; height: 100%; object-fit: cover; }
 
+        /* === COMPACT LAYOUT: tighter vertical spacing throughout ── */
+        .page-header-banner { padding: 22px 20px 14px !important; }
+        .stats-bar { padding: 12px 0 !important; }
+        .boats-list.section-padding { padding-top: 24px !important; padding-bottom: 40px !important; }
+        .boats-wrapper { padding: 10px 0 !important; }
+        .footer-top { padding-top: 50px !important; padding-bottom: 30px !important; }
+        @media (max-width: 768px) {
+            .page-header-banner { padding: 16px 16px 12px !important; }
+            .boats-list.section-padding { padding-top: 18px !important; padding-bottom: 32px !important; }
+        }
         /* ── FIX: Boat grid layout — prevent horizontal overflow, stack properly ── */
         #boatsGrid {
             display: grid !important;
