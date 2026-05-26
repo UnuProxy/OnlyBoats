@@ -664,7 +664,7 @@
                             <p class="footer-contact-text">Passeig Joan Carles I, 5<br>07800 Ibiza, Islas Baleares<br>Spain</p>
                             <div class="footer-contact-info">
                                 <p class="footer-contact-phone"><span class="flaticon-call"></span> +34 642 45 39 52</p>
-                                <p class="footer-contact-mail">info@justenjoyibizaboats.com</p>
+                                <p class="footer-contact-mail"><a href="#" class="email-protect" data-u="info" data-d="justenjoyibizaboats.com" rel="nofollow">Click to reveal email</a></p>
                             </div>
                             <div class="footer-about-social-list">
                                 <a href="https://www.instagram.com/justenjoyibiza_boats_tours/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -1064,6 +1064,15 @@ if (!localStorage.getItem('welcomePopupShown')) { setTimeout(createWelcomePopup,
 <!-- Lean script set (was 17 legacy files, now 2 essential ones). Removed: Firebase, jquery-migrate, modernizr, imagesloaded, isotope, pace, popper+bootstrap duplicates, scrollIt, waypoints, stellar, magnific-popup, YouTubePopUp, select2, datepicker, smooth-scroll. -->
 <script src="/assets/js/owl.carousel.min.js"></script>
 <script src="/assets/js/custom.js"></script>
+<!-- Email obfuscation: bots see "Click to reveal email", users get real mailto: link -->
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('.email-protect').forEach(function(el){
+        var u=el.getAttribute('data-u'),d=el.getAttribute('data-d');
+        if(u&&d){var em=u+'@'+d;el.textContent=em;el.setAttribute('href','mailto:'+em);}
+    });
+});
+</script>
 <!-- DYNAMIC HOMEPAGE BOATS — auto-loads from boats.json -->
 <script>
 (function() {
