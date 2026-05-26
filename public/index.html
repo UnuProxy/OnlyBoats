@@ -367,6 +367,13 @@
                 <i class="fas fa-spinner fa-spin"></i> Loading boats...
             </div>
         </div>
+        <div class="row mt-4" id="showMoreRowHomepage" style="display:none;">
+            <div class="col-md-12" style="text-align:center;padding:20px 0;">
+                <button id="showMoreBoatsBtn" type="button" onclick="showMoreHomepageBoats()" style="background:#2095AE;color:#fff;border:none;padding:14px 36px;border-radius:30px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(32,149,174,0.25);">
+                    Show More Boats
+                </button>
+            </div>
+        </div>
     <div class="row mt-5">
         <div class="col-md-12">
             <div class="view-all-boats">
@@ -1112,6 +1119,11 @@ document.addEventListener('DOMContentLoaded',function(){
     const slug = (boat.name || '').toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
     return `<div class="col-md-4"><div class="boat-item"><div class="image-container"><img src="${image}" alt="${name}" loading="lazy"><div class="image-overlay"><span class="boat-type">${tagline}</span></div></div><div class="boat-content"><div class="boat-name">${name}</div><div class="key-features"><span class="price-tag">${priceLabel}</span><span class="capacity">${capacity}</span></div><div class="boat-actions"><button class="enquiry-btn" onclick="openInquiryForm('${nameForJs}')">BOOK NOW</button><a href="/boat/${slug}/" class="view-details">View Details</a></div></div></div></div>`;
   }
+  // Pagination: show 6 boats initially, "Show More" reveals next 6
+  const HOMEPAGE_BATCH = 6;
+  let allHomepageBoats = [];
+  let homepageVisibleCount = 0;
+
   async function loadHomepageBoats() {
     const grid = document.getElementById('homepageBoatsGrid');
     if (!grid) return;
@@ -1119,37 +1131,55 @@ document.addEventListener('DOMContentLoaded',function(){
       const resp = await fetch('/content/boats.json?v=' + Date.now());
       if (!resp.ok) throw new Error('Failed to load');
       const data = await resp.json();
-      let boats = Array.isArray(data.boats) ? data.boats : [];
-      boats = boats.filter(b => b.published !== false);
-      if (boats.length === 0) {
+      allHomepageBoats = (Array.isArray(data.boats) ? data.boats : []).filter(b => b.published !== false);
+      if (allHomepageBoats.length === 0) {
         grid.innerHTML = '<div class="col-md-12" style="text-align:center;padding:40px;color:#666;">No boats available right now. <a href="/contact.html">Contact us</a> for inquiries.</div>';
         return;
       }
-      grid.innerHTML = boats.map(renderHomepageBoat).join('');
-      const items = document.querySelectorAll('#homepageBoatsGrid .boat-item');
-      if (typeof IntersectionObserver !== 'undefined') {
-        const obs = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateY(0)';
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.2 });
-        items.forEach((item, i) => {
-          item.style.opacity = '0';
-          item.style.transform = 'translateY(30px)';
-          item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-          item.style.transitionDelay = (i * 0.05) + 's';
-          obs.observe(item);
-        });
-      }
+      // Reset and render first batch
+      homepageVisibleCount = 0;
+      grid.innerHTML = '';
+      window.showMoreHomepageBoats();
     } catch (err) {
       console.error('Homepage boats load failed:', err);
       grid.innerHTML = '<div class="col-md-12" style="text-align:center;padding:40px;color:#666;">Boats temporarily unavailable. Please refresh or <a href="/contact.html">contact us</a>.</div>';
     }
   }
+
+  // Reveal next batch of boats with fade-in animation
+  window.showMoreHomepageBoats = function() {
+    const grid = document.getElementById('homepageBoatsGrid');
+    if (!grid || allHomepageBoats.length === 0) return;
+    const next = allHomepageBoats.slice(homepageVisibleCount, homepageVisibleCount + HOMEPAGE_BATCH);
+    const startIdx = grid.children.length;
+    next.forEach(boat => grid.insertAdjacentHTML('beforeend', renderHomepageBoat(boat)));
+    homepageVisibleCount += next.length;
+
+    // Animate newly-added cards
+    const newItems = Array.from(grid.querySelectorAll('.boat-item')).slice(startIdx);
+    newItems.forEach((item, i) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(30px)';
+      item.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      item.style.transitionDelay = (i * 0.06) + 's';
+      setTimeout(() => { item.style.opacity = '1'; item.style.transform = 'translateY(0)'; }, 20);
+    });
+
+    // Show More button visibility + label
+    const row = document.getElementById('showMoreRowHomepage');
+    const btn = document.getElementById('showMoreBoatsBtn');
+    if (row && btn) {
+      if (homepageVisibleCount >= allHomepageBoats.length) {
+        row.style.display = 'none';
+      } else {
+        const remaining = allHomepageBoats.length - homepageVisibleCount;
+        const nextBatch = Math.min(HOMEPAGE_BATCH, remaining);
+        btn.textContent = `Show ${nextBatch} More Boats (${remaining} remaining)`;
+        row.style.display = 'block';
+      }
+    }
+  };
+
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', loadHomepageBoats); } else { loadHomepageBoats(); }
 })();
 </script>
