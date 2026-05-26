@@ -446,7 +446,7 @@
                             <p class="footer-contact-text">Passeig Joan Carles I, 5<br>07800 Ibiza, Islas Baleares<br>Spain</p>
                             <div class="footer-contact-info">
                                 <p class="footer-contact-phone"><span class="flaticon-call"></span> +34 642 45 39 52</p>
-                                <p class="footer-contact-mail">info@justenjoyibizaboats.com</p>
+                                <p class="footer-contact-mail"><a href="#" class="email-protect" data-u="info" data-d="justenjoyibizaboats.com" rel="nofollow">Click to reveal email</a></p>
                             </div>
                             <div class="footer-about-social-list">
                                 <a href="https://www.instagram.com/justenjoyibiza_boats_tours/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -472,6 +472,10 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/custom.js"></script>
+    <!-- Email obfuscation -->
+    <script>
+    document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.email-protect').forEach(function(el){var u=el.getAttribute('data-u'),d=el.getAttribute('data-d');if(u&&d){var em=u+'@'+d;el.textContent=em;el.setAttribute('href','mailto:'+em);}});});
+    </script>
     <script>
     // ── BOATS: load from content/boats.json (edited via Pages CMS) ──
     function formatPrice(value) {
