@@ -67,6 +67,14 @@
         /* === BRAND COLOR === */
         :root { --brand: #2095AE; --brand-dark: #1B2838; --soft: #F8F9FA; }
 
+        /* === COMPACT LAYOUT: tighter vertical spacing === */
+        .founder-story, .team-section, .real-moments, .promise-section, .about-cta { padding-top: 60px !important; padding-bottom: 60px !important; }
+        .milestones { padding-top: 40px !important; padding-bottom: 40px !important; }
+        .team-intro, .real-intro { margin-bottom: 36px !important; }
+        @media (max-width: 768px) {
+            .founder-story, .team-section, .real-moments, .promise-section, .about-cta { padding-top: 42px !important; padding-bottom: 42px !important; }
+            .milestones { padding-top: 28px !important; padding-bottom: 28px !important; }
+        }
         /* === SECTION: STORY === */
         .founder-story { padding: 100px 0; background: #fff; }
         .story-eyebrow {
