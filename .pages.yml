@@ -1,0 +1,107 @@
+media:
+  input: public/assets/img
+  output: /assets/img
+  categories: [image]
+
+content:
+  - name: fleet
+    label: "Boats Fleet"
+    path: public/content/boats.json
+    type: file
+    format: json
+    fields:
+      - name: boats
+        label: "All Boats (drag to reorder)"
+        type: object
+        list:
+          min: 1
+        fields:
+          - name: name
+            label: "Boat name"
+            type: string
+            required: true
+
+          - name: published
+            label: "Published — show on website"
+            type: boolean
+            default: true
+            description: "Untick to hide this boat from the live website (drafts in progress)"
+
+          - name: type
+            label: "Boat type"
+            type: select
+            options:
+              values:
+                - { value: motor, label: "Motor Yacht" }
+                - { value: sailing, label: "Sailing Yacht" }
+                - { value: catamaran, label: "Catamaran" }
+            default: motor
+
+          - name: length
+            label: "Length (e.g. 10m)"
+            type: string
+            required: true
+
+          - name: guests
+            label: "Max guests"
+            type: number
+            required: true
+
+          - name: image
+            label: "Boat photo"
+            type: image
+            required: true
+            description: "Upload a photo of this specific boat (will appear in the card)"
+
+          - name: image_position
+            label: "Photo focus (where to center the photo when cropped)"
+            type: select
+            options:
+              values:
+                - { value: center, label: "Center" }
+                - { value: top, label: "Top" }
+                - { value: bottom, label: "Bottom" }
+                - { value: left, label: "Left" }
+                - { value: right, label: "Right" }
+            default: center
+
+          - name: captain_included
+            label: "Captain included"
+            type: boolean
+            default: true
+
+          - name: overnight
+            label: "Overnight available"
+            type: boolean
+            default: false
+
+          - name: price_may
+            label: "Price — May (€/day)"
+            type: number
+            required: true
+            description: "Set to 0 to show 'On request' instead of a price"
+
+          - name: price_june
+            label: "Price — June (€/day)"
+            type: number
+            description: "Set to 0 to show 'On request' instead of a price"
+
+          - name: price_july
+            label: "Price — July (€/day)"
+            type: number
+            description: "Set to 0 to show 'On request' instead of a price"
+
+          - name: price_august
+            label: "Price — August (€/day)"
+            type: number
+            description: "Set to 0 to show 'On request' instead of a price"
+
+          - name: price_september
+            label: "Price — September (€/day)"
+            type: number
+            description: "Set to 0 to show 'On request' instead of a price"
+
+          - name: price_october
+            label: "Price — October (€/day)"
+            type: number
+            description: "Set to 0 to show 'On request' instead of a price"
