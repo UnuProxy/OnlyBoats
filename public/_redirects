@@ -23,6 +23,13 @@
 /services/           /services.html                    200
 /faq/                /faq.html                         200
 /yacht-rental/       /yacht-rental.html                200
+/tours/              /tours.html                       200
+/news/               /news.html                        200
+/formentera/         /formentera.html                  200
+/sunset-cruise/      /sunset-cruise.html               200
+/catamaran-ibiza/    /catamaran-ibiza.html             200
+/private-yacht/      /private-yacht-ibiza.html         200
+/boat-party/         /ibiza-boat-party.html            200
 
 # Spanish version
 /es/sobre-nosotros/  /es/about.html                    200

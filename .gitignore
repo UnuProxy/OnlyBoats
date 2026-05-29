@@ -16,3 +16,45 @@ node_modules/
 # Local env files (NEVER commit secrets)
 .env
 .env.local
+
+# CRM files — not part of the website repo
+/server.js
+/package.json
+/package-lock.json
+/cors.json
+/functions/
+/MY-ACCOUNTS-MASTER-LIST.*
+/SEO-PLAN-*.md
+
+# Claude Code settings
+/.claude/
+
+# Root-level HTML duplicates (website lives in public/)
+/index.html
+/about.html
+/faq.html
+/yacht-rental.html
+/boat-details.html
+/ES-index.html
+/contact.html
+/services.html
+/news.html
+/tours.html
+/formentera.html
+/sunset-cruise.html
+/catamaran-ibiza.html
+/private-yacht-ibiza.html
+/ibiza-boat-party.html
+/room-details.html
+/index-1.html
+/_redirects
+/robots.txt
+/sitemap-COMPLETE.xml
+
+# Root-level loose image/asset duplicates
+/alin-clients-celebration.jpg
+/alin-formentera.jpg
+/alin-portrait-boat.jpg
+/catamaran-group.jpg
+/formentera-guys.jpg
+/assets/
