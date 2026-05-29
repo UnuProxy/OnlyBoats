@@ -1,0 +1,18 @@
+# macOS noise files
+.DS_Store
+**/.DS_Store
+
+# Old deployment artifacts (we use GitHub now)
+*.zip
+
+# Editor cruft
+.vscode/
+.idea/
+*.swp
+
+# Node (in case we add npm later)
+node_modules/
+
+# Local env files (NEVER commit secrets)
+.env
+.env.local

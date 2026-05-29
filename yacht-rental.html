@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRDCG93F2Z"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-JRDCG93F2Z');
+        </script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <title>Our Fleet | Just Enjoy Ibiza Boats - Luxury Yacht Charter Ibiza</title>
+        <meta name="description" content="Browse our luxury yacht fleet in Ibiza — 21 boats from speedboats to superyachts. Captain included. Book direct from €762/day.">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://justenjoyibizaboats.com/yacht-rental.html" />
+        <link rel="shortcut icon" href="/assets/img/favicon-16x16.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <link rel="stylesheet" href="/assets/css/plugins.css">
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="/assets/css/navbar.css">
+        <link rel="stylesheet" href="/assets/css/yacht.rental.css">
+        <meta property="og:title" content="Our Fleet | Just Enjoy Ibiza Boats">
+        <meta property="og:description" content="Browse our full fleet of luxury boats for charter in Ibiza.">
+        <meta property="og:url" content="https://justenjoyibizaboats.com/yacht-rental.html">
+        <meta property="og:image" content="https://justenjoyibizaboats.com/assets/img/RivaArgo90.jpeg">
+        <meta property="og:type" content="website">
+        <style>
+        /* Inquiry Modal */
+        .inquiry-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10000; overflow-y: auto; }
+        .inquiry-modal.active { display: flex !important; align-items: center; justify-content: center; }
+        .inquiry-modal-container { background: white; border-radius: 16px; max-width: 900px; width: 95%; margin: auto; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .inquiry-modal-form .inquiry-input-field,
+        .inquiry-modal-form .inquiry-select-field,
+        .inquiry-modal-form .inquiry-message-field { color: #000 !important; -webkit-text-fill-color: #000 !important; border: 1px solid #ddd !important; background-color: #f8f9fa !important; }
+        .inquiry-modal-form .inquiry-submit-button { background: #2095AE !important; color: white !important; font-weight: bold; display: block; width: 100%; padding: 12px; border: none; border-radius: 8px; margin-top: 20px; cursor: pointer; font-size: 16px; }
+        @media (max-width: 768px) {
+            .inquiry-modal-container { width: 95%; max-height: 90vh; overflow-y: auto; }
+            .inquiry-modal-form { padding: 20px !important; max-height: 60vh; overflow-y: auto; }
+            .inquiry-field-row { flex-direction: column; }
+        }
+        /* WhatsApp */
+        .elegant-whatsapp { position: fixed; bottom: 40px; right: 40px; z-index: 99; text-decoration: none; transition: all 0.3s ease; }
+        .elegant-whatsapp-inner { display: flex; align-items: center; padding: 12px 20px; background-color: rgba(32,149,174,0.9); color: white; border-radius: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease; }
+        .elegant-whatsapp-inner i { font-size: 22px; margin-right: 8px; }
+        .elegant-whatsapp-text { font-family:'Barlow Condensed',sans-serif; font-size:14px; letter-spacing:1px; text-transform:uppercase; }
+        .elegant-whatsapp:hover .elegant-whatsapp-inner { background-color: rgba(32,149,174,1); transform: translateY(-5px); }
+        @media (max-width: 767px) {
+            .elegant-whatsapp { bottom: 30px; right: 20px; }
+            .elegant-whatsapp-text { display: none; }
+            .elegant-whatsapp-inner i { margin-right: 0; }
+        }
+        /* No results / loading */
+        .no-results, .loading-boats { text-align: center; padding: 60px 20px; width: 100%; color: #666; font-family: 'Barlow Condensed', sans-serif; font-size: 18px; letter-spacing: 1px; }
+        /* BOOK NOW button in navbar */
+        .nav-book-btn { background: #2095AE !important; color: #fff !important; border: none; padding: 9px 24px !important; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px !important; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; margin-left: 18px; cursor: pointer; transition: all 0.3s ease; text-decoration: none !important; display: inline-block; line-height: 1; box-shadow: 0 2px 8px rgba(32,149,174,0.25); }
+        .nav-book-btn:hover { background: #197a8d !important; color: #fff !important; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(32,149,174,0.4); text-decoration: none !important; }
+        @media (max-width: 991px) { .nav-book-btn { display: inline-block; margin: 12px 0 0 16px; padding: 10px 28px !important; } }
+        /* Clean dropdown arrow — fixes overlap with placeholder text */
+        .inquiry-modal-form .inquiry-select-field {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%232095AE' d='M6 8L0 0h12z'/></svg>") !important;
+            background-repeat: no-repeat !important;
+            background-position: right 14px center !important;
+            background-size: 12px 8px !important;
+            padding-right: 38px !important;
+        }
+        /* Hide the IE/Edge default arrow */
+        .inquiry-modal-form .inquiry-select-field::-ms-expand { display: none; }
+        /* Boat photo with focus-point support */
+        .boat-image { width: 100%; height: 100%; object-fit: cover; }
+
+        /* === COMPACT LAYOUT: tighter vertical spacing throughout ── */
+        .page-header-banner { padding: 22px 20px 14px !important; }
+        .stats-bar { padding: 12px 0 !important; }
+        .boats-list.section-padding { padding-top: 24px !important; padding-bottom: 40px !important; }
+        .boats-wrapper { padding: 10px 0 !important; }
+        .footer-top { padding-top: 50px !important; padding-bottom: 30px !important; }
+        @media (max-width: 768px) {
+            .page-header-banner { padding: 16px 16px 12px !important; }
+            .boats-list.section-padding { padding-top: 18px !important; padding-bottom: 32px !important; }
+        }
+        /* ── FIX: Boat grid layout — prevent horizontal overflow, stack properly ── */
+        #boatsGrid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)) !important;
+            gap: 28px !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+        }
+        #boatsGrid .card-wrapper {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            float: none !important;
+            display: block !important;
+        }
+        .boats-wrapper {
+            overflow: visible !important;
+            width: 100% !important;
+        }
+        .boats-list {
+            overflow-x: hidden !important;
+        }
+        @media (max-width: 768px) {
+            #boatsGrid {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+        }
+        /* ── Compact horizontal pricing grid ──────────── */
+        .pricing-grid-h {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0;
+            padding: 14px 4px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 10px;
+            margin: 14px 0 18px;
+            border: 1px solid #eaeaea;
+        }
+        .price-col { text-align: center; padding: 2px 3px; border-right: 1px solid #ececec; }
+        .price-col:last-child { border-right: none; }
+        .price-month { display: block; font-size: 9px; color: #888; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 5px; }
+        .price-amount { display: block; font-size: 12px; font-weight: 700; color: #2095AE; font-family: 'Barlow', sans-serif; line-height: 1.1; letter-spacing: -0.3px; }
+        .price-amount.no-price { color: #aaa; font-weight: 500; }
+        @media (max-width: 480px) {
+            .price-amount { font-size: 11px; }
+            .price-month { font-size: 8px; }
+        }
+        </style>
+    </head>
+<body>
+    <!-- Progress scroll totop -->
+    <div class="progress-wrap cursor-pointer">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-special">
+        <div class="container">
+            <div class="logo-wrapper">
+                <a class="logo" href="index.html"><h2>Just Enjoy Ibiza <span>Boats</span></h2></a>
+            </div>
+            <button class="custom-toggler" type="button" aria-label="Toggle navigation">
+                <span class="toggler-icon"><span class="line"></span><span class="line"></span><span class="line"></span></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="yacht-rental.html">OUR BOATS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">ABOUT US</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">CONTACT</a></li>
+                    <li class="nav-item"><button type="button" class="nav-book-btn" onclick="var f=window.openInquiryForm||window.openModal;if(f){f('');}else{window.location.href='/yacht-rental.html#book';}">BOOK NOW</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page Header with H1 -->
+    <header class="page-header-banner">
+        <div class="wide-container">
+            <h1 class="page-h1-title">Boat &amp; Yacht Charter in Ibiza</h1>
+            <p class="page-h1-subtitle">Browse our handpicked fleet — from speedboats to superyachts</p>
+        </div>
+    </header>
+    <style>
+    .page-header-banner { background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%); padding: 30px 20px 20px; text-align: center; border-bottom: 1px solid #eaeaea; }
+    .page-h1-title { font-family: 'Gilda Display', serif; font-size: clamp(26px, 4vw, 38px); color: #1a3540; margin: 0 0 8px; font-weight: 400; line-height: 1.2; }
+    .page-h1-subtitle { font-family: 'Barlow Condensed', sans-serif; color: #666; font-size: 15px; letter-spacing: 1.5px; margin: 0; text-transform: uppercase; }
+    @media (max-width: 768px) { .page-header-banner { padding: 20px 16px 14px; } }
+    </style>
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="wide-container">
+            <div class="stats-content">
+                <div class="stats-found">FOUND <span id="yachtCount">0</span> YACHTS</div>
+                <div class="stats-options">
+                    <button id="toggleSearch" class="toggle-search-btn mobile-filters-btn"><i class="fas fa-filter"></i> Filters</button>
+                    <span>UNITS: M</span>
+                    <span>CURRENCY: EUR</span>
+                    <span>SORT BY: PRICE</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Content -->
+    <div class="main-content wide-container">
+        <!-- Sidebar Filters -->
+        <aside class="filters-panel" id="filtersPanel">
+            <div class="filters-title">
+                <h2>Filters</h2>
+                <button class="filters-close-btn" id="closeFilters" aria-label="Close filters">×</button>
+            </div>
+            <div class="filter-group">
+                <label for="boatType">Boat Type</label>
+                <select id="boatType" autocomplete="off" onchange="applyFilters()">
+                    <option value="" selected>All Types</option>
+                    <option value="motor">Motor Yacht</option>
+                    <option value="sailing">Sailing Yacht</option>
+                    <option value="catamaran">Catamaran</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="guests">Number of Guests</label>
+                <select id="guests" autocomplete="off" onchange="applyFilters()">
+                    <option value="" selected>Any</option>
+                    <option value="7">Up to 7</option>
+                    <option value="9">Up to 9</option>
+                    <option value="11">Up to 11</option>
+                    <option value="12">Up to 12</option>
+                    <option value="30">Up to 30 (large groups)</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="priceRange">Max Price per Day</label>
+                <select id="priceRange" autocomplete="off" onchange="applyFilters()">
+                    <option value="" selected>Any Budget</option>
+                    <option value="1000">Under €1,000</option>
+                    <option value="2000">Under €2,000</option>
+                    <option value="5000">Under €5,000</option>
+                    <option value="10000">Under €10,000</option>
+                    <option value="99999">All Budgets</option>
+                </select>
+            </div>
+            <button class="search-button" onclick="applyFilters()"><i class="fas fa-search"></i> SEARCH</button>
+            <button class="reset-filters-link" id="resetFilters" onclick="resetFilters()"><i class="fas fa-arrow-rotate-left"></i> Reset Filters</button>
+        </aside>
+        <!-- Boat Listing -->
+        <section class="boats-list section-padding" id="boatsList">
+            <div class="boats-wrapper">
+                <div class="row" id="boatsGrid">
+                    <div class="loading-boats"><i class="fas fa-spinner fa-spin"></i> Loading boats...</div>
+                </div>
+                <div id="showMoreRowFleet" style="display:none;text-align:center;padding:30px 0 10px;">
+                    <button id="showMoreFleetBtn" type="button" onclick="showMoreFleetBoats()" style="background:#2095AE;color:#fff;border:none;padding:14px 36px;border-radius:30px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 12px rgba(32,149,174,0.25);">
+                        Show More Boats
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- Inquiry Modal -->
+    <div class="inquiry-modal" id="inquiryModal">
+        <div class="inquiry-modal-container">
+            <button class="inquiry-modal-close">✕</button>
+            <div class="inquiry-modal-content">
+                <div class="inquiry-modal-info">
+                    <div class="inquiry-modal-info-overlay"></div>
+                    <div class="inquiry-modal-info-content">
+                        <a class="inquiry-modal-logo" href="index.html"><h2>Just Enjoy Ibiza</h2><span>Boats</span></a>
+                        <h2 class="inquiry-modal-title">Get in touch to find the perfect boat</h2>
+                        <p class="inquiry-modal-subtitle">You'll hear from us in <span class="inquiry-time-highlight">15 minutes</span>. Or request a callback. We assure you the best offer during the high season.</p>
+                    </div>
+                </div>
+                <div class="inquiry-modal-form">
+                    <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm">
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap"><input type="text" name="firstName" class="inquiry-input-field" placeholder="First Name*" required></div>
+                            <div class="inquiry-field-wrap"><input type="text" name="lastName" class="inquiry-input-field" placeholder="Last Name*" required></div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap"><input type="email" name="email" class="inquiry-input-field" placeholder="Email Address*" required></div>
+                            <div class="inquiry-field-wrap">
+                                <select name="countryPhone" id="countrySelect" class="inquiry-select-field" required>
+                                    <option value="" disabled>Select Your Country*</option>
+                                    <option value="ES|+34" selected>🇪🇸 Spain</option>
+                                    <option value="AF|+93">🇦🇫 Afghanistan</option>
+                                    <option value="AL|+355">🇦🇱 Albania</option>
+                                    <option value="DZ|+213">🇩🇿 Algeria</option>
+                                    <option value="AD|+376">🇦🇩 Andorra</option>
+                                    <option value="AO|+244">🇦🇴 Angola</option>
+                                    <option value="AR|+54">🇦🇷 Argentina</option>
+                                    <option value="AM|+374">🇦🇲 Armenia</option>
+                                    <option value="AU|+61">🇦🇺 Australia</option>
+                                    <option value="AT|+43">🇦🇹 Austria</option>
+                                    <option value="AZ|+994">🇦🇿 Azerbaijan</option>
+                                    <option value="BS|+1">🇧🇸 Bahamas</option>
+                                    <option value="BH|+973">🇧🇭 Bahrain</option>
+                                    <option value="BD|+880">🇧🇩 Bangladesh</option>
+                                    <option value="BY|+375">🇧🇾 Belarus</option>
+                                    <option value="BE|+32">🇧🇪 Belgium</option>
+                                    <option value="BZ|+501">🇧🇿 Belize</option>
+                                    <option value="BO|+591">🇧🇴 Bolivia</option>
+                                    <option value="BA|+387">🇧🇦 Bosnia and Herzegovina</option>
+                                    <option value="BW|+267">🇧🇼 Botswana</option>
+                                    <option value="BR|+55">🇧🇷 Brazil</option>
+                                    <option value="BN|+673">🇧🇳 Brunei</option>
+                                    <option value="BG|+359">🇧🇬 Bulgaria</option>
+                                    <option value="CA|+1">🇨🇦 Canada</option>
+                                    <option value="CL|+56">🇨🇱 Chile</option>
+                                    <option value="CN|+86">🇨🇳 China</option>
+                                    <option value="CO|+57">🇨🇴 Colombia</option>
+                                    <option value="CR|+506">🇨🇷 Costa Rica</option>
+                                    <option value="HR|+385">🇭🇷 Croatia</option>
+                                    <option value="CY|+357">🇨🇾 Cyprus</option>
+                                    <option value="CZ|+420">🇨🇿 Czech Republic</option>
+                                    <option value="DK|+45">🇩🇰 Denmark</option>
+                                    <option value="DO|+1">🇩🇴 Dominican Republic</option>
+                                    <option value="EC|+593">🇪🇨 Ecuador</option>
+                                    <option value="EG|+20">🇪🇬 Egypt</option>
+                                    <option value="EE|+372">🇪🇪 Estonia</option>
+                                    <option value="ET|+251">🇪🇹 Ethiopia</option>
+                                    <option value="FI|+358">🇫🇮 Finland</option>
+                                    <option value="FR|+33">🇫🇷 France</option>
+                                    <option value="GE|+995">🇬🇪 Georgia</option>
+                                    <option value="DE|+49">🇩🇪 Germany</option>
+                                    <option value="GH|+233">🇬🇭 Ghana</option>
+                                    <option value="GR|+30">🇬🇷 Greece</option>
+                                    <option value="GT|+502">🇬🇹 Guatemala</option>
+                                    <option value="HN|+504">🇭🇳 Honduras</option>
+                                    <option value="HU|+36">🇭🇺 Hungary</option>
+                                    <option value="IS|+354">🇮🇸 Iceland</option>
+                                    <option value="IN|+91">🇮🇳 India</option>
+                                    <option value="ID|+62">🇮🇩 Indonesia</option>
+                                    <option value="IQ|+964">🇮🇶 Iraq</option>
+                                    <option value="IE|+353">🇮🇪 Ireland</option>
+                                    <option value="IL|+972">🇮🇱 Israel</option>
+                                    <option value="IT|+39">🇮🇹 Italy</option>
+                                    <option value="JM|+1">🇯🇲 Jamaica</option>
+                                    <option value="JP|+81">🇯🇵 Japan</option>
+                                    <option value="JO|+962">🇯🇴 Jordan</option>
+                                    <option value="KZ|+7">🇰🇿 Kazakhstan</option>
+                                    <option value="KE|+254">🇰🇪 Kenya</option>
+                                    <option value="KW|+965">🇰🇼 Kuwait</option>
+                                    <option value="LV|+371">🇱🇻 Latvia</option>
+                                    <option value="LB|+961">🇱🇧 Lebanon</option>
+                                    <option value="LT|+370">🇱🇹 Lithuania</option>
+                                    <option value="LU|+352">🇱🇺 Luxembourg</option>
+                                    <option value="MY|+60">🇲🇾 Malaysia</option>
+                                    <option value="MT|+356">🇲🇹 Malta</option>
+                                    <option value="MX|+52">🇲🇽 Mexico</option>
+                                    <option value="MD|+373">🇲🇩 Moldova</option>
+                                    <option value="MC|+377">🇲🇨 Monaco</option>
+                                    <option value="MA|+212">🇲🇦 Morocco</option>
+                                    <option value="NL|+31">🇳🇱 Netherlands</option>
+                                    <option value="NZ|+64">🇳🇿 New Zealand</option>
+                                    <option value="NG|+234">🇳🇬 Nigeria</option>
+                                    <option value="NO|+47">🇳🇴 Norway</option>
+                                    <option value="OM|+968">🇴🇲 Oman</option>
+                                    <option value="PK|+92">🇵🇰 Pakistan</option>
+                                    <option value="PA|+507">🇵🇦 Panama</option>
+                                    <option value="PY|+595">🇵🇾 Paraguay</option>
+                                    <option value="PE|+51">🇵🇪 Peru</option>
+                                    <option value="PH|+63">🇵🇭 Philippines</option>
+                                    <option value="PL|+48">🇵🇱 Poland</option>
+                                    <option value="PT|+351">🇵🇹 Portugal</option>
+                                    <option value="QA|+974">🇶🇦 Qatar</option>
+                                    <option value="RO|+40">🇷🇴 Romania</option>
+                                    <option value="RU|+7">🇷🇺 Russia</option>
+                                    <option value="SA|+966">🇸🇦 Saudi Arabia</option>
+                                    <option value="RS|+381">🇷🇸 Serbia</option>
+                                    <option value="SG|+65">🇸🇬 Singapore</option>
+                                    <option value="SK|+421">🇸🇰 Slovakia</option>
+                                    <option value="SI|+386">🇸🇮 Slovenia</option>
+                                    <option value="ZA|+27">🇿🇦 South Africa</option>
+                                    <option value="LK|+94">🇱🇰 Sri Lanka</option>
+                                    <option value="SE|+46">🇸🇪 Sweden</option>
+                                    <option value="CH|+41">🇨🇭 Switzerland</option>
+                                    <option value="SY|+963">🇸🇾 Syria</option>
+                                    <option value="TW|+886">🇹🇼 Taiwan</option>
+                                    <option value="TZ|+255">🇹🇿 Tanzania</option>
+                                    <option value="TH|+66">🇹🇭 Thailand</option>
+                                    <option value="TN|+216">🇹🇳 Tunisia</option>
+                                    <option value="TR|+90">🇹🇷 Turkey</option>
+                                    <option value="UA|+380">🇺🇦 Ukraine</option>
+                                    <option value="AE|+971">🇦🇪 United Arab Emirates</option>
+                                    <option value="GB|+44">🇬🇧 United Kingdom</option>
+                                    <option value="US|+1">🇺🇸 United States</option>
+                                    <option value="UY|+598">🇺🇾 Uruguay</option>
+                                    <option value="UZ|+998">🇺🇿 Uzbekistan</option>
+                                    <option value="VN|+84">🇻🇳 Vietnam</option>
+                                    <option value="YE|+967">🇾🇪 Yemen</option>
+                                    <option value="ZM|+260">🇿🇲 Zambia</option>
+                                    <option value="ZW|+263">🇿🇼 Zimbabwe</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap" style="width:100%;">
+                                <div style="display:flex;align-items:stretch;gap:6px;width:100%;">
+                                    <span id="dialCodeDisplay" style="background:#e9f5f8;color:#2095AE;padding:0 14px;border-radius:6px;font-weight:700;display:flex;align-items:center;white-space:nowrap;border:1px solid #ddd;font-family:'Barlow',sans-serif;min-width:70px;justify-content:center;">+34</span>
+                                    <input type="tel" name="phoneNumber" class="inquiry-input-field" placeholder="Phone Number*" required style="flex:1;min-width:0;">
+                                </div>
+                                <input type="hidden" name="phone" id="combinedPhone">
+                                <input type="hidden" name="country" id="countryCodeHidden" value="ES">
+                            </div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap"><input type="date" name="tripDate" class="inquiry-input-field" required></div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap">
+                                <select name="guests" class="inquiry-select-field" required>
+                                    <option value="" disabled selected>Number of Guests</option>
+                                    <option value="1">1 Passenger</option><option value="2">2 Passengers</option><option value="3">3 Passengers</option><option value="4">4 Passengers</option><option value="5">5 Passengers</option><option value="6">6 Passengers</option><option value="7">7 Passengers</option><option value="8">8 Passengers</option><option value="9">9 Passengers</option><option value="10">10 Passengers</option><option value="11">11 Passengers</option><option value="12">12 Passengers</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Budget range -->
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap">
+                                <select name="budget" class="inquiry-select-field" required>
+                                    <option value="" disabled selected>Your Budget Range (per day)*</option>
+                                    <option value="€0 - €1,000/day">€0 - €1,000/day</option>
+                                    <option value="€1,000 - €2,000/day">€1,000 - €2,000/day</option>
+                                    <option value="€2,000 - €3,000/day">€2,000 - €3,000/day</option>
+                                    <option value="€3,000 - €5,000/day">€3,000 - €5,000/day</option>
+                                    <option value="€5,000 - €7,000/day">€5,000 - €7,000/day</option>
+                                    <option value="€7,000 - €10,000/day">€7,000 - €10,000/day</option>
+                                    <option value="€10,000+/day">€10,000+/day</option>
+                                    <option value="Open to suggestions">Open to suggestions</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="inquiry-field-row">
+                            <div class="inquiry-field-wrap"><textarea name="message" class="inquiry-message-field" placeholder="Tell us about your preferences or special requests"></textarea></div>
+                        </div>
+                        <input type="hidden" id="boatNameInput" name="boatName" value="">
+                        <button type="submit" class="inquiry-submit-button">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="footer-column footer-about">
+                            <h3 class="footer-title">About Just Enjoy Ibiza Boat</h3>
+                            <p class="footer-about-text">At Just Enjoy Ibiza, we create unforgettable yacht experiences. With premium vessels and expert crews, your time on the Mediterranean will be nothing short of exceptional.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 offset-md-1">
+                        <div class="footer-column footer-explore clearfix">
+                            <h3 class="footer-title">Discover</h3>
+                            <ul class="footer-explore-list list-unstyled">
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="yacht-rental.html">Our Fleet</a></li>
+                                <li><a href="services.html">Food &amp; Drinks Delivery</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="about.html">About Us</a></li>
+                                <li><a href="faq.html">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-column footer-contact">
+                            <h3 class="footer-title">Contact</h3>
+                            <address class="footer-contact-text" itemscope itemtype="https://schema.org/PostalAddress" style="font-style:normal;">
+    <span itemprop="streetAddress">Passeig Joan Carles I, 5</span><br>
+    <span itemprop="postalCode">07800</span> <span itemprop="addressLocality">Ibiza</span>, <span itemprop="addressRegion">Islas Baleares</span><br>
+    <span itemprop="addressCountry">Spain</span>
+</address>
+                            <div class="footer-contact-info">
+                                <p class="footer-contact-phone"><span class="flaticon-call"></span> +34 642 45 39 52</p>
+                                <p class="footer-contact-mail"><a href="#" class="email-protect" data-u="info" data-d="justenjoyibizaboats.com" rel="nofollow">Click to reveal email</a></p>
+                            </div>
+                            <div class="footer-about-social-list">
+                                <a href="https://www.instagram.com/justenjoyibiza_boats_tours/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                                <a href="https://wa.me/34642453952" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/34642453952" class="elegant-whatsapp" target="_blank">
+        <div class="elegant-whatsapp-inner">
+            <i class="fab fa-whatsapp"></i>
+            <span class="elegant-whatsapp-text">Contact Us</span>
+        </div>
+    </a>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- Email obfuscation -->
+    <script>
+    document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('.email-protect').forEach(function(el){var u=el.getAttribute('data-u'),d=el.getAttribute('data-d');if(u&&d){var em=u+'@'+d;el.textContent=em;el.setAttribute('href','mailto:'+em);}});});
+    </script>
+    <script>
+    // ── BOATS: load from content/boats.json (edited via Pages CMS) ──
+    function formatPrice(value) {
+        if (!value || value <= 0) return 'On request';
+        return '€' + value.toLocaleString('en-US');
+    }
+    function escapeHtml(str) {
+        return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
+    function renderBoatCard(boat) {
+        const name = escapeHtml(boat.name);
+        const image = escapeHtml(boat.image || '/assets/img/RivaArgo90.jpeg');
+        const imagePosition = escapeHtml(boat.image_position || 'center');
+        const length = escapeHtml(boat.length || '');
+        const guests = parseInt(boat.guests) || 0;
+        const type = escapeHtml(boat.type || 'motor');
+        const captainOrOvernight = boat.overnight
+            ? '<span class="spec-item"><i class="fas fa-bed"></i> Overnight</span>'
+            : (boat.captain_included !== false ? '<span class="spec-item"><i class="fas fa-user-shield"></i> Captain incl.</span>' : '');
+        const priceMay = parseInt(boat.price_may) || 0;
+        const priceJun = parseInt(boat.price_june) || 0;
+        const priceJul = parseInt(boat.price_july) || 0;
+        const priceAug = parseInt(boat.price_august) || 0;
+        const priceSep = parseInt(boat.price_september) || 0;
+        const priceOct = parseInt(boat.price_october) || 0;
+        const filterPrice = priceMay || priceOct || priceJun || priceSep || priceJul || priceAug || 0;
+
+        return `
+        <div class="card-wrapper" data-type="${type}" data-guests="${guests}" data-price="${filterPrice}">
+            <div class="yacht-card">
+                <div class="yacht-image-wrapper">
+                    <img class="boat-image" src="${image}" alt="${name} boat rental Ibiza" loading="lazy" style="object-position: ${imagePosition};">
+                    <button class="favorite-btn" aria-label="Add to favorites"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="yacht-content">
+                    <div class="card-header">
+                        <h3 class="yacht-name">${name}</h3>
+                        <div class="specs-row">
+                            <span class="spec-item"><i class="fas fa-ruler-combined"></i> ${length}</span>
+                            <span class="spec-item"><i class="fas fa-users"></i> ${guests} guests</span>
+                            ${captainOrOvernight}
+                        </div>
+                    </div>
+                    <div class="pricing-grid-h">
+                        <div class="price-col">
+                            <div class="price-month">May</div>
+                            <div class="price-amount ${priceMay > 0 ? '' : 'no-price'}">${priceMay > 0 ? '€' + priceMay.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Jun</div>
+                            <div class="price-amount ${priceJun > 0 ? '' : 'no-price'}">${priceJun > 0 ? '€' + priceJun.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Jul</div>
+                            <div class="price-amount ${priceJul > 0 ? '' : 'no-price'}">${priceJul > 0 ? '€' + priceJul.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Aug</div>
+                            <div class="price-amount ${priceAug > 0 ? '' : 'no-price'}">${priceAug > 0 ? '€' + priceAug.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Sep</div>
+                            <div class="price-amount ${priceSep > 0 ? '' : 'no-price'}">${priceSep > 0 ? '€' + priceSep.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                        <div class="price-col">
+                            <div class="price-month">Oct</div>
+                            <div class="price-amount ${priceOct > 0 ? '' : 'no-price'}">${priceOct > 0 ? '€' + priceOct.toLocaleString('en-US') : '—'}</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <a href="/boat/${boat.name.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '')}/" class="btn-view">View Details</a>
+                        <button class="btn-inquire" data-boat="${name}">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
+    async function loadBoats() {
+        const grid = document.getElementById('boatsGrid');
+        // Force-reset all filters to default empty values (prevents browser autocomplete from caching old selections)
+        document.getElementById('boatType').value = '';
+        document.getElementById('guests').value = '';
+        document.getElementById('priceRange').value = '';
+        try {
+            const resp = await fetch('/content/boats.json?v=' + Date.now());
+            if (!resp.ok) throw new Error('Could not load boats');
+            const data = await resp.json();
+            let boats = Array.isArray(data.boats) ? data.boats : [];
+            boats = boats.filter(b => b.published !== false);
+            if (boats.length === 0) {
+                grid.innerHTML = '<div class="no-results"><p>No boats are listed yet. Please check back soon.</p></div>';
+                document.getElementById('yachtCount').textContent = '0';
+                return;
+            }
+            grid.innerHTML = boats.map(renderBoatCard).join('');
+            document.getElementById('yachtCount').textContent = boats.length;
+            applyFilters();
+        } catch (err) {
+            console.error('Failed to load boats:', err);
+            grid.innerHTML = '<div class="no-results"><p>Unable to load our fleet right now. Please refresh, or contact us on WhatsApp: <a href="https://wa.me/34642453952">+34 642 45 39 52</a></p></div>';
+        }
+    }
+    // Pagination: show 6 of the filtered matching boats, "Show More" reveals next 6
+    const FLEET_BATCH = 6;
+    let fleetVisibleCount = FLEET_BATCH;
+
+    function applyFilters() {
+        // Filter changed → reset to first batch
+        fleetVisibleCount = FLEET_BATCH;
+        renderFleetVisible();
+    }
+
+    function renderFleetVisible() {
+        const type = document.getElementById('boatType').value;
+        const guests = document.getElementById('guests').value;
+        const maxPrice = document.getElementById('priceRange').value;
+        const cards = document.querySelectorAll('#boatsGrid .card-wrapper');
+        let matchCount = 0;
+        let shownCount = 0;
+        cards.forEach(card => {
+            const cardType = card.dataset.type;
+            const cardGuests = parseInt(card.dataset.guests);
+            const cardPrice = parseInt(card.dataset.price);
+            const typeOk = !type || cardType === type;
+            const guestOk = !guests || cardGuests <= parseInt(guests);
+            const priceOk = !maxPrice || cardPrice <= parseInt(maxPrice);
+            const match = typeOk && guestOk && priceOk;
+            if (match) {
+                matchCount++;
+                if (shownCount < fleetVisibleCount) {
+                    card.style.display = '';
+                    shownCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        document.getElementById('yachtCount').textContent = matchCount;
+
+        // Show More button visibility + label
+        const row = document.getElementById('showMoreRowFleet');
+        const btn = document.getElementById('showMoreFleetBtn');
+        if (row && btn) {
+            if (fleetVisibleCount >= matchCount) {
+                row.style.display = 'none';
+            } else {
+                const remaining = matchCount - fleetVisibleCount;
+                const nextBatch = Math.min(FLEET_BATCH, remaining);
+                btn.textContent = `Show ${nextBatch} More Boats (${remaining} remaining)`;
+                row.style.display = 'block';
+            }
+        }
+
+        let noMsg = document.getElementById('noResults');
+        if (matchCount === 0 && cards.length > 0) {
+            if (!noMsg) {
+                noMsg = document.createElement('div');
+                noMsg.id = 'noResults';
+                noMsg.className = 'no-results';
+                noMsg.innerHTML = '<p>No boats match your filters. <a href="#" onclick="resetFilters();return false;">Reset filters</a> or <a href="contact.html">contact us</a>.</p>';
+                document.getElementById('boatsGrid').appendChild(noMsg);
+            }
+        } else if (noMsg) { noMsg.remove(); }
+    }
+
+    window.showMoreFleetBoats = function() {
+        fleetVisibleCount += FLEET_BATCH;
+        renderFleetVisible();
+    };
+    function resetFilters() {
+        document.getElementById('boatType').value = '';
+        document.getElementById('guests').value = '';
+        document.getElementById('priceRange').value = '';
+        applyFilters();
+    }
+    function openModal(boatName) {
+        document.getElementById('boatNameInput').value = boatName || '';
+        document.getElementById('inquiryModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+        document.getElementById('inquiryModal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.btn-inquire');
+        if (btn) { openModal(btn.dataset.boat || ''); }
+        if (e.target.closest('.inquiry-modal-close')) { closeModal(); }
+        if (e.target.id === 'inquiryModal') { closeModal(); }
+        const fav = e.target.closest('.favorite-btn');
+        if (fav) {
+            e.stopPropagation();
+            const icon = fav.querySelector('i');
+            icon.classList.toggle('fas');
+            icon.classList.toggle('far');
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        loadBoats();
+        const openBtn = document.getElementById('toggleSearch');
+        const closeBtn = document.getElementById('closeFilters');
+        const filtersPanel = document.getElementById('filtersPanel');
+        if (openBtn && filtersPanel) {
+            openBtn.addEventListener('click', () => filtersPanel.classList.add('open'));
+            closeBtn.addEventListener('click', () => filtersPanel.classList.remove('open'));
+        }
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.setAttribute('min', new Date().toISOString().split('T')[0]);
+        });
+        // Country dropdown → live update of dial-code badge + hidden country field
+        const countrySelect = document.getElementById('countrySelect');
+        const dialCodeDisplay = document.getElementById('dialCodeDisplay');
+        const countryCodeHidden = document.getElementById('countryCodeHidden');
+        if (countrySelect) {
+            countrySelect.addEventListener('change', function() {
+                const parts = (this.value || '').split('|');
+                const ccode = parts[0] || '';
+                const dial = parts[1] || '';
+                if (dialCodeDisplay) dialCodeDisplay.textContent = dial || '+';
+                if (countryCodeHidden) countryCodeHidden.value = ccode;
+            });
+        }
+        const form = document.getElementById('inquiryForm');
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                // Combine country dial code + phone number into international format
+                const sel = form.querySelector('select[name="countryPhone"]');
+                const parts = (sel && sel.value ? sel.value : 'ES|+34').split('|');
+                const dialCode = parts[1] || '+34';
+                let phoneNumber = form.querySelector('input[name="phoneNumber"]').value.trim();
+                // Strip country code ONLY if user explicitly typed one with + prefix
+                phoneNumber = phoneNumber.replace(/^\+\d{1,4}[\s\-]*/, '').replace(/[^\d\s]/g, '').trim();
+                const combinedPhone = document.getElementById('combinedPhone');
+                if (combinedPhone) combinedPhone.value = dialCode + ' ' + phoneNumber;
+                // Hide internal fields from email submission (only keep clean "phone" field)
+                const phoneNumberInput = form.querySelector('input[name="phoneNumber"]');
+                if (phoneNumberInput) phoneNumberInput.removeAttribute('name');
+                if (sel) sel.removeAttribute('name');
+                if (countryCodeHidden) countryCodeHidden.removeAttribute('name');
+                const btn = form.querySelector('.inquiry-submit-button');
+                const orig = btn.textContent;
+                btn.textContent = 'Sending...';
+                btn.disabled = true;
+                try {
+                    const resp = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (!resp.ok) throw new Error('Failed');
+                    form.reset();
+                    closeModal();
+                    alert('Thank you! Your inquiry has been submitted. We\'ll contact you within 15 minutes.');
+                } catch(err) {
+                    alert('Something went wrong. Please try again or WhatsApp us directly at +34 642 45 39 52.');
+                } finally {
+                    btn.textContent = orig;
+                    btn.disabled = false;
+                    // Restore name attributes for next form submission
+                    if (phoneNumberInput) phoneNumberInput.setAttribute('name', 'phoneNumber');
+                    if (sel) sel.setAttribute('name', 'countryPhone');
+                    if (countryCodeHidden) countryCodeHidden.setAttribute('name', 'country');
+                }
+            });
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggler = document.querySelector('.custom-toggler');
+        const navCollapse = document.querySelector('.navbar-collapse');
+        if (toggler && navCollapse) {
+            let isAnimating = false;
+            toggler.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (isAnimating) return;
+                isAnimating = true;
+                this.classList.toggle('active');
+                navCollapse.classList.toggle('show');
+                document.body.classList.toggle('menu-open');
+                document.body.style.overflow = navCollapse.classList.contains('show') ? 'hidden' : '';
+                setTimeout(() => { isAnimating = false; }, 400);
+            });
+            document.querySelectorAll('.navbar-collapse .nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    toggler.classList.remove('active');
+                    navCollapse.classList.remove('show');
+                    document.body.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                });
+            });
+            document.addEventListener('click', function(e) {
+                if (!toggler.contains(e.target) && !navCollapse.contains(e.target) && navCollapse.classList.contains('show')) {
+                    toggler.classList.remove('active');
+                    navCollapse.classList.remove('show');
+                    document.body.classList.remove('menu-open');
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+    });
+    window.addEventListener('scroll', () => {
+        document.querySelectorAll('.yacht-card').forEach(card => {
+            if (card.getBoundingClientRect().top < window.innerHeight * 0.9) {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }
+        });
+    });
+    </script>
+</body>
+</html>
