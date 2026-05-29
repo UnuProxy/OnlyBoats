@@ -58,3 +58,15 @@ node_modules/
 /catamaran-group.jpg
 /formentera-guys.jpg
 /assets/
+
+# Root-level icon/manifest files (these live in public/)
+/apple-touch-icon.png
+/favicon-32.png
+/icon-192.png
+/icon-512.png
+/manifest.json
+/site.webmanifest
+
+# Root-level verification/misc files
+/*.txt
+/.pages.yml
