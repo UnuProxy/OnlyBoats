@@ -615,7 +615,11 @@
             applyFilters();
         } catch (err) {
             console.error('Failed to load boats:', err);
-            grid.innerHTML = '<div class="no-results"><p>Unable to load our fleet right now. Please refresh, or contact us on WhatsApp: <a href="https://wa.me/34642453952">+34 642 45 39 52</a></p></div>';
+            // Keep the pre-rendered (static) fleet if present; only show the error
+            // when there is nothing to fall back to.
+            if (!grid.querySelector('.card-wrapper')) {
+                grid.innerHTML = '<div class="no-results"><p>Unable to load our fleet right now. Please refresh, or contact us on WhatsApp: <a href="https://wa.me/34642453952">+34 642 45 39 52</a></p></div>';
+            }
         }
     }
     // Pagination: show 6 of the filtered matching boats, "Show More" reveals next 6
