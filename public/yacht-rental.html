@@ -607,6 +607,9 @@
         // Filter changed → reset to first batch
         fleetVisibleCount = FLEET_BATCH;
         renderFleetVisible();
+        // Close the filter panel on mobile after search
+        const panel = document.getElementById('filtersPanel');
+        if (panel) panel.classList.remove('open');
     }
 
     function renderFleetVisible() {
