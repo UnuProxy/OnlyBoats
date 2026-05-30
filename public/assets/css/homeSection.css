@@ -1304,24 +1304,32 @@ input[type="date"]:valid:before {
 }
 
 /* === Inquiry modal — mobile robustness (overrides; appended) ===
-   Forces a clean single-column form on phones: hides the decorative
-   info panel, makes every field full-width, prevents clipped text and
-   iOS auto-zoom. Scoped to the modal so nothing else is affected. */
+   The phone layout made the modal full-screen with overflow:hidden and a
+   25vh info panel whose background image renders empty (white-on-white).
+   This makes the modal scroll, hides the empty panel, and forces every
+   field full-width so nothing is clipped or unreachable. Scoped to .modal-*. */
 @media (max-width: 768px) {
-  .modal-content {
-    grid-template-columns: 1fr !important;
-    width: 92% !important;
-    max-width: 520px !important;
+  .modal-inquiry, .modal-overlay { overflow-y: auto !important; -webkit-overflow-scrolling: touch; }
+  .modal-container, .modal-content {
+    height: auto !important;
     min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    display: block !important;
   }
   .modal-info { display: none !important; }
-  .modal-form { padding: 1.5rem !important; }
+  .modal-form {
+    flex: 1 1 auto !important;
+    padding: 20px !important;
+    overflow: visible !important;
+  }
+  .modal-form > * { flex-shrink: 1 !important; }
   .modal-form .field-row { flex-direction: column !important; gap: 0 !important; }
   .modal-form .field-wrap {
     width: 100% !important;
     flex: 1 1 100% !important;
     min-width: 0 !important;
-    margin-bottom: 1rem;
+    margin-bottom: 14px;
   }
   .modal-form .input-field,
   .modal-form .select-field,
@@ -1330,6 +1338,7 @@ input[type="date"]:valid:before {
     max-width: 100% !important;
     box-sizing: border-box !important;
     font-size: 16px !important;
+    height: auto !important;
   }
 }
 
