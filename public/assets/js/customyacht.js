@@ -205,7 +205,7 @@
             // Fallback form handler if Firebase is not available
             $('.inquiry-modal-form form').on('submit', function(e) {
                 e.preventDefault();
-                alert('Form submission is currently unavailable. Please contact us directly at info@justenjoyibizaboats.com');
+                alert('Form submission is currently unavailable. Please contact us directly at info@justenjoyibiza.com');
             });
         }
     }
