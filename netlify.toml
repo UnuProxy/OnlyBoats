@@ -1,6 +1,10 @@
 [build]
   publish = "public"
   functions = "netlify/functions"
+  # Pre-render the fleet from content/boats.json into the raw HTML for SEO/AI crawlers.
+  # Runs on every deploy, including when the CMS commits boats.json, so it never drifts.
+  # `|| true` guarantees this step can never block a deploy.
+  command = "python3 scripts/build-boats.py || true"
 
 [functions]
   node_bundler = "esbuild"
