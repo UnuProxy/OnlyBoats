@@ -1276,21 +1276,8 @@ input[type="date"] {
     color: #343a40;
 }
 
-/* Add a pseudo-element for placeholder when date is empty */
-input[type="date"]:empty:before {
-    content: 'Select Date';
-    color: #6c757d;
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* Hide the placeholder when date is selected or field is focused */
-input[type="date"]:focus:before,
-input[type="date"]:valid:before {
-    display: none;
-}
+/* Native date inputs show their own dd/mm/yyyy placeholder — no CSS
+   pseudo-label (the old :empty:before overlapped the native text). */
 
 @media (max-width: 768px) {
     .field-wrap {
