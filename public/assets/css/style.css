@@ -1830,7 +1830,8 @@ color: #aa8453;
     width: 160px;
     margin-bottom: 0px;
 }
-.nav-scroll .logo-wrapper .logo h2 {
+.nav-scroll .logo-wrapper .logo h2,
+.nav-scroll .logo-wrapper .logo p {
     font-family: 'Gilda Display', serif;
     font-size: 27px;
     font-weight: 400;
@@ -1858,7 +1859,8 @@ color: #aa8453;
 .logo-wrapper {
     float: left;
 }
-.logo-wrapper .logo h2 {
+.logo-wrapper .logo h2,
+.logo-wrapper .logo p {
     font-family: 'Gilda Display', serif;
     font-size: 27px;
     font-weight: 800 !important;
@@ -5502,7 +5504,9 @@ button.mfp-arrow {
     display: none;
 }
 .news .item .con h5,
-.news .item .con h5 a {
+.news .item .con h5 a,
+.news .item .con h3,
+.news .item .con h3 a {
     color: #fff;
     font-size: 24px;
     font-family: 'Gilda Display', serif;;
@@ -5510,7 +5514,9 @@ button.mfp-arrow {
     margin-bottom: 0px;
 }
 .news .item .con h5:hover,
-.news .item .con h5 a:hover {
+.news .item .con h5 a:hover,
+.news .item .con h3:hover,
+.news .item .con h3 a:hover {
     color: #fff;
 }
 .news .item .con p {
