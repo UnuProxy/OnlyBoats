@@ -102,7 +102,9 @@
             margin: 0 !important;
             padding: 0 !important;
             float: none !important;
-            display: block !important;
+        }
+        #boatsGrid .card-wrapper.hidden-by-filter {
+            display: none !important;
         }
         .boats-wrapper {
             overflow: visible !important;
@@ -625,13 +627,13 @@
             if (match) {
                 matchCount++;
                 if (shownCount < fleetVisibleCount) {
-                    card.style.display = '';
+                    card.classList.remove('hidden-by-filter');
                     shownCount++;
                 } else {
-                    card.style.display = 'none';
+                    card.classList.add('hidden-by-filter');
                 }
             } else {
-                card.style.display = 'none';
+                card.classList.add('hidden-by-filter');
             }
         });
         document.getElementById('yachtCount').textContent = matchCount;
