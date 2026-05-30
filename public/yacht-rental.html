@@ -621,7 +621,7 @@
             const cardGuests = parseInt(card.dataset.guests);
             const cardPrice = parseInt(card.dataset.price);
             const typeOk = !type || cardType === type;
-            const guestOk = !guests || cardGuests >= parseInt(guests);
+            const guestOk = !guests || cardGuests <= parseInt(guests);
             const priceOk = !maxPrice || cardPrice <= parseInt(maxPrice);
             const match = typeOk && guestOk && priceOk;
             if (match) {
