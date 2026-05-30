@@ -115,6 +115,27 @@
     .inquiry-modal-form .inquiry-select-field,
     .inquiry-modal-form .inquiry-message-field { color: #000 !important; -webkit-text-fill-color: #000 !important; border: 1px solid #ddd !important; background-color: #f8f9fa !important; }
     .inquiry-modal-form .inquiry-submit-button { background: #2095AE !important; color: white !important; font-weight: bold; display: block; width: 100%; padding: 12px; border: none; border-radius: 8px; margin-top: 20px; cursor: pointer; font-size: 16px; }
+    /* Two-panel layout (matches homepage/yacht-rental modal) */
+    .inquiry-modal-content { display: grid; grid-template-columns: 1fr 1.5fr; gap: 0; }
+    .inquiry-modal-info { position: relative; border-radius: 16px 0 0 16px; overflow: hidden; background-image: url('/assets/img/50BRONSON9.jpg'); background-size: cover; background-position: center; }
+    .inquiry-modal-info-overlay { position: absolute; inset: 0; background: rgba(32,149,174,0.55); z-index: 1; }
+    .inquiry-modal-info-content { position: relative; z-index: 2; padding: 40px; }
+    .inquiry-modal-logo { text-decoration: none; margin-bottom: 32px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .inquiry-modal-logo h2 { font-family: 'Gilda Display', serif; font-size: 28px; color: #fff; font-weight: 400; margin: 0 0 8px; letter-spacing: 0.5px; }
+    .inquiry-modal-logo span { color: #fff; font-weight: 300; font-size: 22px; display: block; letter-spacing: 0.5px; }
+    .inquiry-modal-title { font-family: 'Gilda Display', serif; font-size: clamp(24px,3vw,38px); font-weight: 400; color: #fff; margin: 0 0 24px; line-height: 1.3; }
+    .inquiry-modal-subtitle { font-family: 'Barlow', sans-serif; font-size: 16px; color: rgba(255,255,255,0.95); line-height: 1.6; }
+    .inquiry-modal-form { padding: 40px; background: #fff; }
+    .inquiry-field-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; }
+    .inquiry-field-wrap { flex: 1; min-width: 0; }
+    .inquiry-modal-form .inquiry-input-field, .inquiry-modal-form .inquiry-select-field, .inquiry-modal-form .inquiry-message-field { width: 100%; padding: 12px; border-radius: 8px; font-size: 16px; box-sizing: border-box; font-family: 'Barlow', sans-serif; }
+    .inquiry-modal-form .inquiry-message-field { min-height: 90px; resize: vertical; }
+    @media (max-width: 768px) {
+      .inquiry-modal-content { grid-template-columns: 1fr; }
+      .inquiry-modal-info { display: none; }
+      .inquiry-field-row { flex-direction: column; gap: 0; }
+      .inquiry-field-wrap { width: 100%; margin-bottom: 14px; }
+    }
     /* Clean dropdown arrow — fixes overlap with placeholder text */
     .inquiry-modal-form .inquiry-select-field {
         -webkit-appearance: none !important;
