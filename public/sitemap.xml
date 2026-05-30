@@ -42,6 +42,51 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://justenjoyibizaboats.com/news.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://justenjoyibizaboats.com/tours.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ===== SEO LANDING PAGES ===== -->
+  <url>
+    <loc>https://justenjoyibizaboats.com/formentera.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://justenjoyibizaboats.com/sunset-cruise.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://justenjoyibizaboats.com/catamaran-ibiza.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://justenjoyibizaboats.com/private-yacht-ibiza.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://justenjoyibizaboats.com/ibiza-boat-party.html</loc>
+    <lastmod>2026-05-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- ===== SPANISH HOMEPAGE ===== -->
   <url>
     <loc>https://justenjoyibizaboats.com/es/</loc>

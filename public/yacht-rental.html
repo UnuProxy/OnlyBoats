@@ -211,14 +211,13 @@
                 </select>
             </div>
             <div class="filter-group">
-                <label for="guests">Number of Guests</label>
+                <label for="guests">My Group Size</label>
                 <select id="guests" autocomplete="off" onchange="applyFilters()">
-                    <option value="" selected>Any</option>
-                    <option value="7">Up to 7</option>
-                    <option value="9">Up to 9</option>
-                    <option value="11">Up to 11</option>
-                    <option value="12">Up to 12</option>
-                    <option value="30">Up to 30 (large groups)</option>
+                    <option value="" selected>Any size</option>
+                    <option value="7">Up to 7 people</option>
+                    <option value="9">Up to 9 people</option>
+                    <option value="11">Up to 11 people</option>
+                    <option value="12">Up to 12 people</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -620,7 +619,7 @@
             const cardGuests = parseInt(card.dataset.guests);
             const cardPrice = parseInt(card.dataset.price);
             const typeOk = !type || cardType === type;
-            const guestOk = !guests || cardGuests <= parseInt(guests);
+            const guestOk = !guests || cardGuests >= parseInt(guests);
             const priceOk = !maxPrice || cardPrice <= parseInt(maxPrice);
             const match = typeOk && guestOk && priceOk;
             if (match) {
