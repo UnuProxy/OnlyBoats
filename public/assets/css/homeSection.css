@@ -1302,3 +1302,34 @@ input[type="date"]:valid:before {
         min-height: 44px; /* Better touch target */
     }
 }
+
+/* === Inquiry modal — mobile robustness (overrides; appended) ===
+   Forces a clean single-column form on phones: hides the decorative
+   info panel, makes every field full-width, prevents clipped text and
+   iOS auto-zoom. Scoped to the modal so nothing else is affected. */
+@media (max-width: 768px) {
+  .modal-content {
+    grid-template-columns: 1fr !important;
+    width: 92% !important;
+    max-width: 520px !important;
+    min-height: 0 !important;
+  }
+  .modal-info { display: none !important; }
+  .modal-form { padding: 1.5rem !important; }
+  .modal-form .field-row { flex-direction: column !important; gap: 0 !important; }
+  .modal-form .field-wrap {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    margin-bottom: 1rem;
+  }
+  .modal-form .input-field,
+  .modal-form .select-field,
+  .modal-form .message-field {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    font-size: 16px !important;
+  }
+}
+
