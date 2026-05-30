@@ -633,11 +633,7 @@
             const cardGuests = parseInt(card.dataset.guests);
             const cardPrice = parseInt(card.dataset.price) || 0;
             const typeOk = !type || cardType === type;
-            const guestOk = !guests || cardGuests <= parseInt(guests);
-            // FIX: a boat with no price (filterPrice 0 = "on request") used to pass
-            // "0 <= maxPrice", so it wrongly appeared under "Under €1,000". Now a specific
-            // budget cap excludes on-request boats, while "Any Budget" ('') and
-            // "All Budgets" (99999) still show every boat.
+            const guestOk = !guests || cardGuests >= parseInt(guests);
             const cap = parseInt(maxPrice);
             const priceOk = !maxPrice || cap >= 99999 || (cardPrice > 0 && cardPrice <= cap);
             const match = typeOk && guestOk && priceOk;
