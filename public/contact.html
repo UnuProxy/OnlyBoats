@@ -64,6 +64,9 @@
         .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
         @media (max-width: 600px) { .cf-row { grid-template-columns: 1fr; } }
         .cf-input, .cf-select, .cf-textarea { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Barlow', sans-serif; font-size: 15px; color: #000; background: #f8f9fa; transition: border-color .2s; box-sizing: border-box; }
+        /* Override global style.css `input[type=date]{color-scheme:dark}` which made this light-bg date field render dark-on-light (looked broken). */
+        .cf-input[type="date"] { color-scheme: light; }
+        .cf-input[type="date"]::-webkit-calendar-picker-indicator { filter: none; opacity: 0.6; cursor: pointer; }
         .cf-input:focus, .cf-select:focus, .cf-textarea:focus { outline: none; border-color: var(--brand); background: #fff; }
         .cf-select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%232095AE' d='M6 8L0 0h12z'/></svg>"); background-repeat: no-repeat; background-position: right 14px center; background-size: 12px 8px; padding-right: 38px; }
         .cf-textarea { min-height: 130px; resize: vertical; }
@@ -130,32 +133,6 @@
         <h1>Contact Us</h1>
     </div>
 </header>
-
-<!-- Quick contact cards -->
-<section class="contact-cards">
-    <div class="contact-cards-inner">
-        <div class="contact-cards-grid">
-            <div class="contact-card">
-                <div class="contact-card-icon"><i class="fab fa-whatsapp"></i></div>
-                <h2>WhatsApp</h2>
-                <p>The fastest way to reach us. We reply within 15 minutes during business hours — often much faster.</p>
-                <a href="https://wa.me/34642453952" class="card-link" target="_blank">+34 642 45 39 52</a>
-            </div>
-            <div class="contact-card">
-                <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
-                <h2>Email</h2>
-                <p>Prefer email? Send us your dates, group size, and budget. We'll come back with the best options.</p>
-                <a href="mailto:info@justenjoyibiza.com" class="card-link">info@justenjoyibiza.com</a>
-            </div>
-            <div class="contact-card">
-                <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
-                <h2>Find Us</h2>
-                <p>All charters depart from Marina Botafoch, the most prestigious marina in Ibiza Town, 5 min from the old city.</p>
-                <a href="https://maps.google.com/?q=Marina+Botafoch+Ibiza" class="card-link" target="_blank">Marina Botafoch, Ibiza</a>
-            </div>
-        </div>
-    </div>
-</section>
 
 <!-- Form + Info -->
 <section class="contact-main" id="contact-form">
