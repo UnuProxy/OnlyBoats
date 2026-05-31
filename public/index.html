@@ -23,6 +23,12 @@
         <link rel="alternate" hreflang="en" href="https://justenjoyibizaboats.com/" />
         <link rel="alternate" hreflang="es" href="https://justenjoyibizaboats.com/es/" />
         <link rel="alternate" hreflang="x-default" href="https://justenjoyibizaboats.com/" />
+        <!-- Perf: open connections to external resource domains early + preload the LCP hero image -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+        <link rel="dns-prefetch" href="https://unpkg.com">
+        <link rel="preload" as="image" href="/assets/video/hero-poster.jpg" fetchpriority="high">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
         <link rel="stylesheet" href="/assets/css/plugins.css" />
         <link rel="stylesheet" href="/assets/css/style.css" />
