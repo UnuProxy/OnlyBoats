@@ -193,6 +193,9 @@
 .modal-form .field-wrap label {
     display: none !important;
 }
+.modal-form .field-wrap label[for="tripDate"] {
+    display: block !important;
+}
 @media (max-width: 768px) {
     .modal-form .submit-button {
         padding: 12px;
@@ -983,6 +986,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
             </div>
             <div class="field-row">
                 <div class="field-wrap">
+                    <label for="tripDate" style="display:block; font-family:'Barlow Condensed',sans-serif; font-size:12px; letter-spacing:1px; text-transform:uppercase; color:#2095AE; font-weight:600; margin-bottom:5px;">Preferred Date *</label>
                     <input type="date" id="tripDate" name="tripDate" class="input-field" required>
                 </div>
             </div>
