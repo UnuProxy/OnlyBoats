@@ -41,6 +41,10 @@
 /sunset-boat-charter-ibiza/  /sunset-boat-charter-ibiza.html   200
 /ibiza-boat-rental-booking/  /ibiza-boat-rental-booking.html   200
 
+# Legal pages (clean URL — Google already discovered /privacy)
+/privacy             /privacy.html                     200
+/privacy/            /privacy.html                     200
+
 # Spanish version
 /es/sobre-nosotros/  /es/about.html                    200
 /es/contacto/        /es/contact.html                  200

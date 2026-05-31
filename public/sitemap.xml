@@ -317,4 +317,12 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- ===== LEGAL ===== -->
+  <url>
+    <loc>https://justenjoyibizaboats.com/privacy</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
 </urlset>
