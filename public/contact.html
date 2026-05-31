@@ -33,6 +33,10 @@
         /* Hero */
         .contact-hero { position: relative; width: 100%; aspect-ratio: 1448 / 480; max-height: 460px; background: var(--brand-dark); overflow: hidden; }
         .contact-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; }
+        /* Mobile: shrink the banner to a slim strip so the form is the focus, not a big cropped photo. */
+        @media (max-width: 768px) {
+            .contact-hero { aspect-ratio: auto; height: 150px; }
+        }
         /* Visible "Contact Us" text is baked into the photo; this H1 stays for SEO/accessibility only. */
         .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
@@ -74,8 +78,15 @@
         input[type="text"].cf-input:focus, input[type="email"].cf-input:focus, input[type="tel"].cf-input:focus {
             outline: none; border: 1px solid var(--brand); background: #fff;
         }
-        /* Date field: override global color-scheme:dark so it reads on the light bg. */
-        .cf-input[type="date"] { color-scheme: light; }
+        /* Date field: override global color-scheme:dark + force the dd/mm/yyyy text
+           visible on iOS (it was rendering white/invisible until tapped). */
+        .cf-input[type="date"] { color-scheme: light; color: #6c757d; -webkit-text-fill-color: #6c757d; }
+        .cf-input[type="date"]:focus, .cf-input[type="date"]:valid { color: #000; -webkit-text-fill-color: #000; }
+        .cf-input[type="date"]::-webkit-datetime-edit,
+        .cf-input[type="date"]::-webkit-datetime-edit-text,
+        .cf-input[type="date"]::-webkit-datetime-edit-month-field,
+        .cf-input[type="date"]::-webkit-datetime-edit-day-field,
+        .cf-input[type="date"]::-webkit-datetime-edit-year-field { color: inherit; -webkit-text-fill-color: inherit; }
         .cf-input[type="date"]::-webkit-calendar-picker-indicator { filter: none; opacity: 0.6; cursor: pointer; }
         /* Override global `select{max-width:160px;height:70px}` which clipped the
            budget/guests dropdowns; keep them full-width like the other fields. */
