@@ -63,11 +63,25 @@
         .cf-field { margin-bottom: 16px; }
         .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
         @media (max-width: 600px) { .cf-row { grid-template-columns: 1fr; } }
-        .cf-input, .cf-select, .cf-textarea { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Barlow', sans-serif; font-size: 15px; color: #000; background: #f8f9fa; transition: border-color .2s; box-sizing: border-box; }
-        /* Override global style.css `input[type=date]{color-scheme:dark}` which made this light-bg date field render dark-on-light (looked broken). */
+        /* High-specificity selectors (input[type=...].cf-input) so these beat the
+           global style.css `input[type=text/email]{background:transparent;border:0 0 1px;color:#fff}`
+           rule that was stripping the boxes and making placeholder text invisible. */
+        .cf-input, .cf-select, .cf-textarea,
+        input[type="text"].cf-input, input[type="email"].cf-input, input[type="tel"].cf-input, input[type="date"].cf-input {
+            width: 100%; padding: 12px 16px; margin-bottom: 0;
+            border: 1px solid #ddd; border-radius: 8px;
+            font-family: 'Barlow', sans-serif; font-size: 15px;
+            color: #000; background: #f8f9fa;
+            transition: border-color .2s; box-sizing: border-box; display: block; height: auto;
+        }
+        .cf-input::placeholder, .cf-textarea::placeholder { color: #6c757d; opacity: 1; }
+        .cf-input:focus, .cf-select:focus, .cf-textarea:focus,
+        input[type="text"].cf-input:focus, input[type="email"].cf-input:focus, input[type="tel"].cf-input:focus {
+            outline: none; border: 1px solid var(--brand); background: #fff;
+        }
+        /* Date field: override global color-scheme:dark so it reads on the light bg. */
         .cf-input[type="date"] { color-scheme: light; }
         .cf-input[type="date"]::-webkit-calendar-picker-indicator { filter: none; opacity: 0.6; cursor: pointer; }
-        .cf-input:focus, .cf-select:focus, .cf-textarea:focus { outline: none; border-color: var(--brand); background: #fff; }
         .cf-select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%232095AE' d='M6 8L0 0h12z'/></svg>"); background-repeat: no-repeat; background-position: right 14px center; background-size: 12px 8px; padding-right: 38px; }
         .cf-textarea { min-height: 130px; resize: vertical; }
         .cf-submit { background: var(--brand); color: #fff; border: none; padding: 14px 40px; border-radius: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: background .2s, transform .2s; width: 100%; margin-top: 8px; }
