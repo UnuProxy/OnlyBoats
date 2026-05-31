@@ -154,6 +154,9 @@
             border-radius: 50%;
             box-shadow: 0 8px 24px rgba(32,149,174,0.35);
         }
+        /* Photo avatar: image fills the circle instead of a letter */
+        .team-avatar-photo { overflow: hidden; padding: 0; }
+        .team-avatar-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; border-radius: 50%; }
         .team-card h3 {
             font-family: 'Gilda Display', serif; font-size: 28px; color: var(--brand-dark);
             margin-bottom: 4px; font-weight: 400;
@@ -437,7 +440,7 @@
             <div class="team-grid">
                 <!-- Donna -->
                 <div class="team-card">
-                    <div class="team-avatar">D</div>
+                    <div class="team-avatar team-avatar-photo"><img src="/assets/img/team-donna.jpg" alt="Donna — Client Relations at Just Enjoy Ibiza Boats" loading="lazy"></div>
                     <h3>Donna</h3>
                     <span class="team-role">Client Relations · 20+ Years in Boats</span>
                     <p>Donna brings two decades of experience as a sales representative across the Ibiza charter industry. She chose to work with us because we share the same ideals — honesty, warmth, and friendliness. A free, energetic, positive spirit who genuinely loves connecting with our guests.</p>
