@@ -362,9 +362,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
 <header class="header slider-fade">
 <div class="video-wrapper">
         <div class="bg-overlay"></div>
-        <video class="bg-video" autoplay loop muted playsinline preload="auto" poster="/assets/video/hero-poster.jpg">
-            <source src="/assets/video/VQ82SeaStory.mp4" type="video/mp4">
-        </video>
+        <video class="bg-video" autoplay loop muted playsinline preload="none" poster="/assets/video/hero-poster.jpg" data-src="/assets/video/VQ82SeaStory.mp4"></video>
         <div class="header-content">
             <div class="container">
               <div class="row">
@@ -1332,6 +1330,23 @@ document.addEventListener('DOMContentLoaded',function(){
   };
 
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', loadHomepageBoats); } else { loadHomepageBoats(); }
+})();
+</script>
+<!-- Lazy-load the hero video AFTER first paint so the poster image renders
+     instantly and the video doesn't block page-load metrics (LCP/Speed Index). -->
+<script>
+(function(){
+  function loadHeroVideo(){
+    var v=document.querySelector('video.bg-video[data-src]');
+    if(!v)return;
+    var s=document.createElement('source');
+    s.src=v.getAttribute('data-src'); s.type='video/mp4';
+    v.appendChild(s); v.load();
+    var p=v.play(); if(p&&p.catch)p.catch(function(){});
+    v.removeAttribute('data-src');
+  }
+  if(document.readyState==='complete'){ setTimeout(loadHeroVideo,200); }
+  else { window.addEventListener('load', function(){ setTimeout(loadHeroVideo,200); }); }
 })();
 </script>
 </body>
