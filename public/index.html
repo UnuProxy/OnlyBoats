@@ -29,7 +29,10 @@
         <link rel="preconnect" href="https://cdnjs.cloudflare.com">
         <link rel="dns-prefetch" href="https://unpkg.com">
         <link rel="preload" as="image" href="/assets/video/hero-poster.jpg" fetchpriority="high">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&family=Gilda+Display&display=swap">
+        <!-- Self-host Gilda Display (the LCP heading font) + preload it so the H1 paints instantly -->
+        <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/gilda-display-400.woff2" crossorigin>
+        <style>@font-face{font-family:'Gilda Display';font-style:normal;font-weight:400;font-display:swap;src:url('/assets/fonts/gilda-display-400.woff2') format('woff2');}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow&family=Barlow+Condensed&display=swap">
         <link rel="stylesheet" href="/assets/css/plugins.css" />
         <link rel="stylesheet" href="/assets/css/style.css" />
         <link rel="stylesheet" href="/assets/css/navbar.css">
