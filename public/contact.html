@@ -82,6 +82,9 @@
         /* Date field: override global color-scheme:dark so it reads on the light bg. */
         .cf-input[type="date"] { color-scheme: light; }
         .cf-input[type="date"]::-webkit-calendar-picker-indicator { filter: none; opacity: 0.6; cursor: pointer; }
+        /* Override global `select{max-width:160px;height:70px}` which clipped the
+           budget/guests dropdowns; keep them full-width like the other fields. */
+        select.cf-select { max-width: 100%; height: auto; }
         .cf-select { -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%232095AE' d='M6 8L0 0h12z'/></svg>"); background-repeat: no-repeat; background-position: right 14px center; background-size: 12px 8px; padding-right: 38px; }
         .cf-textarea { min-height: 130px; resize: vertical; }
         .cf-submit { background: var(--brand); color: #fff; border: none; padding: 14px 40px; border-radius: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; cursor: pointer; transition: background .2s, transform .2s; width: 100%; margin-top: 8px; }
