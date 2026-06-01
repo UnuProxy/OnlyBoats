@@ -1351,4 +1351,4 @@ input[type="date"] {
 /* Final WCAG-AA contrast: teal CTAs/labels on light -> #0E7490; teal on dark cards -> #5BB8CE */
 .view-all-link, .view-all-link span,
 .section-subtitle, .section-subtitle span { color: #0E7490; }
-.category a, .item .con .category a { color: #5BB8CE; }
+.category a, .item .con .category a, .rooms1 .item .category a { color: #5BB8CE !important; }
