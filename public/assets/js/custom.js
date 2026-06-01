@@ -397,7 +397,8 @@ $(function () {
     }
     
     
-    // MagnificPopup Gallery
+    // MagnificPopup Gallery (guard: plugin isn't bundled on every page)
+    if ($.fn.magnificPopup) {
     $('.gallery').magnificPopup({
         delegate: '.popimg',
         type: 'image',
@@ -423,7 +424,8 @@ $(function () {
         preloader: false,
         fixedContentPos: false
     });
-    
+    } // end magnificPopup guard
+
 
     // Smooth Scrolling
     $('a[href*="#"]')
