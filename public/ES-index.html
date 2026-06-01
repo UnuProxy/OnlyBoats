@@ -129,7 +129,7 @@
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg" aria-label="Navegación principal">
     <div class="container">
       <div class="logo-wrapper">
         <a class="logo" href="/es/"><h2>Just Enjoy Ibiza <span>Boats</span></h2></a>
@@ -428,15 +428,15 @@
           </div>
         </div>
         <div class="modal-form">
-          <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm">
+          <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm" data-mcp-action="submit-inquiry" aria-label="Solicitud de alquiler de barco">
             <div class="field-row">
-              <div class="field-wrap"><input type="text" name="firstName" class="input-field" placeholder="Nombre*" required></div>
-              <div class="field-wrap"><input type="text" name="lastName" class="input-field" placeholder="Apellido*" required></div>
+              <div class="field-wrap"><input type="text" name="firstName" class="input-field" placeholder="Nombre*" aria-label="Nombre" autocomplete="given-name" required></div>
+              <div class="field-wrap"><input type="text" name="lastName" class="input-field" placeholder="Apellido*" aria-label="Apellido" autocomplete="family-name" required></div>
             </div>
             <div class="field-row">
-              <div class="field-wrap"><input type="email" name="email" class="input-field" placeholder="Correo Electrónico*" required></div>
+              <div class="field-wrap"><input type="email" name="email" class="input-field" placeholder="Correo Electrónico*" aria-label="Correo electrónico" autocomplete="email" required></div>
               <div class="field-wrap">
-                <select name="countryPhone" id="countrySelect" class="select-field" required>
+                <select name="countryPhone" id="countrySelect" class="select-field" aria-label="Selecciona tu país" required>
                   <option value="" disabled>Selecciona tu País*</option>
                   <option value="ES|+34" selected>🇪🇸 España</option>
                   <option value="AR|+54">🇦🇷 Argentina</option>
@@ -494,7 +494,7 @@
               <div class="field-wrap" style="width:100%;">
                 <div style="display:flex;align-items:stretch;gap:6px;width:100%;">
                   <span id="dialCodeDisplay" style="background:#e9f5f8;color:#2095AE;padding:0 14px;border-radius:6px;font-weight:700;display:flex;align-items:center;white-space:nowrap;border:1px solid #ddd;font-family:'Barlow',sans-serif;min-width:70px;justify-content:center;">+34</span>
-                  <input type="tel" name="phoneNumber" class="input-field" placeholder="Teléfono*" required style="flex:1;min-width:0;">
+                  <input type="tel" name="phoneNumber" class="input-field" placeholder="Teléfono*" aria-label="Teléfono" autocomplete="tel-national" required style="flex:1;min-width:0;">
                 </div>
                 <input type="hidden" name="phone" id="combinedPhone">
                 <input type="hidden" name="country" id="countryCodeHidden" value="ES">
@@ -503,7 +503,7 @@
             <div class="field-row"><div class="field-wrap"><input type="date" id="tripDate" name="tripDate" class="input-field" required></div></div>
             <div class="field-row">
               <div class="field-wrap">
-                <select name="guests" class="select-field" required>
+                <select name="guests" class="select-field" aria-label="Número de personas" required>
                   <option value="" disabled selected>Número de Personas</option>
                   <option value="1">1 Persona</option><option value="2">2 Personas</option><option value="3">3 Personas</option><option value="4">4 Personas</option><option value="5">5 Personas</option><option value="6">6 Personas</option><option value="7">7 Personas</option><option value="8">8 Personas</option><option value="9">9 Personas</option><option value="10">10 Personas</option><option value="11">11 Personas</option><option value="12">12 Personas</option>
                 </select>
@@ -511,7 +511,7 @@
             </div>
             <div class="field-row">
               <div class="field-wrap">
-                <select name="budget" class="select-field" required>
+                <select name="budget" class="select-field" aria-label="Presupuesto por día" required>
                   <option value="" disabled selected>Presupuesto (por día)*</option>
                   <option value="€0 - €1,000/día">€0 - €1.000/día</option>
                   <option value="€1,000 - €2,000/día">€1.000 - €2.000/día</option>
@@ -524,7 +524,7 @@
                 </select>
               </div>
             </div>
-            <div class="field-row"><div class="field-wrap"><textarea name="message" class="message-field" placeholder="Notas o solicitudes especiales"></textarea></div></div>
+            <div class="field-row"><div class="field-wrap"><textarea name="message" class="message-field" placeholder="Notas o solicitudes especiales" aria-label="Notas o solicitudes especiales"></textarea></div></div>
             <input type="hidden" id="boatNameInput" name="boatName" value="">
             <button type="submit" class="submit-button">Enviar Consulta</button>
           </form>

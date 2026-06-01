@@ -166,7 +166,7 @@
 </head>
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-special">
+    <nav class="navbar navbar-expand-lg navbar-special" aria-label="Main navigation">
         <div class="container">
             <div class="logo-wrapper">
                 <a class="logo" href="index.html">
@@ -189,6 +189,7 @@
             </div>
         </div>
     </nav>
+<main id="main-content">
     <!-- LOADING STATE -->
     <div id="loadingState" class="bd-loading">
         <i class="fas fa-spinner fa-spin"></i>
@@ -274,15 +275,15 @@
                     </div>
                 </div>
                 <div class="inquiry-modal-form">
-                    <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm">
+                    <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm" data-mcp-action="submit-inquiry" aria-label="Boat charter inquiry">
                         <div class="inquiry-field-row">
-                            <div class="inquiry-field-wrap"><input type="text" name="firstName" class="inquiry-input-field" placeholder="First Name*" required></div>
-                            <div class="inquiry-field-wrap"><input type="text" name="lastName" class="inquiry-input-field" placeholder="Last Name*" required></div>
+                            <div class="inquiry-field-wrap"><input type="text" name="firstName" class="inquiry-input-field" placeholder="First Name*" aria-label="First name" autocomplete="given-name" required></div>
+                            <div class="inquiry-field-wrap"><input type="text" name="lastName" class="inquiry-input-field" placeholder="Last Name*" aria-label="Last name" autocomplete="family-name" required></div>
                         </div>
                         <div class="inquiry-field-row">
-                            <div class="inquiry-field-wrap"><input type="email" name="email" class="inquiry-input-field" placeholder="Email Address*" required></div>
+                            <div class="inquiry-field-wrap"><input type="email" name="email" class="inquiry-input-field" placeholder="Email Address*" aria-label="Email address" autocomplete="email" required></div>
                             <div class="inquiry-field-wrap">
-                                <select name="countryPhone" id="countrySelect" class="inquiry-select-field" required>
+                                <select name="countryPhone" id="countrySelect" class="inquiry-select-field" aria-label="Select your country" required>
                                     <option value="" disabled>Select Your Country*</option>
                                     <option value="ES|+34" selected>🇪🇸 Spain</option>
                                     <option value="AF|+93">🇦🇫 Afghanistan</option>
@@ -400,7 +401,7 @@
                             <div class="inquiry-field-wrap" style="width:100%;">
                                 <div style="display:flex;align-items:stretch;gap:6px;width:100%;">
                                     <span id="dialCodeDisplay" style="background:#e9f5f8;color:#2095AE;padding:0 14px;border-radius:6px;font-weight:700;display:flex;align-items:center;white-space:nowrap;border:1px solid #ddd;font-family:'Barlow',sans-serif;min-width:70px;justify-content:center;">+34</span>
-                                    <input type="tel" name="phoneNumber" class="inquiry-input-field" placeholder="Phone Number*" required style="flex:1;min-width:0;">
+                                    <input type="tel" name="phoneNumber" class="inquiry-input-field" placeholder="Phone Number*" aria-label="Phone number" autocomplete="tel-national" required style="flex:1;min-width:0;">
                                 </div>
                                 <input type="hidden" name="phone" id="combinedPhone">
                                 <input type="hidden" name="country" id="countryCodeHidden" value="ES">
@@ -414,7 +415,7 @@
                         </div>
                         <div class="inquiry-field-row">
                             <div class="inquiry-field-wrap">
-                                <select name="guests" class="inquiry-select-field" required>
+                                <select name="guests" class="inquiry-select-field" aria-label="Number of guests" required>
                                     <option value="" disabled selected>Number of Guests</option>
                                     <option value="1">1 Passenger</option><option value="2">2 Passengers</option><option value="3">3 Passengers</option><option value="4">4 Passengers</option><option value="5">5 Passengers</option><option value="6">6 Passengers</option><option value="7">7 Passengers</option><option value="8">8 Passengers</option><option value="9">9 Passengers</option><option value="10">10 Passengers</option><option value="11">11 Passengers</option><option value="12">12 Passengers</option>
                                 </select>
@@ -422,7 +423,7 @@
                         </div>
                         <div class="inquiry-field-row">
                             <div class="inquiry-field-wrap">
-                                <select name="budget" class="inquiry-select-field" required>
+                                <select name="budget" class="inquiry-select-field" aria-label="Budget range per day" required>
                                     <option value="" disabled selected>Your Budget Range (per day)*</option>
                                     <option value="€0 - €1,000/day">€0 - €1,000/day</option>
                                     <option value="€1,000 - €2,000/day">€1,000 - €2,000/day</option>
@@ -437,7 +438,7 @@
                         </div>
                         <div class="inquiry-field-row">
                             <div class="inquiry-field-wrap">
-                                <textarea name="message" class="inquiry-message-field" placeholder="Tell us about your preferences or special requests"></textarea>
+                                <textarea name="message" class="inquiry-message-field" placeholder="Tell us about your preferences or special requests" aria-label="Notes or special requests"></textarea>
                             </div>
                         </div>
                         <input type="hidden" id="boatNameInput" name="boatName" value="">
@@ -448,7 +449,8 @@
         </div>
     </div>
     <!-- FOOTER -->
-    <footer class="footer">
+    </main>
+<footer class="footer">
         <div class="footer-top">
             <div class="container">
                 <div class="row">
