@@ -726,10 +726,11 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
   function loadHeroVideo(){
     var v=document.querySelector('video.bg-video[data-src]');
     if(!v)return;
+    v.addEventListener('playing', function(){ v.classList.add('is-playing'); }, {once:true});
     var s=document.createElement('source');
     s.src=v.getAttribute('data-src'); s.type='video/mp4';
     v.appendChild(s); v.load();
-    var p=v.play(); if(p&&p.catch)p.catch(function(){});
+    var p=v.play(); if(p&&p.catch)p.catch(function(){ v.classList.remove('is-playing'); });
     v.removeAttribute('data-src');
   }
   if(document.readyState==='complete'){ setTimeout(loadHeroVideo,200); }

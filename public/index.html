@@ -384,7 +384,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
               <div class="row">
                 <div class="col-md-10 offset-md-1 text-center">
                   <span class="hero-eyebrow">JUST ENJOY IBIZA BOATS</span>
-                  <h1 style="font-family:'Gilda Display',serif; font-size:clamp(30px,4.6vw,54px); color:#fff; font-weight:400; line-height:1.1; margin:0 0 14px;">Boat Rental &amp; Yacht Charter in Ibiza</h1>
+                  <h1 style="font-family:'Gilda Display',serif; font-size:clamp(32px,4.6vw,54px); color:#fff; font-weight:400; line-height:1.14; margin:0 0 14px; text-transform:none; letter-spacing:normal;">Boat Rental &amp;<br class="h1-mobile-break"> Yacht Charter <br class="h1-mobile-break">in Ibiza</h1>
                   <p style="font-family:'Gilda Display',serif; font-style:italic; font-size:clamp(20px,2.8vw,30px); color:#fff; margin:0 0 38px; font-weight:400;">Arrive as a Client, Leave as a Friend</p>
                   <div class="cta-wrapper">
                     <button class="elegant-cta hero-book-btn" data-boat-name="">RENT YOUR BOAT</button>
@@ -1394,10 +1394,13 @@ document.addEventListener('DOMContentLoaded',function(){
   function loadHeroVideo(){
     var v=document.querySelector('video.bg-video[data-src]');
     if(!v)return;
+    // Only reveal the video once it's truly playing; if autoplay is blocked
+    // (iOS Low Power Mode), it stays hidden and the poster shows — no play button.
+    v.addEventListener('playing', function(){ v.classList.add('is-playing'); }, {once:true});
     var s=document.createElement('source');
     s.src=v.getAttribute('data-src'); s.type='video/mp4';
     v.appendChild(s); v.load();
-    var p=v.play(); if(p&&p.catch)p.catch(function(){});
+    var p=v.play(); if(p&&p.catch)p.catch(function(){ v.classList.remove('is-playing'); });
     v.removeAttribute('data-src');
   }
   if(document.readyState==='complete'){ setTimeout(loadHeroVideo,200); }
