@@ -34,16 +34,19 @@ $(function () {
     var wind = $(window);
     
     
-    // ScrollIt
-    $.scrollIt({
-        upKey: 38, // key code to navigate to the next section
-        downKey: 40, // key code to navigate to the previous section
-        easing: 'swing', // the easing function for animation
-        scrollTime: 600, // how long (in ms) the animation takes
-        activeClass: 'active', // class given to the active nav element
-        onPageChange: null, // function(pageIndex) that is called when page is changed
-        topOffset: -70 // offste (in px) for fixed top navigation
-    });
+    // ScrollIt (guard: the scrollIt plugin isn't bundled, so calling it
+    // unguarded threw a console error on every page — dinged Best Practices)
+    if (typeof $.scrollIt === 'function') {
+        $.scrollIt({
+            upKey: 38, // key code to navigate to the next section
+            downKey: 40, // key code to navigate to the previous section
+            easing: 'swing', // the easing function for animation
+            scrollTime: 600, // how long (in ms) the animation takes
+            activeClass: 'active', // class given to the active nav element
+            onPageChange: null, // function(pageIndex) that is called when page is changed
+            topOffset: -70 // offste (in px) for fixed top navigation
+        });
+    }
     
     
     // Navbar scrolling background
@@ -656,3 +659,15 @@ var form = $('.contact__form'),
         }
     });
     
+
+
+// Accessibility: give owl-carousel pagination dots an accessible name (button-name audit)
+jQuery(function ($) {
+    function labelDots() {
+        $(".owl-dot").each(function (i) {
+            if (!this.getAttribute("aria-label")) this.setAttribute("aria-label", "Go to slide " + (i + 1));
+        });
+    }
+    $(window).on("load", function () { setTimeout(labelDots, 600); });
+    $(document).on("initialized.owl.carousel changed.owl.carousel", function () { setTimeout(labelDots, 50); });
+});

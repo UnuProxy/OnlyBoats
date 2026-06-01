@@ -11,7 +11,7 @@
     </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <title>Alquiler de Barcos en Ibiza | Just Enjoy Ibiza Boats</title>
     <meta name="description" content="Alquiler de barcos y yates en Ibiza. 21 embarcaciones, capitanes locales expertos, calas escondidas y excursiones a Formentera. Reserva directo desde 762€/día.">
     <meta name="keywords" content="alquiler barco Ibiza, alquilar barco Ibiza, alquiler yate Ibiza, barcos Ibiza, yates Ibiza, alquiler catamaran Ibiza, Formentera barco, Cala Bassa, Cala Comte, atardecer Ibiza barco">
@@ -362,7 +362,7 @@
 </script>
 
 <!-- Elegant WhatsApp Button -->
-<a href="https://wa.me/34642453952" class="elegant-whatsapp" target="_blank">
+<a href="https://wa.me/34642453952" class="elegant-whatsapp" aria-label="Contact us on WhatsApp" target="_blank">
     <div class="elegant-whatsapp-inner"><i class="fab fa-whatsapp"></i><span class="elegant-whatsapp-text">Contáctanos</span></div>
 </a>
 
@@ -728,6 +728,8 @@ document.addEventListener('DOMContentLoaded',function(){document.querySelectorAl
   function loadHeroVideo(){
     var v=document.querySelector('video.bg-video[data-src]');
     if(!v)return;
+    // On phones, skip the ~3MB hero video — the poster already fills the hero.
+    if(window.matchMedia && window.matchMedia('(max-width: 768px)').matches){ v.removeAttribute('data-src'); return; }
     v.addEventListener('playing', function(){ v.classList.add('is-playing'); }, {once:true});
     var s=document.createElement('source');
     s.src=v.getAttribute('data-src'); s.type='video/mp4';

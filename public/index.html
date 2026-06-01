@@ -11,7 +11,7 @@
 </script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <title>Just Enjoy Ibiza Boats: Boat Charters & Rentals in Ibiza</title>
         <!-- WebMCP: lets AI agents discover this site's tools/actions (see /mcp.json) -->
         <meta name="mcp" content="/mcp.json">
@@ -402,12 +402,12 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
 <section class="memories-section special-background">
     <div class="memories-container">
       <div class="memories-gallery">
-        <div class="gallery-item"><img src="assets/img/ClientsMoments/image00046.jpg" alt="Couple on boat"></div>
-        <div class="gallery-item"><img src="assets/img/ClientsMoments/image00024.jpeg" alt="Family on boat"></div>
-        <div class="gallery-item"><img src="assets/img/ClientsMoments/image00065.jpg" alt="Group of friends"></div>
-        <div class="gallery-item"><img src="assets/img/ClientsMoments/image00029.jpeg" alt="Celebration"></div>
-        <div class="gallery-item"><img src="/assets/img/ClientsMoments/image00054.jpeg" alt="Pink floats"></div>
-        <div class="gallery-item"><img src="/assets/img/ClientsMoments/IMG_0635.jpeg" alt="Underwater swim"></div>
+        <div class="gallery-item"><img loading="lazy" src="assets/img/ClientsMoments/image00046.jpg" alt="Couple on boat"></div>
+        <div class="gallery-item"><img loading="lazy" src="assets/img/ClientsMoments/image00024.jpeg" alt="Family on boat"></div>
+        <div class="gallery-item"><img loading="lazy" src="assets/img/ClientsMoments/image00065.jpg" alt="Group of friends"></div>
+        <div class="gallery-item"><img loading="lazy" src="assets/img/ClientsMoments/image00029.jpeg" alt="Celebration"></div>
+        <div class="gallery-item"><img loading="lazy" src="/assets/img/ClientsMoments/image00054.jpeg" alt="Pink floats"></div>
+        <div class="gallery-item"><img loading="lazy" src="/assets/img/ClientsMoments/IMG_0635.jpeg" alt="Underwater swim"></div>
       </div>
       <div class="memories-content">
         <h2 class="memories-title">Create unforgettable memories</h2>
@@ -807,7 +807,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
 </script>
 </main>
 <!-- Elegant WhatsApp Button -->
-<a href="https://wa.me/34642453952" class="elegant-whatsapp" target="_blank">
+<a href="https://wa.me/34642453952" class="elegant-whatsapp" aria-label="Contact us on WhatsApp" target="_blank">
     <div class="elegant-whatsapp-inner">
         <i class="fab fa-whatsapp"></i>
         <span class="elegant-whatsapp-text">Contact Us</span>
@@ -1399,6 +1399,9 @@ document.addEventListener('DOMContentLoaded',function(){
   function loadHeroVideo(){
     var v=document.querySelector('video.bg-video[data-src]');
     if(!v)return;
+    // On phones, skip the ~3MB hero video entirely — the poster image already
+    // fills the hero, so this avoids the download and speeds up LCP/Speed Index.
+    if(window.matchMedia && window.matchMedia('(max-width: 768px)').matches){ v.removeAttribute('data-src'); return; }
     // Only reveal the video once it's truly playing; if autoplay is blocked
     // (iOS Low Power Mode), it stays hidden and the poster shows — no play button.
     v.addEventListener('playing', function(){ v.classList.add('is-playing'); }, {once:true});
