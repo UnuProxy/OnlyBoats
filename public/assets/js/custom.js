@@ -81,6 +81,7 @@ $(function () {
     
     // Animations
     var contentWayPoint = function () {
+        if (!$.fn.waypoint) return; // waypoint plugin isn't bundled — avoid console error
         var i = 0;
         $('.animate-box').waypoint(function (direction) {
             if (direction === 'down' && !$(this.element).hasClass('animated')) {
@@ -114,8 +115,8 @@ $(function () {
     });
     
     
-    // YouTubePopUp
-    $("a.vid").YouTubePopUp();
+    // YouTubePopUp (guard: plugin isn't bundled — avoid console error)
+    if ($.fn.YouTubePopUp) $("a.vid").YouTubePopUp();
     
     
     // Testimonials owlCarousel *
@@ -667,6 +668,10 @@ jQuery(function ($) {
         $(".owl-dot").each(function (i) {
             if (!this.getAttribute("aria-label")) this.setAttribute("aria-label", "Go to slide " + (i + 1));
         });
+        // owl adds role="presentation" to the prev/next <button>s, which conflicts
+        // with their focusable button role — drop it and give them names.
+        $(".owl-prev").removeAttr("role").attr("aria-label", "Previous");
+        $(".owl-next").removeAttr("role").attr("aria-label", "Next");
     }
     $(window).on("load", function () { setTimeout(labelDots, 600); });
     $(document).on("initialized.owl.carousel changed.owl.carousel", function () { setTimeout(labelDots, 50); });
