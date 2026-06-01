@@ -95,6 +95,18 @@
     background: #1B2838;
     padding: 28px 24px;
 }
+/* Clickable guide cards (internal links to blog articles) */
+a.cg-guide-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: background .18s ease, transform .18s ease;
+}
+a.cg-guide-link:hover {
+    background: #243446;
+    transform: translateY(-2px);
+}
+a.cg-guide-link:hover .cg-dest__title { color: #2095AE; }
 .cg-dest__header {
     display: flex;
     align-items: center;
