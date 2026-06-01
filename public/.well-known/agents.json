@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "name": "Just Enjoy Ibiza Boats",
+  "description": "Private boat rental and yacht charter in Ibiza with your own licensed skipper. Motor yachts, catamarans and speedboats for Formentera day trips, sunset cruises and celebrations — no boat licence needed, captain and drinks included.",
+  "url": "https://justenjoyibizaboats.com",
+  "capabilities": ["search", "contact", "booking-inquiry"],
+  "contact": "info@justenjoyibiza.com",
+  "languages": ["en", "es"]
+}

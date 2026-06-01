@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "name": "Just Enjoy Ibiza Boats",
+  "description": "Tools an AI agent can use to help a guest find and book a private boat charter in Ibiza.",
+  "contact": "info@justenjoyibiza.com",
+  "tools": [
+    {
+      "name": "search_boats",
+      "description": "Browse the fleet of boats available to charter in Ibiza. Filter by number of guests, boat type (yacht, catamaran, speedboat) and budget per day.",
+      "method": "GET",
+      "url": "https://justenjoyibizaboats.com/yacht-rental",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "guests": { "type": "integer", "description": "Number of guests (1-12)" },
+          "type": { "type": "string", "description": "Boat type: yacht, catamaran or speedboat" },
+          "budget": { "type": "string", "description": "Budget range per day, e.g. '€1,000 - €2,000/day'" }
+        }
+      }
+    },
+    {
+      "name": "submit_inquiry",
+      "description": "Send a charter inquiry to Just Enjoy Ibiza Boats. The team typically replies within ~15 minutes during the season.",
+      "method": "POST",
+      "url": "https://usebasin.com/f/d0b5557a2cc1",
+      "input_schema": {
+        "type": "object",
+        "required": ["firstName", "email", "phoneNumber"],
+        "properties": {
+          "firstName": { "type": "string", "description": "Guest first name" },
+          "lastName": { "type": "string", "description": "Guest last name" },
+          "email": { "type": "string", "format": "email", "description": "Contact email" },
+          "phoneNumber": { "type": "string", "description": "Contact phone number, including country code" },
+          "tripDate": { "type": "string", "format": "date", "description": "Preferred charter date (YYYY-MM-DD)" },
+          "guests": { "type": "integer", "description": "Number of guests" },
+          "budget": { "type": "string", "description": "Budget range per day" },
+          "message": { "type": "string", "description": "Notes or special requests" }
+        }
+      }
+    }
+  ]
+}

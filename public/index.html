@@ -13,6 +13,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <title>Just Enjoy Ibiza Boats: Boat Charters & Rentals in Ibiza</title>
+        <!-- WebMCP: lets AI agents discover this site's tools/actions (see /mcp.json) -->
+        <meta name="mcp" content="/mcp.json">
+        <link rel="mcp" href="/mcp.json">
         <meta name="description" content="Luxury boat charter & rental in Ibiza. 21 yachts, expert local captains, hidden coves & Formentera day trips. Book your perfect charter from €762/day.">
         <meta name="keywords" content="Ibiza, boat charter, boat rental, boat hire, yacht charter, boat trip, Ibiza boat, Ibiza yacht, boat party Ibiza, private boat Ibiza, luxury boat Ibiza, Cala Bassa, Cala Comte, Formentera, sunset cruise Ibiza">
         <meta name="robots" content="index, follow">
@@ -338,7 +341,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg" aria-label="Main navigation">
     <div class="container">
       <div class="logo-wrapper">
         <a class="logo" href="index.html">
@@ -395,6 +398,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
           </div>
 </div>
 </header>
+<main id="main-content">
 <section class="memories-section special-background">
     <div class="memories-container">
       <div class="memories-gallery">
@@ -801,6 +805,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', loadGoogleReviews); } else { loadGoogleReviews(); }
 })();
 </script>
+</main>
 <!-- Elegant WhatsApp Button -->
 <a href="https://wa.me/34642453952" class="elegant-whatsapp" target="_blank">
     <div class="elegant-whatsapp-inner">
@@ -888,15 +893,15 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
           </div>
         </div>
         <div class="modal-form">
-          <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm">
+          <form action="https://usebasin.com/f/d0b5557a2cc1" method="POST" id="inquiryForm" data-mcp-action="submit-inquiry" aria-label="Boat charter inquiry">
             <div class="field-row">
-              <div class="field-wrap"><input type="text" name="firstName" class="input-field" placeholder="First Name*" required></div>
-              <div class="field-wrap"><input type="text" name="lastName" class="input-field" placeholder="Last Name*" required></div>
+              <div class="field-wrap"><input type="text" name="firstName" class="input-field" placeholder="First Name*" aria-label="First name" autocomplete="given-name" required></div>
+              <div class="field-wrap"><input type="text" name="lastName" class="input-field" placeholder="Last Name*" aria-label="Last name" autocomplete="family-name" required></div>
             </div>
             <div class="field-row">
-              <div class="field-wrap"><input type="email" name="email" class="input-field" placeholder="Email Address*" required></div>
+              <div class="field-wrap"><input type="email" name="email" class="input-field" placeholder="Email Address*" aria-label="Email address" autocomplete="email" required></div>
               <div class="field-wrap">
-                <select name="countryPhone" id="countrySelect" class="select-field" required>
+                <select name="countryPhone" id="countrySelect" class="select-field" aria-label="Select your country" required>
                   <option value="" disabled>Select Your Country*</option>
                   <option value="ES|+34" selected>🇪🇸 Spain</option>
                   <option value="AF|+93">🇦🇫 Afghanistan</option>
@@ -1014,7 +1019,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
               <div class="field-wrap" style="width:100%;">
                 <div style="display:flex;align-items:stretch;gap:6px;width:100%;">
                   <span id="dialCodeDisplay" style="background:#e9f5f8;color:#2095AE;padding:0 14px;border-radius:6px;font-weight:700;display:flex;align-items:center;white-space:nowrap;border:1px solid #ddd;font-family:'Barlow',sans-serif;min-width:70px;justify-content:center;">+34</span>
-                  <input type="tel" name="phoneNumber" class="input-field" placeholder="Phone Number*" required style="flex:1;min-width:0;">
+                  <input type="tel" name="phoneNumber" class="input-field" placeholder="Phone Number*" aria-label="Phone number" autocomplete="tel-national" required style="flex:1;min-width:0;">
                 </div>
                 <input type="hidden" name="phone" id="combinedPhone">
                 <input type="hidden" name="country" id="countryCodeHidden" value="ES">
@@ -1028,7 +1033,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
             </div>
             <div class="field-row">
               <div class="field-wrap">
-                <select name="guests" class="select-field" required>
+                <select name="guests" class="select-field" aria-label="Number of guests" required>
                   <option value="" disabled selected>Number of Guests</option>
                   <option value="1">1 Guest</option><option value="2">2 Guests</option><option value="3">3 Guests</option><option value="4">4 Guests</option><option value="5">5 Guests</option><option value="6">6 Guests</option><option value="7">7 Guests</option><option value="8">8 Guests</option><option value="9">9 Guests</option><option value="10">10 Guests</option><option value="11">11 Guests</option><option value="12">12 Guests</option>
                 </select>
@@ -1036,7 +1041,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
             </div>
             <div class="field-row">
               <div class="field-wrap">
-                <select name="budget" class="select-field" required>
+                <select name="budget" class="select-field" aria-label="Budget range per day" required>
                   <option value="" disabled selected>Your Budget Range (per day)*</option>
                   <option value="€0 - €1,000/day">€0 - €1,000/day</option>
                   <option value="€1,000 - €2,000/day">€1,000 - €2,000/day</option>
@@ -1050,7 +1055,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
               </div>
             </div>
             <div class="field-row">
-              <div class="field-wrap"><textarea name="message" class="message-field" placeholder="Notes or special requests"></textarea></div>
+              <div class="field-wrap"><textarea name="message" class="message-field" placeholder="Notes or special requests" aria-label="Notes or special requests"></textarea></div>
             </div>
             <input type="hidden" id="boatNameInput" name="boatName" value="">
             <button type="submit" class="submit-button">Send Inquiry</button>
