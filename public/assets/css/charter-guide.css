@@ -372,3 +372,13 @@ a.cg-guide-link:hover .cg-dest__title { color: #2095AE; }
         text-align: center;
     }
 }
+
+
+/* Accessibility (WCAG AA) contrast for small labels.
+   Teal on cream -> deeper #0E7490; teal on dark -> lighter #5BB8CE; gray -> darker. */
+.cg-cream .cg-label,
+.cg-card__label { color: #0E7490; }
+.cg-dark .cg-label,
+.cg-col-label,
+.cg-why__col-label { color: #5BB8CE; }
+.cg-slot__label { color: #5a5a5a; }
