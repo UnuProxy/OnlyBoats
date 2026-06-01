@@ -1346,3 +1346,9 @@ input[type="date"] {
 .memories-cta { background-color: #0E7490; }
 .enquiry-btn:hover,
 .memories-cta:hover { background-color: #0a5d72; }
+
+
+/* Final WCAG-AA contrast: teal CTAs/labels on light -> #0E7490; teal on dark cards -> #5BB8CE */
+.view-all-link, .view-all-link span,
+.section-subtitle, .section-subtitle span { color: #0E7490; }
+.category a, .item .con .category a { color: #5BB8CE; }
