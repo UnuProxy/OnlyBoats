@@ -494,14 +494,14 @@ if (progressPath) {
     })
     
     
-    // Select2
-    $('.select2').select2({
+    // Select2 (guard: plugin isn't bundled on every page)
+    if ($.fn.select2) $('.select2').select2({
         minimumResultsForSearch: Infinity,
     });
-    
-    
-    // Datapicker
-    $(".datepicker").datepicker({
+
+
+    // Datapicker (guard: plugin isn't bundled on every page)
+    if ($.fn.datepicker) $(".datepicker").datepicker({
         orientation: "top"
     });
      
