@@ -1329,3 +1329,20 @@ input[type="date"] {
   }
 }
 
+
+
+/* ============================================================
+   Accessibility (WCAG AA): small teal text/buttons were 3.5:1 on
+   white. Large headings, icons & accents keep the brand teal
+   #2095AE; these small/functional elements use a slightly deeper
+   #0E7490 (~5.3:1) so they meet the 4.5:1 contrast requirement.
+   ============================================================ */
+.boats-section-subtitle,
+.boat-name,
+.capacity,
+.view-details { color: #0E7490; }
+.view-details { border-color: #0E7490; }
+.enquiry-btn,
+.memories-cta { background-color: #0E7490; }
+.enquiry-btn:hover,
+.memories-cta:hover { background-color: #0a5d72; }
