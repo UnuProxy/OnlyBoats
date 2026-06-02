@@ -6384,8 +6384,15 @@ select {
     border-radius: 5px; 
     font-size: 14px; 
     line-height: 1.5; 
-    appearance: none; 
-    position: relative; 
+    appearance: none;
+    position: relative;
+}
+/* Inquiry-modal selects (country / guests / budget) must fill their field.
+   The global `select { max-width:160px }` above was capping them on desktop,
+   which cut off long labels like "Your Budget Range (per day)". */
+.modal-form select,
+.inquiry-modal-form select {
+    max-width: 100% !important;
 }
 
 /* Add a custom arrow */

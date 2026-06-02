@@ -900,8 +900,11 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
             </div>
             <div class="field-row">
               <div class="field-wrap"><input type="email" name="email" class="input-field" placeholder="Email Address*" aria-label="Email address" autocomplete="email" required></div>
-              <div class="field-wrap">
-                <select name="countryPhone" id="countrySelect" class="select-field" aria-label="Select your country" required>
+            </div>
+            <div class="field-row">
+              <div class="field-wrap" style="width:100%;">
+                <div style="display:flex;align-items:stretch;gap:6px;width:100%;">
+                <select name="countryPhone" id="countrySelect" class="select-field" aria-label="Select your country" required style="flex:0 0 42%;min-width:0;max-width:none;">
                   <option value="" disabled>Select Your Country*</option>
                   <option value="ES|+34" selected>🇪🇸 Spain</option>
                   <option value="AF|+93">🇦🇫 Afghanistan</option>
@@ -1013,12 +1016,7 @@ section.section-padding { padding-top: 50px !important; padding-bottom: 50px !im
                   <option value="ZM|+260">🇿🇲 Zambia</option>
                   <option value="ZW|+263">🇿🇼 Zimbabwe</option>
                 </select>
-              </div>
-            </div>
-            <div class="field-row">
-              <div class="field-wrap" style="width:100%;">
-                <div style="display:flex;align-items:stretch;gap:6px;width:100%;">
-                  <span id="dialCodeDisplay" style="background:#e9f5f8;color:#2095AE;padding:0 14px;border-radius:6px;font-weight:700;display:flex;align-items:center;white-space:nowrap;border:1px solid #ddd;font-family:'Barlow',sans-serif;min-width:70px;justify-content:center;">+34</span>
+                  <span id="dialCodeDisplay" style="background:#e9f5f8;color:#2095AE;padding:0 12px;border-radius:6px;font-weight:700;display:flex;align-items:center;white-space:nowrap;border:1px solid #ddd;font-family:'Barlow',sans-serif;min-width:52px;justify-content:center;">+34</span>
                   <input type="tel" name="phoneNumber" class="input-field" placeholder="Phone Number*" aria-label="Phone number" autocomplete="tel-national" required style="flex:1;min-width:0;">
                 </div>
                 <input type="hidden" name="phone" id="combinedPhone">
